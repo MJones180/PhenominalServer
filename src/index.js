@@ -1,0 +1,37 @@
+const { GraphQLServer } = require('graphql-yoga');
+const { formatError } = require('apollo-errors');
+const prisma = require('../prismaStart');
+const grabUser = require('./utils/grabUser');
+const email = require('./utils/email');
+const errors = require('./utils/errors');
+const providers = require('./utils/providers');
+const token = require('./utils/token');
+const resolvers = require('./resolvers');
+
+// Server config
+const server = new GraphQLServer({
+  typeDefs: 'src/schema.graphql',
+  resolvers,
+  resolverValidationOptions: {
+    requireResolversForResolveType: false,
+  },
+  context: req => ({
+    ...req,
+    db: prisma(true),
+    resolvers,
+    user: grabUser(req, errors),
+    utils: {
+      email,
+      errors,
+      providers,
+      token,
+    },
+  }),
+});
+
+// Server options
+const options = {
+  formatError,
+};
+
+server.start(options, () => console.log('Server is running on http://localhost:4000'));

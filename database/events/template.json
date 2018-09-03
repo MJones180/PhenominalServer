@@ -1,0 +1,29 @@
+{
+  "fields": {
+    "goal": "Int: Amount in pennies",
+    "startDate": "Date: YYYY-MM-DD",
+    "endDate": "Date: YYYY-MM-DD",
+    "ein": "String: EIN of charity",
+    "name": "String: Name of special fundraiser",
+    "description": "String: Description of special fundraiser"
+  },
+  "template": {
+    "charities": [
+      {
+        "goal": "",
+        "startDate": "",
+        "endDate": "",
+        "ein": ""
+      }
+    ],
+    "specialFundraisers": [
+      {
+        "goal": "",
+        "startDate": "",
+        "endDate": "",
+        "name": "",
+        "description": ""
+      }
+    ]
+  }
+}

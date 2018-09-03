@@ -1,0 +1,53 @@
+# import Query, Event, EventOrderByInput, User from "./generated/prisma.graphql"
+
+type Mutation {
+  addFunds(amount: Int!, email: String!, token: String!): addFundsPayload
+  addDonations(amount: Int!, email: String!, events: [ID!]): addDonationsPayload
+  charitySuggestion(ein: String, email: String!, name: String!, representative: Boolean, url: String): Boolean
+  contactMessage(email: String!, message: String!, name: String!): Boolean
+  signin(provider: String!, token: String!): signinPayload!
+  updateUserPersonal(email: String!, nameFirst: String!, nameLast: String!): Boolean
+  updateUserPreferences(allowDonationEmails: Boolean!): Boolean
+  updateUserSecurityToken: Boolean
+}
+
+type Query {
+  currentUser: User
+  eventsCurrent(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
+  eventsPast(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
+  eventsUpcoming(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
+  transactionsAggregate(forEvent: String, forUser: Boolean): transactionsAggregatePayload!
+  grabUserBalance: grabUserBalancePayload
+}
+
+type addFundsPayload {
+  amountCharged: Int!
+  amountReceived: Int!
+  balance: Int!
+  transactionID: ID!
+}
+
+type addDonationsPayload {
+  amount: Int!
+  balances: [Int!]
+  events: [String!]
+  ids: [ID!]
+}
+
+type signinPayload {
+  authToken: String!
+  email: String
+  id: String!
+  nameFirst: String
+  nameLast: String
+}
+
+type transactionsAggregatePayload {
+  count: Int!
+  total: Int!
+}
+
+type grabUserBalancePayload {
+  userID: ID
+  balance: Int!
+}
