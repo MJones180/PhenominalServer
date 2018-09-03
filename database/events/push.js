@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const each = require('async/each');
 const forEach = require('lodash/forEach');
-const jsonfile = require('jsonfile');
+const jsonfile = require('./index.json');
 const prisma = require('../../prismaStart');
 
 // Initalize a prisma connection
@@ -14,7 +14,9 @@ const source = `${__dirname}/index.json`;
 const events = jsonfile.readFileSync(source);
 
 // Add a new charity event to the db
-const createCharity = async ({ endDate, goal, startDate, ein }) => (
+const createCharity = async ({
+  endDate, goal, startDate, ein,
+}) => (
   mutation.createEvent({
     data: {
       endDate,
@@ -30,7 +32,9 @@ const createCharity = async ({ endDate, goal, startDate, ein }) => (
 );
 
 // Add a new special fundraiser event to the db
-const createSpecialFundraiser = async ({ endDate, goal, startDate, name, description }) => (
+const createSpecialFundraiser = async ({
+  endDate, goal, startDate, name, description,
+}) => (
   mutation.createEvent({
     data: {
       endDate,

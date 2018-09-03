@@ -1,3 +1,7 @@
+const { env } = require('minimist')(process.argv.slice(2));
+require('dotenv').config({ path: `${process.cwd()}/.env.shared` });
+if (env == 'dev') require('dotenv').config({ path: `${process.cwd()}/.env.dev` });
+if (env == 'prod') require('dotenv').config({ path: `${process.cwd()}/.env.prod` });
 const { GraphQLServer } = require('graphql-yoga');
 const { formatError } = require('apollo-errors');
 const prisma = require('../prismaStart');

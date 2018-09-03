@@ -5,7 +5,7 @@ const includes = require('lodash/includes');
 const isEqual = require('lodash/isEqual');
 const keyBy = require('lodash/keyBy');
 const keys = require('lodash/keys');
-const jsonfile = require('jsonfile');
+const jsonfile = require('./index.json');
 const prisma = require('../../prismaStart');
 
 // Initalize a prisma connection
