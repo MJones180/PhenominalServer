@@ -45,4 +45,6 @@ const options = {
   formatError,
 };
 
+if (env == 'prod') options.playground = false;
+
 server.start(options, () => console.log('Server is running on http://localhost:4000'));
