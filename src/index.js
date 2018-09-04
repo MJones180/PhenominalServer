@@ -47,4 +47,8 @@ const options = {
 
 if (env == 'prod') options.playground = false;
 
-server.start(options, () => console.log('Server is running on http://localhost:4000'));
+if (env == 'prod') {
+  server.start(options, () => console.log('Server is running on http://localhost:4000'));
+} else {
+  server.start(options, () => console.log('Server is running on https://server.phenominal.fund'));
+}
