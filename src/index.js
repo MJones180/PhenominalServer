@@ -35,6 +35,12 @@ const server = new GraphQLServer({
 
 // Server options
 const options = {
+  cors: {
+    origin: [
+      'https://phenominal.netlify.com/',
+      'https://phenominal.fund',
+    ],
+  },
   formatError,
 };
 
