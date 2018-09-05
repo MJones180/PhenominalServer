@@ -40,12 +40,11 @@
     "npm-run-all": "4.1.2"
   },
   "scripts": {
-    "debug": "nodemon -e js,graphql -x node --inspect -r dotenv/config ./src/index.js",
-    "dev": "npm-run-all --parallel start playground",
-    "playground": "graphql playground",
-    "pushEvents": "node -r dotenv/config ./database/events/push.js",
-    "start": "nodemon -e js,graphql -x node ./src/index.js --env=dev",
     "deployProd": "prisma deploy --env-file .env.prod",
-    "syncCharities": "node -r dotenv/config ./database/charities/sync.js"
+    "playground": "graphql playground",
+    "pushEvents": "node run --script=pushEvents",
+    "pushEventsProd": "yarn pushEvents --env=prod",
+    "start": "nodemon -e js,graphql -x node run --script=start",
+    "syncCharities": "node run --script=syncCharities && node run --script=syncCharities --env=prod"
   }
 }

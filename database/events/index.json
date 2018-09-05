@@ -1,19 +1,40 @@
 {
-  "charities": [
-    {
-      "goal": "",
-      "startDate": "",
-      "endDate": "",
-      "ein": ""
-    }
-  ],
-  "specialFundraisers": [
-    {
-      "goal": "",
-      "startDate": "",
-      "endDate": "",
-      "name": "",
-      "description": ""
-    }
-  ]
+  "dev": {
+    "charities": [
+      {
+        "goal": "",
+        "startDate": "",
+        "endDate": "",
+        "ein": ""
+      }
+    ],
+    "specialFundraisers": [
+      {
+        "goal": "",
+        "startDate": "",
+        "endDate": "",
+        "name": "",
+        "description": ""
+      }
+    ]
+  },
+  "prod": {
+    "charities": [
+      {
+        "goal": "",
+        "startDate": "",
+        "endDate": "",
+        "ein": ""
+      }
+    ],
+    "specialFundraisers": [
+      {
+        "goal": "",
+        "startDate": "",
+        "endDate": "",
+        "name": "",
+        "description": ""
+      }
+    ]
+  }
 }

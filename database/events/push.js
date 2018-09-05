@@ -13,6 +13,9 @@ const source = `${__dirname}/index.json`;
 // Grab the events
 const events = jsonfile.readFileSync(source);
 
+// Grab the current env
+const env = process.env.__DEV__ ? 'dev' : 'prod';
+
 // Add a new charity event to the db
 const createCharity = async ({
   endDate, goal, startDate, ein,
@@ -71,7 +74,7 @@ const reset = () => {
 const push = async (path, check, create) => {
   const pushed = [];
   // Loop through each of the events to add
-  each(events[path], (data, done) => {
+  each(events[env][path], (data, done) => {
     // Ensure an actual value exists, not an empty one
     if (data[check] != '') {
       // Add the event to the db

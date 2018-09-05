@@ -34,6 +34,7 @@
     "no-shadow": [0],
     "no-underscore-dangle": [0],
     "no-useless-escape": [0],
+    "object-curly-newline": [0],
     "prefer-destructuring": [2],
     "prefer-rest-params": [0],
     "prefer-spread": [0],

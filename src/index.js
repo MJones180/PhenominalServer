@@ -1,7 +1,3 @@
-const { env } = require('minimist')(process.argv.slice(2));
-require('dotenv').config({ path: `${process.cwd()}/.env.shared` });
-if (env == 'dev') require('dotenv').config({ path: `${process.cwd()}/.env.dev` });
-if (env == 'prod') require('dotenv').config({ path: `${process.cwd()}/.env.prod` });
 const { GraphQLServer } = require('graphql-yoga');
 const { formatError } = require('apollo-errors');
 const prisma = require('../prismaStart');
@@ -45,10 +41,14 @@ const options = {
   formatError,
 };
 
-if (env == 'prod') options.playground = false;
+// Check if in production
+const { __PROD__ } = process.env;
 
-if (env == 'prod') {
-  server.start(options, () => console.log('Server is running on http://localhost:4000'));
-} else {
-  server.start(options, () => console.log('Server is running on https://server.phenominal.fund'));
-}
+// Hide the playground in production
+if (__PROD__) options.playground = false;
+
+// Server's URL
+const serverURL = __PROD__ ? 'https://server.phenominal.fund' : 'http://localhost:4000';
+
+// Start the server
+server.start(options, () => console.log(`Server is running on ${serverURL}`));
