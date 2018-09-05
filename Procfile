@@ -1,1 +1,1 @@
-web: node ./src/index.js --env=prod
+web: node run --script=start --env=prod
