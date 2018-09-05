@@ -40,6 +40,7 @@
     "npm-run-all": "4.1.2"
   },
   "scripts": {
+    "deploy": "prisma deploy --env-file .env.dev",
     "deployProd": "prisma deploy --env-file .env.prod",
     "playground": "graphql playground",
     "pushEvents": "node run --script=pushEvents",
