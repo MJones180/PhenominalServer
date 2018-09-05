@@ -1,0 +1,19 @@
+{
+  "charities": [
+    {
+      "goal": "",
+      "startDate": "",
+      "endDate": "",
+      "ein": ""
+    }
+  ],
+  "specialFundraisers": [
+    {
+      "goal": "",
+      "startDate": "",
+      "endDate": "",
+      "name": "",
+      "description": ""
+    }
+  ]
+}

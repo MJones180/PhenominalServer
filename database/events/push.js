@@ -7,14 +7,14 @@ const prisma = require('../../prismaStart');
 // Initalize a prisma connection
 const { mutation } = prisma(false);
 
+// Grab the current env
+const env = process.env.__DEV__ ? 'dev' : 'prod';
+
 // The source file
-const source = `${__dirname}/index.json`;
+const source = `${__dirname}/${env}.json`;
 
 // Grab the events
 const events = jsonfile.readFileSync(source);
-
-// Grab the current env
-const env = process.env.__DEV__ ? 'dev' : 'prod';
 
 // Add a new charity event to the db
 const createCharity = async ({
@@ -74,7 +74,7 @@ const reset = () => {
 const push = async (path, check, create) => {
   const pushed = [];
   // Loop through each of the events to add
-  each(events[env][path], (data, done) => {
+  each(events[path], (data, done) => {
     // Ensure an actual value exists, not an empty one
     if (data[check] != '') {
       // Add the event to the db

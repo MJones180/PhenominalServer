@@ -8,43 +8,22 @@
     "description": "String: Description of special fundraiser"
   },
   "template": {
-    "dev": {
-      "charities": [
-        {
-          "goal": "",
-          "startDate": "",
-          "endDate": "",
-          "ein": ""
-        }
-      ],
-      "specialFundraisers": [
-        {
-          "goal": "",
-          "startDate": "",
-          "endDate": "",
-          "name": "",
-          "description": ""
-        }
-      ]
-    },
-    "prod": {
-      "charities": [
-        {
-          "goal": "",
-          "startDate": "",
-          "endDate": "",
-          "ein": ""
-        }
-      ],
-      "specialFundraisers": [
-        {
-          "goal": "",
-          "startDate": "",
-          "endDate": "",
-          "name": "",
-          "description": ""
-        }
-      ]
-    }
+    "charities": [
+      {
+        "goal": "",
+        "startDate": "",
+        "endDate": "",
+        "ein": ""
+      }
+    ],
+    "specialFundraisers": [
+      {
+        "goal": "",
+        "startDate": "",
+        "endDate": "",
+        "name": "",
+        "description": ""
+      }
+    ]
   }
 }
