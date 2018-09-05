@@ -5,7 +5,7 @@ const includes = require('lodash/includes');
 const isEqual = require('lodash/isEqual');
 const keyBy = require('lodash/keyBy');
 const keys = require('lodash/keys');
-const jsonfile = require('./index.json');
+const jsonfile = require('jsonfile');
 const prisma = require('../../prismaStart');
 
 // Initalize a prisma connection
@@ -93,6 +93,9 @@ const sync = async () => {
     log('Updated:', updated);
   });
 };
+
+// Print the current env
+console.log('\nENV: ', process.env.__DEV__ ? 'dev' : 'prod');
 
 // Sync the database to the index.json
 sync();

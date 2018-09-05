@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const each = require('async/each');
 const forEach = require('lodash/forEach');
-const jsonfile = require('./index.json');
+const jsonfile = require('jsonfile');
 const prisma = require('../../prismaStart');
 
 // Initalize a prisma connection
