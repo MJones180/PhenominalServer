@@ -33,7 +33,6 @@ module.exports = async (parent, { forEvent, forUser }, ctx) => {
   }
 
   return {
-    count: 0,
     total: 0,
   };
 };
