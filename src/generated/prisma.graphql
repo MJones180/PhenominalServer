@@ -1,5 +1,5 @@
-# source: https://phenominal-production-prisma.herokuapp.com/phenominal/prod
-# timestamp: Tue Sep 11 2018 17:16:30 GMT-0400 (Eastern Daylight Time)
+# source: https://us1.prisma.sh/michael-jones/phenominal/dev
+# timestamp: Wed Sep 12 2018 18:13:29 GMT-0400 (Eastern Daylight Time)
 
 type AggregateCharity {
   count: Int!
@@ -943,6 +943,13 @@ input EventUpdateManyWithoutCharityInput {
   upsert: [EventUpsertWithWhereUniqueWithoutCharityInput!]
 }
 
+input EventUpdateOneRequiredWithoutSpecialFundraiserInput {
+  create: EventCreateWithoutSpecialFundraiserInput
+  connect: EventWhereUniqueInput
+  update: EventUpdateWithoutSpecialFundraiserDataInput
+  upsert: EventUpsertWithoutSpecialFundraiserInput
+}
+
 input EventUpdateOneWithoutDonationsInput {
   create: EventCreateWithoutDonationsInput
   connect: EventWhereUniqueInput
@@ -950,14 +957,6 @@ input EventUpdateOneWithoutDonationsInput {
   delete: Boolean
   update: EventUpdateWithoutDonationsDataInput
   upsert: EventUpsertWithoutDonationsInput
-}
-
-input EventUpdateOneWithoutSpecialFundraiserInput {
-  create: EventCreateWithoutSpecialFundraiserInput
-  connect: EventWhereUniqueInput
-  delete: Boolean
-  update: EventUpdateWithoutSpecialFundraiserDataInput
-  upsert: EventUpsertWithoutSpecialFundraiserInput
 }
 
 input EventUpdateWithoutCharityDataInput {
@@ -1398,13 +1397,12 @@ input IdentitySubscriptionWhereInput {
 input IdentityUpdateInput {
   provider: IdentityProvider
   providerID: String
-  user: UserUpdateOneWithoutIdentityInput
+  user: UserUpdateOneRequiredWithoutIdentityInput
 }
 
-input IdentityUpdateOneWithoutUserInput {
+input IdentityUpdateOneRequiredWithoutUserInput {
   create: IdentityCreateWithoutUserInput
   connect: IdentityWhereUniqueInput
-  delete: Boolean
   update: IdentityUpdateWithoutUserDataInput
   upsert: IdentityUpsertWithoutUserInput
 }
@@ -1748,13 +1746,12 @@ input PreferencesSubscriptionWhereInput {
 
 input PreferencesUpdateInput {
   allowDonationEmails: Boolean
-  user: UserUpdateOneWithoutPreferencesInput
+  user: UserUpdateOneRequiredWithoutPreferencesInput
 }
 
-input PreferencesUpdateOneWithoutUserInput {
+input PreferencesUpdateOneRequiredWithoutUserInput {
   create: PreferencesCreateWithoutUserInput
   connect: PreferencesWhereUniqueInput
-  delete: Boolean
   update: PreferencesUpdateWithoutUserDataInput
   upsert: PreferencesUpsertWithoutUserInput
 }
@@ -2009,7 +2006,7 @@ input SpecialFundraiserSubscriptionWhereInput {
 input SpecialFundraiserUpdateInput {
   description: String
   name: String
-  event: EventUpdateOneWithoutSpecialFundraiserInput
+  event: EventUpdateOneRequiredWithoutSpecialFundraiserInput
 }
 
 input SpecialFundraiserUpdateOneWithoutEventInput {
@@ -2364,7 +2361,7 @@ input TransactionUpdateInput {
   stripeID: String
   type: TransactionType
   event: EventUpdateOneWithoutDonationsInput
-  user: UserUpdateOneWithoutTransactionsInput
+  user: UserUpdateOneRequiredWithoutTransactionsInput
 }
 
 input TransactionUpdateManyWithoutEventInput {
@@ -2390,7 +2387,7 @@ input TransactionUpdateWithoutEventDataInput {
   balance: Int
   stripeID: String
   type: TransactionType
-  user: UserUpdateOneWithoutTransactionsInput
+  user: UserUpdateOneRequiredWithoutTransactionsInput
 }
 
 input TransactionUpdateWithoutUserDataInput {
@@ -2773,31 +2770,28 @@ input UserUpdateInput {
   nameFirst: String
   nameLast: String
   securityToken: Int
-  identity: IdentityUpdateOneWithoutUserInput
-  preferences: PreferencesUpdateOneWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
 
-input UserUpdateOneWithoutIdentityInput {
+input UserUpdateOneRequiredWithoutIdentityInput {
   create: UserCreateWithoutIdentityInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutIdentityDataInput
   upsert: UserUpsertWithoutIdentityInput
 }
 
-input UserUpdateOneWithoutPreferencesInput {
+input UserUpdateOneRequiredWithoutPreferencesInput {
   create: UserCreateWithoutPreferencesInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutPreferencesDataInput
   upsert: UserUpsertWithoutPreferencesInput
 }
 
-input UserUpdateOneWithoutTransactionsInput {
+input UserUpdateOneRequiredWithoutTransactionsInput {
   create: UserCreateWithoutTransactionsInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutTransactionsDataInput
   upsert: UserUpsertWithoutTransactionsInput
 }
@@ -2807,7 +2801,7 @@ input UserUpdateWithoutIdentityDataInput {
   nameFirst: String
   nameLast: String
   securityToken: Int
-  preferences: PreferencesUpdateOneWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
 
@@ -2816,7 +2810,7 @@ input UserUpdateWithoutPreferencesDataInput {
   nameFirst: String
   nameLast: String
   securityToken: Int
-  identity: IdentityUpdateOneWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
 
@@ -2825,8 +2819,8 @@ input UserUpdateWithoutTransactionsDataInput {
   nameFirst: String
   nameLast: String
   securityToken: Int
-  identity: IdentityUpdateOneWithoutUserInput
-  preferences: PreferencesUpdateOneWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
 }
 
 input UserUpsertWithoutIdentityInput {
