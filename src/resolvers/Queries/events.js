@@ -22,7 +22,7 @@ const merge = (args, type) => {
   };
 };
 
-const current = and(
+const current = () => and(
   // Start <= Date
   { startDate_lte: getDate() },
   // End > Date
@@ -30,16 +30,16 @@ const current = and(
 );
 
 // End < Date
-const past = { endDate_lt: getDate() };
+const past = () => ({ endDate_lt: getDate() });
 
 // Start > Date
-const upcoming = { startDate_gt: getDate() };
+const upcoming = () => ({ startDate_gt: getDate() });
 
 // Grab the event data for the correct time period
 const wrapper = async (parent, args, ctx, info, period) => ctx.db.query.events(merge(args, period), info);
 
 module.exports = {
-  eventsCurrent: async (...props) => wrapper(...props, current),
-  eventsPast: async (...props) => wrapper(...props, past),
-  eventsUpcoming: async (...props) => wrapper(...props, upcoming),
+  eventsCurrent: async (...props) => wrapper(...props, current()),
+  eventsPast: async (...props) => wrapper(...props, past()),
+  eventsUpcoming: async (...props) => wrapper(...props, upcoming()),
 };
