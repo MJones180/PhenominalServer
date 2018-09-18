@@ -1,6 +1,4 @@
-const date = new Date().toISOString();
-
-console.log(`\n\n\n====================\nCurrent Date: ${date}\n\n\n\n\n`);
+const getDate = () => new Date().toISOString();
 
 // Return an AND conditional
 const and = (arg1, arg2) => ({ AND: [arg1, arg2] });
@@ -26,16 +24,16 @@ const merge = (args, type) => {
 
 const current = and(
   // Start <= Date
-  { startDate_lte: date },
+  { startDate_lte: getDate() },
   // End > Date
-  { endDate_gt: date }
+  { endDate_gt: getDate() }
 );
 
 // End < Date
-const past = { endDate_lt: date };
+const past = { endDate_lt: getDate() };
 
 // Start > Date
-const upcoming = { startDate_gt: date };
+const upcoming = { startDate_gt: getDate() };
 
 // Grab the event data for the correct time period
 const wrapper = async (parent, args, ctx, info, period) => ctx.db.query.events(merge(args, period), info);
