@@ -1,5 +1,7 @@
 const date = new Date().toISOString();
 
+console.log(`\n\n\n====================\nCurrent Date: ${date}\n\n\n\n\n`);
+
 // Return an AND conditional
 const and = (arg1, arg2) => ({ AND: [arg1, arg2] });
 
