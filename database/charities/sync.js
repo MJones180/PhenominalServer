@@ -25,6 +25,7 @@ const grabPushed = async () => {
       expensesFundraising
       expensesOther
       expensesProgram
+      expensesUpdated
       location
       mission
       name

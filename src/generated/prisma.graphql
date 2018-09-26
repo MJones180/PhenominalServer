@@ -1,5 +1,5 @@
-# source: https://us1.prisma.sh/michael-jones/phenominal/dev
-# timestamp: Wed Sep 12 2018 18:13:29 GMT-0400 (Eastern Daylight Time)
+# source: https://phenominal-production-prisma.herokuapp.com/phenominal/prod
+# timestamp: Tue Sep 25 2018 20:15:44 GMT-0400 (Eastern Daylight Time)
 
 type AggregateCharity {
   count: Int!
@@ -45,6 +45,7 @@ type Charity implements Node {
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
+  expensesUpdated: String
   location: String!
   mission: String!
   name: String!
@@ -71,6 +72,7 @@ input CharityCreateInput {
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
+  expensesUpdated: String
   location: String!
   mission: String!
   name: String!
@@ -92,6 +94,7 @@ input CharityCreateWithoutEventsInput {
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
+  expensesUpdated: String
   location: String!
   mission: String!
   name: String!
@@ -129,6 +132,8 @@ enum CharityOrderByInput {
   expensesOther_DESC
   expensesProgram_ASC
   expensesProgram_DESC
+  expensesUpdated_ASC
+  expensesUpdated_DESC
   location_ASC
   location_DESC
   mission_ASC
@@ -152,6 +157,7 @@ type CharityPreviousValues {
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
+  expensesUpdated: String
   location: String!
   mission: String!
   name: String!
@@ -206,6 +212,7 @@ input CharityUpdateInput {
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
+  expensesUpdated: String
   location: String
   mission: String
   name: String
@@ -231,6 +238,7 @@ input CharityUpdateWithoutEventsDataInput {
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
+  expensesUpdated: String
   location: String
   mission: String
   name: String
@@ -544,6 +552,46 @@ input CharityWhereInput {
 
   """All values greater than or equal the given value."""
   expensesProgram_gte: Float
+  expensesUpdated: String
+
+  """All values that are not equal to given value."""
+  expensesUpdated_not: String
+
+  """All values that are contained in given list."""
+  expensesUpdated_in: [String!]
+
+  """All values that are not contained in given list."""
+  expensesUpdated_not_in: [String!]
+
+  """All values less than the given value."""
+  expensesUpdated_lt: String
+
+  """All values less than or equal the given value."""
+  expensesUpdated_lte: String
+
+  """All values greater than the given value."""
+  expensesUpdated_gt: String
+
+  """All values greater than or equal the given value."""
+  expensesUpdated_gte: String
+
+  """All values containing the given string."""
+  expensesUpdated_contains: String
+
+  """All values not containing the given string."""
+  expensesUpdated_not_contains: String
+
+  """All values starting with the given string."""
+  expensesUpdated_starts_with: String
+
+  """All values not starting with the given string."""
+  expensesUpdated_not_starts_with: String
+
+  """All values ending with the given string."""
+  expensesUpdated_ends_with: String
+
+  """All values not ending with the given string."""
+  expensesUpdated_not_ends_with: String
   location: String
 
   """All values that are not equal to given value."""
@@ -943,13 +991,6 @@ input EventUpdateManyWithoutCharityInput {
   upsert: [EventUpsertWithWhereUniqueWithoutCharityInput!]
 }
 
-input EventUpdateOneRequiredWithoutSpecialFundraiserInput {
-  create: EventCreateWithoutSpecialFundraiserInput
-  connect: EventWhereUniqueInput
-  update: EventUpdateWithoutSpecialFundraiserDataInput
-  upsert: EventUpsertWithoutSpecialFundraiserInput
-}
-
 input EventUpdateOneWithoutDonationsInput {
   create: EventCreateWithoutDonationsInput
   connect: EventWhereUniqueInput
@@ -957,6 +998,14 @@ input EventUpdateOneWithoutDonationsInput {
   delete: Boolean
   update: EventUpdateWithoutDonationsDataInput
   upsert: EventUpsertWithoutDonationsInput
+}
+
+input EventUpdateOneWithoutSpecialFundraiserInput {
+  create: EventCreateWithoutSpecialFundraiserInput
+  connect: EventWhereUniqueInput
+  delete: Boolean
+  update: EventUpdateWithoutSpecialFundraiserDataInput
+  upsert: EventUpsertWithoutSpecialFundraiserInput
 }
 
 input EventUpdateWithoutCharityDataInput {
@@ -1397,12 +1446,13 @@ input IdentitySubscriptionWhereInput {
 input IdentityUpdateInput {
   provider: IdentityProvider
   providerID: String
-  user: UserUpdateOneRequiredWithoutIdentityInput
+  user: UserUpdateOneWithoutIdentityInput
 }
 
-input IdentityUpdateOneRequiredWithoutUserInput {
+input IdentityUpdateOneWithoutUserInput {
   create: IdentityCreateWithoutUserInput
   connect: IdentityWhereUniqueInput
+  delete: Boolean
   update: IdentityUpdateWithoutUserDataInput
   upsert: IdentityUpsertWithoutUserInput
 }
@@ -1746,12 +1796,13 @@ input PreferencesSubscriptionWhereInput {
 
 input PreferencesUpdateInput {
   allowDonationEmails: Boolean
-  user: UserUpdateOneRequiredWithoutPreferencesInput
+  user: UserUpdateOneWithoutPreferencesInput
 }
 
-input PreferencesUpdateOneRequiredWithoutUserInput {
+input PreferencesUpdateOneWithoutUserInput {
   create: PreferencesCreateWithoutUserInput
   connect: PreferencesWhereUniqueInput
+  delete: Boolean
   update: PreferencesUpdateWithoutUserDataInput
   upsert: PreferencesUpsertWithoutUserInput
 }
@@ -2006,7 +2057,7 @@ input SpecialFundraiserSubscriptionWhereInput {
 input SpecialFundraiserUpdateInput {
   description: String
   name: String
-  event: EventUpdateOneRequiredWithoutSpecialFundraiserInput
+  event: EventUpdateOneWithoutSpecialFundraiserInput
 }
 
 input SpecialFundraiserUpdateOneWithoutEventInput {
@@ -2361,7 +2412,7 @@ input TransactionUpdateInput {
   stripeID: String
   type: TransactionType
   event: EventUpdateOneWithoutDonationsInput
-  user: UserUpdateOneRequiredWithoutTransactionsInput
+  user: UserUpdateOneWithoutTransactionsInput
 }
 
 input TransactionUpdateManyWithoutEventInput {
@@ -2387,7 +2438,7 @@ input TransactionUpdateWithoutEventDataInput {
   balance: Int
   stripeID: String
   type: TransactionType
-  user: UserUpdateOneRequiredWithoutTransactionsInput
+  user: UserUpdateOneWithoutTransactionsInput
 }
 
 input TransactionUpdateWithoutUserDataInput {
@@ -2770,28 +2821,31 @@ input UserUpdateInput {
   nameFirst: String
   nameLast: String
   securityToken: Int
-  identity: IdentityUpdateOneRequiredWithoutUserInput
-  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+  identity: IdentityUpdateOneWithoutUserInput
+  preferences: PreferencesUpdateOneWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
 
-input UserUpdateOneRequiredWithoutIdentityInput {
+input UserUpdateOneWithoutIdentityInput {
   create: UserCreateWithoutIdentityInput
   connect: UserWhereUniqueInput
+  delete: Boolean
   update: UserUpdateWithoutIdentityDataInput
   upsert: UserUpsertWithoutIdentityInput
 }
 
-input UserUpdateOneRequiredWithoutPreferencesInput {
+input UserUpdateOneWithoutPreferencesInput {
   create: UserCreateWithoutPreferencesInput
   connect: UserWhereUniqueInput
+  delete: Boolean
   update: UserUpdateWithoutPreferencesDataInput
   upsert: UserUpsertWithoutPreferencesInput
 }
 
-input UserUpdateOneRequiredWithoutTransactionsInput {
+input UserUpdateOneWithoutTransactionsInput {
   create: UserCreateWithoutTransactionsInput
   connect: UserWhereUniqueInput
+  delete: Boolean
   update: UserUpdateWithoutTransactionsDataInput
   upsert: UserUpsertWithoutTransactionsInput
 }
@@ -2801,7 +2855,7 @@ input UserUpdateWithoutIdentityDataInput {
   nameFirst: String
   nameLast: String
   securityToken: Int
-  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+  preferences: PreferencesUpdateOneWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
 
@@ -2810,7 +2864,7 @@ input UserUpdateWithoutPreferencesDataInput {
   nameFirst: String
   nameLast: String
   securityToken: Int
-  identity: IdentityUpdateOneRequiredWithoutUserInput
+  identity: IdentityUpdateOneWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
 
@@ -2819,8 +2873,8 @@ input UserUpdateWithoutTransactionsDataInput {
   nameFirst: String
   nameLast: String
   securityToken: Int
-  identity: IdentityUpdateOneRequiredWithoutUserInput
-  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+  identity: IdentityUpdateOneWithoutUserInput
+  preferences: PreferencesUpdateOneWithoutUserInput
 }
 
 input UserUpsertWithoutIdentityInput {

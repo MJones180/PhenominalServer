@@ -47,6 +47,7 @@ type Charity {
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
+  expensesUpdated: String
   location: String!
   mission: String!
   name: String!
