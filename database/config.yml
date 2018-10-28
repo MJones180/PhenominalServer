@@ -1,0 +1,10 @@
+managementApiSecret: riW3g7hqHOKXEeIBf1hKlO54dZS5jj
+port: 8080
+databases:
+  default:
+    connector: postgres
+    migrations: true
+    host: 35.237.106.35
+    port: 5432
+    user: postgres
+    password: lMgFrfMjbsqr3P4y

@@ -1,5 +1,5 @@
-# source: https://phenominal-production-prisma.herokuapp.com/phenominal/prod
-# timestamp: Tue Sep 25 2018 20:15:44 GMT-0400 (Eastern Daylight Time)
+# source: https://us1.prisma.sh/michael-jones/phenominal/dev
+# timestamp: Sat Oct 27 2018 20:57:30 GMT-0400 (Eastern Daylight Time)
 
 type AggregateCharity {
   count: Int!
@@ -219,6 +219,22 @@ input CharityUpdateInput {
   phoneNumber: String
   website: String
   events: EventUpdateManyWithoutCharityInput
+}
+
+input CharityUpdateManyInput {
+  acronym: String
+  bannerCredit: String
+  ein: String
+  expensesAdministrative: Float
+  expensesFundraising: Float
+  expensesOther: Float
+  expensesProgram: Float
+  expensesUpdated: String
+  location: String
+  mission: String
+  name: String
+  phoneNumber: String
+  website: String
 }
 
 input CharityUpdateOneWithoutEventsInput {
@@ -814,8 +830,8 @@ type Event implements Node {
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime!
-  charity(where: CharityWhereInput): Charity
-  specialFundraiser(where: SpecialFundraiserWhereInput): SpecialFundraiser
+  charity: Charity
+  specialFundraiser: SpecialFundraiser
   donations(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction!]
 }
 
@@ -982,6 +998,15 @@ input EventUpdateInput {
   donations: TransactionUpdateManyWithoutEventInput
 }
 
+input EventUpdateManyInput {
+  endDate: DateTime
+  goal: Int
+  multiplier: Int
+  sponsorName: String
+  sponsorWebsite: String
+  startDate: DateTime
+}
+
 input EventUpdateManyWithoutCharityInput {
   create: [EventCreateWithoutCharityInput!]
   connect: [EventWhereUniqueInput!]
@@ -991,6 +1016,13 @@ input EventUpdateManyWithoutCharityInput {
   upsert: [EventUpsertWithWhereUniqueWithoutCharityInput!]
 }
 
+input EventUpdateOneRequiredWithoutSpecialFundraiserInput {
+  create: EventCreateWithoutSpecialFundraiserInput
+  connect: EventWhereUniqueInput
+  update: EventUpdateWithoutSpecialFundraiserDataInput
+  upsert: EventUpsertWithoutSpecialFundraiserInput
+}
+
 input EventUpdateOneWithoutDonationsInput {
   create: EventCreateWithoutDonationsInput
   connect: EventWhereUniqueInput
@@ -998,14 +1030,6 @@ input EventUpdateOneWithoutDonationsInput {
   delete: Boolean
   update: EventUpdateWithoutDonationsDataInput
   upsert: EventUpsertWithoutDonationsInput
-}
-
-input EventUpdateOneWithoutSpecialFundraiserInput {
-  create: EventCreateWithoutSpecialFundraiserInput
-  connect: EventWhereUniqueInput
-  delete: Boolean
-  update: EventUpdateWithoutSpecialFundraiserDataInput
-  upsert: EventUpsertWithoutSpecialFundraiserInput
 }
 
 input EventUpdateWithoutCharityDataInput {
@@ -1340,7 +1364,7 @@ type Identity implements Node {
   updatedAt: DateTime!
   provider: IdentityProvider!
   providerID: String!
-  user(where: UserWhereInput): User!
+  user: User!
 }
 
 """A connection to a list of items."""
@@ -1446,13 +1470,17 @@ input IdentitySubscriptionWhereInput {
 input IdentityUpdateInput {
   provider: IdentityProvider
   providerID: String
-  user: UserUpdateOneWithoutIdentityInput
+  user: UserUpdateOneRequiredWithoutIdentityInput
 }
 
-input IdentityUpdateOneWithoutUserInput {
+input IdentityUpdateManyInput {
+  provider: IdentityProvider
+  providerID: String
+}
+
+input IdentityUpdateOneRequiredWithoutUserInput {
   create: IdentityCreateWithoutUserInput
   connect: IdentityWhereUniqueInput
-  delete: Boolean
   update: IdentityUpdateWithoutUserDataInput
   upsert: IdentityUpsertWithoutUserInput
 }
@@ -1653,13 +1681,13 @@ type Mutation {
   upsertSpecialFundraiser(where: SpecialFundraiserWhereUniqueInput!, create: SpecialFundraiserCreateInput!, update: SpecialFundraiserUpdateInput!): SpecialFundraiser!
   upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
   upsertTransaction(where: TransactionWhereUniqueInput!, create: TransactionCreateInput!, update: TransactionUpdateInput!): Transaction!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyIdentities(data: IdentityUpdateInput!, where: IdentityWhereInput): BatchPayload!
-  updateManyPreferenceses(data: PreferencesUpdateInput!, where: PreferencesWhereInput): BatchPayload!
-  updateManyCharities(data: CharityUpdateInput!, where: CharityWhereInput): BatchPayload!
-  updateManySpecialFundraisers(data: SpecialFundraiserUpdateInput!, where: SpecialFundraiserWhereInput): BatchPayload!
-  updateManyEvents(data: EventUpdateInput!, where: EventWhereInput): BatchPayload!
-  updateManyTransactions(data: TransactionUpdateInput!, where: TransactionWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyInput!, where: UserWhereInput): BatchPayload!
+  updateManyIdentities(data: IdentityUpdateManyInput!, where: IdentityWhereInput): BatchPayload!
+  updateManyPreferenceses(data: PreferencesUpdateManyInput!, where: PreferencesWhereInput): BatchPayload!
+  updateManyCharities(data: CharityUpdateManyInput!, where: CharityWhereInput): BatchPayload!
+  updateManySpecialFundraisers(data: SpecialFundraiserUpdateManyInput!, where: SpecialFundraiserWhereInput): BatchPayload!
+  updateManyEvents(data: EventUpdateManyInput!, where: EventWhereInput): BatchPayload!
+  updateManyTransactions(data: TransactionUpdateManyInput!, where: TransactionWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyIdentities(where: IdentityWhereInput): BatchPayload!
   deleteManyPreferenceses(where: PreferencesWhereInput): BatchPayload!
@@ -1701,7 +1729,7 @@ type Preferences implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   allowDonationEmails: Boolean!
-  user(where: UserWhereInput): User!
+  user: User!
 }
 
 """A connection to a list of items."""
@@ -1796,13 +1824,16 @@ input PreferencesSubscriptionWhereInput {
 
 input PreferencesUpdateInput {
   allowDonationEmails: Boolean
-  user: UserUpdateOneWithoutPreferencesInput
+  user: UserUpdateOneRequiredWithoutPreferencesInput
 }
 
-input PreferencesUpdateOneWithoutUserInput {
+input PreferencesUpdateManyInput {
+  allowDonationEmails: Boolean
+}
+
+input PreferencesUpdateOneRequiredWithoutUserInput {
   create: PreferencesCreateWithoutUserInput
   connect: PreferencesWhereUniqueInput
-  delete: Boolean
   update: PreferencesUpdateWithoutUserDataInput
   upsert: PreferencesUpsertWithoutUserInput
 }
@@ -1956,7 +1987,7 @@ type SpecialFundraiser implements Node {
   updatedAt: DateTime!
   description: String!
   name: String!
-  event(where: EventWhereInput): Event!
+  event: Event!
 }
 
 """A connection to a list of items."""
@@ -2057,7 +2088,12 @@ input SpecialFundraiserSubscriptionWhereInput {
 input SpecialFundraiserUpdateInput {
   description: String
   name: String
-  event: EventUpdateOneWithoutSpecialFundraiserInput
+  event: EventUpdateOneRequiredWithoutSpecialFundraiserInput
+}
+
+input SpecialFundraiserUpdateManyInput {
+  description: String
+  name: String
 }
 
 input SpecialFundraiserUpdateOneWithoutEventInput {
@@ -2277,8 +2313,8 @@ type Transaction implements Node {
   balance: Int!
   stripeID: String
   type: TransactionType!
-  event(where: EventWhereInput): Event
-  user(where: UserWhereInput): User!
+  event: Event
+  user: User!
 }
 
 """A connection to a list of items."""
@@ -2412,7 +2448,14 @@ input TransactionUpdateInput {
   stripeID: String
   type: TransactionType
   event: EventUpdateOneWithoutDonationsInput
-  user: UserUpdateOneWithoutTransactionsInput
+  user: UserUpdateOneRequiredWithoutTransactionsInput
+}
+
+input TransactionUpdateManyInput {
+  amount: Int
+  balance: Int
+  stripeID: String
+  type: TransactionType
 }
 
 input TransactionUpdateManyWithoutEventInput {
@@ -2438,7 +2481,7 @@ input TransactionUpdateWithoutEventDataInput {
   balance: Int
   stripeID: String
   type: TransactionType
-  user: UserUpdateOneWithoutTransactionsInput
+  user: UserUpdateOneRequiredWithoutTransactionsInput
 }
 
 input TransactionUpdateWithoutUserDataInput {
@@ -2674,8 +2717,8 @@ type User implements Node {
   nameFirst: String!
   nameLast: String!
   securityToken: Int!
-  identity(where: IdentityWhereInput): Identity!
-  preferences(where: PreferencesWhereInput): Preferences!
+  identity: Identity!
+  preferences: Preferences!
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction!]
 }
 
@@ -2821,31 +2864,35 @@ input UserUpdateInput {
   nameFirst: String
   nameLast: String
   securityToken: Int
-  identity: IdentityUpdateOneWithoutUserInput
-  preferences: PreferencesUpdateOneWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
 
-input UserUpdateOneWithoutIdentityInput {
+input UserUpdateManyInput {
+  email: String
+  nameFirst: String
+  nameLast: String
+  securityToken: Int
+}
+
+input UserUpdateOneRequiredWithoutIdentityInput {
   create: UserCreateWithoutIdentityInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutIdentityDataInput
   upsert: UserUpsertWithoutIdentityInput
 }
 
-input UserUpdateOneWithoutPreferencesInput {
+input UserUpdateOneRequiredWithoutPreferencesInput {
   create: UserCreateWithoutPreferencesInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutPreferencesDataInput
   upsert: UserUpsertWithoutPreferencesInput
 }
 
-input UserUpdateOneWithoutTransactionsInput {
+input UserUpdateOneRequiredWithoutTransactionsInput {
   create: UserCreateWithoutTransactionsInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutTransactionsDataInput
   upsert: UserUpsertWithoutTransactionsInput
 }
@@ -2855,7 +2902,7 @@ input UserUpdateWithoutIdentityDataInput {
   nameFirst: String
   nameLast: String
   securityToken: Int
-  preferences: PreferencesUpdateOneWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
 
@@ -2864,7 +2911,7 @@ input UserUpdateWithoutPreferencesDataInput {
   nameFirst: String
   nameLast: String
   securityToken: Int
-  identity: IdentityUpdateOneWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
 
@@ -2873,8 +2920,8 @@ input UserUpdateWithoutTransactionsDataInput {
   nameFirst: String
   nameLast: String
   securityToken: Int
-  identity: IdentityUpdateOneWithoutUserInput
-  preferences: PreferencesUpdateOneWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
 }
 
 input UserUpsertWithoutIdentityInput {
