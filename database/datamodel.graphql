@@ -3,16 +3,43 @@ type User {
   createdAt: DateTime!
   updatedAt: DateTime!
 
+  bio: String
   email: String!
   nameFirst: String!
   nameLast: String!
+  picture: String
   securityToken: Int!
+  username: String! @unique
 
+  circles: [Circles!]!
+  dots: [Dots!]! @relation(name: "UserDots", onDelete: CASCADE)
+  followedCharities: [Charity!]!
+  halos: [Halos!]! @relation(name: "UserHalos", onDelete: CASCADE)
   identity: Identity! @relation(name: "UserIdentity", onDelete: CASCADE)
+  loops: [Loops!]! @relation(name: "UserLoops", onDelete: CASCADE)
   preferences: Preferences! @relation(name: "UserPreferences", onDelete: CASCADE)
   transactions: [Transaction!]!
 }
 
+type Dots {
+  id: ID! @unique
+  createdAt: DateTime!
+
+  action: String!
+  amount: Int!
+  total: Int!
+
+  user: User! @relation(name: "UserDots")
+}
+
+type Halos {
+  id: ID! @unique
+  createdAt: DateTime!
+
+  key: String!
+
+  user: User! @relation(name: "UserHalos")
+}
 
 type Identity {
   id: ID! @unique
@@ -22,7 +49,17 @@ type Identity {
   provider: IdentityProvider!
   providerID: String! @unique
 
-  user: User! @relation(name: "UserIdentity", onDelete: SET_NULL)
+  user: User! @relation(name: "UserIdentity")
+}
+
+type Loops {
+  id: ID! @unique
+  createdAt: DateTime!
+
+  count: Int!
+
+  event: Event!
+  user: User! @relation(name: "UserLoops")
 }
 
 type Preferences {
@@ -32,7 +69,18 @@ type Preferences {
 
   allowDonationEmails: Boolean! @default(value: "true")
 
-  user: User! @relation(name: "UserPreferences", onDelete: SET_NULL)
+  user: User! @relation(name: "UserPreferences")
+}
+
+type Circles {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  description: String
+  name: String!
+
+  users: [User!]!
 }
 
 type Charity {
@@ -55,6 +103,7 @@ type Charity {
   website: String!
 
   events: [Event!]!
+  followers: [User!]!
 }
 
 type SpecialFundraiser {
@@ -88,7 +137,6 @@ type Event {
 type Transaction {
   id: ID! @unique
   createdAt: DateTime!
-  updatedAt: DateTime!
 
   amount: Int!
   balance: Int!

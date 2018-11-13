@@ -26,6 +26,7 @@ module.exports = async (parent, { provider, token }, ctx) => {
         nameFirst: capitalize(nameFirst),
         nameLast: capitalize(nameLast),
         securityToken: ctx.utils.token.generateSecurity(),
+        username: capitalize(nameFirst) + capitalize(nameLast) + Math.floor(Math.random() * (999 - 1) + 1),
         identity: {
           create: {
             provider: toUpper(provider),
@@ -36,11 +37,11 @@ module.exports = async (parent, { provider, token }, ctx) => {
           create: {},
         },
       },
-    }, '{ email id nameFirst nameLast securityToken }');
+    }, '{ email id nameFirst nameLast securityToken username }');
   };
 
   // Grab the user's info
-  const { email, id, nameFirst, nameLast, securityToken } = await getUser(await getProviderData());
+  const { email, id, nameFirst, nameLast, securityToken, username } = await getUser(await getProviderData());
 
   return {
     // Generate an authToken
@@ -49,5 +50,6 @@ module.exports = async (parent, { provider, token }, ctx) => {
     id,
     nameFirst,
     nameLast,
+    username,
   };
 };

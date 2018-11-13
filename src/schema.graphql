@@ -40,6 +40,7 @@ type signinPayload {
   id: String!
   nameFirst: String
   nameLast: String
+  username: String
 }
 
 type transactionsAggregatePayload {

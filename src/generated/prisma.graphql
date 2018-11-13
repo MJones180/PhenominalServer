@@ -1,7 +1,15 @@
 # source: https://us1.prisma.sh/michael-jones/phenominal/dev
-# timestamp: Sat Oct 27 2018 20:57:30 GMT-0400 (Eastern Daylight Time)
+# timestamp: Mon Nov 12 2018 18:43:47 GMT-0500 (Eastern Standard Time)
 
 type AggregateCharity {
+  count: Int!
+}
+
+type AggregateCircles {
+  count: Int!
+}
+
+type AggregateDots {
   count: Int!
 }
 
@@ -9,7 +17,15 @@ type AggregateEvent {
   count: Int!
 }
 
+type AggregateHalos {
+  count: Int!
+}
+
 type AggregateIdentity {
+  count: Int!
+}
+
+type AggregateLoops {
   count: Int!
 }
 
@@ -52,6 +68,7 @@ type Charity implements Node {
   phoneNumber: String!
   website: String!
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
+  followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
 """A connection to a list of items."""
@@ -79,6 +96,12 @@ input CharityCreateInput {
   phoneNumber: String!
   website: String!
   events: EventCreateManyWithoutCharityInput
+  followers: UserCreateManyWithoutFollowedCharitiesInput
+}
+
+input CharityCreateManyWithoutFollowersInput {
+  create: [CharityCreateWithoutFollowersInput!]
+  connect: [CharityWhereUniqueInput!]
 }
 
 input CharityCreateOneWithoutEventsInput {
@@ -100,6 +123,24 @@ input CharityCreateWithoutEventsInput {
   name: String!
   phoneNumber: String!
   website: String!
+  followers: UserCreateManyWithoutFollowedCharitiesInput
+}
+
+input CharityCreateWithoutFollowersInput {
+  acronym: String
+  bannerCredit: String
+  ein: String!
+  expensesAdministrative: Float
+  expensesFundraising: Float
+  expensesOther: Float
+  expensesProgram: Float
+  expensesUpdated: String
+  location: String!
+  mission: String!
+  name: String!
+  phoneNumber: String!
+  website: String!
+  events: EventCreateManyWithoutCharityInput
 }
 
 """An edge in a connection."""
@@ -165,6 +206,549 @@ type CharityPreviousValues {
   website: String!
 }
 
+input CharityScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CharityScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CharityScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CharityScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  acronym: String
+
+  """All values that are not equal to given value."""
+  acronym_not: String
+
+  """All values that are contained in given list."""
+  acronym_in: [String!]
+
+  """All values that are not contained in given list."""
+  acronym_not_in: [String!]
+
+  """All values less than the given value."""
+  acronym_lt: String
+
+  """All values less than or equal the given value."""
+  acronym_lte: String
+
+  """All values greater than the given value."""
+  acronym_gt: String
+
+  """All values greater than or equal the given value."""
+  acronym_gte: String
+
+  """All values containing the given string."""
+  acronym_contains: String
+
+  """All values not containing the given string."""
+  acronym_not_contains: String
+
+  """All values starting with the given string."""
+  acronym_starts_with: String
+
+  """All values not starting with the given string."""
+  acronym_not_starts_with: String
+
+  """All values ending with the given string."""
+  acronym_ends_with: String
+
+  """All values not ending with the given string."""
+  acronym_not_ends_with: String
+  bannerCredit: String
+
+  """All values that are not equal to given value."""
+  bannerCredit_not: String
+
+  """All values that are contained in given list."""
+  bannerCredit_in: [String!]
+
+  """All values that are not contained in given list."""
+  bannerCredit_not_in: [String!]
+
+  """All values less than the given value."""
+  bannerCredit_lt: String
+
+  """All values less than or equal the given value."""
+  bannerCredit_lte: String
+
+  """All values greater than the given value."""
+  bannerCredit_gt: String
+
+  """All values greater than or equal the given value."""
+  bannerCredit_gte: String
+
+  """All values containing the given string."""
+  bannerCredit_contains: String
+
+  """All values not containing the given string."""
+  bannerCredit_not_contains: String
+
+  """All values starting with the given string."""
+  bannerCredit_starts_with: String
+
+  """All values not starting with the given string."""
+  bannerCredit_not_starts_with: String
+
+  """All values ending with the given string."""
+  bannerCredit_ends_with: String
+
+  """All values not ending with the given string."""
+  bannerCredit_not_ends_with: String
+  ein: String
+
+  """All values that are not equal to given value."""
+  ein_not: String
+
+  """All values that are contained in given list."""
+  ein_in: [String!]
+
+  """All values that are not contained in given list."""
+  ein_not_in: [String!]
+
+  """All values less than the given value."""
+  ein_lt: String
+
+  """All values less than or equal the given value."""
+  ein_lte: String
+
+  """All values greater than the given value."""
+  ein_gt: String
+
+  """All values greater than or equal the given value."""
+  ein_gte: String
+
+  """All values containing the given string."""
+  ein_contains: String
+
+  """All values not containing the given string."""
+  ein_not_contains: String
+
+  """All values starting with the given string."""
+  ein_starts_with: String
+
+  """All values not starting with the given string."""
+  ein_not_starts_with: String
+
+  """All values ending with the given string."""
+  ein_ends_with: String
+
+  """All values not ending with the given string."""
+  ein_not_ends_with: String
+  expensesAdministrative: Float
+
+  """All values that are not equal to given value."""
+  expensesAdministrative_not: Float
+
+  """All values that are contained in given list."""
+  expensesAdministrative_in: [Float!]
+
+  """All values that are not contained in given list."""
+  expensesAdministrative_not_in: [Float!]
+
+  """All values less than the given value."""
+  expensesAdministrative_lt: Float
+
+  """All values less than or equal the given value."""
+  expensesAdministrative_lte: Float
+
+  """All values greater than the given value."""
+  expensesAdministrative_gt: Float
+
+  """All values greater than or equal the given value."""
+  expensesAdministrative_gte: Float
+  expensesFundraising: Float
+
+  """All values that are not equal to given value."""
+  expensesFundraising_not: Float
+
+  """All values that are contained in given list."""
+  expensesFundraising_in: [Float!]
+
+  """All values that are not contained in given list."""
+  expensesFundraising_not_in: [Float!]
+
+  """All values less than the given value."""
+  expensesFundraising_lt: Float
+
+  """All values less than or equal the given value."""
+  expensesFundraising_lte: Float
+
+  """All values greater than the given value."""
+  expensesFundraising_gt: Float
+
+  """All values greater than or equal the given value."""
+  expensesFundraising_gte: Float
+  expensesOther: Float
+
+  """All values that are not equal to given value."""
+  expensesOther_not: Float
+
+  """All values that are contained in given list."""
+  expensesOther_in: [Float!]
+
+  """All values that are not contained in given list."""
+  expensesOther_not_in: [Float!]
+
+  """All values less than the given value."""
+  expensesOther_lt: Float
+
+  """All values less than or equal the given value."""
+  expensesOther_lte: Float
+
+  """All values greater than the given value."""
+  expensesOther_gt: Float
+
+  """All values greater than or equal the given value."""
+  expensesOther_gte: Float
+  expensesProgram: Float
+
+  """All values that are not equal to given value."""
+  expensesProgram_not: Float
+
+  """All values that are contained in given list."""
+  expensesProgram_in: [Float!]
+
+  """All values that are not contained in given list."""
+  expensesProgram_not_in: [Float!]
+
+  """All values less than the given value."""
+  expensesProgram_lt: Float
+
+  """All values less than or equal the given value."""
+  expensesProgram_lte: Float
+
+  """All values greater than the given value."""
+  expensesProgram_gt: Float
+
+  """All values greater than or equal the given value."""
+  expensesProgram_gte: Float
+  expensesUpdated: String
+
+  """All values that are not equal to given value."""
+  expensesUpdated_not: String
+
+  """All values that are contained in given list."""
+  expensesUpdated_in: [String!]
+
+  """All values that are not contained in given list."""
+  expensesUpdated_not_in: [String!]
+
+  """All values less than the given value."""
+  expensesUpdated_lt: String
+
+  """All values less than or equal the given value."""
+  expensesUpdated_lte: String
+
+  """All values greater than the given value."""
+  expensesUpdated_gt: String
+
+  """All values greater than or equal the given value."""
+  expensesUpdated_gte: String
+
+  """All values containing the given string."""
+  expensesUpdated_contains: String
+
+  """All values not containing the given string."""
+  expensesUpdated_not_contains: String
+
+  """All values starting with the given string."""
+  expensesUpdated_starts_with: String
+
+  """All values not starting with the given string."""
+  expensesUpdated_not_starts_with: String
+
+  """All values ending with the given string."""
+  expensesUpdated_ends_with: String
+
+  """All values not ending with the given string."""
+  expensesUpdated_not_ends_with: String
+  location: String
+
+  """All values that are not equal to given value."""
+  location_not: String
+
+  """All values that are contained in given list."""
+  location_in: [String!]
+
+  """All values that are not contained in given list."""
+  location_not_in: [String!]
+
+  """All values less than the given value."""
+  location_lt: String
+
+  """All values less than or equal the given value."""
+  location_lte: String
+
+  """All values greater than the given value."""
+  location_gt: String
+
+  """All values greater than or equal the given value."""
+  location_gte: String
+
+  """All values containing the given string."""
+  location_contains: String
+
+  """All values not containing the given string."""
+  location_not_contains: String
+
+  """All values starting with the given string."""
+  location_starts_with: String
+
+  """All values not starting with the given string."""
+  location_not_starts_with: String
+
+  """All values ending with the given string."""
+  location_ends_with: String
+
+  """All values not ending with the given string."""
+  location_not_ends_with: String
+  mission: String
+
+  """All values that are not equal to given value."""
+  mission_not: String
+
+  """All values that are contained in given list."""
+  mission_in: [String!]
+
+  """All values that are not contained in given list."""
+  mission_not_in: [String!]
+
+  """All values less than the given value."""
+  mission_lt: String
+
+  """All values less than or equal the given value."""
+  mission_lte: String
+
+  """All values greater than the given value."""
+  mission_gt: String
+
+  """All values greater than or equal the given value."""
+  mission_gte: String
+
+  """All values containing the given string."""
+  mission_contains: String
+
+  """All values not containing the given string."""
+  mission_not_contains: String
+
+  """All values starting with the given string."""
+  mission_starts_with: String
+
+  """All values not starting with the given string."""
+  mission_not_starts_with: String
+
+  """All values ending with the given string."""
+  mission_ends_with: String
+
+  """All values not ending with the given string."""
+  mission_not_ends_with: String
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  phoneNumber: String
+
+  """All values that are not equal to given value."""
+  phoneNumber_not: String
+
+  """All values that are contained in given list."""
+  phoneNumber_in: [String!]
+
+  """All values that are not contained in given list."""
+  phoneNumber_not_in: [String!]
+
+  """All values less than the given value."""
+  phoneNumber_lt: String
+
+  """All values less than or equal the given value."""
+  phoneNumber_lte: String
+
+  """All values greater than the given value."""
+  phoneNumber_gt: String
+
+  """All values greater than or equal the given value."""
+  phoneNumber_gte: String
+
+  """All values containing the given string."""
+  phoneNumber_contains: String
+
+  """All values not containing the given string."""
+  phoneNumber_not_contains: String
+
+  """All values starting with the given string."""
+  phoneNumber_starts_with: String
+
+  """All values not starting with the given string."""
+  phoneNumber_not_starts_with: String
+
+  """All values ending with the given string."""
+  phoneNumber_ends_with: String
+
+  """All values not ending with the given string."""
+  phoneNumber_not_ends_with: String
+  website: String
+
+  """All values that are not equal to given value."""
+  website_not: String
+
+  """All values that are contained in given list."""
+  website_in: [String!]
+
+  """All values that are not contained in given list."""
+  website_not_in: [String!]
+
+  """All values less than the given value."""
+  website_lt: String
+
+  """All values less than or equal the given value."""
+  website_lte: String
+
+  """All values greater than the given value."""
+  website_gt: String
+
+  """All values greater than or equal the given value."""
+  website_gte: String
+
+  """All values containing the given string."""
+  website_contains: String
+
+  """All values not containing the given string."""
+  website_not_contains: String
+
+  """All values starting with the given string."""
+  website_starts_with: String
+
+  """All values not starting with the given string."""
+  website_not_starts_with: String
+
+  """All values ending with the given string."""
+  website_ends_with: String
+
+  """All values not ending with the given string."""
+  website_not_ends_with: String
+}
+
 type CharitySubscriptionPayload {
   mutation: MutationType!
   node: Charity
@@ -219,9 +803,10 @@ input CharityUpdateInput {
   phoneNumber: String
   website: String
   events: EventUpdateManyWithoutCharityInput
+  followers: UserUpdateManyWithoutFollowedCharitiesInput
 }
 
-input CharityUpdateManyInput {
+input CharityUpdateManyDataInput {
   acronym: String
   bannerCredit: String
   ein: String
@@ -235,6 +820,38 @@ input CharityUpdateManyInput {
   name: String
   phoneNumber: String
   website: String
+}
+
+input CharityUpdateManyMutationInput {
+  acronym: String
+  bannerCredit: String
+  ein: String
+  expensesAdministrative: Float
+  expensesFundraising: Float
+  expensesOther: Float
+  expensesProgram: Float
+  expensesUpdated: String
+  location: String
+  mission: String
+  name: String
+  phoneNumber: String
+  website: String
+}
+
+input CharityUpdateManyWithoutFollowersInput {
+  create: [CharityCreateWithoutFollowersInput!]
+  connect: [CharityWhereUniqueInput!]
+  disconnect: [CharityWhereUniqueInput!]
+  delete: [CharityWhereUniqueInput!]
+  update: [CharityUpdateWithWhereUniqueWithoutFollowersInput!]
+  updateMany: [CharityUpdateManyWithWhereNestedInput!]
+  deleteMany: [CharityScalarWhereInput!]
+  upsert: [CharityUpsertWithWhereUniqueWithoutFollowersInput!]
+}
+
+input CharityUpdateManyWithWhereNestedInput {
+  where: CharityScalarWhereInput!
+  data: CharityUpdateManyDataInput!
 }
 
 input CharityUpdateOneWithoutEventsInput {
@@ -260,11 +877,40 @@ input CharityUpdateWithoutEventsDataInput {
   name: String
   phoneNumber: String
   website: String
+  followers: UserUpdateManyWithoutFollowedCharitiesInput
+}
+
+input CharityUpdateWithoutFollowersDataInput {
+  acronym: String
+  bannerCredit: String
+  ein: String
+  expensesAdministrative: Float
+  expensesFundraising: Float
+  expensesOther: Float
+  expensesProgram: Float
+  expensesUpdated: String
+  location: String
+  mission: String
+  name: String
+  phoneNumber: String
+  website: String
+  events: EventUpdateManyWithoutCharityInput
+}
+
+input CharityUpdateWithWhereUniqueWithoutFollowersInput {
+  where: CharityWhereUniqueInput!
+  data: CharityUpdateWithoutFollowersDataInput!
 }
 
 input CharityUpsertWithoutEventsInput {
   update: CharityUpdateWithoutEventsDataInput!
   create: CharityCreateWithoutEventsInput!
+}
+
+input CharityUpsertWithWhereUniqueWithoutFollowersInput {
+  where: CharityWhereUniqueInput!
+  update: CharityUpdateWithoutFollowersDataInput!
+  create: CharityCreateWithoutFollowersInput!
 }
 
 input CharityWhereInput {
@@ -811,6 +1457,9 @@ input CharityWhereInput {
   events_every: EventWhereInput
   events_some: EventWhereInput
   events_none: EventWhereInput
+  followers_every: UserWhereInput
+  followers_some: UserWhereInput
+  followers_none: UserWhereInput
 }
 
 input CharityWhereUniqueInput {
@@ -818,7 +1467,995 @@ input CharityWhereUniqueInput {
   ein: String
 }
 
+type Circles implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  description: String
+  name: String!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+"""A connection to a list of items."""
+type CirclesConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CirclesEdge]!
+  aggregate: AggregateCircles!
+}
+
+input CirclesCreateInput {
+  description: String
+  name: String!
+  users: UserCreateManyWithoutCirclesInput
+}
+
+input CirclesCreateManyWithoutUsersInput {
+  create: [CirclesCreateWithoutUsersInput!]
+  connect: [CirclesWhereUniqueInput!]
+}
+
+input CirclesCreateWithoutUsersInput {
+  description: String
+  name: String!
+}
+
+"""An edge in a connection."""
+type CirclesEdge {
+  """The item at the end of the edge."""
+  node: Circles!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CirclesOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  description_ASC
+  description_DESC
+  name_ASC
+  name_DESC
+}
+
+type CirclesPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  description: String
+  name: String!
+}
+
+input CirclesScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CirclesScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CirclesScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CirclesScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+type CirclesSubscriptionPayload {
+  mutation: MutationType!
+  node: Circles
+  updatedFields: [String!]
+  previousValues: CirclesPreviousValues
+}
+
+input CirclesSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CirclesSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CirclesSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CirclesSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CirclesWhereInput
+}
+
+input CirclesUpdateInput {
+  description: String
+  name: String
+  users: UserUpdateManyWithoutCirclesInput
+}
+
+input CirclesUpdateManyDataInput {
+  description: String
+  name: String
+}
+
+input CirclesUpdateManyMutationInput {
+  description: String
+  name: String
+}
+
+input CirclesUpdateManyWithoutUsersInput {
+  create: [CirclesCreateWithoutUsersInput!]
+  connect: [CirclesWhereUniqueInput!]
+  disconnect: [CirclesWhereUniqueInput!]
+  delete: [CirclesWhereUniqueInput!]
+  update: [CirclesUpdateWithWhereUniqueWithoutUsersInput!]
+  updateMany: [CirclesUpdateManyWithWhereNestedInput!]
+  deleteMany: [CirclesScalarWhereInput!]
+  upsert: [CirclesUpsertWithWhereUniqueWithoutUsersInput!]
+}
+
+input CirclesUpdateManyWithWhereNestedInput {
+  where: CirclesScalarWhereInput!
+  data: CirclesUpdateManyDataInput!
+}
+
+input CirclesUpdateWithoutUsersDataInput {
+  description: String
+  name: String
+}
+
+input CirclesUpdateWithWhereUniqueWithoutUsersInput {
+  where: CirclesWhereUniqueInput!
+  data: CirclesUpdateWithoutUsersDataInput!
+}
+
+input CirclesUpsertWithWhereUniqueWithoutUsersInput {
+  where: CirclesWhereUniqueInput!
+  update: CirclesUpdateWithoutUsersDataInput!
+  create: CirclesCreateWithoutUsersInput!
+}
+
+input CirclesWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CirclesWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CirclesWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CirclesWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+}
+
+input CirclesWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
+
+type Dots implements Node {
+  id: ID!
+  createdAt: DateTime!
+  action: String!
+  amount: Int!
+  total: Int!
+  user: User!
+}
+
+"""A connection to a list of items."""
+type DotsConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [DotsEdge]!
+  aggregate: AggregateDots!
+}
+
+input DotsCreateInput {
+  action: String!
+  amount: Int!
+  total: Int!
+  user: UserCreateOneWithoutDotsInput!
+}
+
+input DotsCreateManyWithoutUserInput {
+  create: [DotsCreateWithoutUserInput!]
+  connect: [DotsWhereUniqueInput!]
+}
+
+input DotsCreateWithoutUserInput {
+  action: String!
+  amount: Int!
+  total: Int!
+}
+
+"""An edge in a connection."""
+type DotsEdge {
+  """The item at the end of the edge."""
+  node: Dots!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum DotsOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  action_ASC
+  action_DESC
+  amount_ASC
+  amount_DESC
+  total_ASC
+  total_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type DotsPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  action: String!
+  amount: Int!
+  total: Int!
+}
+
+input DotsScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DotsScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DotsScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DotsScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  action: String
+
+  """All values that are not equal to given value."""
+  action_not: String
+
+  """All values that are contained in given list."""
+  action_in: [String!]
+
+  """All values that are not contained in given list."""
+  action_not_in: [String!]
+
+  """All values less than the given value."""
+  action_lt: String
+
+  """All values less than or equal the given value."""
+  action_lte: String
+
+  """All values greater than the given value."""
+  action_gt: String
+
+  """All values greater than or equal the given value."""
+  action_gte: String
+
+  """All values containing the given string."""
+  action_contains: String
+
+  """All values not containing the given string."""
+  action_not_contains: String
+
+  """All values starting with the given string."""
+  action_starts_with: String
+
+  """All values not starting with the given string."""
+  action_not_starts_with: String
+
+  """All values ending with the given string."""
+  action_ends_with: String
+
+  """All values not ending with the given string."""
+  action_not_ends_with: String
+  amount: Int
+
+  """All values that are not equal to given value."""
+  amount_not: Int
+
+  """All values that are contained in given list."""
+  amount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  amount_not_in: [Int!]
+
+  """All values less than the given value."""
+  amount_lt: Int
+
+  """All values less than or equal the given value."""
+  amount_lte: Int
+
+  """All values greater than the given value."""
+  amount_gt: Int
+
+  """All values greater than or equal the given value."""
+  amount_gte: Int
+  total: Int
+
+  """All values that are not equal to given value."""
+  total_not: Int
+
+  """All values that are contained in given list."""
+  total_in: [Int!]
+
+  """All values that are not contained in given list."""
+  total_not_in: [Int!]
+
+  """All values less than the given value."""
+  total_lt: Int
+
+  """All values less than or equal the given value."""
+  total_lte: Int
+
+  """All values greater than the given value."""
+  total_gt: Int
+
+  """All values greater than or equal the given value."""
+  total_gte: Int
+}
+
+type DotsSubscriptionPayload {
+  mutation: MutationType!
+  node: Dots
+  updatedFields: [String!]
+  previousValues: DotsPreviousValues
+}
+
+input DotsSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DotsSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DotsSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DotsSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: DotsWhereInput
+}
+
+input DotsUpdateInput {
+  action: String
+  amount: Int
+  total: Int
+  user: UserUpdateOneRequiredWithoutDotsInput
+}
+
+input DotsUpdateManyDataInput {
+  action: String
+  amount: Int
+  total: Int
+}
+
+input DotsUpdateManyMutationInput {
+  action: String
+  amount: Int
+  total: Int
+}
+
+input DotsUpdateManyWithoutUserInput {
+  create: [DotsCreateWithoutUserInput!]
+  connect: [DotsWhereUniqueInput!]
+  disconnect: [DotsWhereUniqueInput!]
+  delete: [DotsWhereUniqueInput!]
+  update: [DotsUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [DotsUpdateManyWithWhereNestedInput!]
+  deleteMany: [DotsScalarWhereInput!]
+  upsert: [DotsUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input DotsUpdateManyWithWhereNestedInput {
+  where: DotsScalarWhereInput!
+  data: DotsUpdateManyDataInput!
+}
+
+input DotsUpdateWithoutUserDataInput {
+  action: String
+  amount: Int
+  total: Int
+}
+
+input DotsUpdateWithWhereUniqueWithoutUserInput {
+  where: DotsWhereUniqueInput!
+  data: DotsUpdateWithoutUserDataInput!
+}
+
+input DotsUpsertWithWhereUniqueWithoutUserInput {
+  where: DotsWhereUniqueInput!
+  update: DotsUpdateWithoutUserDataInput!
+  create: DotsCreateWithoutUserInput!
+}
+
+input DotsWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DotsWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DotsWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DotsWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  action: String
+
+  """All values that are not equal to given value."""
+  action_not: String
+
+  """All values that are contained in given list."""
+  action_in: [String!]
+
+  """All values that are not contained in given list."""
+  action_not_in: [String!]
+
+  """All values less than the given value."""
+  action_lt: String
+
+  """All values less than or equal the given value."""
+  action_lte: String
+
+  """All values greater than the given value."""
+  action_gt: String
+
+  """All values greater than or equal the given value."""
+  action_gte: String
+
+  """All values containing the given string."""
+  action_contains: String
+
+  """All values not containing the given string."""
+  action_not_contains: String
+
+  """All values starting with the given string."""
+  action_starts_with: String
+
+  """All values not starting with the given string."""
+  action_not_starts_with: String
+
+  """All values ending with the given string."""
+  action_ends_with: String
+
+  """All values not ending with the given string."""
+  action_not_ends_with: String
+  amount: Int
+
+  """All values that are not equal to given value."""
+  amount_not: Int
+
+  """All values that are contained in given list."""
+  amount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  amount_not_in: [Int!]
+
+  """All values less than the given value."""
+  amount_lt: Int
+
+  """All values less than or equal the given value."""
+  amount_lte: Int
+
+  """All values greater than the given value."""
+  amount_gt: Int
+
+  """All values greater than or equal the given value."""
+  amount_gte: Int
+  total: Int
+
+  """All values that are not equal to given value."""
+  total_not: Int
+
+  """All values that are contained in given list."""
+  total_in: [Int!]
+
+  """All values that are not contained in given list."""
+  total_not_in: [Int!]
+
+  """All values less than the given value."""
+  total_lt: Int
+
+  """All values less than or equal the given value."""
+  total_lte: Int
+
+  """All values greater than the given value."""
+  total_gt: Int
+
+  """All values greater than or equal the given value."""
+  total_gte: Int
+  user: UserWhereInput
+}
+
+input DotsWhereUniqueInput {
+  id: ID
+}
 
 type Event implements Node {
   id: ID!
@@ -860,6 +2497,11 @@ input EventCreateInput {
 input EventCreateManyWithoutCharityInput {
   create: [EventCreateWithoutCharityInput!]
   connect: [EventWhereUniqueInput!]
+}
+
+input EventCreateOneInput {
+  create: EventCreateInput
+  connect: EventWhereUniqueInput
 }
 
 input EventCreateOneWithoutDonationsInput {
@@ -947,6 +2589,269 @@ type EventPreviousValues {
   startDate: DateTime!
 }
 
+input EventScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EventScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EventScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EventScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  endDate: DateTime
+
+  """All values that are not equal to given value."""
+  endDate_not: DateTime
+
+  """All values that are contained in given list."""
+  endDate_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  endDate_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  endDate_lt: DateTime
+
+  """All values less than or equal the given value."""
+  endDate_lte: DateTime
+
+  """All values greater than the given value."""
+  endDate_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  endDate_gte: DateTime
+  goal: Int
+
+  """All values that are not equal to given value."""
+  goal_not: Int
+
+  """All values that are contained in given list."""
+  goal_in: [Int!]
+
+  """All values that are not contained in given list."""
+  goal_not_in: [Int!]
+
+  """All values less than the given value."""
+  goal_lt: Int
+
+  """All values less than or equal the given value."""
+  goal_lte: Int
+
+  """All values greater than the given value."""
+  goal_gt: Int
+
+  """All values greater than or equal the given value."""
+  goal_gte: Int
+  multiplier: Int
+
+  """All values that are not equal to given value."""
+  multiplier_not: Int
+
+  """All values that are contained in given list."""
+  multiplier_in: [Int!]
+
+  """All values that are not contained in given list."""
+  multiplier_not_in: [Int!]
+
+  """All values less than the given value."""
+  multiplier_lt: Int
+
+  """All values less than or equal the given value."""
+  multiplier_lte: Int
+
+  """All values greater than the given value."""
+  multiplier_gt: Int
+
+  """All values greater than or equal the given value."""
+  multiplier_gte: Int
+  sponsorName: String
+
+  """All values that are not equal to given value."""
+  sponsorName_not: String
+
+  """All values that are contained in given list."""
+  sponsorName_in: [String!]
+
+  """All values that are not contained in given list."""
+  sponsorName_not_in: [String!]
+
+  """All values less than the given value."""
+  sponsorName_lt: String
+
+  """All values less than or equal the given value."""
+  sponsorName_lte: String
+
+  """All values greater than the given value."""
+  sponsorName_gt: String
+
+  """All values greater than or equal the given value."""
+  sponsorName_gte: String
+
+  """All values containing the given string."""
+  sponsorName_contains: String
+
+  """All values not containing the given string."""
+  sponsorName_not_contains: String
+
+  """All values starting with the given string."""
+  sponsorName_starts_with: String
+
+  """All values not starting with the given string."""
+  sponsorName_not_starts_with: String
+
+  """All values ending with the given string."""
+  sponsorName_ends_with: String
+
+  """All values not ending with the given string."""
+  sponsorName_not_ends_with: String
+  sponsorWebsite: String
+
+  """All values that are not equal to given value."""
+  sponsorWebsite_not: String
+
+  """All values that are contained in given list."""
+  sponsorWebsite_in: [String!]
+
+  """All values that are not contained in given list."""
+  sponsorWebsite_not_in: [String!]
+
+  """All values less than the given value."""
+  sponsorWebsite_lt: String
+
+  """All values less than or equal the given value."""
+  sponsorWebsite_lte: String
+
+  """All values greater than the given value."""
+  sponsorWebsite_gt: String
+
+  """All values greater than or equal the given value."""
+  sponsorWebsite_gte: String
+
+  """All values containing the given string."""
+  sponsorWebsite_contains: String
+
+  """All values not containing the given string."""
+  sponsorWebsite_not_contains: String
+
+  """All values starting with the given string."""
+  sponsorWebsite_starts_with: String
+
+  """All values not starting with the given string."""
+  sponsorWebsite_not_starts_with: String
+
+  """All values ending with the given string."""
+  sponsorWebsite_ends_with: String
+
+  """All values not ending with the given string."""
+  sponsorWebsite_not_ends_with: String
+  startDate: DateTime
+
+  """All values that are not equal to given value."""
+  startDate_not: DateTime
+
+  """All values that are contained in given list."""
+  startDate_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  startDate_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  startDate_lt: DateTime
+
+  """All values less than or equal the given value."""
+  startDate_lte: DateTime
+
+  """All values greater than the given value."""
+  startDate_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  startDate_gte: DateTime
+}
+
 type EventSubscriptionPayload {
   mutation: MutationType!
   node: Event
@@ -986,6 +2891,18 @@ input EventSubscriptionWhereInput {
   node: EventWhereInput
 }
 
+input EventUpdateDataInput {
+  endDate: DateTime
+  goal: Int
+  multiplier: Int
+  sponsorName: String
+  sponsorWebsite: String
+  startDate: DateTime
+  charity: CharityUpdateOneWithoutEventsInput
+  specialFundraiser: SpecialFundraiserUpdateOneWithoutEventInput
+  donations: TransactionUpdateManyWithoutEventInput
+}
+
 input EventUpdateInput {
   endDate: DateTime
   goal: Int
@@ -998,7 +2915,16 @@ input EventUpdateInput {
   donations: TransactionUpdateManyWithoutEventInput
 }
 
-input EventUpdateManyInput {
+input EventUpdateManyDataInput {
+  endDate: DateTime
+  goal: Int
+  multiplier: Int
+  sponsorName: String
+  sponsorWebsite: String
+  startDate: DateTime
+}
+
+input EventUpdateManyMutationInput {
   endDate: DateTime
   goal: Int
   multiplier: Int
@@ -1013,7 +2939,21 @@ input EventUpdateManyWithoutCharityInput {
   disconnect: [EventWhereUniqueInput!]
   delete: [EventWhereUniqueInput!]
   update: [EventUpdateWithWhereUniqueWithoutCharityInput!]
+  updateMany: [EventUpdateManyWithWhereNestedInput!]
+  deleteMany: [EventScalarWhereInput!]
   upsert: [EventUpsertWithWhereUniqueWithoutCharityInput!]
+}
+
+input EventUpdateManyWithWhereNestedInput {
+  where: EventScalarWhereInput!
+  data: EventUpdateManyDataInput!
+}
+
+input EventUpdateOneRequiredInput {
+  create: EventCreateInput
+  connect: EventWhereUniqueInput
+  update: EventUpdateDataInput
+  upsert: EventUpsertNestedInput
 }
 
 input EventUpdateOneRequiredWithoutSpecialFundraiserInput {
@@ -1068,6 +3008,11 @@ input EventUpdateWithoutSpecialFundraiserDataInput {
 input EventUpdateWithWhereUniqueWithoutCharityInput {
   where: EventWhereUniqueInput!
   data: EventUpdateWithoutCharityDataInput!
+}
+
+input EventUpsertNestedInput {
+  update: EventUpdateDataInput!
+  create: EventCreateInput!
 }
 
 input EventUpsertWithoutDonationsInput {
@@ -1358,6 +3303,377 @@ input EventWhereUniqueInput {
   id: ID
 }
 
+type Halos implements Node {
+  id: ID!
+  createdAt: DateTime!
+  key: String!
+  user: User!
+}
+
+"""A connection to a list of items."""
+type HalosConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [HalosEdge]!
+  aggregate: AggregateHalos!
+}
+
+input HalosCreateInput {
+  key: String!
+  user: UserCreateOneWithoutHalosInput!
+}
+
+input HalosCreateManyWithoutUserInput {
+  create: [HalosCreateWithoutUserInput!]
+  connect: [HalosWhereUniqueInput!]
+}
+
+input HalosCreateWithoutUserInput {
+  key: String!
+}
+
+"""An edge in a connection."""
+type HalosEdge {
+  """The item at the end of the edge."""
+  node: Halos!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum HalosOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  key_ASC
+  key_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type HalosPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  key: String!
+}
+
+input HalosScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [HalosScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [HalosScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [HalosScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
+}
+
+type HalosSubscriptionPayload {
+  mutation: MutationType!
+  node: Halos
+  updatedFields: [String!]
+  previousValues: HalosPreviousValues
+}
+
+input HalosSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [HalosSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [HalosSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [HalosSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: HalosWhereInput
+}
+
+input HalosUpdateInput {
+  key: String
+  user: UserUpdateOneRequiredWithoutHalosInput
+}
+
+input HalosUpdateManyDataInput {
+  key: String
+}
+
+input HalosUpdateManyMutationInput {
+  key: String
+}
+
+input HalosUpdateManyWithoutUserInput {
+  create: [HalosCreateWithoutUserInput!]
+  connect: [HalosWhereUniqueInput!]
+  disconnect: [HalosWhereUniqueInput!]
+  delete: [HalosWhereUniqueInput!]
+  update: [HalosUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [HalosUpdateManyWithWhereNestedInput!]
+  deleteMany: [HalosScalarWhereInput!]
+  upsert: [HalosUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input HalosUpdateManyWithWhereNestedInput {
+  where: HalosScalarWhereInput!
+  data: HalosUpdateManyDataInput!
+}
+
+input HalosUpdateWithoutUserDataInput {
+  key: String
+}
+
+input HalosUpdateWithWhereUniqueWithoutUserInput {
+  where: HalosWhereUniqueInput!
+  data: HalosUpdateWithoutUserDataInput!
+}
+
+input HalosUpsertWithWhereUniqueWithoutUserInput {
+  where: HalosWhereUniqueInput!
+  update: HalosUpdateWithoutUserDataInput!
+  create: HalosCreateWithoutUserInput!
+}
+
+input HalosWhereInput {
+  """Logical AND on all given filters."""
+  AND: [HalosWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [HalosWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [HalosWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
+  user: UserWhereInput
+}
+
+input HalosWhereUniqueInput {
+  id: ID
+}
+
 type Identity implements Node {
   id: ID!
   createdAt: DateTime!
@@ -1473,7 +3789,7 @@ input IdentityUpdateInput {
   user: UserUpdateOneRequiredWithoutIdentityInput
 }
 
-input IdentityUpdateManyInput {
+input IdentityUpdateManyMutationInput {
   provider: IdentityProvider
   providerID: String
 }
@@ -1652,49 +3968,414 @@ Long can represent values between -(2^63) and 2^63 - 1.
 """
 scalar Long
 
+type Loops implements Node {
+  id: ID!
+  createdAt: DateTime!
+  count: Int!
+  event: Event!
+  user: User!
+}
+
+"""A connection to a list of items."""
+type LoopsConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LoopsEdge]!
+  aggregate: AggregateLoops!
+}
+
+input LoopsCreateInput {
+  count: Int!
+  event: EventCreateOneInput!
+  user: UserCreateOneWithoutLoopsInput!
+}
+
+input LoopsCreateManyWithoutUserInput {
+  create: [LoopsCreateWithoutUserInput!]
+  connect: [LoopsWhereUniqueInput!]
+}
+
+input LoopsCreateWithoutUserInput {
+  count: Int!
+  event: EventCreateOneInput!
+}
+
+"""An edge in a connection."""
+type LoopsEdge {
+  """The item at the end of the edge."""
+  node: Loops!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LoopsOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  count_ASC
+  count_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type LoopsPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  count: Int!
+}
+
+input LoopsScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LoopsScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LoopsScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LoopsScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  count: Int
+
+  """All values that are not equal to given value."""
+  count_not: Int
+
+  """All values that are contained in given list."""
+  count_in: [Int!]
+
+  """All values that are not contained in given list."""
+  count_not_in: [Int!]
+
+  """All values less than the given value."""
+  count_lt: Int
+
+  """All values less than or equal the given value."""
+  count_lte: Int
+
+  """All values greater than the given value."""
+  count_gt: Int
+
+  """All values greater than or equal the given value."""
+  count_gte: Int
+}
+
+type LoopsSubscriptionPayload {
+  mutation: MutationType!
+  node: Loops
+  updatedFields: [String!]
+  previousValues: LoopsPreviousValues
+}
+
+input LoopsSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LoopsSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LoopsSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LoopsSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LoopsWhereInput
+}
+
+input LoopsUpdateInput {
+  count: Int
+  event: EventUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutLoopsInput
+}
+
+input LoopsUpdateManyDataInput {
+  count: Int
+}
+
+input LoopsUpdateManyMutationInput {
+  count: Int
+}
+
+input LoopsUpdateManyWithoutUserInput {
+  create: [LoopsCreateWithoutUserInput!]
+  connect: [LoopsWhereUniqueInput!]
+  disconnect: [LoopsWhereUniqueInput!]
+  delete: [LoopsWhereUniqueInput!]
+  update: [LoopsUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [LoopsUpdateManyWithWhereNestedInput!]
+  deleteMany: [LoopsScalarWhereInput!]
+  upsert: [LoopsUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input LoopsUpdateManyWithWhereNestedInput {
+  where: LoopsScalarWhereInput!
+  data: LoopsUpdateManyDataInput!
+}
+
+input LoopsUpdateWithoutUserDataInput {
+  count: Int
+  event: EventUpdateOneRequiredInput
+}
+
+input LoopsUpdateWithWhereUniqueWithoutUserInput {
+  where: LoopsWhereUniqueInput!
+  data: LoopsUpdateWithoutUserDataInput!
+}
+
+input LoopsUpsertWithWhereUniqueWithoutUserInput {
+  where: LoopsWhereUniqueInput!
+  update: LoopsUpdateWithoutUserDataInput!
+  create: LoopsCreateWithoutUserInput!
+}
+
+input LoopsWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LoopsWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LoopsWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LoopsWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  count: Int
+
+  """All values that are not equal to given value."""
+  count_not: Int
+
+  """All values that are contained in given list."""
+  count_in: [Int!]
+
+  """All values that are not contained in given list."""
+  count_not_in: [Int!]
+
+  """All values less than the given value."""
+  count_lt: Int
+
+  """All values less than or equal the given value."""
+  count_lte: Int
+
+  """All values greater than the given value."""
+  count_gt: Int
+
+  """All values greater than or equal the given value."""
+  count_gte: Int
+  event: EventWhereInput
+  user: UserWhereInput
+}
+
+input LoopsWhereUniqueInput {
+  id: ID
+}
+
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createDots(data: DotsCreateInput!): Dots!
+  createHalos(data: HalosCreateInput!): Halos!
   createIdentity(data: IdentityCreateInput!): Identity!
+  createLoops(data: LoopsCreateInput!): Loops!
   createPreferences(data: PreferencesCreateInput!): Preferences!
+  createCircles(data: CirclesCreateInput!): Circles!
   createCharity(data: CharityCreateInput!): Charity!
   createSpecialFundraiser(data: SpecialFundraiserCreateInput!): SpecialFundraiser!
-  createEvent(data: EventCreateInput!): Event!
   createTransaction(data: TransactionCreateInput!): Transaction!
+  createEvent(data: EventCreateInput!): Event!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateDots(data: DotsUpdateInput!, where: DotsWhereUniqueInput!): Dots
+  updateHalos(data: HalosUpdateInput!, where: HalosWhereUniqueInput!): Halos
   updateIdentity(data: IdentityUpdateInput!, where: IdentityWhereUniqueInput!): Identity
+  updateLoops(data: LoopsUpdateInput!, where: LoopsWhereUniqueInput!): Loops
   updatePreferences(data: PreferencesUpdateInput!, where: PreferencesWhereUniqueInput!): Preferences
+  updateCircles(data: CirclesUpdateInput!, where: CirclesWhereUniqueInput!): Circles
   updateCharity(data: CharityUpdateInput!, where: CharityWhereUniqueInput!): Charity
   updateSpecialFundraiser(data: SpecialFundraiserUpdateInput!, where: SpecialFundraiserWhereUniqueInput!): SpecialFundraiser
-  updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
   updateTransaction(data: TransactionUpdateInput!, where: TransactionWhereUniqueInput!): Transaction
+  updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteDots(where: DotsWhereUniqueInput!): Dots
+  deleteHalos(where: HalosWhereUniqueInput!): Halos
   deleteIdentity(where: IdentityWhereUniqueInput!): Identity
+  deleteLoops(where: LoopsWhereUniqueInput!): Loops
   deletePreferences(where: PreferencesWhereUniqueInput!): Preferences
+  deleteCircles(where: CirclesWhereUniqueInput!): Circles
   deleteCharity(where: CharityWhereUniqueInput!): Charity
   deleteSpecialFundraiser(where: SpecialFundraiserWhereUniqueInput!): SpecialFundraiser
-  deleteEvent(where: EventWhereUniqueInput!): Event
   deleteTransaction(where: TransactionWhereUniqueInput!): Transaction
+  deleteEvent(where: EventWhereUniqueInput!): Event
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertDots(where: DotsWhereUniqueInput!, create: DotsCreateInput!, update: DotsUpdateInput!): Dots!
+  upsertHalos(where: HalosWhereUniqueInput!, create: HalosCreateInput!, update: HalosUpdateInput!): Halos!
   upsertIdentity(where: IdentityWhereUniqueInput!, create: IdentityCreateInput!, update: IdentityUpdateInput!): Identity!
+  upsertLoops(where: LoopsWhereUniqueInput!, create: LoopsCreateInput!, update: LoopsUpdateInput!): Loops!
   upsertPreferences(where: PreferencesWhereUniqueInput!, create: PreferencesCreateInput!, update: PreferencesUpdateInput!): Preferences!
+  upsertCircles(where: CirclesWhereUniqueInput!, create: CirclesCreateInput!, update: CirclesUpdateInput!): Circles!
   upsertCharity(where: CharityWhereUniqueInput!, create: CharityCreateInput!, update: CharityUpdateInput!): Charity!
   upsertSpecialFundraiser(where: SpecialFundraiserWhereUniqueInput!, create: SpecialFundraiserCreateInput!, update: SpecialFundraiserUpdateInput!): SpecialFundraiser!
-  upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
   upsertTransaction(where: TransactionWhereUniqueInput!, create: TransactionCreateInput!, update: TransactionUpdateInput!): Transaction!
-  updateManyUsers(data: UserUpdateManyInput!, where: UserWhereInput): BatchPayload!
-  updateManyIdentities(data: IdentityUpdateManyInput!, where: IdentityWhereInput): BatchPayload!
-  updateManyPreferenceses(data: PreferencesUpdateManyInput!, where: PreferencesWhereInput): BatchPayload!
-  updateManyCharities(data: CharityUpdateManyInput!, where: CharityWhereInput): BatchPayload!
-  updateManySpecialFundraisers(data: SpecialFundraiserUpdateManyInput!, where: SpecialFundraiserWhereInput): BatchPayload!
-  updateManyEvents(data: EventUpdateManyInput!, where: EventWhereInput): BatchPayload!
-  updateManyTransactions(data: TransactionUpdateManyInput!, where: TransactionWhereInput): BatchPayload!
+  upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyDotses(data: DotsUpdateManyMutationInput!, where: DotsWhereInput): BatchPayload!
+  updateManyHaloses(data: HalosUpdateManyMutationInput!, where: HalosWhereInput): BatchPayload!
+  updateManyIdentities(data: IdentityUpdateManyMutationInput!, where: IdentityWhereInput): BatchPayload!
+  updateManyLoopses(data: LoopsUpdateManyMutationInput!, where: LoopsWhereInput): BatchPayload!
+  updateManyPreferenceses(data: PreferencesUpdateManyMutationInput!, where: PreferencesWhereInput): BatchPayload!
+  updateManyCircleses(data: CirclesUpdateManyMutationInput!, where: CirclesWhereInput): BatchPayload!
+  updateManyCharities(data: CharityUpdateManyMutationInput!, where: CharityWhereInput): BatchPayload!
+  updateManySpecialFundraisers(data: SpecialFundraiserUpdateManyMutationInput!, where: SpecialFundraiserWhereInput): BatchPayload!
+  updateManyTransactions(data: TransactionUpdateManyMutationInput!, where: TransactionWhereInput): BatchPayload!
+  updateManyEvents(data: EventUpdateManyMutationInput!, where: EventWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyDotses(where: DotsWhereInput): BatchPayload!
+  deleteManyHaloses(where: HalosWhereInput): BatchPayload!
   deleteManyIdentities(where: IdentityWhereInput): BatchPayload!
+  deleteManyLoopses(where: LoopsWhereInput): BatchPayload!
   deleteManyPreferenceses(where: PreferencesWhereInput): BatchPayload!
+  deleteManyCircleses(where: CirclesWhereInput): BatchPayload!
   deleteManyCharities(where: CharityWhereInput): BatchPayload!
   deleteManySpecialFundraisers(where: SpecialFundraiserWhereInput): BatchPayload!
-  deleteManyEvents(where: EventWhereInput): BatchPayload!
   deleteManyTransactions(where: TransactionWhereInput): BatchPayload!
+  deleteManyEvents(where: EventWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -1827,7 +4508,7 @@ input PreferencesUpdateInput {
   user: UserUpdateOneRequiredWithoutPreferencesInput
 }
 
-input PreferencesUpdateManyInput {
+input PreferencesUpdateManyMutationInput {
   allowDonationEmails: Boolean
 }
 
@@ -1953,26 +4634,38 @@ input PreferencesWhereUniqueInput {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  dotses(where: DotsWhereInput, orderBy: DotsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dots]!
+  haloses(where: HalosWhereInput, orderBy: HalosOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Halos]!
   identities(where: IdentityWhereInput, orderBy: IdentityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Identity]!
+  loopses(where: LoopsWhereInput, orderBy: LoopsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Loops]!
   preferenceses(where: PreferencesWhereInput, orderBy: PreferencesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Preferences]!
+  circleses(where: CirclesWhereInput, orderBy: CirclesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circles]!
   charities(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charity]!
   specialFundraisers(where: SpecialFundraiserWhereInput, orderBy: SpecialFundraiserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SpecialFundraiser]!
-  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction]!
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
   user(where: UserWhereUniqueInput!): User
+  dots(where: DotsWhereUniqueInput!): Dots
+  halos(where: HalosWhereUniqueInput!): Halos
   identity(where: IdentityWhereUniqueInput!): Identity
+  loops(where: LoopsWhereUniqueInput!): Loops
   preferences(where: PreferencesWhereUniqueInput!): Preferences
+  circles(where: CirclesWhereUniqueInput!): Circles
   charity(where: CharityWhereUniqueInput!): Charity
   specialFundraiser(where: SpecialFundraiserWhereUniqueInput!): SpecialFundraiser
-  event(where: EventWhereUniqueInput!): Event
   transaction(where: TransactionWhereUniqueInput!): Transaction
+  event(where: EventWhereUniqueInput!): Event
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  dotsesConnection(where: DotsWhereInput, orderBy: DotsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DotsConnection!
+  halosesConnection(where: HalosWhereInput, orderBy: HalosOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HalosConnection!
   identitiesConnection(where: IdentityWhereInput, orderBy: IdentityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IdentityConnection!
+  loopsesConnection(where: LoopsWhereInput, orderBy: LoopsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LoopsConnection!
   preferencesesConnection(where: PreferencesWhereInput, orderBy: PreferencesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PreferencesConnection!
+  circlesesConnection(where: CirclesWhereInput, orderBy: CirclesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CirclesConnection!
   charitiesConnection(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CharityConnection!
   specialFundraisersConnection(where: SpecialFundraiserWhereInput, orderBy: SpecialFundraiserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SpecialFundraiserConnection!
-  eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
   transactionsConnection(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransactionConnection!
+  eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -2091,7 +4784,7 @@ input SpecialFundraiserUpdateInput {
   event: EventUpdateOneRequiredWithoutSpecialFundraiserInput
 }
 
-input SpecialFundraiserUpdateManyInput {
+input SpecialFundraiserUpdateManyMutationInput {
   description: String
   name: String
 }
@@ -2297,18 +4990,21 @@ input SpecialFundraiserWhereUniqueInput {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  dots(where: DotsSubscriptionWhereInput): DotsSubscriptionPayload
+  halos(where: HalosSubscriptionWhereInput): HalosSubscriptionPayload
   identity(where: IdentitySubscriptionWhereInput): IdentitySubscriptionPayload
+  loops(where: LoopsSubscriptionWhereInput): LoopsSubscriptionPayload
   preferences(where: PreferencesSubscriptionWhereInput): PreferencesSubscriptionPayload
+  circles(where: CirclesSubscriptionWhereInput): CirclesSubscriptionPayload
   charity(where: CharitySubscriptionWhereInput): CharitySubscriptionPayload
   specialFundraiser(where: SpecialFundraiserSubscriptionWhereInput): SpecialFundraiserSubscriptionPayload
-  event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
   transaction(where: TransactionSubscriptionWhereInput): TransactionSubscriptionPayload
+  event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
 }
 
 type Transaction implements Node {
   id: ID!
   createdAt: DateTime!
-  updatedAt: DateTime!
   amount: Int!
   balance: Int!
   stripeID: String
@@ -2376,8 +5072,6 @@ enum TransactionOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   amount_ASC
   amount_DESC
   balance_ASC
@@ -2386,16 +5080,184 @@ enum TransactionOrderByInput {
   stripeID_DESC
   type_ASC
   type_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type TransactionPreviousValues {
   id: ID!
   createdAt: DateTime!
-  updatedAt: DateTime!
   amount: Int!
   balance: Int!
   stripeID: String
   type: TransactionType!
+}
+
+input TransactionScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TransactionScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TransactionScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TransactionScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  amount: Int
+
+  """All values that are not equal to given value."""
+  amount_not: Int
+
+  """All values that are contained in given list."""
+  amount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  amount_not_in: [Int!]
+
+  """All values less than the given value."""
+  amount_lt: Int
+
+  """All values less than or equal the given value."""
+  amount_lte: Int
+
+  """All values greater than the given value."""
+  amount_gt: Int
+
+  """All values greater than or equal the given value."""
+  amount_gte: Int
+  balance: Int
+
+  """All values that are not equal to given value."""
+  balance_not: Int
+
+  """All values that are contained in given list."""
+  balance_in: [Int!]
+
+  """All values that are not contained in given list."""
+  balance_not_in: [Int!]
+
+  """All values less than the given value."""
+  balance_lt: Int
+
+  """All values less than or equal the given value."""
+  balance_lte: Int
+
+  """All values greater than the given value."""
+  balance_gt: Int
+
+  """All values greater than or equal the given value."""
+  balance_gte: Int
+  stripeID: String
+
+  """All values that are not equal to given value."""
+  stripeID_not: String
+
+  """All values that are contained in given list."""
+  stripeID_in: [String!]
+
+  """All values that are not contained in given list."""
+  stripeID_not_in: [String!]
+
+  """All values less than the given value."""
+  stripeID_lt: String
+
+  """All values less than or equal the given value."""
+  stripeID_lte: String
+
+  """All values greater than the given value."""
+  stripeID_gt: String
+
+  """All values greater than or equal the given value."""
+  stripeID_gte: String
+
+  """All values containing the given string."""
+  stripeID_contains: String
+
+  """All values not containing the given string."""
+  stripeID_not_contains: String
+
+  """All values starting with the given string."""
+  stripeID_starts_with: String
+
+  """All values not starting with the given string."""
+  stripeID_not_starts_with: String
+
+  """All values ending with the given string."""
+  stripeID_ends_with: String
+
+  """All values not ending with the given string."""
+  stripeID_not_ends_with: String
+  type: TransactionType
+
+  """All values that are not equal to given value."""
+  type_not: TransactionType
+
+  """All values that are contained in given list."""
+  type_in: [TransactionType!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [TransactionType!]
 }
 
 type TransactionSubscriptionPayload {
@@ -2451,7 +5313,14 @@ input TransactionUpdateInput {
   user: UserUpdateOneRequiredWithoutTransactionsInput
 }
 
-input TransactionUpdateManyInput {
+input TransactionUpdateManyDataInput {
+  amount: Int
+  balance: Int
+  stripeID: String
+  type: TransactionType
+}
+
+input TransactionUpdateManyMutationInput {
   amount: Int
   balance: Int
   stripeID: String
@@ -2464,6 +5333,8 @@ input TransactionUpdateManyWithoutEventInput {
   disconnect: [TransactionWhereUniqueInput!]
   delete: [TransactionWhereUniqueInput!]
   update: [TransactionUpdateWithWhereUniqueWithoutEventInput!]
+  updateMany: [TransactionUpdateManyWithWhereNestedInput!]
+  deleteMany: [TransactionScalarWhereInput!]
   upsert: [TransactionUpsertWithWhereUniqueWithoutEventInput!]
 }
 
@@ -2473,7 +5344,14 @@ input TransactionUpdateManyWithoutUserInput {
   disconnect: [TransactionWhereUniqueInput!]
   delete: [TransactionWhereUniqueInput!]
   update: [TransactionUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [TransactionUpdateManyWithWhereNestedInput!]
+  deleteMany: [TransactionScalarWhereInput!]
   upsert: [TransactionUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input TransactionUpdateManyWithWhereNestedInput {
+  where: TransactionScalarWhereInput!
+  data: TransactionUpdateManyDataInput!
 }
 
 input TransactionUpdateWithoutEventDataInput {
@@ -2585,28 +5463,6 @@ input TransactionWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
   amount: Int
 
   """All values that are not equal to given value."""
@@ -2713,11 +5569,19 @@ type User implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  bio: String
   email: String!
   nameFirst: String!
   nameLast: String!
+  picture: String
   securityToken: Int!
+  username: String!
+  circles(where: CirclesWhereInput, orderBy: CirclesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circles!]
+  dots(where: DotsWhereInput, orderBy: DotsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dots!]
+  followedCharities(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charity!]
+  halos(where: HalosWhereInput, orderBy: HalosOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Halos!]
   identity: Identity!
+  loops(where: LoopsWhereInput, orderBy: LoopsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Loops!]
   preferences: Preferences!
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction!]
 }
@@ -2733,17 +5597,50 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  bio: String
   email: String!
   nameFirst: String!
   nameLast: String!
+  picture: String
   securityToken: Int!
+  username: String!
+  circles: CirclesCreateManyWithoutUsersInput
+  dots: DotsCreateManyWithoutUserInput
+  followedCharities: CharityCreateManyWithoutFollowersInput
+  halos: HalosCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
+  loops: LoopsCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
 }
 
+input UserCreateManyWithoutCirclesInput {
+  create: [UserCreateWithoutCirclesInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutFollowedCharitiesInput {
+  create: [UserCreateWithoutFollowedCharitiesInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneWithoutDotsInput {
+  create: UserCreateWithoutDotsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutHalosInput {
+  create: UserCreateWithoutHalosInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateOneWithoutIdentityInput {
   create: UserCreateWithoutIdentityInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutLoopsInput {
+  create: UserCreateWithoutLoopsInput
   connect: UserWhereUniqueInput
 }
 
@@ -2757,30 +5654,139 @@ input UserCreateOneWithoutTransactionsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithoutIdentityInput {
+input UserCreateWithoutCirclesInput {
+  bio: String
   email: String!
   nameFirst: String!
   nameLast: String!
+  picture: String
   securityToken: Int!
+  username: String!
+  dots: DotsCreateManyWithoutUserInput
+  followedCharities: CharityCreateManyWithoutFollowersInput
+  halos: HalosCreateManyWithoutUserInput
+  identity: IdentityCreateOneWithoutUserInput!
+  loops: LoopsCreateManyWithoutUserInput
+  preferences: PreferencesCreateOneWithoutUserInput!
+  transactions: TransactionCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutDotsInput {
+  bio: String
+  email: String!
+  nameFirst: String!
+  nameLast: String!
+  picture: String
+  securityToken: Int!
+  username: String!
+  circles: CirclesCreateManyWithoutUsersInput
+  followedCharities: CharityCreateManyWithoutFollowersInput
+  halos: HalosCreateManyWithoutUserInput
+  identity: IdentityCreateOneWithoutUserInput!
+  loops: LoopsCreateManyWithoutUserInput
+  preferences: PreferencesCreateOneWithoutUserInput!
+  transactions: TransactionCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutFollowedCharitiesInput {
+  bio: String
+  email: String!
+  nameFirst: String!
+  nameLast: String!
+  picture: String
+  securityToken: Int!
+  username: String!
+  circles: CirclesCreateManyWithoutUsersInput
+  dots: DotsCreateManyWithoutUserInput
+  halos: HalosCreateManyWithoutUserInput
+  identity: IdentityCreateOneWithoutUserInput!
+  loops: LoopsCreateManyWithoutUserInput
+  preferences: PreferencesCreateOneWithoutUserInput!
+  transactions: TransactionCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutHalosInput {
+  bio: String
+  email: String!
+  nameFirst: String!
+  nameLast: String!
+  picture: String
+  securityToken: Int!
+  username: String!
+  circles: CirclesCreateManyWithoutUsersInput
+  dots: DotsCreateManyWithoutUserInput
+  followedCharities: CharityCreateManyWithoutFollowersInput
+  identity: IdentityCreateOneWithoutUserInput!
+  loops: LoopsCreateManyWithoutUserInput
+  preferences: PreferencesCreateOneWithoutUserInput!
+  transactions: TransactionCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutIdentityInput {
+  bio: String
+  email: String!
+  nameFirst: String!
+  nameLast: String!
+  picture: String
+  securityToken: Int!
+  username: String!
+  circles: CirclesCreateManyWithoutUsersInput
+  dots: DotsCreateManyWithoutUserInput
+  followedCharities: CharityCreateManyWithoutFollowersInput
+  halos: HalosCreateManyWithoutUserInput
+  loops: LoopsCreateManyWithoutUserInput
+  preferences: PreferencesCreateOneWithoutUserInput!
+  transactions: TransactionCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutLoopsInput {
+  bio: String
+  email: String!
+  nameFirst: String!
+  nameLast: String!
+  picture: String
+  securityToken: Int!
+  username: String!
+  circles: CirclesCreateManyWithoutUsersInput
+  dots: DotsCreateManyWithoutUserInput
+  followedCharities: CharityCreateManyWithoutFollowersInput
+  halos: HalosCreateManyWithoutUserInput
+  identity: IdentityCreateOneWithoutUserInput!
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutPreferencesInput {
+  bio: String
   email: String!
   nameFirst: String!
   nameLast: String!
+  picture: String
   securityToken: Int!
+  username: String!
+  circles: CirclesCreateManyWithoutUsersInput
+  dots: DotsCreateManyWithoutUserInput
+  followedCharities: CharityCreateManyWithoutFollowersInput
+  halos: HalosCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
+  loops: LoopsCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutTransactionsInput {
+  bio: String
   email: String!
   nameFirst: String!
   nameLast: String!
+  picture: String
   securityToken: Int!
+  username: String!
+  circles: CirclesCreateManyWithoutUsersInput
+  dots: DotsCreateManyWithoutUserInput
+  followedCharities: CharityCreateManyWithoutFollowersInput
+  halos: HalosCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
+  loops: LoopsCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
 }
 
@@ -2800,154 +5806,44 @@ enum UserOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  bio_ASC
+  bio_DESC
   email_ASC
   email_DESC
   nameFirst_ASC
   nameFirst_DESC
   nameLast_ASC
   nameLast_DESC
+  picture_ASC
+  picture_DESC
   securityToken_ASC
   securityToken_DESC
+  username_ASC
+  username_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  bio: String
   email: String!
   nameFirst: String!
   nameLast: String!
+  picture: String
   securityToken: Int!
+  username: String!
 }
 
-type UserSubscriptionPayload {
-  mutation: MutationType!
-  node: User
-  updatedFields: [String!]
-  previousValues: UserPreviousValues
-}
-
-input UserSubscriptionWhereInput {
+input UserScalarWhereInput {
   """Logical AND on all given filters."""
-  AND: [UserSubscriptionWhereInput!]
+  AND: [UserScalarWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [UserSubscriptionWhereInput!]
+  OR: [UserScalarWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [UserSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: UserWhereInput
-}
-
-input UserUpdateInput {
-  email: String
-  nameFirst: String
-  nameLast: String
-  securityToken: Int
-  identity: IdentityUpdateOneRequiredWithoutUserInput
-  preferences: PreferencesUpdateOneRequiredWithoutUserInput
-  transactions: TransactionUpdateManyWithoutUserInput
-}
-
-input UserUpdateManyInput {
-  email: String
-  nameFirst: String
-  nameLast: String
-  securityToken: Int
-}
-
-input UserUpdateOneRequiredWithoutIdentityInput {
-  create: UserCreateWithoutIdentityInput
-  connect: UserWhereUniqueInput
-  update: UserUpdateWithoutIdentityDataInput
-  upsert: UserUpsertWithoutIdentityInput
-}
-
-input UserUpdateOneRequiredWithoutPreferencesInput {
-  create: UserCreateWithoutPreferencesInput
-  connect: UserWhereUniqueInput
-  update: UserUpdateWithoutPreferencesDataInput
-  upsert: UserUpsertWithoutPreferencesInput
-}
-
-input UserUpdateOneRequiredWithoutTransactionsInput {
-  create: UserCreateWithoutTransactionsInput
-  connect: UserWhereUniqueInput
-  update: UserUpdateWithoutTransactionsDataInput
-  upsert: UserUpsertWithoutTransactionsInput
-}
-
-input UserUpdateWithoutIdentityDataInput {
-  email: String
-  nameFirst: String
-  nameLast: String
-  securityToken: Int
-  preferences: PreferencesUpdateOneRequiredWithoutUserInput
-  transactions: TransactionUpdateManyWithoutUserInput
-}
-
-input UserUpdateWithoutPreferencesDataInput {
-  email: String
-  nameFirst: String
-  nameLast: String
-  securityToken: Int
-  identity: IdentityUpdateOneRequiredWithoutUserInput
-  transactions: TransactionUpdateManyWithoutUserInput
-}
-
-input UserUpdateWithoutTransactionsDataInput {
-  email: String
-  nameFirst: String
-  nameLast: String
-  securityToken: Int
-  identity: IdentityUpdateOneRequiredWithoutUserInput
-  preferences: PreferencesUpdateOneRequiredWithoutUserInput
-}
-
-input UserUpsertWithoutIdentityInput {
-  update: UserUpdateWithoutIdentityDataInput!
-  create: UserCreateWithoutIdentityInput!
-}
-
-input UserUpsertWithoutPreferencesInput {
-  update: UserUpdateWithoutPreferencesDataInput!
-  create: UserCreateWithoutPreferencesInput!
-}
-
-input UserUpsertWithoutTransactionsInput {
-  update: UserUpdateWithoutTransactionsDataInput!
-  create: UserCreateWithoutTransactionsInput!
-}
-
-input UserWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserWhereInput!]
+  NOT: [UserScalarWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -3032,6 +5928,46 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  bio: String
+
+  """All values that are not equal to given value."""
+  bio_not: String
+
+  """All values that are contained in given list."""
+  bio_in: [String!]
+
+  """All values that are not contained in given list."""
+  bio_not_in: [String!]
+
+  """All values less than the given value."""
+  bio_lt: String
+
+  """All values less than or equal the given value."""
+  bio_lte: String
+
+  """All values greater than the given value."""
+  bio_gt: String
+
+  """All values greater than or equal the given value."""
+  bio_gte: String
+
+  """All values containing the given string."""
+  bio_contains: String
+
+  """All values not containing the given string."""
+  bio_not_contains: String
+
+  """All values starting with the given string."""
+  bio_starts_with: String
+
+  """All values not starting with the given string."""
+  bio_not_starts_with: String
+
+  """All values ending with the given string."""
+  bio_ends_with: String
+
+  """All values not ending with the given string."""
+  bio_not_ends_with: String
   email: String
 
   """All values that are not equal to given value."""
@@ -3152,6 +6088,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   nameLast_not_ends_with: String
+  picture: String
+
+  """All values that are not equal to given value."""
+  picture_not: String
+
+  """All values that are contained in given list."""
+  picture_in: [String!]
+
+  """All values that are not contained in given list."""
+  picture_not_in: [String!]
+
+  """All values less than the given value."""
+  picture_lt: String
+
+  """All values less than or equal the given value."""
+  picture_lte: String
+
+  """All values greater than the given value."""
+  picture_gt: String
+
+  """All values greater than or equal the given value."""
+  picture_gte: String
+
+  """All values containing the given string."""
+  picture_contains: String
+
+  """All values not containing the given string."""
+  picture_not_contains: String
+
+  """All values starting with the given string."""
+  picture_starts_with: String
+
+  """All values not starting with the given string."""
+  picture_not_starts_with: String
+
+  """All values ending with the given string."""
+  picture_ends_with: String
+
+  """All values not ending with the given string."""
+  picture_not_ends_with: String
   securityToken: Int
 
   """All values that are not equal to given value."""
@@ -3174,7 +6150,753 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   securityToken_gte: Int
+  username: String
+
+  """All values that are not equal to given value."""
+  username_not: String
+
+  """All values that are contained in given list."""
+  username_in: [String!]
+
+  """All values that are not contained in given list."""
+  username_not_in: [String!]
+
+  """All values less than the given value."""
+  username_lt: String
+
+  """All values less than or equal the given value."""
+  username_lte: String
+
+  """All values greater than the given value."""
+  username_gt: String
+
+  """All values greater than or equal the given value."""
+  username_gte: String
+
+  """All values containing the given string."""
+  username_contains: String
+
+  """All values not containing the given string."""
+  username_not_contains: String
+
+  """All values starting with the given string."""
+  username_starts_with: String
+
+  """All values not starting with the given string."""
+  username_not_starts_with: String
+
+  """All values ending with the given string."""
+  username_ends_with: String
+
+  """All values not ending with the given string."""
+  username_not_ends_with: String
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+}
+
+input UserUpdateInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+  circles: CirclesUpdateManyWithoutUsersInput
+  dots: DotsUpdateManyWithoutUserInput
+  followedCharities: CharityUpdateManyWithoutFollowersInput
+  halos: HalosUpdateManyWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  loops: LoopsUpdateManyWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+}
+
+input UserUpdateManyDataInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+}
+
+input UserUpdateManyMutationInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+}
+
+input UserUpdateManyWithoutCirclesInput {
+  create: [UserCreateWithoutCirclesInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutCirclesInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+  deleteMany: [UserScalarWhereInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutCirclesInput!]
+}
+
+input UserUpdateManyWithoutFollowedCharitiesInput {
+  create: [UserCreateWithoutFollowedCharitiesInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+  deleteMany: [UserScalarWhereInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneRequiredWithoutDotsInput {
+  create: UserCreateWithoutDotsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutDotsDataInput
+  upsert: UserUpsertWithoutDotsInput
+}
+
+input UserUpdateOneRequiredWithoutHalosInput {
+  create: UserCreateWithoutHalosInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutHalosDataInput
+  upsert: UserUpsertWithoutHalosInput
+}
+
+input UserUpdateOneRequiredWithoutIdentityInput {
+  create: UserCreateWithoutIdentityInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutIdentityDataInput
+  upsert: UserUpsertWithoutIdentityInput
+}
+
+input UserUpdateOneRequiredWithoutLoopsInput {
+  create: UserCreateWithoutLoopsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutLoopsDataInput
+  upsert: UserUpsertWithoutLoopsInput
+}
+
+input UserUpdateOneRequiredWithoutPreferencesInput {
+  create: UserCreateWithoutPreferencesInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutPreferencesDataInput
+  upsert: UserUpsertWithoutPreferencesInput
+}
+
+input UserUpdateOneRequiredWithoutTransactionsInput {
+  create: UserCreateWithoutTransactionsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutTransactionsDataInput
+  upsert: UserUpsertWithoutTransactionsInput
+}
+
+input UserUpdateWithoutCirclesDataInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+  dots: DotsUpdateManyWithoutUserInput
+  followedCharities: CharityUpdateManyWithoutFollowersInput
+  halos: HalosUpdateManyWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  loops: LoopsUpdateManyWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutDotsDataInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+  circles: CirclesUpdateManyWithoutUsersInput
+  followedCharities: CharityUpdateManyWithoutFollowersInput
+  halos: HalosUpdateManyWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  loops: LoopsUpdateManyWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutFollowedCharitiesDataInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+  circles: CirclesUpdateManyWithoutUsersInput
+  dots: DotsUpdateManyWithoutUserInput
+  halos: HalosUpdateManyWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  loops: LoopsUpdateManyWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutHalosDataInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+  circles: CirclesUpdateManyWithoutUsersInput
+  dots: DotsUpdateManyWithoutUserInput
+  followedCharities: CharityUpdateManyWithoutFollowersInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  loops: LoopsUpdateManyWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutIdentityDataInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+  circles: CirclesUpdateManyWithoutUsersInput
+  dots: DotsUpdateManyWithoutUserInput
+  followedCharities: CharityUpdateManyWithoutFollowersInput
+  halos: HalosUpdateManyWithoutUserInput
+  loops: LoopsUpdateManyWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutLoopsDataInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+  circles: CirclesUpdateManyWithoutUsersInput
+  dots: DotsUpdateManyWithoutUserInput
+  followedCharities: CharityUpdateManyWithoutFollowersInput
+  halos: HalosUpdateManyWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutPreferencesDataInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+  circles: CirclesUpdateManyWithoutUsersInput
+  dots: DotsUpdateManyWithoutUserInput
+  followedCharities: CharityUpdateManyWithoutFollowersInput
+  halos: HalosUpdateManyWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  loops: LoopsUpdateManyWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutTransactionsDataInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+  circles: CirclesUpdateManyWithoutUsersInput
+  dots: DotsUpdateManyWithoutUserInput
+  followedCharities: CharityUpdateManyWithoutFollowersInput
+  halos: HalosUpdateManyWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  loops: LoopsUpdateManyWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+}
+
+input UserUpdateWithWhereUniqueWithoutCirclesInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutCirclesDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutFollowedCharitiesDataInput!
+}
+
+input UserUpsertWithoutDotsInput {
+  update: UserUpdateWithoutDotsDataInput!
+  create: UserCreateWithoutDotsInput!
+}
+
+input UserUpsertWithoutHalosInput {
+  update: UserUpdateWithoutHalosDataInput!
+  create: UserCreateWithoutHalosInput!
+}
+
+input UserUpsertWithoutIdentityInput {
+  update: UserUpdateWithoutIdentityDataInput!
+  create: UserCreateWithoutIdentityInput!
+}
+
+input UserUpsertWithoutLoopsInput {
+  update: UserUpdateWithoutLoopsDataInput!
+  create: UserCreateWithoutLoopsInput!
+}
+
+input UserUpsertWithoutPreferencesInput {
+  update: UserUpdateWithoutPreferencesDataInput!
+  create: UserCreateWithoutPreferencesInput!
+}
+
+input UserUpsertWithoutTransactionsInput {
+  update: UserUpdateWithoutTransactionsDataInput!
+  create: UserCreateWithoutTransactionsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutCirclesInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutCirclesDataInput!
+  create: UserCreateWithoutCirclesInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutFollowedCharitiesDataInput!
+  create: UserCreateWithoutFollowedCharitiesInput!
+}
+
+input UserWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  bio: String
+
+  """All values that are not equal to given value."""
+  bio_not: String
+
+  """All values that are contained in given list."""
+  bio_in: [String!]
+
+  """All values that are not contained in given list."""
+  bio_not_in: [String!]
+
+  """All values less than the given value."""
+  bio_lt: String
+
+  """All values less than or equal the given value."""
+  bio_lte: String
+
+  """All values greater than the given value."""
+  bio_gt: String
+
+  """All values greater than or equal the given value."""
+  bio_gte: String
+
+  """All values containing the given string."""
+  bio_contains: String
+
+  """All values not containing the given string."""
+  bio_not_contains: String
+
+  """All values starting with the given string."""
+  bio_starts_with: String
+
+  """All values not starting with the given string."""
+  bio_not_starts_with: String
+
+  """All values ending with the given string."""
+  bio_ends_with: String
+
+  """All values not ending with the given string."""
+  bio_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  nameFirst: String
+
+  """All values that are not equal to given value."""
+  nameFirst_not: String
+
+  """All values that are contained in given list."""
+  nameFirst_in: [String!]
+
+  """All values that are not contained in given list."""
+  nameFirst_not_in: [String!]
+
+  """All values less than the given value."""
+  nameFirst_lt: String
+
+  """All values less than or equal the given value."""
+  nameFirst_lte: String
+
+  """All values greater than the given value."""
+  nameFirst_gt: String
+
+  """All values greater than or equal the given value."""
+  nameFirst_gte: String
+
+  """All values containing the given string."""
+  nameFirst_contains: String
+
+  """All values not containing the given string."""
+  nameFirst_not_contains: String
+
+  """All values starting with the given string."""
+  nameFirst_starts_with: String
+
+  """All values not starting with the given string."""
+  nameFirst_not_starts_with: String
+
+  """All values ending with the given string."""
+  nameFirst_ends_with: String
+
+  """All values not ending with the given string."""
+  nameFirst_not_ends_with: String
+  nameLast: String
+
+  """All values that are not equal to given value."""
+  nameLast_not: String
+
+  """All values that are contained in given list."""
+  nameLast_in: [String!]
+
+  """All values that are not contained in given list."""
+  nameLast_not_in: [String!]
+
+  """All values less than the given value."""
+  nameLast_lt: String
+
+  """All values less than or equal the given value."""
+  nameLast_lte: String
+
+  """All values greater than the given value."""
+  nameLast_gt: String
+
+  """All values greater than or equal the given value."""
+  nameLast_gte: String
+
+  """All values containing the given string."""
+  nameLast_contains: String
+
+  """All values not containing the given string."""
+  nameLast_not_contains: String
+
+  """All values starting with the given string."""
+  nameLast_starts_with: String
+
+  """All values not starting with the given string."""
+  nameLast_not_starts_with: String
+
+  """All values ending with the given string."""
+  nameLast_ends_with: String
+
+  """All values not ending with the given string."""
+  nameLast_not_ends_with: String
+  picture: String
+
+  """All values that are not equal to given value."""
+  picture_not: String
+
+  """All values that are contained in given list."""
+  picture_in: [String!]
+
+  """All values that are not contained in given list."""
+  picture_not_in: [String!]
+
+  """All values less than the given value."""
+  picture_lt: String
+
+  """All values less than or equal the given value."""
+  picture_lte: String
+
+  """All values greater than the given value."""
+  picture_gt: String
+
+  """All values greater than or equal the given value."""
+  picture_gte: String
+
+  """All values containing the given string."""
+  picture_contains: String
+
+  """All values not containing the given string."""
+  picture_not_contains: String
+
+  """All values starting with the given string."""
+  picture_starts_with: String
+
+  """All values not starting with the given string."""
+  picture_not_starts_with: String
+
+  """All values ending with the given string."""
+  picture_ends_with: String
+
+  """All values not ending with the given string."""
+  picture_not_ends_with: String
+  securityToken: Int
+
+  """All values that are not equal to given value."""
+  securityToken_not: Int
+
+  """All values that are contained in given list."""
+  securityToken_in: [Int!]
+
+  """All values that are not contained in given list."""
+  securityToken_not_in: [Int!]
+
+  """All values less than the given value."""
+  securityToken_lt: Int
+
+  """All values less than or equal the given value."""
+  securityToken_lte: Int
+
+  """All values greater than the given value."""
+  securityToken_gt: Int
+
+  """All values greater than or equal the given value."""
+  securityToken_gte: Int
+  username: String
+
+  """All values that are not equal to given value."""
+  username_not: String
+
+  """All values that are contained in given list."""
+  username_in: [String!]
+
+  """All values that are not contained in given list."""
+  username_not_in: [String!]
+
+  """All values less than the given value."""
+  username_lt: String
+
+  """All values less than or equal the given value."""
+  username_lte: String
+
+  """All values greater than the given value."""
+  username_gt: String
+
+  """All values greater than or equal the given value."""
+  username_gte: String
+
+  """All values containing the given string."""
+  username_contains: String
+
+  """All values not containing the given string."""
+  username_not_contains: String
+
+  """All values starting with the given string."""
+  username_starts_with: String
+
+  """All values not starting with the given string."""
+  username_not_starts_with: String
+
+  """All values ending with the given string."""
+  username_ends_with: String
+
+  """All values not ending with the given string."""
+  username_not_ends_with: String
+  circles_every: CirclesWhereInput
+  circles_some: CirclesWhereInput
+  circles_none: CirclesWhereInput
+  dots_every: DotsWhereInput
+  dots_some: DotsWhereInput
+  dots_none: DotsWhereInput
+  followedCharities_every: CharityWhereInput
+  followedCharities_some: CharityWhereInput
+  followedCharities_none: CharityWhereInput
+  halos_every: HalosWhereInput
+  halos_some: HalosWhereInput
+  halos_none: HalosWhereInput
   identity: IdentityWhereInput
+  loops_every: LoopsWhereInput
+  loops_some: LoopsWhereInput
+  loops_none: LoopsWhereInput
   preferences: PreferencesWhereInput
   transactions_every: TransactionWhereInput
   transactions_some: TransactionWhereInput
@@ -3183,4 +6905,5 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  username: String
 }
