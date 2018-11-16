@@ -1,6 +1,8 @@
 const _prisma = require('./Queries/_prisma');
 const currentUser = require('./Queries/currentUser');
 const events = require('./Queries/events');
+const grabDots = require('./Queries/grabDots');
+const grabLoops = require('./Queries/grabLoops');
 const grabUserBalance = require('./Queries/grabUserBalance');
 const transactionsAggregate = require('./Queries/transactionsAggregate');
 
@@ -18,6 +20,8 @@ module.exports = {
     ..._prisma,
     currentUser,
     ...events,
+    grabDots,
+    grabLoops,
     grabUserBalance,
     transactionsAggregate,
   },

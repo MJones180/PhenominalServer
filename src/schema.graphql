@@ -17,7 +17,17 @@ type Query {
   eventsPast(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
   eventsUpcoming(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
   transactionsAggregate(forEvent: String, forUser: Boolean): transactionsAggregatePayload!
+  grabDots(username: String): grabDotsPayload!
+  grabLoops(username: String): grabLoopsPayload!
   grabUserBalance: grabUserBalancePayload
+}
+
+type grabDotsPayload {
+  total: Int!
+}
+
+type grabLoopsPayload {
+  count: Int!
 }
 
 type addFundsPayload {

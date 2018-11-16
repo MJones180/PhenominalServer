@@ -1,15 +1,15 @@
 # source: https://us1.prisma.sh/michael-jones/phenominal/dev
-# timestamp: Mon Nov 12 2018 18:43:47 GMT-0500 (Eastern Standard Time)
+# timestamp: Mon Nov 12 2018 20:04:37 GMT-0500 (Eastern Standard Time)
 
 type AggregateCharity {
   count: Int!
 }
 
-type AggregateCircles {
+type AggregateCircle {
   count: Int!
 }
 
-type AggregateDots {
+type AggregateDot {
   count: Int!
 }
 
@@ -17,7 +17,7 @@ type AggregateEvent {
   count: Int!
 }
 
-type AggregateHalos {
+type AggregateHalo {
   count: Int!
 }
 
@@ -25,7 +25,7 @@ type AggregateIdentity {
   count: Int!
 }
 
-type AggregateLoops {
+type AggregateLoop {
   count: Int!
 }
 
@@ -1467,7 +1467,7 @@ input CharityWhereUniqueInput {
   ein: String
 }
 
-type Circles implements Node {
+type Circle implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -1477,41 +1477,41 @@ type Circles implements Node {
 }
 
 """A connection to a list of items."""
-type CirclesConnection {
+type CircleConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [CirclesEdge]!
-  aggregate: AggregateCircles!
+  edges: [CircleEdge]!
+  aggregate: AggregateCircle!
 }
 
-input CirclesCreateInput {
+input CircleCreateInput {
   description: String
   name: String!
   users: UserCreateManyWithoutCirclesInput
 }
 
-input CirclesCreateManyWithoutUsersInput {
-  create: [CirclesCreateWithoutUsersInput!]
-  connect: [CirclesWhereUniqueInput!]
+input CircleCreateManyWithoutUsersInput {
+  create: [CircleCreateWithoutUsersInput!]
+  connect: [CircleWhereUniqueInput!]
 }
 
-input CirclesCreateWithoutUsersInput {
+input CircleCreateWithoutUsersInput {
   description: String
   name: String!
 }
 
 """An edge in a connection."""
-type CirclesEdge {
+type CircleEdge {
   """The item at the end of the edge."""
-  node: Circles!
+  node: Circle!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum CirclesOrderByInput {
+enum CircleOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
@@ -1524,7 +1524,7 @@ enum CirclesOrderByInput {
   name_DESC
 }
 
-type CirclesPreviousValues {
+type CirclePreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -1532,15 +1532,15 @@ type CirclesPreviousValues {
   name: String!
 }
 
-input CirclesScalarWhereInput {
+input CircleScalarWhereInput {
   """Logical AND on all given filters."""
-  AND: [CirclesScalarWhereInput!]
+  AND: [CircleScalarWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [CirclesScalarWhereInput!]
+  OR: [CircleScalarWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [CirclesScalarWhereInput!]
+  NOT: [CircleScalarWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -1707,22 +1707,22 @@ input CirclesScalarWhereInput {
   name_not_ends_with: String
 }
 
-type CirclesSubscriptionPayload {
+type CircleSubscriptionPayload {
   mutation: MutationType!
-  node: Circles
+  node: Circle
   updatedFields: [String!]
-  previousValues: CirclesPreviousValues
+  previousValues: CirclePreviousValues
 }
 
-input CirclesSubscriptionWhereInput {
+input CircleSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [CirclesSubscriptionWhereInput!]
+  AND: [CircleSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [CirclesSubscriptionWhereInput!]
+  OR: [CircleSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [CirclesSubscriptionWhereInput!]
+  NOT: [CircleSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -1743,66 +1743,66 @@ input CirclesSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: CirclesWhereInput
+  node: CircleWhereInput
 }
 
-input CirclesUpdateInput {
+input CircleUpdateInput {
   description: String
   name: String
   users: UserUpdateManyWithoutCirclesInput
 }
 
-input CirclesUpdateManyDataInput {
+input CircleUpdateManyDataInput {
   description: String
   name: String
 }
 
-input CirclesUpdateManyMutationInput {
+input CircleUpdateManyMutationInput {
   description: String
   name: String
 }
 
-input CirclesUpdateManyWithoutUsersInput {
-  create: [CirclesCreateWithoutUsersInput!]
-  connect: [CirclesWhereUniqueInput!]
-  disconnect: [CirclesWhereUniqueInput!]
-  delete: [CirclesWhereUniqueInput!]
-  update: [CirclesUpdateWithWhereUniqueWithoutUsersInput!]
-  updateMany: [CirclesUpdateManyWithWhereNestedInput!]
-  deleteMany: [CirclesScalarWhereInput!]
-  upsert: [CirclesUpsertWithWhereUniqueWithoutUsersInput!]
+input CircleUpdateManyWithoutUsersInput {
+  create: [CircleCreateWithoutUsersInput!]
+  connect: [CircleWhereUniqueInput!]
+  disconnect: [CircleWhereUniqueInput!]
+  delete: [CircleWhereUniqueInput!]
+  update: [CircleUpdateWithWhereUniqueWithoutUsersInput!]
+  updateMany: [CircleUpdateManyWithWhereNestedInput!]
+  deleteMany: [CircleScalarWhereInput!]
+  upsert: [CircleUpsertWithWhereUniqueWithoutUsersInput!]
 }
 
-input CirclesUpdateManyWithWhereNestedInput {
-  where: CirclesScalarWhereInput!
-  data: CirclesUpdateManyDataInput!
+input CircleUpdateManyWithWhereNestedInput {
+  where: CircleScalarWhereInput!
+  data: CircleUpdateManyDataInput!
 }
 
-input CirclesUpdateWithoutUsersDataInput {
+input CircleUpdateWithoutUsersDataInput {
   description: String
   name: String
 }
 
-input CirclesUpdateWithWhereUniqueWithoutUsersInput {
-  where: CirclesWhereUniqueInput!
-  data: CirclesUpdateWithoutUsersDataInput!
+input CircleUpdateWithWhereUniqueWithoutUsersInput {
+  where: CircleWhereUniqueInput!
+  data: CircleUpdateWithoutUsersDataInput!
 }
 
-input CirclesUpsertWithWhereUniqueWithoutUsersInput {
-  where: CirclesWhereUniqueInput!
-  update: CirclesUpdateWithoutUsersDataInput!
-  create: CirclesCreateWithoutUsersInput!
+input CircleUpsertWithWhereUniqueWithoutUsersInput {
+  where: CircleWhereUniqueInput!
+  update: CircleUpdateWithoutUsersDataInput!
+  create: CircleCreateWithoutUsersInput!
 }
 
-input CirclesWhereInput {
+input CircleWhereInput {
   """Logical AND on all given filters."""
-  AND: [CirclesWhereInput!]
+  AND: [CircleWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [CirclesWhereInput!]
+  OR: [CircleWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [CirclesWhereInput!]
+  NOT: [CircleWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -1972,13 +1972,13 @@ input CirclesWhereInput {
   users_none: UserWhereInput
 }
 
-input CirclesWhereUniqueInput {
+input CircleWhereUniqueInput {
   id: ID
 }
 
 scalar DateTime
 
-type Dots implements Node {
+type Dot implements Node {
   id: ID!
   createdAt: DateTime!
   action: String!
@@ -1988,43 +1988,43 @@ type Dots implements Node {
 }
 
 """A connection to a list of items."""
-type DotsConnection {
+type DotConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [DotsEdge]!
-  aggregate: AggregateDots!
+  edges: [DotEdge]!
+  aggregate: AggregateDot!
 }
 
-input DotsCreateInput {
+input DotCreateInput {
   action: String!
   amount: Int!
   total: Int!
   user: UserCreateOneWithoutDotsInput!
 }
 
-input DotsCreateManyWithoutUserInput {
-  create: [DotsCreateWithoutUserInput!]
-  connect: [DotsWhereUniqueInput!]
+input DotCreateManyWithoutUserInput {
+  create: [DotCreateWithoutUserInput!]
+  connect: [DotWhereUniqueInput!]
 }
 
-input DotsCreateWithoutUserInput {
+input DotCreateWithoutUserInput {
   action: String!
   amount: Int!
   total: Int!
 }
 
 """An edge in a connection."""
-type DotsEdge {
+type DotEdge {
   """The item at the end of the edge."""
-  node: Dots!
+  node: Dot!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum DotsOrderByInput {
+enum DotOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
@@ -2039,7 +2039,7 @@ enum DotsOrderByInput {
   updatedAt_DESC
 }
 
-type DotsPreviousValues {
+type DotPreviousValues {
   id: ID!
   createdAt: DateTime!
   action: String!
@@ -2047,15 +2047,15 @@ type DotsPreviousValues {
   total: Int!
 }
 
-input DotsScalarWhereInput {
+input DotScalarWhereInput {
   """Logical AND on all given filters."""
-  AND: [DotsScalarWhereInput!]
+  AND: [DotScalarWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [DotsScalarWhereInput!]
+  OR: [DotScalarWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [DotsScalarWhereInput!]
+  NOT: [DotScalarWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -2204,22 +2204,22 @@ input DotsScalarWhereInput {
   total_gte: Int
 }
 
-type DotsSubscriptionPayload {
+type DotSubscriptionPayload {
   mutation: MutationType!
-  node: Dots
+  node: Dot
   updatedFields: [String!]
-  previousValues: DotsPreviousValues
+  previousValues: DotPreviousValues
 }
 
-input DotsSubscriptionWhereInput {
+input DotSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [DotsSubscriptionWhereInput!]
+  AND: [DotSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [DotsSubscriptionWhereInput!]
+  OR: [DotSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [DotsSubscriptionWhereInput!]
+  NOT: [DotSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -2240,70 +2240,70 @@ input DotsSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: DotsWhereInput
+  node: DotWhereInput
 }
 
-input DotsUpdateInput {
+input DotUpdateInput {
   action: String
   amount: Int
   total: Int
   user: UserUpdateOneRequiredWithoutDotsInput
 }
 
-input DotsUpdateManyDataInput {
+input DotUpdateManyDataInput {
   action: String
   amount: Int
   total: Int
 }
 
-input DotsUpdateManyMutationInput {
+input DotUpdateManyMutationInput {
   action: String
   amount: Int
   total: Int
 }
 
-input DotsUpdateManyWithoutUserInput {
-  create: [DotsCreateWithoutUserInput!]
-  connect: [DotsWhereUniqueInput!]
-  disconnect: [DotsWhereUniqueInput!]
-  delete: [DotsWhereUniqueInput!]
-  update: [DotsUpdateWithWhereUniqueWithoutUserInput!]
-  updateMany: [DotsUpdateManyWithWhereNestedInput!]
-  deleteMany: [DotsScalarWhereInput!]
-  upsert: [DotsUpsertWithWhereUniqueWithoutUserInput!]
+input DotUpdateManyWithoutUserInput {
+  create: [DotCreateWithoutUserInput!]
+  connect: [DotWhereUniqueInput!]
+  disconnect: [DotWhereUniqueInput!]
+  delete: [DotWhereUniqueInput!]
+  update: [DotUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [DotUpdateManyWithWhereNestedInput!]
+  deleteMany: [DotScalarWhereInput!]
+  upsert: [DotUpsertWithWhereUniqueWithoutUserInput!]
 }
 
-input DotsUpdateManyWithWhereNestedInput {
-  where: DotsScalarWhereInput!
-  data: DotsUpdateManyDataInput!
+input DotUpdateManyWithWhereNestedInput {
+  where: DotScalarWhereInput!
+  data: DotUpdateManyDataInput!
 }
 
-input DotsUpdateWithoutUserDataInput {
+input DotUpdateWithoutUserDataInput {
   action: String
   amount: Int
   total: Int
 }
 
-input DotsUpdateWithWhereUniqueWithoutUserInput {
-  where: DotsWhereUniqueInput!
-  data: DotsUpdateWithoutUserDataInput!
+input DotUpdateWithWhereUniqueWithoutUserInput {
+  where: DotWhereUniqueInput!
+  data: DotUpdateWithoutUserDataInput!
 }
 
-input DotsUpsertWithWhereUniqueWithoutUserInput {
-  where: DotsWhereUniqueInput!
-  update: DotsUpdateWithoutUserDataInput!
-  create: DotsCreateWithoutUserInput!
+input DotUpsertWithWhereUniqueWithoutUserInput {
+  where: DotWhereUniqueInput!
+  update: DotUpdateWithoutUserDataInput!
+  create: DotCreateWithoutUserInput!
 }
 
-input DotsWhereInput {
+input DotWhereInput {
   """Logical AND on all given filters."""
-  AND: [DotsWhereInput!]
+  AND: [DotWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [DotsWhereInput!]
+  OR: [DotWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [DotsWhereInput!]
+  NOT: [DotWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -2453,7 +2453,7 @@ input DotsWhereInput {
   user: UserWhereInput
 }
 
-input DotsWhereUniqueInput {
+input DotWhereUniqueInput {
   id: ID
 }
 
@@ -3303,7 +3303,7 @@ input EventWhereUniqueInput {
   id: ID
 }
 
-type Halos implements Node {
+type Halo implements Node {
   id: ID!
   createdAt: DateTime!
   key: String!
@@ -3311,39 +3311,39 @@ type Halos implements Node {
 }
 
 """A connection to a list of items."""
-type HalosConnection {
+type HaloConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [HalosEdge]!
-  aggregate: AggregateHalos!
+  edges: [HaloEdge]!
+  aggregate: AggregateHalo!
 }
 
-input HalosCreateInput {
+input HaloCreateInput {
   key: String!
   user: UserCreateOneWithoutHalosInput!
 }
 
-input HalosCreateManyWithoutUserInput {
-  create: [HalosCreateWithoutUserInput!]
-  connect: [HalosWhereUniqueInput!]
+input HaloCreateManyWithoutUserInput {
+  create: [HaloCreateWithoutUserInput!]
+  connect: [HaloWhereUniqueInput!]
 }
 
-input HalosCreateWithoutUserInput {
+input HaloCreateWithoutUserInput {
   key: String!
 }
 
 """An edge in a connection."""
-type HalosEdge {
+type HaloEdge {
   """The item at the end of the edge."""
-  node: Halos!
+  node: Halo!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum HalosOrderByInput {
+enum HaloOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
@@ -3354,21 +3354,21 @@ enum HalosOrderByInput {
   updatedAt_DESC
 }
 
-type HalosPreviousValues {
+type HaloPreviousValues {
   id: ID!
   createdAt: DateTime!
   key: String!
 }
 
-input HalosScalarWhereInput {
+input HaloScalarWhereInput {
   """Logical AND on all given filters."""
-  AND: [HalosScalarWhereInput!]
+  AND: [HaloScalarWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [HalosScalarWhereInput!]
+  OR: [HaloScalarWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [HalosScalarWhereInput!]
+  NOT: [HaloScalarWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -3473,22 +3473,22 @@ input HalosScalarWhereInput {
   key_not_ends_with: String
 }
 
-type HalosSubscriptionPayload {
+type HaloSubscriptionPayload {
   mutation: MutationType!
-  node: Halos
+  node: Halo
   updatedFields: [String!]
-  previousValues: HalosPreviousValues
+  previousValues: HaloPreviousValues
 }
 
-input HalosSubscriptionWhereInput {
+input HaloSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [HalosSubscriptionWhereInput!]
+  AND: [HaloSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [HalosSubscriptionWhereInput!]
+  OR: [HaloSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [HalosSubscriptionWhereInput!]
+  NOT: [HaloSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -3509,62 +3509,62 @@ input HalosSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: HalosWhereInput
+  node: HaloWhereInput
 }
 
-input HalosUpdateInput {
+input HaloUpdateInput {
   key: String
   user: UserUpdateOneRequiredWithoutHalosInput
 }
 
-input HalosUpdateManyDataInput {
+input HaloUpdateManyDataInput {
   key: String
 }
 
-input HalosUpdateManyMutationInput {
+input HaloUpdateManyMutationInput {
   key: String
 }
 
-input HalosUpdateManyWithoutUserInput {
-  create: [HalosCreateWithoutUserInput!]
-  connect: [HalosWhereUniqueInput!]
-  disconnect: [HalosWhereUniqueInput!]
-  delete: [HalosWhereUniqueInput!]
-  update: [HalosUpdateWithWhereUniqueWithoutUserInput!]
-  updateMany: [HalosUpdateManyWithWhereNestedInput!]
-  deleteMany: [HalosScalarWhereInput!]
-  upsert: [HalosUpsertWithWhereUniqueWithoutUserInput!]
+input HaloUpdateManyWithoutUserInput {
+  create: [HaloCreateWithoutUserInput!]
+  connect: [HaloWhereUniqueInput!]
+  disconnect: [HaloWhereUniqueInput!]
+  delete: [HaloWhereUniqueInput!]
+  update: [HaloUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [HaloUpdateManyWithWhereNestedInput!]
+  deleteMany: [HaloScalarWhereInput!]
+  upsert: [HaloUpsertWithWhereUniqueWithoutUserInput!]
 }
 
-input HalosUpdateManyWithWhereNestedInput {
-  where: HalosScalarWhereInput!
-  data: HalosUpdateManyDataInput!
+input HaloUpdateManyWithWhereNestedInput {
+  where: HaloScalarWhereInput!
+  data: HaloUpdateManyDataInput!
 }
 
-input HalosUpdateWithoutUserDataInput {
+input HaloUpdateWithoutUserDataInput {
   key: String
 }
 
-input HalosUpdateWithWhereUniqueWithoutUserInput {
-  where: HalosWhereUniqueInput!
-  data: HalosUpdateWithoutUserDataInput!
+input HaloUpdateWithWhereUniqueWithoutUserInput {
+  where: HaloWhereUniqueInput!
+  data: HaloUpdateWithoutUserDataInput!
 }
 
-input HalosUpsertWithWhereUniqueWithoutUserInput {
-  where: HalosWhereUniqueInput!
-  update: HalosUpdateWithoutUserDataInput!
-  create: HalosCreateWithoutUserInput!
+input HaloUpsertWithWhereUniqueWithoutUserInput {
+  where: HaloWhereUniqueInput!
+  update: HaloUpdateWithoutUserDataInput!
+  create: HaloCreateWithoutUserInput!
 }
 
-input HalosWhereInput {
+input HaloWhereInput {
   """Logical AND on all given filters."""
-  AND: [HalosWhereInput!]
+  AND: [HaloWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [HalosWhereInput!]
+  OR: [HaloWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [HalosWhereInput!]
+  NOT: [HaloWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -3670,7 +3670,7 @@ input HalosWhereInput {
   user: UserWhereInput
 }
 
-input HalosWhereUniqueInput {
+input HaloWhereUniqueInput {
   id: ID
 }
 
@@ -3968,7 +3968,7 @@ Long can represent values between -(2^63) and 2^63 - 1.
 """
 scalar Long
 
-type Loops implements Node {
+type Loop implements Node {
   id: ID!
   createdAt: DateTime!
   count: Int!
@@ -3977,41 +3977,41 @@ type Loops implements Node {
 }
 
 """A connection to a list of items."""
-type LoopsConnection {
+type LoopConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [LoopsEdge]!
-  aggregate: AggregateLoops!
+  edges: [LoopEdge]!
+  aggregate: AggregateLoop!
 }
 
-input LoopsCreateInput {
+input LoopCreateInput {
   count: Int!
   event: EventCreateOneInput!
   user: UserCreateOneWithoutLoopsInput!
 }
 
-input LoopsCreateManyWithoutUserInput {
-  create: [LoopsCreateWithoutUserInput!]
-  connect: [LoopsWhereUniqueInput!]
+input LoopCreateManyWithoutUserInput {
+  create: [LoopCreateWithoutUserInput!]
+  connect: [LoopWhereUniqueInput!]
 }
 
-input LoopsCreateWithoutUserInput {
+input LoopCreateWithoutUserInput {
   count: Int!
   event: EventCreateOneInput!
 }
 
 """An edge in a connection."""
-type LoopsEdge {
+type LoopEdge {
   """The item at the end of the edge."""
-  node: Loops!
+  node: Loop!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum LoopsOrderByInput {
+enum LoopOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
@@ -4022,21 +4022,21 @@ enum LoopsOrderByInput {
   updatedAt_DESC
 }
 
-type LoopsPreviousValues {
+type LoopPreviousValues {
   id: ID!
   createdAt: DateTime!
   count: Int!
 }
 
-input LoopsScalarWhereInput {
+input LoopScalarWhereInput {
   """Logical AND on all given filters."""
-  AND: [LoopsScalarWhereInput!]
+  AND: [LoopScalarWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [LoopsScalarWhereInput!]
+  OR: [LoopScalarWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [LoopsScalarWhereInput!]
+  NOT: [LoopScalarWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -4123,22 +4123,22 @@ input LoopsScalarWhereInput {
   count_gte: Int
 }
 
-type LoopsSubscriptionPayload {
+type LoopSubscriptionPayload {
   mutation: MutationType!
-  node: Loops
+  node: Loop
   updatedFields: [String!]
-  previousValues: LoopsPreviousValues
+  previousValues: LoopPreviousValues
 }
 
-input LoopsSubscriptionWhereInput {
+input LoopSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [LoopsSubscriptionWhereInput!]
+  AND: [LoopSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [LoopsSubscriptionWhereInput!]
+  OR: [LoopSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [LoopsSubscriptionWhereInput!]
+  NOT: [LoopSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -4159,64 +4159,64 @@ input LoopsSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: LoopsWhereInput
+  node: LoopWhereInput
 }
 
-input LoopsUpdateInput {
+input LoopUpdateInput {
   count: Int
   event: EventUpdateOneRequiredInput
   user: UserUpdateOneRequiredWithoutLoopsInput
 }
 
-input LoopsUpdateManyDataInput {
+input LoopUpdateManyDataInput {
   count: Int
 }
 
-input LoopsUpdateManyMutationInput {
+input LoopUpdateManyMutationInput {
   count: Int
 }
 
-input LoopsUpdateManyWithoutUserInput {
-  create: [LoopsCreateWithoutUserInput!]
-  connect: [LoopsWhereUniqueInput!]
-  disconnect: [LoopsWhereUniqueInput!]
-  delete: [LoopsWhereUniqueInput!]
-  update: [LoopsUpdateWithWhereUniqueWithoutUserInput!]
-  updateMany: [LoopsUpdateManyWithWhereNestedInput!]
-  deleteMany: [LoopsScalarWhereInput!]
-  upsert: [LoopsUpsertWithWhereUniqueWithoutUserInput!]
+input LoopUpdateManyWithoutUserInput {
+  create: [LoopCreateWithoutUserInput!]
+  connect: [LoopWhereUniqueInput!]
+  disconnect: [LoopWhereUniqueInput!]
+  delete: [LoopWhereUniqueInput!]
+  update: [LoopUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [LoopUpdateManyWithWhereNestedInput!]
+  deleteMany: [LoopScalarWhereInput!]
+  upsert: [LoopUpsertWithWhereUniqueWithoutUserInput!]
 }
 
-input LoopsUpdateManyWithWhereNestedInput {
-  where: LoopsScalarWhereInput!
-  data: LoopsUpdateManyDataInput!
+input LoopUpdateManyWithWhereNestedInput {
+  where: LoopScalarWhereInput!
+  data: LoopUpdateManyDataInput!
 }
 
-input LoopsUpdateWithoutUserDataInput {
+input LoopUpdateWithoutUserDataInput {
   count: Int
   event: EventUpdateOneRequiredInput
 }
 
-input LoopsUpdateWithWhereUniqueWithoutUserInput {
-  where: LoopsWhereUniqueInput!
-  data: LoopsUpdateWithoutUserDataInput!
+input LoopUpdateWithWhereUniqueWithoutUserInput {
+  where: LoopWhereUniqueInput!
+  data: LoopUpdateWithoutUserDataInput!
 }
 
-input LoopsUpsertWithWhereUniqueWithoutUserInput {
-  where: LoopsWhereUniqueInput!
-  update: LoopsUpdateWithoutUserDataInput!
-  create: LoopsCreateWithoutUserInput!
+input LoopUpsertWithWhereUniqueWithoutUserInput {
+  where: LoopWhereUniqueInput!
+  update: LoopUpdateWithoutUserDataInput!
+  create: LoopCreateWithoutUserInput!
 }
 
-input LoopsWhereInput {
+input LoopWhereInput {
   """Logical AND on all given filters."""
-  AND: [LoopsWhereInput!]
+  AND: [LoopWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [LoopsWhereInput!]
+  OR: [LoopWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [LoopsWhereInput!]
+  NOT: [LoopWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -4305,73 +4305,73 @@ input LoopsWhereInput {
   user: UserWhereInput
 }
 
-input LoopsWhereUniqueInput {
+input LoopWhereUniqueInput {
   id: ID
 }
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
-  createDots(data: DotsCreateInput!): Dots!
-  createHalos(data: HalosCreateInput!): Halos!
+  createDot(data: DotCreateInput!): Dot!
+  createHalo(data: HaloCreateInput!): Halo!
   createIdentity(data: IdentityCreateInput!): Identity!
-  createLoops(data: LoopsCreateInput!): Loops!
+  createLoop(data: LoopCreateInput!): Loop!
   createPreferences(data: PreferencesCreateInput!): Preferences!
-  createCircles(data: CirclesCreateInput!): Circles!
+  createCircle(data: CircleCreateInput!): Circle!
   createCharity(data: CharityCreateInput!): Charity!
   createSpecialFundraiser(data: SpecialFundraiserCreateInput!): SpecialFundraiser!
   createTransaction(data: TransactionCreateInput!): Transaction!
   createEvent(data: EventCreateInput!): Event!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateDots(data: DotsUpdateInput!, where: DotsWhereUniqueInput!): Dots
-  updateHalos(data: HalosUpdateInput!, where: HalosWhereUniqueInput!): Halos
+  updateDot(data: DotUpdateInput!, where: DotWhereUniqueInput!): Dot
+  updateHalo(data: HaloUpdateInput!, where: HaloWhereUniqueInput!): Halo
   updateIdentity(data: IdentityUpdateInput!, where: IdentityWhereUniqueInput!): Identity
-  updateLoops(data: LoopsUpdateInput!, where: LoopsWhereUniqueInput!): Loops
+  updateLoop(data: LoopUpdateInput!, where: LoopWhereUniqueInput!): Loop
   updatePreferences(data: PreferencesUpdateInput!, where: PreferencesWhereUniqueInput!): Preferences
-  updateCircles(data: CirclesUpdateInput!, where: CirclesWhereUniqueInput!): Circles
+  updateCircle(data: CircleUpdateInput!, where: CircleWhereUniqueInput!): Circle
   updateCharity(data: CharityUpdateInput!, where: CharityWhereUniqueInput!): Charity
   updateSpecialFundraiser(data: SpecialFundraiserUpdateInput!, where: SpecialFundraiserWhereUniqueInput!): SpecialFundraiser
   updateTransaction(data: TransactionUpdateInput!, where: TransactionWhereUniqueInput!): Transaction
   updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
   deleteUser(where: UserWhereUniqueInput!): User
-  deleteDots(where: DotsWhereUniqueInput!): Dots
-  deleteHalos(where: HalosWhereUniqueInput!): Halos
+  deleteDot(where: DotWhereUniqueInput!): Dot
+  deleteHalo(where: HaloWhereUniqueInput!): Halo
   deleteIdentity(where: IdentityWhereUniqueInput!): Identity
-  deleteLoops(where: LoopsWhereUniqueInput!): Loops
+  deleteLoop(where: LoopWhereUniqueInput!): Loop
   deletePreferences(where: PreferencesWhereUniqueInput!): Preferences
-  deleteCircles(where: CirclesWhereUniqueInput!): Circles
+  deleteCircle(where: CircleWhereUniqueInput!): Circle
   deleteCharity(where: CharityWhereUniqueInput!): Charity
   deleteSpecialFundraiser(where: SpecialFundraiserWhereUniqueInput!): SpecialFundraiser
   deleteTransaction(where: TransactionWhereUniqueInput!): Transaction
   deleteEvent(where: EventWhereUniqueInput!): Event
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertDots(where: DotsWhereUniqueInput!, create: DotsCreateInput!, update: DotsUpdateInput!): Dots!
-  upsertHalos(where: HalosWhereUniqueInput!, create: HalosCreateInput!, update: HalosUpdateInput!): Halos!
+  upsertDot(where: DotWhereUniqueInput!, create: DotCreateInput!, update: DotUpdateInput!): Dot!
+  upsertHalo(where: HaloWhereUniqueInput!, create: HaloCreateInput!, update: HaloUpdateInput!): Halo!
   upsertIdentity(where: IdentityWhereUniqueInput!, create: IdentityCreateInput!, update: IdentityUpdateInput!): Identity!
-  upsertLoops(where: LoopsWhereUniqueInput!, create: LoopsCreateInput!, update: LoopsUpdateInput!): Loops!
+  upsertLoop(where: LoopWhereUniqueInput!, create: LoopCreateInput!, update: LoopUpdateInput!): Loop!
   upsertPreferences(where: PreferencesWhereUniqueInput!, create: PreferencesCreateInput!, update: PreferencesUpdateInput!): Preferences!
-  upsertCircles(where: CirclesWhereUniqueInput!, create: CirclesCreateInput!, update: CirclesUpdateInput!): Circles!
+  upsertCircle(where: CircleWhereUniqueInput!, create: CircleCreateInput!, update: CircleUpdateInput!): Circle!
   upsertCharity(where: CharityWhereUniqueInput!, create: CharityCreateInput!, update: CharityUpdateInput!): Charity!
   upsertSpecialFundraiser(where: SpecialFundraiserWhereUniqueInput!, create: SpecialFundraiserCreateInput!, update: SpecialFundraiserUpdateInput!): SpecialFundraiser!
   upsertTransaction(where: TransactionWhereUniqueInput!, create: TransactionCreateInput!, update: TransactionUpdateInput!): Transaction!
   upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  updateManyDotses(data: DotsUpdateManyMutationInput!, where: DotsWhereInput): BatchPayload!
-  updateManyHaloses(data: HalosUpdateManyMutationInput!, where: HalosWhereInput): BatchPayload!
+  updateManyDots(data: DotUpdateManyMutationInput!, where: DotWhereInput): BatchPayload!
+  updateManyHaloes(data: HaloUpdateManyMutationInput!, where: HaloWhereInput): BatchPayload!
   updateManyIdentities(data: IdentityUpdateManyMutationInput!, where: IdentityWhereInput): BatchPayload!
-  updateManyLoopses(data: LoopsUpdateManyMutationInput!, where: LoopsWhereInput): BatchPayload!
+  updateManyLoops(data: LoopUpdateManyMutationInput!, where: LoopWhereInput): BatchPayload!
   updateManyPreferenceses(data: PreferencesUpdateManyMutationInput!, where: PreferencesWhereInput): BatchPayload!
-  updateManyCircleses(data: CirclesUpdateManyMutationInput!, where: CirclesWhereInput): BatchPayload!
+  updateManyCircles(data: CircleUpdateManyMutationInput!, where: CircleWhereInput): BatchPayload!
   updateManyCharities(data: CharityUpdateManyMutationInput!, where: CharityWhereInput): BatchPayload!
   updateManySpecialFundraisers(data: SpecialFundraiserUpdateManyMutationInput!, where: SpecialFundraiserWhereInput): BatchPayload!
   updateManyTransactions(data: TransactionUpdateManyMutationInput!, where: TransactionWhereInput): BatchPayload!
   updateManyEvents(data: EventUpdateManyMutationInput!, where: EventWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyDotses(where: DotsWhereInput): BatchPayload!
-  deleteManyHaloses(where: HalosWhereInput): BatchPayload!
+  deleteManyDots(where: DotWhereInput): BatchPayload!
+  deleteManyHaloes(where: HaloWhereInput): BatchPayload!
   deleteManyIdentities(where: IdentityWhereInput): BatchPayload!
-  deleteManyLoopses(where: LoopsWhereInput): BatchPayload!
+  deleteManyLoops(where: LoopWhereInput): BatchPayload!
   deleteManyPreferenceses(where: PreferencesWhereInput): BatchPayload!
-  deleteManyCircleses(where: CirclesWhereInput): BatchPayload!
+  deleteManyCircles(where: CircleWhereInput): BatchPayload!
   deleteManyCharities(where: CharityWhereInput): BatchPayload!
   deleteManySpecialFundraisers(where: SpecialFundraiserWhereInput): BatchPayload!
   deleteManyTransactions(where: TransactionWhereInput): BatchPayload!
@@ -4634,34 +4634,34 @@ input PreferencesWhereUniqueInput {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  dotses(where: DotsWhereInput, orderBy: DotsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dots]!
-  haloses(where: HalosWhereInput, orderBy: HalosOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Halos]!
+  dots(where: DotWhereInput, orderBy: DotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dot]!
+  haloes(where: HaloWhereInput, orderBy: HaloOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Halo]!
   identities(where: IdentityWhereInput, orderBy: IdentityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Identity]!
-  loopses(where: LoopsWhereInput, orderBy: LoopsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Loops]!
+  loops(where: LoopWhereInput, orderBy: LoopOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Loop]!
   preferenceses(where: PreferencesWhereInput, orderBy: PreferencesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Preferences]!
-  circleses(where: CirclesWhereInput, orderBy: CirclesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circles]!
+  circles(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle]!
   charities(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charity]!
   specialFundraisers(where: SpecialFundraiserWhereInput, orderBy: SpecialFundraiserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SpecialFundraiser]!
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction]!
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
   user(where: UserWhereUniqueInput!): User
-  dots(where: DotsWhereUniqueInput!): Dots
-  halos(where: HalosWhereUniqueInput!): Halos
+  dot(where: DotWhereUniqueInput!): Dot
+  halo(where: HaloWhereUniqueInput!): Halo
   identity(where: IdentityWhereUniqueInput!): Identity
-  loops(where: LoopsWhereUniqueInput!): Loops
+  loop(where: LoopWhereUniqueInput!): Loop
   preferences(where: PreferencesWhereUniqueInput!): Preferences
-  circles(where: CirclesWhereUniqueInput!): Circles
+  circle(where: CircleWhereUniqueInput!): Circle
   charity(where: CharityWhereUniqueInput!): Charity
   specialFundraiser(where: SpecialFundraiserWhereUniqueInput!): SpecialFundraiser
   transaction(where: TransactionWhereUniqueInput!): Transaction
   event(where: EventWhereUniqueInput!): Event
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  dotsesConnection(where: DotsWhereInput, orderBy: DotsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DotsConnection!
-  halosesConnection(where: HalosWhereInput, orderBy: HalosOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HalosConnection!
+  dotsConnection(where: DotWhereInput, orderBy: DotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DotConnection!
+  haloesConnection(where: HaloWhereInput, orderBy: HaloOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HaloConnection!
   identitiesConnection(where: IdentityWhereInput, orderBy: IdentityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IdentityConnection!
-  loopsesConnection(where: LoopsWhereInput, orderBy: LoopsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LoopsConnection!
+  loopsConnection(where: LoopWhereInput, orderBy: LoopOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LoopConnection!
   preferencesesConnection(where: PreferencesWhereInput, orderBy: PreferencesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PreferencesConnection!
-  circlesesConnection(where: CirclesWhereInput, orderBy: CirclesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CirclesConnection!
+  circlesConnection(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CircleConnection!
   charitiesConnection(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CharityConnection!
   specialFundraisersConnection(where: SpecialFundraiserWhereInput, orderBy: SpecialFundraiserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SpecialFundraiserConnection!
   transactionsConnection(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransactionConnection!
@@ -4990,12 +4990,12 @@ input SpecialFundraiserWhereUniqueInput {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  dots(where: DotsSubscriptionWhereInput): DotsSubscriptionPayload
-  halos(where: HalosSubscriptionWhereInput): HalosSubscriptionPayload
+  dot(where: DotSubscriptionWhereInput): DotSubscriptionPayload
+  halo(where: HaloSubscriptionWhereInput): HaloSubscriptionPayload
   identity(where: IdentitySubscriptionWhereInput): IdentitySubscriptionPayload
-  loops(where: LoopsSubscriptionWhereInput): LoopsSubscriptionPayload
+  loop(where: LoopSubscriptionWhereInput): LoopSubscriptionPayload
   preferences(where: PreferencesSubscriptionWhereInput): PreferencesSubscriptionPayload
-  circles(where: CirclesSubscriptionWhereInput): CirclesSubscriptionPayload
+  circle(where: CircleSubscriptionWhereInput): CircleSubscriptionPayload
   charity(where: CharitySubscriptionWhereInput): CharitySubscriptionPayload
   specialFundraiser(where: SpecialFundraiserSubscriptionWhereInput): SpecialFundraiserSubscriptionPayload
   transaction(where: TransactionSubscriptionWhereInput): TransactionSubscriptionPayload
@@ -5576,12 +5576,12 @@ type User implements Node {
   picture: String
   securityToken: Int!
   username: String!
-  circles(where: CirclesWhereInput, orderBy: CirclesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circles!]
-  dots(where: DotsWhereInput, orderBy: DotsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dots!]
+  circles(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle!]
+  dots(where: DotWhereInput, orderBy: DotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dot!]
   followedCharities(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charity!]
-  halos(where: HalosWhereInput, orderBy: HalosOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Halos!]
+  halos(where: HaloWhereInput, orderBy: HaloOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Halo!]
   identity: Identity!
-  loops(where: LoopsWhereInput, orderBy: LoopsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Loops!]
+  loops(where: LoopWhereInput, orderBy: LoopOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Loop!]
   preferences: Preferences!
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction!]
 }
@@ -5604,12 +5604,12 @@ input UserCreateInput {
   picture: String
   securityToken: Int!
   username: String!
-  circles: CirclesCreateManyWithoutUsersInput
-  dots: DotsCreateManyWithoutUserInput
+  circles: CircleCreateManyWithoutUsersInput
+  dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
-  halos: HalosCreateManyWithoutUserInput
+  halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
-  loops: LoopsCreateManyWithoutUserInput
+  loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
 }
@@ -5662,11 +5662,11 @@ input UserCreateWithoutCirclesInput {
   picture: String
   securityToken: Int!
   username: String!
-  dots: DotsCreateManyWithoutUserInput
+  dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
-  halos: HalosCreateManyWithoutUserInput
+  halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
-  loops: LoopsCreateManyWithoutUserInput
+  loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
 }
@@ -5679,11 +5679,11 @@ input UserCreateWithoutDotsInput {
   picture: String
   securityToken: Int!
   username: String!
-  circles: CirclesCreateManyWithoutUsersInput
+  circles: CircleCreateManyWithoutUsersInput
   followedCharities: CharityCreateManyWithoutFollowersInput
-  halos: HalosCreateManyWithoutUserInput
+  halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
-  loops: LoopsCreateManyWithoutUserInput
+  loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
 }
@@ -5696,11 +5696,11 @@ input UserCreateWithoutFollowedCharitiesInput {
   picture: String
   securityToken: Int!
   username: String!
-  circles: CirclesCreateManyWithoutUsersInput
-  dots: DotsCreateManyWithoutUserInput
-  halos: HalosCreateManyWithoutUserInput
+  circles: CircleCreateManyWithoutUsersInput
+  dots: DotCreateManyWithoutUserInput
+  halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
-  loops: LoopsCreateManyWithoutUserInput
+  loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
 }
@@ -5713,11 +5713,11 @@ input UserCreateWithoutHalosInput {
   picture: String
   securityToken: Int!
   username: String!
-  circles: CirclesCreateManyWithoutUsersInput
-  dots: DotsCreateManyWithoutUserInput
+  circles: CircleCreateManyWithoutUsersInput
+  dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   identity: IdentityCreateOneWithoutUserInput!
-  loops: LoopsCreateManyWithoutUserInput
+  loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
 }
@@ -5730,11 +5730,11 @@ input UserCreateWithoutIdentityInput {
   picture: String
   securityToken: Int!
   username: String!
-  circles: CirclesCreateManyWithoutUsersInput
-  dots: DotsCreateManyWithoutUserInput
+  circles: CircleCreateManyWithoutUsersInput
+  dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
-  halos: HalosCreateManyWithoutUserInput
-  loops: LoopsCreateManyWithoutUserInput
+  halos: HaloCreateManyWithoutUserInput
+  loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
 }
@@ -5747,10 +5747,10 @@ input UserCreateWithoutLoopsInput {
   picture: String
   securityToken: Int!
   username: String!
-  circles: CirclesCreateManyWithoutUsersInput
-  dots: DotsCreateManyWithoutUserInput
+  circles: CircleCreateManyWithoutUsersInput
+  dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
-  halos: HalosCreateManyWithoutUserInput
+  halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
@@ -5764,12 +5764,12 @@ input UserCreateWithoutPreferencesInput {
   picture: String
   securityToken: Int!
   username: String!
-  circles: CirclesCreateManyWithoutUsersInput
-  dots: DotsCreateManyWithoutUserInput
+  circles: CircleCreateManyWithoutUsersInput
+  dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
-  halos: HalosCreateManyWithoutUserInput
+  halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
-  loops: LoopsCreateManyWithoutUserInput
+  loops: LoopCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
 }
 
@@ -5781,12 +5781,12 @@ input UserCreateWithoutTransactionsInput {
   picture: String
   securityToken: Int!
   username: String!
-  circles: CirclesCreateManyWithoutUsersInput
-  dots: DotsCreateManyWithoutUserInput
+  circles: CircleCreateManyWithoutUsersInput
+  dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
-  halos: HalosCreateManyWithoutUserInput
+  halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
-  loops: LoopsCreateManyWithoutUserInput
+  loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
 }
 
@@ -6239,12 +6239,12 @@ input UserUpdateInput {
   picture: String
   securityToken: Int
   username: String
-  circles: CirclesUpdateManyWithoutUsersInput
-  dots: DotsUpdateManyWithoutUserInput
+  circles: CircleUpdateManyWithoutUsersInput
+  dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
-  halos: HalosUpdateManyWithoutUserInput
+  halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
-  loops: LoopsUpdateManyWithoutUserInput
+  loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
@@ -6346,11 +6346,11 @@ input UserUpdateWithoutCirclesDataInput {
   picture: String
   securityToken: Int
   username: String
-  dots: DotsUpdateManyWithoutUserInput
+  dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
-  halos: HalosUpdateManyWithoutUserInput
+  halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
-  loops: LoopsUpdateManyWithoutUserInput
+  loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
@@ -6363,11 +6363,11 @@ input UserUpdateWithoutDotsDataInput {
   picture: String
   securityToken: Int
   username: String
-  circles: CirclesUpdateManyWithoutUsersInput
+  circles: CircleUpdateManyWithoutUsersInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
-  halos: HalosUpdateManyWithoutUserInput
+  halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
-  loops: LoopsUpdateManyWithoutUserInput
+  loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
@@ -6380,11 +6380,11 @@ input UserUpdateWithoutFollowedCharitiesDataInput {
   picture: String
   securityToken: Int
   username: String
-  circles: CirclesUpdateManyWithoutUsersInput
-  dots: DotsUpdateManyWithoutUserInput
-  halos: HalosUpdateManyWithoutUserInput
+  circles: CircleUpdateManyWithoutUsersInput
+  dots: DotUpdateManyWithoutUserInput
+  halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
-  loops: LoopsUpdateManyWithoutUserInput
+  loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
@@ -6397,11 +6397,11 @@ input UserUpdateWithoutHalosDataInput {
   picture: String
   securityToken: Int
   username: String
-  circles: CirclesUpdateManyWithoutUsersInput
-  dots: DotsUpdateManyWithoutUserInput
+  circles: CircleUpdateManyWithoutUsersInput
+  dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
-  loops: LoopsUpdateManyWithoutUserInput
+  loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
@@ -6414,11 +6414,11 @@ input UserUpdateWithoutIdentityDataInput {
   picture: String
   securityToken: Int
   username: String
-  circles: CirclesUpdateManyWithoutUsersInput
-  dots: DotsUpdateManyWithoutUserInput
+  circles: CircleUpdateManyWithoutUsersInput
+  dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
-  halos: HalosUpdateManyWithoutUserInput
-  loops: LoopsUpdateManyWithoutUserInput
+  halos: HaloUpdateManyWithoutUserInput
+  loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
@@ -6431,10 +6431,10 @@ input UserUpdateWithoutLoopsDataInput {
   picture: String
   securityToken: Int
   username: String
-  circles: CirclesUpdateManyWithoutUsersInput
-  dots: DotsUpdateManyWithoutUserInput
+  circles: CircleUpdateManyWithoutUsersInput
+  dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
-  halos: HalosUpdateManyWithoutUserInput
+  halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
@@ -6448,12 +6448,12 @@ input UserUpdateWithoutPreferencesDataInput {
   picture: String
   securityToken: Int
   username: String
-  circles: CirclesUpdateManyWithoutUsersInput
-  dots: DotsUpdateManyWithoutUserInput
+  circles: CircleUpdateManyWithoutUsersInput
+  dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
-  halos: HalosUpdateManyWithoutUserInput
+  halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
-  loops: LoopsUpdateManyWithoutUserInput
+  loops: LoopUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
 }
 
@@ -6465,12 +6465,12 @@ input UserUpdateWithoutTransactionsDataInput {
   picture: String
   securityToken: Int
   username: String
-  circles: CirclesUpdateManyWithoutUsersInput
-  dots: DotsUpdateManyWithoutUserInput
+  circles: CircleUpdateManyWithoutUsersInput
+  dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
-  halos: HalosUpdateManyWithoutUserInput
+  halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
-  loops: LoopsUpdateManyWithoutUserInput
+  loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
 }
 
@@ -6881,22 +6881,22 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   username_not_ends_with: String
-  circles_every: CirclesWhereInput
-  circles_some: CirclesWhereInput
-  circles_none: CirclesWhereInput
-  dots_every: DotsWhereInput
-  dots_some: DotsWhereInput
-  dots_none: DotsWhereInput
+  circles_every: CircleWhereInput
+  circles_some: CircleWhereInput
+  circles_none: CircleWhereInput
+  dots_every: DotWhereInput
+  dots_some: DotWhereInput
+  dots_none: DotWhereInput
   followedCharities_every: CharityWhereInput
   followedCharities_some: CharityWhereInput
   followedCharities_none: CharityWhereInput
-  halos_every: HalosWhereInput
-  halos_some: HalosWhereInput
-  halos_none: HalosWhereInput
+  halos_every: HaloWhereInput
+  halos_some: HaloWhereInput
+  halos_none: HaloWhereInput
   identity: IdentityWhereInput
-  loops_every: LoopsWhereInput
-  loops_some: LoopsWhereInput
-  loops_none: LoopsWhereInput
+  loops_every: LoopWhereInput
+  loops_some: LoopWhereInput
+  loops_none: LoopWhereInput
   preferences: PreferencesWhereInput
   transactions_every: TransactionWhereInput
   transactions_some: TransactionWhereInput

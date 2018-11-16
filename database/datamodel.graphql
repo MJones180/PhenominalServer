@@ -11,17 +11,17 @@ type User {
   securityToken: Int!
   username: String! @unique
 
-  circles: [Circles!]!
-  dots: [Dots!]! @relation(name: "UserDots", onDelete: CASCADE)
+  circles: [Circle!]!
+  dots: [Dot!]! @relation(name: "UserDots", onDelete: CASCADE)
   followedCharities: [Charity!]!
-  halos: [Halos!]! @relation(name: "UserHalos", onDelete: CASCADE)
+  halos: [Halo!]! @relation(name: "UserHalos", onDelete: CASCADE)
   identity: Identity! @relation(name: "UserIdentity", onDelete: CASCADE)
-  loops: [Loops!]! @relation(name: "UserLoops", onDelete: CASCADE)
+  loops: [Loop!]! @relation(name: "UserLoops", onDelete: CASCADE)
   preferences: Preferences! @relation(name: "UserPreferences", onDelete: CASCADE)
   transactions: [Transaction!]!
 }
 
-type Dots {
+type Dot {
   id: ID! @unique
   createdAt: DateTime!
 
@@ -32,7 +32,7 @@ type Dots {
   user: User! @relation(name: "UserDots")
 }
 
-type Halos {
+type Halo {
   id: ID! @unique
   createdAt: DateTime!
 
@@ -52,7 +52,7 @@ type Identity {
   user: User! @relation(name: "UserIdentity")
 }
 
-type Loops {
+type Loop {
   id: ID! @unique
   createdAt: DateTime!
 
@@ -72,7 +72,7 @@ type Preferences {
   user: User! @relation(name: "UserPreferences")
 }
 
-type Circles {
+type Circle {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
