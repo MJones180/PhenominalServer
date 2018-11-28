@@ -25,15 +25,12 @@
     "moment": "^2.21.0",
     "node-mailjet": "^3.2.1",
     "prisma-binding": "2.1.0",
+    "prisma-client-lib": "^1.21.1",
     "stripe": "^5.6.0"
   },
   "devDependencies": {
-    "babel-core": "^6.25.0",
-    "babel-eslint": "^7.2.3",
-    "babel-loader": "^7.1.0",
     "eslint": "^4.3.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-import": "^2.14.0",
     "graphql-cli": "^2.16.0",
     "nodemon": "1.17.2"
@@ -45,6 +42,7 @@
     "pushEvents": "node run --script=pushEvents",
     "pushEventsProd": "node run --script=pushEvents --env=prod",
     "start": "nodemon -e js,graphql -x node run --script=start",
-    "syncCharities": "node run --script=syncCharities && node run --script=syncCharities --env=prod"
+    "syncCharities": "node run --script=syncCharities && node run --script=syncCharities --env=prod",
+    "test_generate": "prisma generate --env-file .env.dev"
   }
 }

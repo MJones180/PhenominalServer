@@ -9,9 +9,7 @@
     "__DEV__": false,
     "__PROD__": false
   },
-  "parser": "babel-eslint",
   "plugins": [
-    "babel",
     "import"
   ],
   "rules": {

@@ -8,6 +8,8 @@ const providers = require('./utils/providers');
 const token = require('./utils/token');
 const resolvers = require('./resolvers');
 
+const { prisma: prismaClient } = require('./generated/prisma-client');
+
 // Server config
 const server = new GraphQLServer({
   typeDefs: 'src/schema.graphql',
@@ -20,6 +22,7 @@ const server = new GraphQLServer({
     db: prisma(true),
     resolvers,
     user: grabUser(req, errors),
+    prismaClient,
     utils: {
       email,
       errors,

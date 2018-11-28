@@ -15,7 +15,7 @@ module.exports = async (parent, args, ctx) => {
   // Query the current user
   const { id, transactions } = await ctx.resolvers.Query.currentUser(parent, {}, ctx, resultData);
   // If there is a balance, return it
-  const balance = transactions[0] ? transactions[0].balance : 0;
+  const balance = transactions ? transactions.balance : 0;
   return {
     userID: id,
     balance,
