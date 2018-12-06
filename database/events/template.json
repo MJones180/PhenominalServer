@@ -10,7 +10,7 @@
   "template": {
     "charities": [
       {
-        "goal": "",
+        "goal": 0,
         "startDate": "",
         "endDate": "",
         "ein": ""
@@ -18,7 +18,7 @@
     ],
     "specialFundraisers": [
       {
-        "goal": "",
+        "goal": 0,
         "startDate": "",
         "endDate": "",
         "name": "",

@@ -1,6 +1,6 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { formatError } = require('apollo-errors');
-const prismaBinding = require('../prismaBinding');
+const { Prisma: PrismaBinding } = require('prisma-binding');
 const user = require('./middleware/user');
 const email = require('./utils/email');
 const errors = require('./utils/errors');
@@ -21,7 +21,11 @@ const server = new GraphQLServer({
   },
   context: req => ({
     ...req,
-    binding: prismaBinding,
+    binding: new PrismaBinding({
+      typeDefs: 'src/generated/prisma.graphql',
+      endpoint: process.env.PRISMA_ENDPOINT,
+      secret: process.env.PRISMA_SECRET,
+    }),
     client: prismaClient,
     utils: {
       email,

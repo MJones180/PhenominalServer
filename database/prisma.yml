@@ -1,5 +1,8 @@
 datamodel: datamodel.graphql
 endpoint: ${env:PRISMA_ENDPOINT}
+generate:
+  - generator: javascript-client
+    output: ../src/generated/prisma-client/
 hooks:
   post-deploy:
     - graphql get-schema --project database

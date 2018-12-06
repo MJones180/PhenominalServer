@@ -68,4 +68,18 @@
   "name": "Tuesday's Children",
   "phoneNumber": "(516)562-9000",
   "website": "https://www.tuesdayschildren.org/"
+}, {
+  "acronym": null,
+  "bannerCredit": "Thugga",
+  "ein": "11-1111111",
+  "expensesAdministrative": 33.3,
+  "expensesFundraising": 33.3,
+  "expensesOther": 0.1,
+  "expensesProgram": 33.3,
+  "expensesUpdated": "11/11",
+  "location": "Victor NY, 14564",
+  "mission": "Mission",
+  "name": "Thugga Time",
+  "phoneNumber": "(xxx)xxx-yyyy",
+  "website": "https://www.website.org/"
 }]

@@ -2,10 +2,7 @@ const chalk = require('chalk');
 const each = require('async/each');
 const forEach = require('lodash/forEach');
 const jsonfile = require('jsonfile');
-const prisma = require('../../prismaBinding');
-
-// Initalize a prisma connection
-const { mutation } = prisma;
+const { prisma } = require('../../src/generated/prisma-client');
 
 // Grab the current env
 const env = process.env.__DEV__ ? 'dev' : 'prod';
@@ -20,15 +17,13 @@ const events = jsonfile.readFileSync(source);
 const createCharity = async ({
   endDate, goal, startDate, ein,
 }) => (
-  mutation.createEvent({
-    data: {
-      endDate,
-      goal,
-      startDate,
-      charity: {
-        connect: {
-          ein,
-        },
+  prisma.createEvent({
+    endDate,
+    goal,
+    startDate,
+    charity: {
+      connect: {
+        ein,
       },
     },
   })
@@ -38,16 +33,14 @@ const createCharity = async ({
 const createSpecialFundraiser = async ({
   endDate, goal, startDate, name, description,
 }) => (
-  mutation.createEvent({
-    data: {
-      endDate,
-      goal,
-      startDate,
-      specialFundraiser: {
-        create: {
-          description,
-          name,
-        },
+  prisma.createEvent({
+    endDate,
+    goal,
+    startDate,
+    specialFundraiser: {
+      create: {
+        description,
+        name,
       },
     },
   })

@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const chalk = require('chalk');
 const async_each = require('async/each');
 const forEach = require('lodash/forEach');
@@ -6,47 +7,27 @@ const isEqual = require('lodash/isEqual');
 const keyBy = require('lodash/keyBy');
 const keys = require('lodash/keys');
 const jsonfile = require('jsonfile');
-const prisma = require('../../prismaBinding');
-
-// Initalize a prisma connection
-const { mutation, query } = prisma;
+const { prisma } = require('../../src/generated/prisma-client');
 
 // Grab the source file with all of the charities
 const source = jsonfile.readFileSync(`${__dirname}/index.json`);
 
 // Grab all of the current charities in the db
 const grabPushed = async () => {
-  const fields = `
-    {
-      acronym
-      bannerCredit
-      ein
-      expensesAdministrative
-      expensesFundraising
-      expensesOther
-      expensesProgram
-      expensesUpdated
-      location
-      mission
-      name
-      phoneNumber
-      website
-    }
-  `;
-  const charities = await query.charities(null, fields);
+  const charitiesRaw = await prisma.charities();
+  // Remove all database specific fields
+  const charities = _.map(charitiesRaw, ({ id, createdAt, updatedAt, ...data }) => data);
   // Format all charities so they are indexed by their EINs
   // Ex: { [ein]: { ...data } }
   return keyBy(charities, ({ ein }) => ein);
 };
 
 // Add a new charity to the db
-const create = async data => (
-  mutation.createCharity({ data })
-);
+const create = async data => prisma.createCharity({ ...data });
 
 // Update an existing charity in the db
 const update = async ({ ein, ...data }) => (
-  mutation.updateCharity({
+  prisma.updateCharity({
     data,
     where: {
       ein,
