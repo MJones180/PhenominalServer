@@ -1,10 +1,12 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { formatError } = require('apollo-errors');
-const prisma = require('../prismaStart');
-const grabUser = require('./utils/grabUser');
+const prismaBinding = require('../prismaBinding');
+const user = require('./middleware/user');
 const email = require('./utils/email');
 const errors = require('./utils/errors');
 const providers = require('./utils/providers');
+const wait = require('./utils/wait');
+const rand = require('./utils/rand');
 const token = require('./utils/token');
 const resolvers = require('./resolvers');
 
@@ -19,17 +21,18 @@ const server = new GraphQLServer({
   },
   context: req => ({
     ...req,
-    db: prisma(true),
-    resolvers,
-    user: grabUser(req, errors),
-    prismaClient,
+    binding: prismaBinding,
+    client: prismaClient,
     utils: {
       email,
       errors,
       providers,
+      rand,
       token,
+      wait,
     },
   }),
+  middlewares: [user],
 });
 
 // Server options

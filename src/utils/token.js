@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const rand = require('./rand');
 
 const secret = process.env.APP_SECRET;
 
@@ -13,7 +14,7 @@ module.exports = {
   generateAuth: data => jwt.sign(data, secret, authTokenOptions),
 
   // Generate a random 8 digit security token
-  generateSecurity: () => Math.floor(Math.random() * 90000000) + 10000000,
+  generateSecurity: () => rand(10000000, 99999999),
 
   // Verify the JWT
   validateAuth: (token) => {

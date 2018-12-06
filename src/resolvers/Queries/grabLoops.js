@@ -9,21 +9,16 @@ module.exports = async (parent, { username }, ctx) => {
     // Convert to ISO string
     return date.toISOString();
   };
-
-  // Grab the loop count
-  const loopCount = await ctx.db.query.loops({
-    first: 1,
-    orderBy: 'createdAt_DESC',
-    where: {
-      user: {
-        username,
-      },
+  // Grab the most recent row for the loop count
+  const [loopCount] = await ctx.client
+    .user({ username })
+    .loops({
+      first: 1,
+      orderBy: 'createdAt_DESC',
       // Loop's createdAt must be today or yesterday
-      createdAt_gte: dateYesterday(),
-    },
-  }, '{ count }');
-
-  // Loop exists return its count, otherwise return 0
-  const count = loopCount[0] ? loopCount[0].count : 0;
+      where: { createdAt_gte: dateYesterday() },
+    });
+  // If the loop count does not exist default to 0
+  const count = loopCount ? loopCount.count : 0;
   return { count };
 };

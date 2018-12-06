@@ -1,4 +1,4 @@
-const _prisma = require('./Queries/_prisma');
+const _forwarded = require('./Queries/_forwarded');
 const currentUser = require('./Queries/currentUser');
 const events = require('./Queries/events');
 const grabDots = require('./Queries/grabDots');
@@ -17,7 +17,7 @@ const updateUserSecurityToken = require('./Mutations/updateUserSecurityToken');
 
 module.exports = {
   Query: {
-    ..._prisma,
+    ..._forwarded,
     currentUser,
     ...events,
     grabDots,

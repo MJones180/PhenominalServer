@@ -1,23 +1,6 @@
 module.exports = async (parent, args, ctx) => {
-  // Ensure a user token exists
-  ctx.user();
-  const resultData = `
-    {
-      id
-      transactions(
-        orderBy: createdAt_DESC
-        first: 1
-      ) {
-        balance
-      }
-    }
-  `;
-  // Query the current user
-  const { id, transactions } = await ctx.resolvers.Query.currentUser(parent, {}, ctx, resultData);
-  // If there is a balance, return it
-  const balance = transactions ? transactions.balance : 0;
-  return {
-    userID: id,
-    balance,
-  };
+  // Grab the user
+  const user = await ctx.currentUser();
+  // Grab the balance
+  return user.grabBalance();
 };

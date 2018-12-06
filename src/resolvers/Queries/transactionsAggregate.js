@@ -17,7 +17,7 @@ module.exports = async (parent, { forEvent, forUser }, ctx) => {
     };
   }
 
-  const data = await ctx.db.query.transactions({
+  const data = await ctx.binding.query.transactions({
     where: {
       AND: [condition, {
         type: 'DONATION',

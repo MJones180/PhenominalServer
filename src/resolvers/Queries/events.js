@@ -36,7 +36,7 @@ const past = () => ({ endDate_lt: getDate() });
 const upcoming = () => ({ startDate_gt: getDate() });
 
 // Grab the event data for the correct time period
-const wrapper = async (parent, args, ctx, info, period) => ctx.db.query.events(merge(args, period), info);
+const wrapper = async (parent, args, ctx, info, period) => ctx.binding.query.events(merge(args, period), info);
 
 module.exports = {
   eventsCurrent: async (...props) => wrapper(...props, current()),

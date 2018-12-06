@@ -6,10 +6,10 @@ const isEqual = require('lodash/isEqual');
 const keyBy = require('lodash/keyBy');
 const keys = require('lodash/keys');
 const jsonfile = require('jsonfile');
-const prisma = require('../../prismaStart');
+const prisma = require('../../prismaBinding');
 
 // Initalize a prisma connection
-const { mutation, query } = prisma(false);
+const { mutation, query } = prisma;
 
 // Grab the source file with all of the charities
 const source = jsonfile.readFileSync(`${__dirname}/index.json`);

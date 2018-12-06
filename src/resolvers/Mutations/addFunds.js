@@ -2,11 +2,8 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 module.exports = async (parent, { amount, email, token }, ctx) => (
   new Promise(async (done) => {
-    // Ensure a user token exists
-    ctx.user();
-
     // Grab the user's balance and ID
-    const { balance: startingBalance, userID } = await ctx.resolvers.Query.grabUserBalance(parent, {}, ctx);
+    const { balance: startingBalance, userID } = await (await ctx.currentUser()).grabBalance();
 
     // Add funds, returns user information as well for the confirmation
     const addFunds = async (balance, stripeID) => {
@@ -20,7 +17,7 @@ module.exports = async (parent, { amount, email, token }, ctx) => (
           }
         }
       `;
-      return ctx.db.mutation.createTransaction({
+      return ctx.binding.mutation.createTransaction({
         data: {
           amount,
           balance,

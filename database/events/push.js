@@ -2,10 +2,10 @@ const chalk = require('chalk');
 const each = require('async/each');
 const forEach = require('lodash/forEach');
 const jsonfile = require('jsonfile');
-const prisma = require('../../prismaStart');
+const prisma = require('../../prismaBinding');
 
 // Initalize a prisma connection
-const { mutation } = prisma(false);
+const { mutation } = prisma;
 
 // Grab the current env
 const env = process.env.__DEV__ ? 'dev' : 'prod';

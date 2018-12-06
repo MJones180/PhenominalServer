@@ -4,40 +4,49 @@ const toUpper = require('lodash/toUpper');
 module.exports = async (parent, { provider, token }, ctx) => {
   // Grab the user's data from the provider
   const getProviderData = async () => (
-    // Create a promise to wait for the data to be fetched
-    new Promise((cb) => {
+    // Go from Async > Sync
+    ctx.utils.wait((done) => {
       // Call the corresponding provider and end the promise once the data is retrieved
-      ctx.utils.providers[provider](token, data => cb(data));
-      // Return the user's data
-    }).then(data => data)
+      ctx.utils.providers[provider](token, data => done(data));
+    })
   );
 
   // Grab the current user, create one if needed
   const getUser = async ({ email, nameFirst, nameLast, providerID }) => {
     // Query to see if the identity already exists
-    const identity = await ctx.db.query.identity({ where: { providerID } }, '{ user { id securityToken } }');
+    const identity = await ctx.client.identity({ providerID }).user();
     // Return if the identity exists
-    if (identity) return identity.user;
-    // Create a new user
-    // Must also create each of the relations
-    return ctx.db.mutation.createUser({
-      data: {
-        email,
-        nameFirst: capitalize(nameFirst),
-        nameLast: capitalize(nameLast),
-        securityToken: ctx.utils.token.generateSecurity(),
-        username: capitalize(nameFirst) + capitalize(nameLast) + Math.floor(Math.random() * (999 - 1) + 1),
-        identity: {
-          create: {
-            provider: toUpper(provider),
-            providerID,
-          },
-        },
-        preferences: {
-          create: {},
+    if (identity) return identity;
+    // Capitalized name
+    const upperFirst = capitalize(nameFirst);
+    const upperLast = capitalize(nameLast);
+    // Generate a random username consiting of the user's first and last name with a three digit suffix
+    const generateUsername = async () => {
+      // Concat the username
+      const username = upperFirst + upperLast + ctx.utils.rand(1, 999);
+      // Check if the username already exists
+      const usernameExists = await ctx.binding.exists.User({ username });
+      // If it does, generate a new one
+      if (usernameExists) return generateUsername();
+      return username;
+    };
+    // Create a new user and each of the relations
+    return ctx.client.createUser({
+      email,
+      nameFirst: upperFirst,
+      nameLast: upperLast,
+      securityToken: ctx.utils.token.generateSecurity(),
+      username: await generateUsername(),
+      identity: {
+        create: {
+          provider: toUpper(provider),
+          providerID,
         },
       },
-    }, '{ email id nameFirst nameLast securityToken username }');
+      preferences: {
+        create: {},
+      },
+    });
   };
 
   // Grab the user's info

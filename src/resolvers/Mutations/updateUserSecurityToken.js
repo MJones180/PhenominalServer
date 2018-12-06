@@ -1,12 +1,8 @@
 module.exports = async (parent, args, ctx) => {
-  // Ensure a user token exists
-  ctx.user();
-
-  // Grab the user's id from currentUser because it also verifies the securityToken
-  const { id } = await ctx.resolvers.Query.currentUser(parent, {}, ctx, '{ id }');
-
+  // Grab the user's id
+  const { id } = await ctx.currentUser();
   // Update the user's security token
-  ctx.db.mutation.updateUser({
+  return ctx.client.updateUser({
     data: {
       securityToken: ctx.utils.token.generateSecurity(),
     },

@@ -3,13 +3,13 @@ const forEach = require('lodash/forEach');
 const get = require('lodash/get');
 const reverse = require('lodash/reverse');
 
-module.exports = async (parent, { amount, email, events }, ctx) => (
-  new Promise(async (done, reject) => {
-    // Ensure a user token exists
-    ctx.user();
+module.exports = async (parent, { amount, events }, ctx) => (
+  ctx.utils.wait(async (done, reject) => {
+    // Grab the user's id
+    const user = await ctx.currentUser();
 
     // Grab the user's balance
-    let { balance } = await ctx.resolvers.Query.grabUserBalance(parent, {}, ctx);
+    let { balance } = await user.grabBalance();
 
     // Make sure the donation amount is not greater than the current balance
     // Accounts for the sum of the batch of donations
@@ -18,10 +18,7 @@ module.exports = async (parent, { amount, email, events }, ctx) => (
       return;
     }
 
-    // Grab the user's data
-    const user = await ctx.resolvers.Query.currentUser(parent, {}, ctx, '{ id nameFirst nameLast preferences { allowDonationEmails } }');
-    // Add the email to the user's data
-    user.email = email;
+    const preferences = await ctx.client.user({ id: user.id }).preferences();
 
     // Add funds, returns user information as well for the confirmation
     const addDonation = async (eventID) => {
@@ -38,7 +35,7 @@ module.exports = async (parent, { amount, email, events }, ctx) => (
           }
         }
       `;
-      return ctx.db.mutation.createTransaction({
+      return ctx.binding.mutation.createTransaction({
         data: {
           amount,
           balance,
@@ -81,7 +78,7 @@ module.exports = async (parent, { amount, email, events }, ctx) => (
       // This makes it so the newest balance shows first
       forEach(transactionsData, value => reverse(value));
       // Check to see if the user has confirmation emails enabled
-      if (user.preferences.allowDonationEmails) {
+      if (preferences.allowDonationEmails) {
         // Send an email with the confirmation
         ctx.utils.email.donationConfirmation({
           user,
