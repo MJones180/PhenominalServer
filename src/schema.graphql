@@ -1,33 +1,23 @@
 # import Query, Event, EventOrderByInput, User from "./generated/prisma.graphql"
 
 type Mutation {
-  addFunds(amount: Int!, email: String!, token: String!): addFundsPayload
-  addDonations(amount: Int!, email: String!, events: [ID!]): addDonationsPayload
+  addFunds(amount: Int!, token: String!): addFundsPayload
   charitySuggestion(ein: String, email: String!, name: String!, representative: Boolean, url: String): Boolean
   contactMessage(email: String!, message: String!, name: String!): Boolean
+  donation(amount: Int!, events: [ID!]): donationPayload
   signin(provider: String!, token: String!): signinPayload!
-  updateUserPersonal(email: String!, nameFirst: String!, nameLast: String!): Boolean
-  updateUserPreferences(allowDonationEmails: Boolean!): Boolean
-  updateUserSecurityToken: Boolean
+  updateUser(email: String, nameFirst: String, nameLast: String, allowDonationEmails: Boolean, securityToken: Boolean): Boolean
 }
 
 type Query {
+  aggregateDonations(forEvent: String, forUser: Boolean): aggregateDonationsPayload!
   currentUser: User
+  currentUserBalance: Int!
   eventsCurrent(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
   eventsPast(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
   eventsUpcoming(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
-  transactionsAggregate(forEvent: String, forUser: Boolean): transactionsAggregatePayload!
-  grabDots(username: String): grabDotsPayload!
-  grabLoops(username: String): grabLoopsPayload!
-  grabUserBalance: grabUserBalancePayload
-}
-
-type grabDotsPayload {
-  total: Int!
-}
-
-type grabLoopsPayload {
-  count: Int!
+  userDots(username: String): Int!
+  userLoops(username: String): Int!
 }
 
 type addFundsPayload {
@@ -37,7 +27,7 @@ type addFundsPayload {
   transactionID: ID!
 }
 
-type addDonationsPayload {
+type donationPayload {
   amount: Int!
   balances: [Int!]
   events: [String!]
@@ -53,12 +43,7 @@ type signinPayload {
   username: String
 }
 
-type transactionsAggregatePayload {
+type aggregateDonationsPayload {
   count: Int!
   total: Int!
-}
-
-type grabUserBalancePayload {
-  userID: ID
-  balance: Int!
 }

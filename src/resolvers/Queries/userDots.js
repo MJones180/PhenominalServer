@@ -8,5 +8,5 @@ module.exports = async (parent, { username }, ctx) => {
     });
   // If the dot total does not exist default to 0
   const total = dotCount ? dotCount.total : 0;
-  return { total };
+  return total;
 };

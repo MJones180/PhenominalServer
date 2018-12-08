@@ -1,9 +1,12 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
-module.exports = async (parent, { amount, email, token }, ctx) => (
+module.exports = async (parent, { amount, token }, ctx) => (
   new Promise(async (done) => {
+    // Grab the user's email and ID
+    const { email, grabBalance, id: userID } = await ctx.currentUser();
+
     // Grab the user's balance and ID
-    const { balance: startingBalance, userID } = await (await ctx.currentUser()).grabBalance();
+    const startingBalance = await grabBalance();
 
     // Add funds, returns user information as well for the confirmation
     const addFunds = async (balance, stripeID) => {

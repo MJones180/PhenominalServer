@@ -1,38 +1,34 @@
-const _forwarded = require('./Queries/_forwarded');
-const currentUser = require('./Queries/currentUser');
-const events = require('./Queries/events');
-const grabDots = require('./Queries/grabDots');
-const grabLoops = require('./Queries/grabLoops');
-const grabUserBalance = require('./Queries/grabUserBalance');
-const transactionsAggregate = require('./Queries/transactionsAggregate');
-
-const addDonations = require('./Mutations/addDonations');
 const addFunds = require('./Mutations/addFunds');
 const charitySuggestion = require('./Mutations/charitySuggestion');
 const contactMessage = require('./Mutations/contactMessage');
+const donation = require('./Mutations/donation');
 const signin = require('./Mutations/signin');
-const updateUserPersonal = require('./Mutations/updateUserPersonal');
-const updateUserPreferences = require('./Mutations/updateUserPreferences');
-const updateUserSecurityToken = require('./Mutations/updateUserSecurityToken');
+const updateUser = require('./Mutations/updateUser');
+
+const _forwarded = require('./Queries/_forwarded');
+const aggregateDonations = require('./Queries/aggregateDonations');
+const currentUser = require('./Queries/currentUser');
+const currentUserBalance = require('./Queries/currentUserBalance');
+const events = require('./Queries/events');
+const userDots = require('./Queries/userDots');
+const userLoops = require('./Queries/userLoops');
 
 module.exports = {
-  Query: {
-    ..._forwarded,
-    currentUser,
-    ...events,
-    grabDots,
-    grabLoops,
-    grabUserBalance,
-    transactionsAggregate,
-  },
   Mutation: {
-    addDonations,
     addFunds,
     charitySuggestion,
     contactMessage,
+    donation,
     signin,
-    updateUserPersonal,
-    updateUserPreferences,
-    updateUserSecurityToken,
+    updateUser,
+  },
+  Query: {
+    ..._forwarded,
+    aggregateDonations,
+    currentUser,
+    currentUserBalance,
+    ...events,
+    userDots,
+    userLoops,
   },
 };

@@ -20,5 +20,5 @@ module.exports = async (parent, { username }, ctx) => {
     });
   // If the loop count does not exist default to 0
   const count = loopCount ? loopCount.count : 0;
-  return { count };
+  return count;
 };

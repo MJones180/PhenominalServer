@@ -9,7 +9,7 @@ module.exports = async (parent, { amount, events }, ctx) => (
     const user = await ctx.currentUser();
 
     // Grab the user's balance
-    let { balance } = await user.grabBalance();
+    let balance = await user.grabBalance();
 
     // Make sure the donation amount is not greater than the current balance
     // Accounts for the sum of the batch of donations

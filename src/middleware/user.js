@@ -21,10 +21,7 @@ module.exports = async (resolve, root, args, ctx, info) => {
         .transactions({ first: 1, orderBy: 'createdAt_DESC' });
       // If no balance, default to 0
       const balance = (transaction && transaction.balance) || 0;
-      return {
-        userID,
-        balance,
-      };
+      return balance;
     };
     // Grab the user's information
     const grabInfo = async (info) => {
