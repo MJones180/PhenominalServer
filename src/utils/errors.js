@@ -13,4 +13,7 @@ module.exports = {
   NotAuthenticated: createError('NotAuthenticated', {
     message: 'The user is not authenticated.',
   }),
+  UsernameAlreadyExists: createError('UsernameAlreadyExists', {
+    message: 'The requested username is already taken.',
+  }),
 };

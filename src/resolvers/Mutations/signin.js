@@ -10,19 +10,22 @@ module.exports = async (parent, { provider, token }, ctx) => {
       ctx.utils.providers[provider](token, data => done(data));
     })
   );
-
+  // Bool for if the user is new
+  let isNewUser = false;
   // Grab the current user, create one if needed
   const getUser = async ({ email, nameFirst, nameLast, providerID }) => {
     // Query to see if the identity already exists
     const identity = await ctx.client.identity({ providerID }).user();
     // Return if the identity exists
     if (identity) return identity;
+    // User does not already exist
+    isNewUser = true;
     // Capitalized name
     const upperFirst = capitalize(nameFirst);
     const upperLast = capitalize(nameLast);
     // Generate a random username consiting of the user's first and last name with a three digit suffix
     const generateUsername = async () => {
-      // Concat the username
+      // Create a new username with a random 1-3 digit number appended as the suffix
       const username = upperFirst + upperLast + ctx.utils.rand(1, 999);
       // Check if the username already exists
       const usernameExists = await ctx.binding.exists.User({ username });
@@ -57,6 +60,7 @@ module.exports = async (parent, { provider, token }, ctx) => {
     authToken: ctx.utils.token.generateAuth({ userID: id, securityToken }),
     email,
     id,
+    isNewUser,
     nameFirst,
     nameLast,
     username,

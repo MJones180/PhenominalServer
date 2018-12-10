@@ -6,7 +6,7 @@ type Mutation {
   contactMessage(email: String!, message: String!, name: String!): Boolean
   donation(amount: Int!, events: [ID!]): donationPayload
   signin(provider: String!, token: String!): signinPayload!
-  updateUser(email: String, nameFirst: String, nameLast: String, allowDonationEmails: Boolean, securityToken: Boolean): Boolean
+  updateUser(email: String, nameFirst: String, nameLast: String, username: String, allowDonationEmails: Boolean, securityToken: Boolean): Boolean
 }
 
 type Query {
@@ -38,6 +38,7 @@ type signinPayload {
   authToken: String!
   email: String
   id: String!
+  isNewUser: Boolean
   nameFirst: String
   nameLast: String
   username: String
