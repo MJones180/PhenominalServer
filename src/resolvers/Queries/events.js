@@ -1,19 +1,17 @@
 const getDate = () => new Date().toISOString();
 
-// Return an AND conditional
-const and = (arg1, arg2) => ({ AND: [arg1, arg2] });
-
 // Combine together all of the props
 const merge = (args, type) => {
   const { charityEIN, ...props } = args;
 
   const conditions = () => {
     if (!charityEIN) return type;
-    return and({
+    return ({
       charity: {
         ein: charityEIN,
       },
-    }, type);
+      ...type,
+    });
   };
 
   return {
@@ -22,12 +20,12 @@ const merge = (args, type) => {
   };
 };
 
-const current = () => and(
+const current = () => ({
   // Start <= Date
-  { startDate_lte: getDate() },
+  startDate_lte: getDate(),
   // End > Date
-  { endDate_gt: getDate() }
-);
+  endDate_gt: getDate(),
+});
 
 // End < Date
 const past = () => ({ endDate_lt: getDate() });

@@ -28,10 +28,8 @@ module.exports = async (resolve, root, args, ctx, info) => {
       // Query the user based on the userID and securityToken from the authToken
       const [user] = await ctx.binding.query.users({
         where: {
-          AND: [
-            { id: userID },
-            { securityToken: token.securityToken },
-          ],
+          id: userID,
+          securityToken: token.securityToken,
         },
       }, info);
       // If the user is found return the requested info and a grabBalance function
