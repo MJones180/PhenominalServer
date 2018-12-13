@@ -10,6 +10,9 @@ module.exports = {
   InvalidUser: createError('InvalidUser', {
     message: 'The authToken contains either a non-existant user or an invalid securityToken.',
   }),
+  InvalidUserData: createError('InvalidUserData', {
+    message: 'Data passed to update the user information is invalid.',
+  }),
   NotAuthenticated: createError('NotAuthenticated', {
     message: 'The user is not authenticated.',
   }),

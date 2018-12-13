@@ -1,32 +1,67 @@
 const capitalize = require('lodash/capitalize');
 const trim = require('lodash/trim');
+const mapValues = require('lodash/mapValues');
+const validator = require('email-validator');
 
-module.exports = async (parent, { email, nameFirst, nameLast, username, allowDonationEmails, securityToken }, ctx) => {
+
+module.exports = async (parent, params, ctx) => {
   // Grab the user's id
   const { id } = await ctx.currentUser();
+
+  // Simple params
+  const { allowDonationEmails, securityToken } = params;
+
+  // Trimmed params
+  const { email, nameFirst, nameLast, username } = mapValues(params, param => trim(param));
 
   // Properties to update
   const data = {};
 
-  // If fields are passed, simply update them
-  if (email) data.email = email;
-  if (nameFirst) data.nameFirst = capitalize(nameFirst);
-  if (nameLast) data.nameLast = capitalize(nameLast);
+  // Throw an error if any of the data is invalid
+  const invalidData = () => {
+    throw new ctx.utils.errors.InvalidUserData();
+  };
 
-  // If username is passed, make sure it does not already exist
+  // Check if email is passed
+  if (email) {
+    // Ensure it is valid
+    if (validator.validate(email)) data.email = email;
+    else invalidData();
+  }
+
+  // Check if first name is passed
+  if (nameFirst) {
+    // Ensure it is no more than 30 characters
+    if (nameFirst.length <= 30) data.nameFirst = capitalize(nameFirst);
+    else invalidData();
+  }
+
+  // Check if last name is passed
+  if (nameLast) {
+    // Ensure it is no more than 30 characters
+    if (nameLast.length <= 30) data.nameLast = capitalize(nameLast);
+    else invalidData();
+  }
+
+  // Check if username is passed
   if (username) {
     // Ensure the username does not already exist for another user
-    const usernameExists = await ctx.binding.exists.User({ username: trim(username), id_not: id });
-    // If it does throw an error
+    const usernameExists = await ctx.binding.exists.User({ username, id_not: id });
+    // If it already exists throw an error
     if (usernameExists) throw new ctx.utils.errors.UsernameAlreadyExists();
-    // Update username
-    data.username = trim(username);
+    // Check if username is between 5 and 30 characters
+    const length = username.length >= 5 && username.length <= 30;
+    // Check if username contains invalid characters
+    const valid = /^[a-zA-Z0-9_]+$/.test(username);
+    // Update username if all checks are passed
+    if (length && valid) data.username = username;
+    else invalidData();
   }
 
   // Update nested preference field if bool is set
   if (allowDonationEmails != undefined) data.preferences = { update: { allowDonationEmails } };
 
-  // Generate a new securityToken if bool is true
+  // Generate a new securityToken if bool is set
   if (securityToken) data.securityToken = ctx.utils.token.generateSecurity();
 
   // Update the user's info
