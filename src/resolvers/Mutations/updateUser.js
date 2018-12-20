@@ -3,7 +3,6 @@ const trim = require('lodash/trim');
 const mapValues = require('lodash/mapValues');
 const validator = require('email-validator');
 
-
 module.exports = async (parent, params, ctx) => {
   // Grab the user's id
   const { id } = await ctx.currentUser();
@@ -12,7 +11,7 @@ module.exports = async (parent, params, ctx) => {
   const { allowDonationEmails, securityToken } = params;
 
   // Trimmed params
-  const { email, nameFirst, nameLast, username } = mapValues(params, param => trim(param));
+  const { bio, email, nameFirst, nameLast, username } = mapValues(params, param => trim(param));
 
   // Properties to update
   const data = {};
@@ -21,6 +20,14 @@ module.exports = async (parent, params, ctx) => {
   const invalidData = () => {
     throw new ctx.utils.errors.InvalidUserData();
   };
+
+  // Check if bio is passed
+  if (bio) {
+    // Ensure it is no more than 250 characters
+    if (bio.length <= 250) data.bio = bio;
+    else invalidData();
+  }
+
 
   // Check if email is passed
   if (email) {
