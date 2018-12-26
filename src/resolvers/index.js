@@ -4,6 +4,7 @@ const contactMessage = require('./Mutations/contactMessage');
 const donation = require('./Mutations/donation');
 const signin = require('./Mutations/signin');
 const updateUser = require('./Mutations/updateUser');
+const updateUserPicture = require('./Mutations/updateUserPicture');
 
 const _forwarded = require('./Queries/_forwarded');
 const aggregateDonations = require('./Queries/aggregateDonations');
@@ -21,6 +22,7 @@ module.exports = {
     donation,
     signin,
     updateUser,
+    updateUserPicture,
   },
   Query: {
     ..._forwarded,

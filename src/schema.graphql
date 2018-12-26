@@ -1,5 +1,7 @@
 # import Query, Event, EventOrderByInput, User from "./generated/prisma.graphql"
 
+scalar Upload
+
 type Mutation {
   addFunds(amount: Int!, token: String!): addFundsPayload
   charitySuggestion(ein: String, email: String!, name: String!, representative: Boolean, url: String): Boolean
@@ -7,6 +9,7 @@ type Mutation {
   donation(amount: Int!, events: [ID!]): donationPayload
   signin(provider: String!, token: String!): signinPayload!
   updateUser(bio: String, email: String, nameFirst: String, nameLast: String, username: String, allowDonationEmails: Boolean, securityToken: Boolean): Boolean
+  updateUserPicture(picture: Upload!): Boolean
 }
 
 type Query {

@@ -2,6 +2,7 @@ const { GraphQLServer } = require('graphql-yoga');
 const { formatError } = require('apollo-errors');
 const { Prisma: PrismaBinding } = require('prisma-binding');
 const user = require('./middleware/user');
+const aws = require('./utils/aws');
 const email = require('./utils/email');
 const errors = require('./utils/errors');
 const providers = require('./utils/providers');
@@ -28,6 +29,7 @@ const server = new GraphQLServer({
     }),
     client: prismaClient,
     utils: {
+      aws,
       email,
       errors,
       providers,
