@@ -15,7 +15,6 @@
     "async": "^2.6.0",
     "aws-sdk": "^2.382.0",
     "chalk": "^2.4.0",
-    "cloudinary": "^1.13.2",
     "dotenv": "5.0.1",
     "email-validator": "^2.0.4",
     "fbgraph": "^1.4.4",
