@@ -28,7 +28,6 @@ module.exports = async (parent, params, ctx) => {
     else invalidData();
   }
 
-
   // Check if email is passed
   if (email) {
     // Ensure it is valid
