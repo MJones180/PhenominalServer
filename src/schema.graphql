@@ -32,6 +32,10 @@ type addFundsPayload {
 
 type donationPayload {
   amount: Int!
+  dotTotal: Int!
+  dotsGained: Int!
+  loopCount: Int!
+  loopsGained: Int!
   transactions: [donationTransactionPayload!]
 }
 

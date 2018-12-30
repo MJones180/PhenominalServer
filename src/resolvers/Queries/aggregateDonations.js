@@ -12,7 +12,7 @@ module.exports = async (parent, { forEvent, forUser }, ctx) => {
   if (forUser) {
     condition = {
       user: {
-        id: ctx.user().userID,
+        id: (await ctx.currentUser()).id,
       },
     };
   }

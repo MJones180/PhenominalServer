@@ -71,7 +71,7 @@ module.exports = async (parent, params, ctx) => {
   if (securityToken) data.securityToken = ctx.utils.token.generateSecurity();
 
   // Update the user's info
-  return ctx.client.updateUser({
+  ctx.client.updateUser({
     data,
     where: {
       id,
