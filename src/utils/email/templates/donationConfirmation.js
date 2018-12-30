@@ -1,15 +1,13 @@
 const map = require('lodash/map');
 const sendEmail = require('../sendEmail');
 
-module.exports = ({ transactionsData, user }) => {
-  const { amount, balances, events, ids } = transactionsData;
-  const { email, nameFirst, nameLast } = user;
+module.exports = ({ amount, transactions, user: { email, nameFirst, nameLast } }) => {
   // Format the data for the mailjet template
-  const donationData = map(ids, (id, index) => ({
+  const donationData = map(transactions, ({ balance, event, id }, index) => ({
     id,
     amount: amount / 100,
-    balance: balances[index] / 100,
-    event: events[index],
+    balance: balance / 100,
+    event,
     currentIteration: index + 1,
   }));
   sendEmail({

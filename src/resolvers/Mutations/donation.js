@@ -1,26 +1,27 @@
 const eachSeries = require('async/eachSeries');
-const forEach = require('lodash/forEach');
 const get = require('lodash/get');
-const reverse = require('lodash/reverse');
 
 module.exports = async (parent, { amount, events }, ctx) => (
   ctx.utils.wait(async (done, reject) => {
-    // Grab the user's id
+    // Grab the user's information
     const user = await ctx.currentUser();
 
-    // Grab the user's balance
-    let balance = await user.grabBalance();
+    // Grab the user's balance (and key)
+    let { balance, key: keyNumber } = await user.grabBalance();
+    // Grab the key number
+    keyNumber = ctx.utils.transactionKey.getNumber(keyNumber);
 
     // Make sure the donation amount is not greater than the current balance
     // Accounts for the sum of the batch of donations
     if ((amount * events.length) > balance) {
-      reject(new ctx.utils.errors.InsufficientFunds());
-      return;
+      // End the script and throw an error
+      return reject(new ctx.utils.errors.InsufficientFunds());
     }
 
-    const preferences = await ctx.client.user({ id: user.id }).preferences();
+    // Grab the user's preferences
+    const { allowDonationEmails } = await ctx.client.user({ id: user.id }).preferences();
 
-    // Add funds, returns user information as well for the confirmation
+    // Create the transaction, returns event information
     const addDonation = async (eventID) => {
       const resultData = `
         {
@@ -39,6 +40,7 @@ module.exports = async (parent, { amount, events }, ctx) => (
         data: {
           amount,
           balance,
+          key: ctx.utils.transactionKey.generate(user.id, ++keyNumber),
           type: 'DONATION',
           event: {
             connect: {
@@ -54,39 +56,35 @@ module.exports = async (parent, { amount, events }, ctx) => (
       }, resultData);
     };
 
-    // The data to return
-    const transactionsData = {
-      amount,
-      balances: [],
-      events: [],
-      ids: [],
-    };
+    // Newly added transactions
+    const transactions = [];
 
-    eachSeries(events, (eventID, cb) => (
-      setTimeout(async () => {
-        balance -= amount;
-        // Submit the donation
-        const { id, event } = await addDonation(eventID);
-        // Push the data that will be returned
-        transactionsData.balances.push(balance);
-        transactionsData.events.push(get(event, 'charity.name') || get(event, 'specialFundraiser.name'));
-        transactionsData.ids.push(id);
-        cb(null);
-      }, 1000)
-    ), () => {
-      // Reverse the values in each of the arrays
-      // This makes it so the newest balance shows first
-      forEach(transactionsData, value => reverse(value));
+    eachSeries(events, async (eventID) => {
+      // Update the balance
+      balance -= amount;
+      // Submit the donation
+      const { id, event } = await addDonation(eventID);
+      // Push the data to the front of the array
+      transactions.unshift({
+        balance,
+        event: get(event, 'charity.name') || get(event, 'specialFundraiser.name'),
+        id,
+      });
+    }, () => {
       // Check to see if the user has confirmation emails enabled
-      if (preferences.allowDonationEmails) {
+      if (allowDonationEmails) {
         // Send an email with the confirmation
         ctx.utils.email.donationConfirmation({
+          amount,
+          transactions,
           user,
-          transactionsData,
         });
       }
       // Return the data back to the client
-      done(transactionsData);
+      done({
+        amount,
+        transactions,
+      });
     });
   })
 );

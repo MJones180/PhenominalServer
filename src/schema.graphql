@@ -32,9 +32,13 @@ type addFundsPayload {
 
 type donationPayload {
   amount: Int!
-  balances: [Int!]
-  events: [String!]
-  ids: [ID!]
+  transactions: [donationTransactionPayload!]
+}
+
+type donationTransactionPayload {
+  balance: Int!
+  event: String!
+  id: ID!
 }
 
 type signinPayload {

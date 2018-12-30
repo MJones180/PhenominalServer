@@ -29,6 +29,7 @@
     "no-param-reassign": [2, {
       "props": false
     }],
+    "no-plusplus": [0],
     "no-shadow": [0],
     "no-underscore-dangle": [0],
     "no-useless-escape": [0],

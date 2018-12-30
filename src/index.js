@@ -1,17 +1,17 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { formatError } = require('apollo-errors');
 const { Prisma: PrismaBinding } = require('prisma-binding');
+const { prisma: prismaClient } = require('./generated/prisma-client');
 const user = require('./middleware/user');
 const aws = require('./utils/aws');
 const email = require('./utils/email');
-const errors = require('./utils/errors');
 const providers = require('./utils/providers');
-const wait = require('./utils/wait');
+const errors = require('./utils/errors');
 const rand = require('./utils/rand');
 const token = require('./utils/token');
+const transactionKey = require('./utils/transactionKey');
+const wait = require('./utils/wait');
 const resolvers = require('./resolvers');
-
-const { prisma: prismaClient } = require('./generated/prisma-client');
 
 // Server config
 const server = new GraphQLServer({
@@ -31,10 +31,11 @@ const server = new GraphQLServer({
     utils: {
       aws,
       email,
-      errors,
       providers,
+      errors,
       rand,
       token,
+      transactionKey,
       wait,
     },
   }),

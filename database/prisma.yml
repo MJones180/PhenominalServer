@@ -5,5 +5,5 @@ generate:
     output: ../src/generated/prisma-client/
 hooks:
   post-deploy:
-    - graphql get-schema --project database
+    - graphql get-schema -p database
 secret: ${env:PRISMA_SECRET}

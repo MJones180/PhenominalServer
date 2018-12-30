@@ -140,6 +140,7 @@ type Transaction {
 
   amount: Int!
   balance: Int!
+  key: String! @unique
   stripeID: String
   type: TransactionType!
 

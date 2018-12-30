@@ -5,8 +5,12 @@ module.exports = async (parent, { amount, token }, ctx) => (
     // Grab the user's email and ID
     const { email, grabBalance, id: userID } = await ctx.currentUser();
 
-    // Grab the user's balance and ID
-    const startingBalance = await grabBalance();
+    // Grab the user's balance (and key)
+    const balanceInfo = await grabBalance();
+    // Starting balance
+    const startingBalance = balanceInfo.balance;
+    // Grab the key number
+    let keyNumber = ctx.utils.transactionKey.getNumber(balanceInfo.key);
 
     // Add funds, returns user information as well for the confirmation
     const addFunds = async (balance, stripeID) => {
@@ -24,6 +28,7 @@ module.exports = async (parent, { amount, token }, ctx) => (
         data: {
           amount,
           balance,
+          key: ctx.utils.transactionKey.generate(userID, ++keyNumber),
           stripeID,
           type: 'ADD_FUNDS',
           user: {

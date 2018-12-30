@@ -2115,6 +2115,7 @@ type Transaction {
   createdAt: DateTime!
   amount: Int!
   balance: Int!
+  key: String!
   stripeID: String
   type: TransactionType!
   event: Event
@@ -2130,6 +2131,7 @@ type TransactionConnection {
 input TransactionCreateInput {
   amount: Int!
   balance: Int!
+  key: String!
   stripeID: String
   type: TransactionType!
   event: EventCreateOneWithoutDonationsInput
@@ -2149,6 +2151,7 @@ input TransactionCreateManyWithoutUserInput {
 input TransactionCreateWithoutEventInput {
   amount: Int!
   balance: Int!
+  key: String!
   stripeID: String
   type: TransactionType!
   user: UserCreateOneWithoutTransactionsInput!
@@ -2157,6 +2160,7 @@ input TransactionCreateWithoutEventInput {
 input TransactionCreateWithoutUserInput {
   amount: Int!
   balance: Int!
+  key: String!
   stripeID: String
   type: TransactionType!
   event: EventCreateOneWithoutDonationsInput
@@ -2176,6 +2180,8 @@ enum TransactionOrderByInput {
   amount_DESC
   balance_ASC
   balance_DESC
+  key_ASC
+  key_DESC
   stripeID_ASC
   stripeID_DESC
   type_ASC
@@ -2189,6 +2195,7 @@ type TransactionPreviousValues {
   createdAt: DateTime!
   amount: Int!
   balance: Int!
+  key: String!
   stripeID: String
   type: TransactionType!
 }
@@ -2219,6 +2226,7 @@ enum TransactionType {
 input TransactionUpdateInput {
   amount: Int
   balance: Int
+  key: String
   stripeID: String
   type: TransactionType
   event: EventUpdateOneWithoutDonationsInput
@@ -2246,6 +2254,7 @@ input TransactionUpdateManyWithoutUserInput {
 input TransactionUpdateWithoutEventDataInput {
   amount: Int
   balance: Int
+  key: String
   stripeID: String
   type: TransactionType
   user: UserUpdateOneRequiredWithoutTransactionsInput
@@ -2254,6 +2263,7 @@ input TransactionUpdateWithoutEventDataInput {
 input TransactionUpdateWithoutUserDataInput {
   amount: Int
   balance: Int
+  key: String
   stripeID: String
   type: TransactionType
   event: EventUpdateOneWithoutDonationsInput
@@ -2320,6 +2330,20 @@ input TransactionWhereInput {
   balance_lte: Int
   balance_gt: Int
   balance_gte: Int
+  key: String
+  key_not: String
+  key_in: [String!]
+  key_not_in: [String!]
+  key_lt: String
+  key_lte: String
+  key_gt: String
+  key_gte: String
+  key_contains: String
+  key_not_contains: String
+  key_starts_with: String
+  key_not_starts_with: String
+  key_ends_with: String
+  key_not_ends_with: String
   stripeID: String
   stripeID_not: String
   stripeID_in: [String!]
@@ -2347,6 +2371,7 @@ input TransactionWhereInput {
 
 input TransactionWhereUniqueInput {
   id: ID
+  key: String
 }
 
 type User {

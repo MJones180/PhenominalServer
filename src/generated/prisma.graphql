@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/michael-jones/phenominal/dev
-# timestamp: Mon Nov 12 2018 20:04:37 GMT-0500 (Eastern Standard Time)
+# timestamp: Sat Dec 29 2018 15:02:13 GMT-0500 (Eastern Standard Time)
 
 type AggregateCharity {
   count: Int!
@@ -5007,6 +5007,7 @@ type Transaction implements Node {
   createdAt: DateTime!
   amount: Int!
   balance: Int!
+  key: String!
   stripeID: String
   type: TransactionType!
   event: Event
@@ -5026,6 +5027,7 @@ type TransactionConnection {
 input TransactionCreateInput {
   amount: Int!
   balance: Int!
+  key: String!
   stripeID: String
   type: TransactionType!
   event: EventCreateOneWithoutDonationsInput
@@ -5045,6 +5047,7 @@ input TransactionCreateManyWithoutUserInput {
 input TransactionCreateWithoutEventInput {
   amount: Int!
   balance: Int!
+  key: String!
   stripeID: String
   type: TransactionType!
   user: UserCreateOneWithoutTransactionsInput!
@@ -5053,6 +5056,7 @@ input TransactionCreateWithoutEventInput {
 input TransactionCreateWithoutUserInput {
   amount: Int!
   balance: Int!
+  key: String!
   stripeID: String
   type: TransactionType!
   event: EventCreateOneWithoutDonationsInput
@@ -5076,6 +5080,8 @@ enum TransactionOrderByInput {
   amount_DESC
   balance_ASC
   balance_DESC
+  key_ASC
+  key_DESC
   stripeID_ASC
   stripeID_DESC
   type_ASC
@@ -5089,6 +5095,7 @@ type TransactionPreviousValues {
   createdAt: DateTime!
   amount: Int!
   balance: Int!
+  key: String!
   stripeID: String
   type: TransactionType!
 }
@@ -5208,6 +5215,46 @@ input TransactionScalarWhereInput {
 
   """All values greater than or equal the given value."""
   balance_gte: Int
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
   stripeID: String
 
   """All values that are not equal to given value."""
@@ -5307,6 +5354,7 @@ enum TransactionType {
 input TransactionUpdateInput {
   amount: Int
   balance: Int
+  key: String
   stripeID: String
   type: TransactionType
   event: EventUpdateOneWithoutDonationsInput
@@ -5316,6 +5364,7 @@ input TransactionUpdateInput {
 input TransactionUpdateManyDataInput {
   amount: Int
   balance: Int
+  key: String
   stripeID: String
   type: TransactionType
 }
@@ -5323,6 +5372,7 @@ input TransactionUpdateManyDataInput {
 input TransactionUpdateManyMutationInput {
   amount: Int
   balance: Int
+  key: String
   stripeID: String
   type: TransactionType
 }
@@ -5357,6 +5407,7 @@ input TransactionUpdateManyWithWhereNestedInput {
 input TransactionUpdateWithoutEventDataInput {
   amount: Int
   balance: Int
+  key: String
   stripeID: String
   type: TransactionType
   user: UserUpdateOneRequiredWithoutTransactionsInput
@@ -5365,6 +5416,7 @@ input TransactionUpdateWithoutEventDataInput {
 input TransactionUpdateWithoutUserDataInput {
   amount: Int
   balance: Int
+  key: String
   stripeID: String
   type: TransactionType
   event: EventUpdateOneWithoutDonationsInput
@@ -5507,6 +5559,46 @@ input TransactionWhereInput {
 
   """All values greater than or equal the given value."""
   balance_gte: Int
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
   stripeID: String
 
   """All values that are not equal to given value."""
@@ -5563,6 +5655,7 @@ input TransactionWhereInput {
 
 input TransactionWhereUniqueInput {
   id: ID
+  key: String
 }
 
 type User implements Node {

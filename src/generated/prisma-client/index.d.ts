@@ -672,6 +672,8 @@ export type TransactionOrderByInput =
   | "amount_DESC"
   | "balance_ASC"
   | "balance_DESC"
+  | "key_ASC"
+  | "key_DESC"
   | "stripeID_ASC"
   | "stripeID_DESC"
   | "type_ASC"
@@ -834,6 +836,20 @@ export interface TransactionWhereInput {
   balance_lte?: Int;
   balance_gt?: Int;
   balance_gte?: Int;
+  key?: String;
+  key_not?: String;
+  key_in?: String[] | String;
+  key_not_in?: String[] | String;
+  key_lt?: String;
+  key_lte?: String;
+  key_gt?: String;
+  key_gte?: String;
+  key_contains?: String;
+  key_not_contains?: String;
+  key_starts_with?: String;
+  key_not_starts_with?: String;
+  key_ends_with?: String;
+  key_not_ends_with?: String;
   stripeID?: String;
   stripeID_not?: String;
   stripeID_in?: String[] | String;
@@ -1194,6 +1210,7 @@ export interface HaloSubscriptionWhereInput {
 export interface TransactionCreateWithoutUserInput {
   amount: Int;
   balance: Int;
+  key: String;
   stripeID?: String;
   type: TransactionType;
   event?: EventCreateOneWithoutDonationsInput;
@@ -1293,6 +1310,7 @@ export interface EventUpdateManyWithoutCharityInput {
 export interface TransactionCreateInput {
   amount: Int;
   balance: Int;
+  key: String;
   stripeID?: String;
   type: TransactionType;
   event?: EventCreateOneWithoutDonationsInput;
@@ -1403,6 +1421,7 @@ export type IdentityWhereUniqueInput = AtLeastOne<{
 export interface TransactionUpdateWithoutEventDataInput {
   amount?: Int;
   balance?: Int;
+  key?: String;
   stripeID?: String;
   type?: TransactionType;
   user?: UserUpdateOneRequiredWithoutTransactionsInput;
@@ -1770,6 +1789,7 @@ export interface UserCreateOneWithoutHalosInput {
 export interface TransactionCreateWithoutEventInput {
   amount: Int;
   balance: Int;
+  key: String;
   stripeID?: String;
   type: TransactionType;
   user: UserCreateOneWithoutTransactionsInput;
@@ -2319,6 +2339,7 @@ export interface UserUpdateManyWithoutFollowedCharitiesInput {
 export interface TransactionUpdateInput {
   amount?: Int;
   balance?: Int;
+  key?: String;
   stripeID?: String;
   type?: TransactionType;
   event?: EventUpdateOneWithoutDonationsInput;
@@ -2432,6 +2453,7 @@ export interface LoopCreateInput {
 export interface TransactionUpdateWithoutUserDataInput {
   amount?: Int;
   balance?: Int;
+  key?: String;
   stripeID?: String;
   type?: TransactionType;
   event?: EventUpdateOneWithoutDonationsInput;
@@ -2792,6 +2814,7 @@ export interface UserCreateManyWithoutCirclesInput {
 
 export type TransactionWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
+  key?: String;
 }>;
 
 export interface UserCreateWithoutCirclesInput {
@@ -3277,6 +3300,7 @@ export interface TransactionPreviousValuesNode {
   createdAt: DateTimeOutput;
   amount: Int;
   balance: Int;
+  key: String;
   stripeID?: String;
   type: TransactionType;
 }
@@ -3288,6 +3312,7 @@ export interface TransactionPreviousValues
   createdAt: () => Promise<DateTimeOutput>;
   amount: () => Promise<Int>;
   balance: () => Promise<Int>;
+  key: () => Promise<String>;
   stripeID: () => Promise<String>;
   type: () => Promise<TransactionType>;
 }
@@ -3299,6 +3324,7 @@ export interface TransactionPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   amount: () => Promise<AsyncIterator<Int>>;
   balance: () => Promise<AsyncIterator<Int>>;
+  key: () => Promise<AsyncIterator<String>>;
   stripeID: () => Promise<AsyncIterator<String>>;
   type: () => Promise<AsyncIterator<TransactionType>>;
 }
@@ -3702,6 +3728,7 @@ export interface TransactionNode {
   createdAt: DateTimeOutput;
   amount: Int;
   balance: Int;
+  key: String;
   stripeID?: String;
   type: TransactionType;
 }
@@ -3711,6 +3738,7 @@ export interface Transaction extends Promise<TransactionNode>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   amount: () => Promise<Int>;
   balance: () => Promise<Int>;
+  key: () => Promise<String>;
   stripeID: () => Promise<String>;
   type: () => Promise<TransactionType>;
   event: <T = Event>() => T;
@@ -3724,6 +3752,7 @@ export interface TransactionSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   amount: () => Promise<AsyncIterator<Int>>;
   balance: () => Promise<AsyncIterator<Int>>;
+  key: () => Promise<AsyncIterator<String>>;
   stripeID: () => Promise<AsyncIterator<String>>;
   type: () => Promise<AsyncIterator<TransactionType>>;
   event: <T = EventSubscription>() => T;
