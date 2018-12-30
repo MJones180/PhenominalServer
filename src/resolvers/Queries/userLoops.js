@@ -20,5 +20,7 @@ module.exports = async (parent, { username }, ctx) => {
     });
   // If the loop count does not exist default to 0
   const count = loopCount ? loopCount.count : 0;
-  return count;
+  // Grab all of the stage information (contains count)
+  const stage = ctx.utils.loops(count);
+  return stage;
 };

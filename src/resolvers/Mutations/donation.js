@@ -97,7 +97,7 @@ module.exports = async (parent, { amount, events }, ctx) => (
     const loopedEvents = await grabLoopedEvents();
 
     // Grab the user's current Loop count
-    let loopCount = await userLoops(parent, { username: user.username }, ctx);
+    let { count: loopCount } = await userLoops(parent, { username: user.username }, ctx);
 
     // New Loops added
     let loopsGained = 0;
