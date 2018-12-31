@@ -7,7 +7,7 @@ const aws = require('./utils/aws');
 const email = require('./utils/email');
 const providers = require('./utils/providers');
 const errors = require('./utils/errors');
-const loops = require('./utils/loops');
+const loopStage = require('./utils/loopStage');
 const rand = require('./utils/rand');
 const token = require('./utils/token');
 const transactionKey = require('./utils/transactionKey');
@@ -34,7 +34,7 @@ const server = new GraphQLServer({
       email,
       providers,
       errors,
-      loops,
+      loopStage,
       rand,
       token,
       transactionKey,

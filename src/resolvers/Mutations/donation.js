@@ -2,6 +2,7 @@ const eachSeries = require('async/eachSeries');
 const get = require('lodash/get');
 const includes = require('lodash/includes');
 const map = require('lodash/map');
+const userDots = require('../Queries/userDots');
 const userLoops = require('../Queries/userLoops');
 
 module.exports = async (parent, { amount, events }, ctx) => (
@@ -105,12 +106,33 @@ module.exports = async (parent, { amount, events }, ctx) => (
     // Add a new Loop
     const addLoop = async eventID => (
       ctx.client.createLoop({
+        // Increase the loopCount by 1
         count: ++loopCount,
         event: {
           connect: {
             id: eventID,
           },
         },
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+      })
+    );
+
+    // Grab the user's current Dot total
+    let dotTotal = await userDots(parent, { username: user.username }, ctx);
+
+    // New Dots added
+    let dotsGained = 0;
+
+    // Add Dots
+    const addDots = async (amount, total, boost) => (
+      ctx.client.createDot({
+        action: `Donation (Boost ${boost}x)`,
+        amount,
+        total,
         user: {
           connect: {
             id: user.id,
@@ -137,12 +159,22 @@ module.exports = async (parent, { amount, events }, ctx) => (
       // Check if the donation is Loop eligible
       if (!includes(loopedEvents, eventID)) {
         // Add the Loop
-        addLoop(eventID);
+        await addLoop(eventID);
         // Append to the Looped events
         loopedEvents.push(eventID);
         // Increase the Loops gained by 1
         loopsGained++;
       }
+      // The Dot boost, based on Loop count
+      const { boost } = ctx.utils.loopStage(loopCount);
+      // The amount of Dots given for donating
+      const dotIncrease = 50 * boost;
+      // Increase the new Dot total
+      dotTotal += dotIncrease;
+      // Increase the total newly added Dots
+      dotsGained += dotIncrease;
+      // Add the new Dots
+      await addDots(dotIncrease, dotTotal, boost);
     }, () => {
       // Check to see if the user has confirmation emails enabled
       if (allowDonationEmails) {
@@ -153,11 +185,11 @@ module.exports = async (parent, { amount, events }, ctx) => (
           user,
         });
       }
-
-      console.log('LoopsGained: ', loopsGained);
       // Return the data back to the client
       done({
         amount,
+        dotTotal,
+        dotsGained,
         loopCount,
         loopsGained,
         transactions,
