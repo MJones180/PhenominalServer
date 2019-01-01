@@ -711,7 +711,9 @@ export type PreferencesOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC"
   | "allowDonationEmails_ASC"
-  | "allowDonationEmails_DESC";
+  | "allowDonationEmails_DESC"
+  | "publicProfile_ASC"
+  | "publicProfile_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -785,6 +787,8 @@ export interface PreferencesWhereInput {
   updatedAt_gte?: DateTimeInput;
   allowDonationEmails?: Boolean;
   allowDonationEmails_not?: Boolean;
+  publicProfile?: Boolean;
+  publicProfile_not?: Boolean;
   user?: UserWhereInput;
   AND?: PreferencesWhereInput[] | PreferencesWhereInput;
   OR?: PreferencesWhereInput[] | PreferencesWhereInput;
@@ -1176,6 +1180,7 @@ export interface PreferencesSubscriptionWhereInput {
 
 export interface PreferencesCreateWithoutUserInput {
   allowDonationEmails?: Boolean;
+  publicProfile?: Boolean;
 }
 
 export interface LoopSubscriptionWhereInput {
@@ -1453,6 +1458,7 @@ export interface UserUpdateOneRequiredWithoutTransactionsInput {
 
 export interface PreferencesCreateInput {
   allowDonationEmails?: Boolean;
+  publicProfile?: Boolean;
   user: UserCreateOneWithoutPreferencesInput;
 }
 
@@ -2404,10 +2410,12 @@ export interface UserUpsertWithoutPreferencesInput {
 
 export interface PreferencesUpdateWithoutUserDataInput {
   allowDonationEmails?: Boolean;
+  publicProfile?: Boolean;
 }
 
 export interface PreferencesUpdateInput {
   allowDonationEmails?: Boolean;
+  publicProfile?: Boolean;
   user?: UserUpdateOneRequiredWithoutPreferencesInput;
 }
 
@@ -3703,6 +3711,7 @@ export interface PreferencesNode {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   allowDonationEmails: Boolean;
+  publicProfile: Boolean;
 }
 
 export interface Preferences extends Promise<PreferencesNode>, Fragmentable {
@@ -3710,6 +3719,7 @@ export interface Preferences extends Promise<PreferencesNode>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   allowDonationEmails: () => Promise<Boolean>;
+  publicProfile: () => Promise<Boolean>;
   user: <T = User>() => T;
 }
 
@@ -3720,6 +3730,7 @@ export interface PreferencesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   allowDonationEmails: () => Promise<AsyncIterator<Boolean>>;
+  publicProfile: () => Promise<AsyncIterator<Boolean>>;
   user: <T = UserSubscription>() => T;
 }
 
@@ -4720,6 +4731,7 @@ export interface PreferencesPreviousValuesNode {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   allowDonationEmails: Boolean;
+  publicProfile: Boolean;
 }
 
 export interface PreferencesPreviousValues
@@ -4729,6 +4741,7 @@ export interface PreferencesPreviousValues
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   allowDonationEmails: () => Promise<Boolean>;
+  publicProfile: () => Promise<Boolean>;
 }
 
 export interface PreferencesPreviousValuesSubscription
@@ -4738,6 +4751,7 @@ export interface PreferencesPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   allowDonationEmails: () => Promise<AsyncIterator<Boolean>>;
+  publicProfile: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface PreferencesSubscriptionPayloadNode {

@@ -68,6 +68,7 @@ type Preferences {
   updatedAt: DateTime!
 
   allowDonationEmails: Boolean! @default(value: "true")
+  publicProfile: Boolean! @default(value: "true")
 
   user: User! @relation(name: "UserPreferences")
 }

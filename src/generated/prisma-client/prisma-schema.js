@@ -1762,6 +1762,7 @@ type Preferences {
   createdAt: DateTime!
   updatedAt: DateTime!
   allowDonationEmails: Boolean!
+  publicProfile: Boolean!
   user: User!
 }
 
@@ -1773,6 +1774,7 @@ type PreferencesConnection {
 
 input PreferencesCreateInput {
   allowDonationEmails: Boolean
+  publicProfile: Boolean
   user: UserCreateOneWithoutPreferencesInput!
 }
 
@@ -1783,6 +1785,7 @@ input PreferencesCreateOneWithoutUserInput {
 
 input PreferencesCreateWithoutUserInput {
   allowDonationEmails: Boolean
+  publicProfile: Boolean
 }
 
 type PreferencesEdge {
@@ -1799,6 +1802,8 @@ enum PreferencesOrderByInput {
   updatedAt_DESC
   allowDonationEmails_ASC
   allowDonationEmails_DESC
+  publicProfile_ASC
+  publicProfile_DESC
 }
 
 type PreferencesPreviousValues {
@@ -1806,6 +1811,7 @@ type PreferencesPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   allowDonationEmails: Boolean!
+  publicProfile: Boolean!
 }
 
 type PreferencesSubscriptionPayload {
@@ -1828,6 +1834,7 @@ input PreferencesSubscriptionWhereInput {
 
 input PreferencesUpdateInput {
   allowDonationEmails: Boolean
+  publicProfile: Boolean
   user: UserUpdateOneRequiredWithoutPreferencesInput
 }
 
@@ -1840,6 +1847,7 @@ input PreferencesUpdateOneRequiredWithoutUserInput {
 
 input PreferencesUpdateWithoutUserDataInput {
   allowDonationEmails: Boolean
+  publicProfile: Boolean
 }
 
 input PreferencesUpsertWithoutUserInput {
@@ -1880,6 +1888,8 @@ input PreferencesWhereInput {
   updatedAt_gte: DateTime
   allowDonationEmails: Boolean
   allowDonationEmails_not: Boolean
+  publicProfile: Boolean
+  publicProfile_not: Boolean
   user: UserWhereInput
   AND: [PreferencesWhereInput!]
   OR: [PreferencesWhereInput!]

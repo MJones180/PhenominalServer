@@ -1,6 +1,7 @@
 const capitalize = require('lodash/capitalize');
 const trim = require('lodash/trim');
 const mapValues = require('lodash/mapValues');
+const set = require('lodash/set');
 const validator = require('email-validator');
 
 module.exports = async (parent, params, ctx) => {
@@ -8,7 +9,7 @@ module.exports = async (parent, params, ctx) => {
   const { id } = await ctx.currentUser();
 
   // Simple params
-  const { allowDonationEmails, securityToken } = params;
+  const { allowDonationEmails, publicProfile, securityToken } = params;
 
   // Trimmed params
   const { bio, email, nameFirst, nameLast, username } = mapValues(params, param => trim(param));
@@ -64,14 +65,15 @@ module.exports = async (parent, params, ctx) => {
     else invalidData();
   }
 
-  // Update nested preference field if bool is set
-  if (allowDonationEmails != undefined) data.preferences = { update: { allowDonationEmails } };
+  // Update nested preference fields if bools are set
+  if (allowDonationEmails != undefined) set(data, 'preferences.update.allowDonationEmails', allowDonationEmails);
+  if (publicProfile != undefined) set(data, 'preferences.update.publicProfile', publicProfile);
 
   // Generate a new securityToken if bool is set
   if (securityToken) data.securityToken = ctx.utils.token.generateSecurity();
 
   // Update the user's info
-  ctx.client.updateUser({
+  await ctx.client.updateUser({
     data,
     where: {
       id,

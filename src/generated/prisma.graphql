@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/michael-jones/phenominal/dev
-# timestamp: Sat Dec 29 2018 15:02:13 GMT-0500 (Eastern Standard Time)
+# timestamp: Mon Dec 31 2018 16:05:30 GMT-0500 (Eastern Standard Time)
 
 type AggregateCharity {
   count: Int!
@@ -4410,6 +4410,7 @@ type Preferences implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   allowDonationEmails: Boolean!
+  publicProfile: Boolean!
   user: User!
 }
 
@@ -4425,6 +4426,7 @@ type PreferencesConnection {
 
 input PreferencesCreateInput {
   allowDonationEmails: Boolean
+  publicProfile: Boolean
   user: UserCreateOneWithoutPreferencesInput!
 }
 
@@ -4435,6 +4437,7 @@ input PreferencesCreateOneWithoutUserInput {
 
 input PreferencesCreateWithoutUserInput {
   allowDonationEmails: Boolean
+  publicProfile: Boolean
 }
 
 """An edge in a connection."""
@@ -4455,6 +4458,8 @@ enum PreferencesOrderByInput {
   updatedAt_DESC
   allowDonationEmails_ASC
   allowDonationEmails_DESC
+  publicProfile_ASC
+  publicProfile_DESC
 }
 
 type PreferencesPreviousValues {
@@ -4462,6 +4467,7 @@ type PreferencesPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   allowDonationEmails: Boolean!
+  publicProfile: Boolean!
 }
 
 type PreferencesSubscriptionPayload {
@@ -4505,11 +4511,13 @@ input PreferencesSubscriptionWhereInput {
 
 input PreferencesUpdateInput {
   allowDonationEmails: Boolean
+  publicProfile: Boolean
   user: UserUpdateOneRequiredWithoutPreferencesInput
 }
 
 input PreferencesUpdateManyMutationInput {
   allowDonationEmails: Boolean
+  publicProfile: Boolean
 }
 
 input PreferencesUpdateOneRequiredWithoutUserInput {
@@ -4521,6 +4529,7 @@ input PreferencesUpdateOneRequiredWithoutUserInput {
 
 input PreferencesUpdateWithoutUserDataInput {
   allowDonationEmails: Boolean
+  publicProfile: Boolean
 }
 
 input PreferencesUpsertWithoutUserInput {
@@ -4625,6 +4634,10 @@ input PreferencesWhereInput {
 
   """All values that are not equal to given value."""
   allowDonationEmails_not: Boolean
+  publicProfile: Boolean
+
+  """All values that are not equal to given value."""
+  publicProfile_not: Boolean
   user: UserWhereInput
 }
 
