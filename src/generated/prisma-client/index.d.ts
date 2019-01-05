@@ -579,7 +579,7 @@ export type CharityOrderByInput =
   | "website_ASC"
   | "website_DESC";
 
-export type TransactionType = "DONATION" | "ADD_FUNDS";
+export type IdentityProvider = "FACEBOOK" | "GOOGLE";
 
 export type DotOrderByInput =
   | "id_ASC"
@@ -641,7 +641,7 @@ export type IdentityOrderByInput =
   | "providerID_ASC"
   | "providerID_DESC";
 
-export type IdentityProvider = "FACEBOOK" | "GOOGLE";
+export type TransactionType = "DONATION" | "ADD_FUNDS";
 
 export type EventOrderByInput =
   | "id_ASC"
@@ -691,7 +691,9 @@ export type CircleOrderByInput =
   | "description_ASC"
   | "description_DESC"
   | "name_ASC"
-  | "name_DESC";
+  | "name_DESC"
+  | "open_ASC"
+  | "open_DESC";
 
 export type LoopOrderByInput =
   | "id_ASC"
@@ -730,6 +732,8 @@ export type HaloOrderByInput =
 export interface CircleUpdateWithoutUsersDataInput {
   description?: String;
   name?: String;
+  open?: Boolean;
+  owner?: UserUpdateOneRequiredWithoutCirclesOwnedInput;
 }
 
 export type CharityWhereUniqueInput = AtLeastOne<{
@@ -737,24 +741,12 @@ export type CharityWhereUniqueInput = AtLeastOne<{
   ein?: String;
 }>;
 
-export interface CharityUpdateWithoutFollowersDataInput {
-  acronym?: String;
-  bannerCredit?: String;
-  ein?: String;
-  expensesAdministrative?: Float;
-  expensesFundraising?: Float;
-  expensesOther?: Float;
-  expensesProgram?: Float;
-  expensesUpdated?: String;
-  location?: String;
-  mission?: String;
-  name?: String;
-  phoneNumber?: String;
-  website?: String;
-  events?: EventUpdateManyWithoutCharityInput;
+export interface CharityUpdateWithWhereUniqueWithoutFollowersInput {
+  where: CharityWhereUniqueInput;
+  data: CharityUpdateWithoutFollowersDataInput;
 }
 
-export interface PreferencesWhereInput {
+export interface LoopWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -777,28 +769,36 @@ export interface PreferencesWhereInput {
   createdAt_lte?: DateTimeInput;
   createdAt_gt?: DateTimeInput;
   createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  allowDonationEmails?: Boolean;
-  allowDonationEmails_not?: Boolean;
-  publicProfile?: Boolean;
-  publicProfile_not?: Boolean;
+  count?: Int;
+  count_not?: Int;
+  count_in?: Int[] | Int;
+  count_not_in?: Int[] | Int;
+  count_lt?: Int;
+  count_lte?: Int;
+  count_gt?: Int;
+  count_gte?: Int;
+  event?: EventWhereInput;
   user?: UserWhereInput;
-  AND?: PreferencesWhereInput[] | PreferencesWhereInput;
-  OR?: PreferencesWhereInput[] | PreferencesWhereInput;
-  NOT?: PreferencesWhereInput[] | PreferencesWhereInput;
+  AND?: LoopWhereInput[] | LoopWhereInput;
+  OR?: LoopWhereInput[] | LoopWhereInput;
+  NOT?: LoopWhereInput[] | LoopWhereInput;
 }
 
-export interface CharityUpsertWithWhereUniqueWithoutFollowersInput {
-  where: CharityWhereUniqueInput;
-  update: CharityUpdateWithoutFollowersDataInput;
-  create: CharityCreateWithoutFollowersInput;
+export interface CharityUpdateWithoutFollowersDataInput {
+  acronym?: String;
+  bannerCredit?: String;
+  ein?: String;
+  expensesAdministrative?: Float;
+  expensesFundraising?: Float;
+  expensesOther?: Float;
+  expensesProgram?: Float;
+  expensesUpdated?: String;
+  location?: String;
+  mission?: String;
+  name?: String;
+  phoneNumber?: String;
+  website?: String;
+  events?: EventUpdateManyWithoutCharityInput;
 }
 
 export interface TransactionWhereInput {
@@ -879,17 +879,10 @@ export interface TransactionWhereInput {
   NOT?: TransactionWhereInput[] | TransactionWhereInput;
 }
 
-export interface HaloUpdateManyWithoutUserInput {
-  create?: HaloCreateWithoutUserInput[] | HaloCreateWithoutUserInput;
-  delete?: HaloWhereUniqueInput[] | HaloWhereUniqueInput;
-  connect?: HaloWhereUniqueInput[] | HaloWhereUniqueInput;
-  disconnect?: HaloWhereUniqueInput[] | HaloWhereUniqueInput;
-  update?:
-    | HaloUpdateWithWhereUniqueWithoutUserInput[]
-    | HaloUpdateWithWhereUniqueWithoutUserInput;
-  upsert?:
-    | HaloUpsertWithWhereUniqueWithoutUserInput[]
-    | HaloUpsertWithWhereUniqueWithoutUserInput;
+export interface CharityUpsertWithWhereUniqueWithoutFollowersInput {
+  where: CharityWhereUniqueInput;
+  update: CharityUpdateWithoutFollowersDataInput;
+  create: CharityCreateWithoutFollowersInput;
 }
 
 export interface SpecialFundraiserWhereInput {
@@ -957,16 +950,11 @@ export interface SpecialFundraiserWhereInput {
   NOT?: SpecialFundraiserWhereInput[] | SpecialFundraiserWhereInput;
 }
 
-export interface EventCreateInput {
-  endDate: DateTimeInput;
-  goal: Int;
-  multiplier?: Int;
-  sponsorName?: String;
-  sponsorWebsite?: String;
-  startDate: DateTimeInput;
-  charity?: CharityCreateOneWithoutEventsInput;
-  specialFundraiser?: SpecialFundraiserCreateOneWithoutEventInput;
-  donations?: TransactionCreateManyWithoutEventInput;
+export interface UserCreateManyWithoutFollowedCharitiesInput {
+  create?:
+    | UserCreateWithoutFollowedCharitiesInput[]
+    | UserCreateWithoutFollowedCharitiesInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
 }
 
 export interface UserUpsertWithoutDotsInput {
@@ -974,31 +962,40 @@ export interface UserUpsertWithoutDotsInput {
   create: UserCreateWithoutDotsInput;
 }
 
-export interface CharityCreateOneWithoutEventsInput {
-  create?: CharityCreateWithoutEventsInput;
-  connect?: CharityWhereUniqueInput;
+export interface UserCreateWithoutFollowedCharitiesInput {
+  bio?: String;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: String;
+  securityToken: Int;
+  username: String;
+  circles?: CircleCreateManyWithoutUsersInput;
+  circlesOwned?: CircleCreateManyWithoutOwnerInput;
+  dots?: DotCreateManyWithoutUserInput;
+  halos?: HaloCreateManyWithoutUserInput;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: LoopCreateManyWithoutUserInput;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
 }
 
-export interface HaloUpdateWithWhereUniqueWithoutUserInput {
-  where: HaloWhereUniqueInput;
-  data: HaloUpdateWithoutUserDataInput;
+export interface HaloUpdateManyWithoutUserInput {
+  create?: HaloCreateWithoutUserInput[] | HaloCreateWithoutUserInput;
+  delete?: HaloWhereUniqueInput[] | HaloWhereUniqueInput;
+  connect?: HaloWhereUniqueInput[] | HaloWhereUniqueInput;
+  disconnect?: HaloWhereUniqueInput[] | HaloWhereUniqueInput;
+  update?:
+    | HaloUpdateWithWhereUniqueWithoutUserInput[]
+    | HaloUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | HaloUpsertWithWhereUniqueWithoutUserInput[]
+    | HaloUpsertWithWhereUniqueWithoutUserInput;
 }
 
-export interface CharityCreateWithoutEventsInput {
-  acronym?: String;
-  bannerCredit?: String;
-  ein: String;
-  expensesAdministrative?: Float;
-  expensesFundraising?: Float;
-  expensesOther?: Float;
-  expensesProgram?: Float;
-  expensesUpdated?: String;
-  location: String;
-  mission: String;
-  name: String;
-  phoneNumber: String;
-  website: String;
-  followers?: UserCreateManyWithoutFollowedCharitiesInput;
+export interface CircleCreateManyWithoutOwnerInput {
+  create?: CircleCreateWithoutOwnerInput[] | CircleCreateWithoutOwnerInput;
+  connect?: CircleWhereUniqueInput[] | CircleWhereUniqueInput;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -1012,87 +1009,33 @@ export interface UserSubscriptionWhereInput {
   NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
 }
 
-export interface UserCreateManyWithoutFollowedCharitiesInput {
-  create?:
-    | UserCreateWithoutFollowedCharitiesInput[]
-    | UserCreateWithoutFollowedCharitiesInput;
+export interface CircleCreateWithoutOwnerInput {
+  description?: String;
+  name: String;
+  open?: Boolean;
+  users?: UserCreateManyWithoutCirclesInput;
+}
+
+export interface SpecialFundraiserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: SpecialFundraiserWhereInput;
+  AND?:
+    | SpecialFundraiserSubscriptionWhereInput[]
+    | SpecialFundraiserSubscriptionWhereInput;
+  OR?:
+    | SpecialFundraiserSubscriptionWhereInput[]
+    | SpecialFundraiserSubscriptionWhereInput;
+  NOT?:
+    | SpecialFundraiserSubscriptionWhereInput[]
+    | SpecialFundraiserSubscriptionWhereInput;
+}
+
+export interface UserCreateManyWithoutCirclesInput {
+  create?: UserCreateWithoutCirclesInput[] | UserCreateWithoutCirclesInput;
   connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-}
-
-export interface DotWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  action?: String;
-  action_not?: String;
-  action_in?: String[] | String;
-  action_not_in?: String[] | String;
-  action_lt?: String;
-  action_lte?: String;
-  action_gt?: String;
-  action_gte?: String;
-  action_contains?: String;
-  action_not_contains?: String;
-  action_starts_with?: String;
-  action_not_starts_with?: String;
-  action_ends_with?: String;
-  action_not_ends_with?: String;
-  amount?: Int;
-  amount_not?: Int;
-  amount_in?: Int[] | Int;
-  amount_not_in?: Int[] | Int;
-  amount_lt?: Int;
-  amount_lte?: Int;
-  amount_gt?: Int;
-  amount_gte?: Int;
-  total?: Int;
-  total_not?: Int;
-  total_in?: Int[] | Int;
-  total_not_in?: Int[] | Int;
-  total_lt?: Int;
-  total_lte?: Int;
-  total_gt?: Int;
-  total_gte?: Int;
-  user?: UserWhereInput;
-  AND?: DotWhereInput[] | DotWhereInput;
-  OR?: DotWhereInput[] | DotWhereInput;
-  NOT?: DotWhereInput[] | DotWhereInput;
-}
-
-export interface UserCreateWithoutFollowedCharitiesInput {
-  bio?: String;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: String;
-  securityToken: Int;
-  username: String;
-  circles?: CircleCreateManyWithoutUsersInput;
-  dots?: DotCreateManyWithoutUserInput;
-  halos?: HaloCreateManyWithoutUserInput;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: LoopCreateManyWithoutUserInput;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
 }
 
 export interface CircleWhereInput {
@@ -1154,6 +1097,9 @@ export interface CircleWhereInput {
   name_not_starts_with?: String;
   name_ends_with?: String;
   name_not_ends_with?: String;
+  open?: Boolean;
+  open_not?: Boolean;
+  owner?: UserWhereInput;
   users_every?: UserWhereInput;
   users_some?: UserWhereInput;
   users_none?: UserWhereInput;
@@ -1162,25 +1108,22 @@ export interface CircleWhereInput {
   NOT?: CircleWhereInput[] | CircleWhereInput;
 }
 
-export interface PreferencesCreateOneWithoutUserInput {
-  create?: PreferencesCreateWithoutUserInput;
-  connect?: PreferencesWhereUniqueInput;
-}
-
-export interface PreferencesSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: PreferencesWhereInput;
-  AND?: PreferencesSubscriptionWhereInput[] | PreferencesSubscriptionWhereInput;
-  OR?: PreferencesSubscriptionWhereInput[] | PreferencesSubscriptionWhereInput;
-  NOT?: PreferencesSubscriptionWhereInput[] | PreferencesSubscriptionWhereInput;
-}
-
-export interface PreferencesCreateWithoutUserInput {
-  allowDonationEmails?: Boolean;
-  publicProfile?: Boolean;
+export interface UserCreateWithoutCirclesInput {
+  bio?: String;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: String;
+  securityToken: Int;
+  username: String;
+  circlesOwned?: CircleCreateManyWithoutOwnerInput;
+  dots?: DotCreateManyWithoutUserInput;
+  followedCharities?: CharityCreateManyWithoutFollowersInput;
+  halos?: HaloCreateManyWithoutUserInput;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: LoopCreateManyWithoutUserInput;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
 }
 
 export interface LoopSubscriptionWhereInput {
@@ -1194,31 +1137,25 @@ export interface LoopSubscriptionWhereInput {
   NOT?: LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput;
 }
 
-export interface TransactionCreateManyWithoutUserInput {
-  create?:
-    | TransactionCreateWithoutUserInput[]
-    | TransactionCreateWithoutUserInput;
-  connect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
+export interface PreferencesCreateOneWithoutUserInput {
+  create?: PreferencesCreateWithoutUserInput;
+  connect?: PreferencesWhereUniqueInput;
 }
 
-export interface HaloSubscriptionWhereInput {
+export interface IdentitySubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: HaloWhereInput;
-  AND?: HaloSubscriptionWhereInput[] | HaloSubscriptionWhereInput;
-  OR?: HaloSubscriptionWhereInput[] | HaloSubscriptionWhereInput;
-  NOT?: HaloSubscriptionWhereInput[] | HaloSubscriptionWhereInput;
+  node?: IdentityWhereInput;
+  AND?: IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput;
+  OR?: IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput;
+  NOT?: IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput;
 }
 
-export interface TransactionCreateWithoutUserInput {
-  amount: Int;
-  balance: Int;
-  key: String;
-  stripeID?: String;
-  type: TransactionType;
-  event?: EventCreateOneWithoutDonationsInput;
+export interface PreferencesCreateWithoutUserInput {
+  allowDonationEmails?: Boolean;
+  publicProfile?: Boolean;
 }
 
 export interface EventSubscriptionWhereInput {
@@ -1232,20 +1169,66 @@ export interface EventSubscriptionWhereInput {
   NOT?: EventSubscriptionWhereInput[] | EventSubscriptionWhereInput;
 }
 
+export interface TransactionCreateManyWithoutUserInput {
+  create?:
+    | TransactionCreateWithoutUserInput[]
+    | TransactionCreateWithoutUserInput;
+  connect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
+}
+
+export interface DotSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: DotWhereInput;
+  AND?: DotSubscriptionWhereInput[] | DotSubscriptionWhereInput;
+  OR?: DotSubscriptionWhereInput[] | DotSubscriptionWhereInput;
+  NOT?: DotSubscriptionWhereInput[] | DotSubscriptionWhereInput;
+}
+
+export interface TransactionCreateWithoutUserInput {
+  amount: Int;
+  balance: Int;
+  key: String;
+  stripeID?: String;
+  type: TransactionType;
+  event?: EventCreateOneWithoutDonationsInput;
+}
+
+export interface CharitySubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: CharityWhereInput;
+  AND?: CharitySubscriptionWhereInput[] | CharitySubscriptionWhereInput;
+  OR?: CharitySubscriptionWhereInput[] | CharitySubscriptionWhereInput;
+  NOT?: CharitySubscriptionWhereInput[] | CharitySubscriptionWhereInput;
+}
+
 export interface EventCreateOneWithoutDonationsInput {
   create?: EventCreateWithoutDonationsInput;
   connect?: EventWhereUniqueInput;
 }
 
-export interface CircleSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: CircleWhereInput;
-  AND?: CircleSubscriptionWhereInput[] | CircleSubscriptionWhereInput;
-  OR?: CircleSubscriptionWhereInput[] | CircleSubscriptionWhereInput;
-  NOT?: CircleSubscriptionWhereInput[] | CircleSubscriptionWhereInput;
+export interface UserCreateInput {
+  bio?: String;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: String;
+  securityToken: Int;
+  username: String;
+  circles?: CircleCreateManyWithoutUsersInput;
+  circlesOwned?: CircleCreateManyWithoutOwnerInput;
+  dots?: DotCreateManyWithoutUserInput;
+  followedCharities?: CharityCreateManyWithoutFollowersInput;
+  halos?: HaloCreateManyWithoutUserInput;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: LoopCreateManyWithoutUserInput;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
 }
 
 export interface EventCreateWithoutDonationsInput {
@@ -1259,23 +1242,9 @@ export interface EventCreateWithoutDonationsInput {
   specialFundraiser?: SpecialFundraiserCreateOneWithoutEventInput;
 }
 
-export interface UserUpdateInput {
-  bio?: String;
-  email?: String;
-  nameFirst?: String;
-  nameLast?: String;
-  picture?: String;
-  securityToken?: Int;
-  username?: String;
-  circles?: CircleUpdateManyWithoutUsersInput;
-  dots?: DotUpdateManyWithoutUserInput;
-  followedCharities?: CharityUpdateManyWithoutFollowersInput;
-  halos?: HaloUpdateManyWithoutUserInput;
-  identity?: IdentityUpdateOneRequiredWithoutUserInput;
-  loops?: LoopUpdateManyWithoutUserInput;
-  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
-  transactions?: TransactionUpdateManyWithoutUserInput;
-}
+export type CircleWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface CharityUpdateInput {
   acronym?: String;
@@ -1295,9 +1264,10 @@ export interface CharityUpdateInput {
   followers?: UserUpdateManyWithoutFollowedCharitiesInput;
 }
 
-export type CircleWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface EventUpsertWithoutSpecialFundraiserInput {
+  update: EventUpdateWithoutSpecialFundraiserDataInput;
+  create: EventCreateWithoutSpecialFundraiserInput;
+}
 
 export interface EventUpdateManyWithoutCharityInput {
   create?: EventCreateWithoutCharityInput[] | EventCreateWithoutCharityInput;
@@ -1312,24 +1282,20 @@ export interface EventUpdateManyWithoutCharityInput {
     | EventUpsertWithWhereUniqueWithoutCharityInput;
 }
 
-export interface TransactionCreateInput {
-  amount: Int;
-  balance: Int;
-  key: String;
-  stripeID?: String;
-  type: TransactionType;
-  event?: EventCreateOneWithoutDonationsInput;
-  user: UserCreateOneWithoutTransactionsInput;
-}
+export type DotWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface EventUpdateWithWhereUniqueWithoutCharityInput {
   where: EventWhereUniqueInput;
   data: EventUpdateWithoutCharityDataInput;
 }
 
-export type DotWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface SpecialFundraiserUpdateInput {
+  description?: String;
+  name?: String;
+  event?: EventUpdateOneRequiredWithoutSpecialFundraiserInput;
+}
 
 export interface EventUpdateWithoutCharityDataInput {
   endDate?: DateTimeInput;
@@ -1342,12 +1308,9 @@ export interface EventUpdateWithoutCharityDataInput {
   donations?: TransactionUpdateManyWithoutEventInput;
 }
 
-export interface EventUpdateOneRequiredWithoutSpecialFundraiserInput {
-  create?: EventCreateWithoutSpecialFundraiserInput;
-  update?: EventUpdateWithoutSpecialFundraiserDataInput;
-  upsert?: EventUpsertWithoutSpecialFundraiserInput;
-  connect?: EventWhereUniqueInput;
-}
+export type EventWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface SpecialFundraiserUpdateOneWithoutEventInput {
   create?: SpecialFundraiserCreateWithoutEventInput;
@@ -1358,28 +1321,32 @@ export interface SpecialFundraiserUpdateOneWithoutEventInput {
   connect?: SpecialFundraiserWhereUniqueInput;
 }
 
-export type EventWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface SpecialFundraiserCreateInput {
+  description: String;
+  name: String;
+  event: EventCreateOneWithoutSpecialFundraiserInput;
+}
 
 export interface SpecialFundraiserUpdateWithoutEventDataInput {
   description?: String;
   name?: String;
 }
 
-export interface EventCreateOneWithoutSpecialFundraiserInput {
-  create?: EventCreateWithoutSpecialFundraiserInput;
-  connect?: EventWhereUniqueInput;
-}
+export type HaloWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface SpecialFundraiserUpsertWithoutEventInput {
   update: SpecialFundraiserUpdateWithoutEventDataInput;
   create: SpecialFundraiserCreateWithoutEventInput;
 }
 
-export type HaloWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface UserUpdateOneRequiredWithoutPreferencesInput {
+  create?: UserCreateWithoutPreferencesInput;
+  update?: UserUpdateWithoutPreferencesDataInput;
+  upsert?: UserUpsertWithoutPreferencesInput;
+  connect?: UserWhereUniqueInput;
+}
 
 export interface TransactionUpdateManyWithoutEventInput {
   create?:
@@ -1396,32 +1363,20 @@ export interface TransactionUpdateManyWithoutEventInput {
     | TransactionUpsertWithWhereUniqueWithoutEventInput;
 }
 
-export interface UserUpdateWithoutPreferencesDataInput {
-  bio?: String;
-  email?: String;
-  nameFirst?: String;
-  nameLast?: String;
-  picture?: String;
-  securityToken?: Int;
-  username?: String;
-  circles?: CircleUpdateManyWithoutUsersInput;
-  dots?: DotUpdateManyWithoutUserInput;
-  followedCharities?: CharityUpdateManyWithoutFollowersInput;
-  halos?: HaloUpdateManyWithoutUserInput;
-  identity?: IdentityUpdateOneRequiredWithoutUserInput;
-  loops?: LoopUpdateManyWithoutUserInput;
-  transactions?: TransactionUpdateManyWithoutUserInput;
-}
+export type IdentityWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  providerID?: String;
+}>;
 
 export interface TransactionUpdateWithWhereUniqueWithoutEventInput {
   where: TransactionWhereUniqueInput;
   data: TransactionUpdateWithoutEventDataInput;
 }
 
-export type IdentityWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  providerID?: String;
-}>;
+export interface UserCreateOneWithoutPreferencesInput {
+  create?: UserCreateWithoutPreferencesInput;
+  connect?: UserWhereUniqueInput;
+}
 
 export interface TransactionUpdateWithoutEventDataInput {
   amount?: Int;
@@ -1432,21 +1387,9 @@ export interface TransactionUpdateWithoutEventDataInput {
   user?: UserUpdateOneRequiredWithoutTransactionsInput;
 }
 
-export interface UserCreateWithoutPreferencesInput {
-  bio?: String;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: String;
-  securityToken: Int;
-  username: String;
-  circles?: CircleCreateManyWithoutUsersInput;
-  dots?: DotCreateManyWithoutUserInput;
-  followedCharities?: CharityCreateManyWithoutFollowersInput;
-  halos?: HaloCreateManyWithoutUserInput;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: LoopCreateManyWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
+export interface UserUpsertWithoutLoopsInput {
+  update: UserUpdateWithoutLoopsDataInput;
+  create: UserCreateWithoutLoopsInput;
 }
 
 export interface UserUpdateOneRequiredWithoutTransactionsInput {
@@ -1456,10 +1399,22 @@ export interface UserUpdateOneRequiredWithoutTransactionsInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface PreferencesCreateInput {
-  allowDonationEmails?: Boolean;
-  publicProfile?: Boolean;
-  user: UserCreateOneWithoutPreferencesInput;
+export interface UserUpdateWithoutLoopsDataInput {
+  bio?: String;
+  email?: String;
+  nameFirst?: String;
+  nameLast?: String;
+  picture?: String;
+  securityToken?: Int;
+  username?: String;
+  circles?: CircleUpdateManyWithoutUsersInput;
+  circlesOwned?: CircleUpdateManyWithoutOwnerInput;
+  dots?: DotUpdateManyWithoutUserInput;
+  followedCharities?: CharityUpdateManyWithoutFollowersInput;
+  halos?: HaloUpdateManyWithoutUserInput;
+  identity?: IdentityUpdateOneRequiredWithoutUserInput;
+  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
 }
 
 export interface UserUpdateWithoutTransactionsDataInput {
@@ -1471,6 +1426,7 @@ export interface UserUpdateWithoutTransactionsDataInput {
   securityToken?: Int;
   username?: String;
   circles?: CircleUpdateManyWithoutUsersInput;
+  circlesOwned?: CircleUpdateManyWithoutOwnerInput;
   dots?: DotUpdateManyWithoutUserInput;
   followedCharities?: CharityUpdateManyWithoutFollowersInput;
   halos?: HaloUpdateManyWithoutUserInput;
@@ -1479,9 +1435,10 @@ export interface UserUpdateWithoutTransactionsDataInput {
   preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
 }
 
-export interface UserUpsertWithoutLoopsInput {
-  update: UserUpdateWithoutLoopsDataInput;
-  create: UserCreateWithoutLoopsInput;
+export interface LoopUpdateInput {
+  count?: Int;
+  event?: EventUpdateOneRequiredInput;
+  user?: UserUpdateOneRequiredWithoutLoopsInput;
 }
 
 export interface CircleUpdateManyWithoutUsersInput {
@@ -1497,11 +1454,22 @@ export interface CircleUpdateManyWithoutUsersInput {
     | CircleUpsertWithWhereUniqueWithoutUsersInput;
 }
 
-export interface UserUpdateOneRequiredWithoutLoopsInput {
-  create?: UserCreateWithoutLoopsInput;
-  update?: UserUpdateWithoutLoopsDataInput;
-  upsert?: UserUpsertWithoutLoopsInput;
-  connect?: UserWhereUniqueInput;
+export interface UserCreateWithoutLoopsInput {
+  bio?: String;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: String;
+  securityToken: Int;
+  username: String;
+  circles?: CircleCreateManyWithoutUsersInput;
+  circlesOwned?: CircleCreateManyWithoutOwnerInput;
+  dots?: DotCreateManyWithoutUserInput;
+  followedCharities?: CharityCreateManyWithoutFollowersInput;
+  halos?: HaloCreateManyWithoutUserInput;
+  identity: IdentityCreateOneWithoutUserInput;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
 }
 
 export interface CircleUpdateWithWhereUniqueWithoutUsersInput {
@@ -1509,31 +1477,83 @@ export interface CircleUpdateWithWhereUniqueWithoutUsersInput {
   data: CircleUpdateWithoutUsersDataInput;
 }
 
-export interface LoopUpdateInput {
-  count?: Int;
-  event?: EventUpdateOneRequiredInput;
-  user?: UserUpdateOneRequiredWithoutLoopsInput;
+export interface LoopCreateInput {
+  count: Int;
+  event: EventCreateOneInput;
+  user: UserCreateOneWithoutLoopsInput;
 }
 
-export interface HaloUpdateInput {
-  key?: String;
-  user?: UserUpdateOneRequiredWithoutHalosInput;
-}
-
-export interface UserCreateOneWithoutLoopsInput {
-  create?: UserCreateWithoutLoopsInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface CircleUpsertWithWhereUniqueWithoutUsersInput {
-  where: CircleWhereUniqueInput;
-  update: CircleUpdateWithoutUsersDataInput;
-  create: CircleCreateWithoutUsersInput;
+export interface UserCreateWithoutHalosInput {
+  bio?: String;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: String;
+  securityToken: Int;
+  username: String;
+  circles?: CircleCreateManyWithoutUsersInput;
+  circlesOwned?: CircleCreateManyWithoutOwnerInput;
+  dots?: DotCreateManyWithoutUserInput;
+  followedCharities?: CharityCreateManyWithoutFollowersInput;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: LoopCreateManyWithoutUserInput;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
 }
 
 export type SpecialFundraiserWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
+
+export interface UserUpdateOneRequiredWithoutCirclesOwnedInput {
+  create?: UserCreateWithoutCirclesOwnedInput;
+  update?: UserUpdateWithoutCirclesOwnedDataInput;
+  upsert?: UserUpsertWithoutCirclesOwnedInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateOneRequiredWithoutIdentityInput {
+  create?: UserCreateWithoutIdentityInput;
+  update?: UserUpdateWithoutIdentityDataInput;
+  upsert?: UserUpsertWithoutIdentityInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateWithoutCirclesOwnedDataInput {
+  bio?: String;
+  email?: String;
+  nameFirst?: String;
+  nameLast?: String;
+  picture?: String;
+  securityToken?: Int;
+  username?: String;
+  circles?: CircleUpdateManyWithoutUsersInput;
+  dots?: DotUpdateManyWithoutUserInput;
+  followedCharities?: CharityUpdateManyWithoutFollowersInput;
+  halos?: HaloUpdateManyWithoutUserInput;
+  identity?: IdentityUpdateOneRequiredWithoutUserInput;
+  loops?: LoopUpdateManyWithoutUserInput;
+  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
+}
+
+export interface UserCreateWithoutIdentityInput {
+  bio?: String;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: String;
+  securityToken: Int;
+  username: String;
+  circles?: CircleCreateManyWithoutUsersInput;
+  circlesOwned?: CircleCreateManyWithoutOwnerInput;
+  dots?: DotCreateManyWithoutUserInput;
+  followedCharities?: CharityCreateManyWithoutFollowersInput;
+  halos?: HaloCreateManyWithoutUserInput;
+  loops?: LoopCreateManyWithoutUserInput;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+}
 
 export interface DotUpdateManyWithoutUserInput {
   create?: DotCreateWithoutUserInput[] | DotCreateWithoutUserInput;
@@ -1548,21 +1568,9 @@ export interface DotUpdateManyWithoutUserInput {
     | DotUpsertWithWhereUniqueWithoutUserInput;
 }
 
-export interface UserUpdateWithoutIdentityDataInput {
-  bio?: String;
-  email?: String;
-  nameFirst?: String;
-  nameLast?: String;
-  picture?: String;
-  securityToken?: Int;
-  username?: String;
-  circles?: CircleUpdateManyWithoutUsersInput;
-  dots?: DotUpdateManyWithoutUserInput;
-  followedCharities?: CharityUpdateManyWithoutFollowersInput;
-  halos?: HaloUpdateManyWithoutUserInput;
-  loops?: LoopUpdateManyWithoutUserInput;
-  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
-  transactions?: TransactionUpdateManyWithoutUserInput;
+export interface UserCreateOneWithoutIdentityInput {
+  create?: UserCreateWithoutIdentityInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface DotUpdateWithWhereUniqueWithoutUserInput {
@@ -1570,10 +1578,9 @@ export interface DotUpdateWithWhereUniqueWithoutUserInput {
   data: DotUpdateWithoutUserDataInput;
 }
 
-export interface IdentityUpdateInput {
-  provider?: IdentityProvider;
-  providerID?: String;
-  user?: UserUpdateOneRequiredWithoutIdentityInput;
+export interface UserUpsertWithoutHalosInput {
+  update: UserUpdateWithoutHalosDataInput;
+  create: UserCreateWithoutHalosInput;
 }
 
 export interface DotUpdateWithoutUserDataInput {
@@ -1582,21 +1589,22 @@ export interface DotUpdateWithoutUserDataInput {
   total?: Int;
 }
 
-export interface UserCreateWithoutIdentityInput {
+export interface UserUpdateWithoutHalosDataInput {
   bio?: String;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
+  email?: String;
+  nameFirst?: String;
+  nameLast?: String;
   picture?: String;
-  securityToken: Int;
-  username: String;
-  circles?: CircleCreateManyWithoutUsersInput;
-  dots?: DotCreateManyWithoutUserInput;
-  followedCharities?: CharityCreateManyWithoutFollowersInput;
-  halos?: HaloCreateManyWithoutUserInput;
-  loops?: LoopCreateManyWithoutUserInput;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
+  securityToken?: Int;
+  username?: String;
+  circles?: CircleUpdateManyWithoutUsersInput;
+  circlesOwned?: CircleUpdateManyWithoutOwnerInput;
+  dots?: DotUpdateManyWithoutUserInput;
+  followedCharities?: CharityUpdateManyWithoutFollowersInput;
+  identity?: IdentityUpdateOneRequiredWithoutUserInput;
+  loops?: LoopUpdateManyWithoutUserInput;
+  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
 }
 
 export interface DotUpsertWithWhereUniqueWithoutUserInput {
@@ -1605,10 +1613,9 @@ export interface DotUpsertWithWhereUniqueWithoutUserInput {
   create: DotCreateWithoutUserInput;
 }
 
-export interface IdentityCreateInput {
-  provider: IdentityProvider;
-  providerID: String;
-  user: UserCreateOneWithoutIdentityInput;
+export interface HaloUpdateInput {
+  key?: String;
+  user?: UserUpdateOneRequiredWithoutHalosInput;
 }
 
 export interface CharityUpdateManyWithoutFollowersInput {
@@ -1624,40 +1631,6 @@ export interface CharityUpdateManyWithoutFollowersInput {
   upsert?:
     | CharityUpsertWithWhereUniqueWithoutFollowersInput[]
     | CharityUpsertWithWhereUniqueWithoutFollowersInput;
-}
-
-export interface UserUpsertWithoutHalosInput {
-  update: UserUpdateWithoutHalosDataInput;
-  create: UserCreateWithoutHalosInput;
-}
-
-export interface CharityUpdateWithWhereUniqueWithoutFollowersInput {
-  where: CharityWhereUniqueInput;
-  data: CharityUpdateWithoutFollowersDataInput;
-}
-
-export interface UserUpdateOneRequiredWithoutHalosInput {
-  create?: UserCreateWithoutHalosInput;
-  update?: UserUpdateWithoutHalosDataInput;
-  upsert?: UserUpsertWithoutHalosInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserCreateWithoutHalosInput {
-  bio?: String;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: String;
-  securityToken: Int;
-  username: String;
-  circles?: CircleCreateManyWithoutUsersInput;
-  dots?: DotCreateManyWithoutUserInput;
-  followedCharities?: CharityCreateManyWithoutFollowersInput;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: LoopCreateManyWithoutUserInput;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
 }
 
 export interface CharityCreateInput {
@@ -1678,7 +1651,7 @@ export interface CharityCreateInput {
   followers?: UserCreateManyWithoutFollowedCharitiesInput;
 }
 
-export interface LoopWhereInput {
+export interface PreferencesWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -1701,19 +1674,22 @@ export interface LoopWhereInput {
   createdAt_lte?: DateTimeInput;
   createdAt_gt?: DateTimeInput;
   createdAt_gte?: DateTimeInput;
-  count?: Int;
-  count_not?: Int;
-  count_in?: Int[] | Int;
-  count_not_in?: Int[] | Int;
-  count_lt?: Int;
-  count_lte?: Int;
-  count_gt?: Int;
-  count_gte?: Int;
-  event?: EventWhereInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  allowDonationEmails?: Boolean;
+  allowDonationEmails_not?: Boolean;
+  publicProfile?: Boolean;
+  publicProfile_not?: Boolean;
   user?: UserWhereInput;
-  AND?: LoopWhereInput[] | LoopWhereInput;
-  OR?: LoopWhereInput[] | LoopWhereInput;
-  NOT?: LoopWhereInput[] | LoopWhereInput;
+  AND?: PreferencesWhereInput[] | PreferencesWhereInput;
+  OR?: PreferencesWhereInput[] | PreferencesWhereInput;
+  NOT?: PreferencesWhereInput[] | PreferencesWhereInput;
 }
 
 export interface EventCreateWithoutCharityInput {
@@ -1787,129 +1763,6 @@ export interface SpecialFundraiserCreateWithoutEventInput {
   name: String;
 }
 
-export interface UserCreateOneWithoutHalosInput {
-  create?: UserCreateWithoutHalosInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface TransactionCreateWithoutEventInput {
-  amount: Int;
-  balance: Int;
-  key: String;
-  stripeID?: String;
-  type: TransactionType;
-  user: UserCreateOneWithoutTransactionsInput;
-}
-
-export interface HaloUpdateWithoutUserDataInput {
-  key?: String;
-}
-
-export interface UserCreateWithoutTransactionsInput {
-  bio?: String;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: String;
-  securityToken: Int;
-  username: String;
-  circles?: CircleCreateManyWithoutUsersInput;
-  dots?: DotCreateManyWithoutUserInput;
-  followedCharities?: CharityCreateManyWithoutFollowersInput;
-  halos?: HaloCreateManyWithoutUserInput;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: LoopCreateManyWithoutUserInput;
-  preferences: PreferencesCreateOneWithoutUserInput;
-}
-
-export interface HaloUpsertWithWhereUniqueWithoutUserInput {
-  where: HaloWhereUniqueInput;
-  update: HaloUpdateWithoutUserDataInput;
-  create: HaloCreateWithoutUserInput;
-}
-
-export interface CircleCreateWithoutUsersInput {
-  description?: String;
-  name: String;
-}
-
-export interface IdentityUpdateOneRequiredWithoutUserInput {
-  create?: IdentityCreateWithoutUserInput;
-  update?: IdentityUpdateWithoutUserDataInput;
-  upsert?: IdentityUpsertWithoutUserInput;
-  connect?: IdentityWhereUniqueInput;
-}
-
-export interface DotCreateWithoutUserInput {
-  action: String;
-  amount: Int;
-  total: Int;
-}
-
-export interface IdentityUpdateWithoutUserDataInput {
-  provider?: IdentityProvider;
-  providerID?: String;
-}
-
-export interface CharityCreateWithoutFollowersInput {
-  acronym?: String;
-  bannerCredit?: String;
-  ein: String;
-  expensesAdministrative?: Float;
-  expensesFundraising?: Float;
-  expensesOther?: Float;
-  expensesProgram?: Float;
-  expensesUpdated?: String;
-  location: String;
-  mission: String;
-  name: String;
-  phoneNumber: String;
-  website: String;
-  events?: EventCreateManyWithoutCharityInput;
-}
-
-export interface IdentityUpsertWithoutUserInput {
-  update: IdentityUpdateWithoutUserDataInput;
-  create: IdentityCreateWithoutUserInput;
-}
-
-export interface HaloCreateWithoutUserInput {
-  key: String;
-}
-
-export interface LoopUpdateManyWithoutUserInput {
-  create?: LoopCreateWithoutUserInput[] | LoopCreateWithoutUserInput;
-  delete?: LoopWhereUniqueInput[] | LoopWhereUniqueInput;
-  connect?: LoopWhereUniqueInput[] | LoopWhereUniqueInput;
-  disconnect?: LoopWhereUniqueInput[] | LoopWhereUniqueInput;
-  update?:
-    | LoopUpdateWithWhereUniqueWithoutUserInput[]
-    | LoopUpdateWithWhereUniqueWithoutUserInput;
-  upsert?:
-    | LoopUpsertWithWhereUniqueWithoutUserInput[]
-    | LoopUpsertWithWhereUniqueWithoutUserInput;
-}
-
-export interface IdentityCreateWithoutUserInput {
-  provider: IdentityProvider;
-  providerID: String;
-}
-
-export interface LoopUpdateWithWhereUniqueWithoutUserInput {
-  where: LoopWhereUniqueInput;
-  data: LoopUpdateWithoutUserDataInput;
-}
-
-export interface LoopCreateWithoutUserInput {
-  count: Int;
-  event: EventCreateOneInput;
-}
-
-export interface LoopUpdateWithoutUserDataInput {
-  count?: Int;
-  event?: EventUpdateOneRequiredInput;
-}
-
 export interface HaloWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
@@ -1953,6 +1806,184 @@ export interface HaloWhereInput {
   NOT?: HaloWhereInput[] | HaloWhereInput;
 }
 
+export interface TransactionCreateWithoutEventInput {
+  amount: Int;
+  balance: Int;
+  key: String;
+  stripeID?: String;
+  type: TransactionType;
+  user: UserCreateOneWithoutTransactionsInput;
+}
+
+export interface UserCreateOneWithoutHalosInput {
+  create?: UserCreateWithoutHalosInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutTransactionsInput {
+  bio?: String;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: String;
+  securityToken: Int;
+  username: String;
+  circles?: CircleCreateManyWithoutUsersInput;
+  circlesOwned?: CircleCreateManyWithoutOwnerInput;
+  dots?: DotCreateManyWithoutUserInput;
+  followedCharities?: CharityCreateManyWithoutFollowersInput;
+  halos?: HaloCreateManyWithoutUserInput;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: LoopCreateManyWithoutUserInput;
+  preferences: PreferencesCreateOneWithoutUserInput;
+}
+
+export interface HaloUpdateWithWhereUniqueWithoutUserInput {
+  where: HaloWhereUniqueInput;
+  data: HaloUpdateWithoutUserDataInput;
+}
+
+export interface CircleCreateWithoutUsersInput {
+  description?: String;
+  name: String;
+  open?: Boolean;
+  owner: UserCreateOneWithoutCirclesOwnedInput;
+}
+
+export interface HaloUpdateWithoutUserDataInput {
+  key?: String;
+}
+
+export interface UserCreateWithoutCirclesOwnedInput {
+  bio?: String;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: String;
+  securityToken: Int;
+  username: String;
+  circles?: CircleCreateManyWithoutUsersInput;
+  dots?: DotCreateManyWithoutUserInput;
+  followedCharities?: CharityCreateManyWithoutFollowersInput;
+  halos?: HaloCreateManyWithoutUserInput;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: LoopCreateManyWithoutUserInput;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
+}
+
+export interface HaloUpsertWithWhereUniqueWithoutUserInput {
+  where: HaloWhereUniqueInput;
+  update: HaloUpdateWithoutUserDataInput;
+  create: HaloCreateWithoutUserInput;
+}
+
+export interface DotCreateWithoutUserInput {
+  action: String;
+  amount: Int;
+  total: Int;
+}
+
+export interface IdentityUpdateOneRequiredWithoutUserInput {
+  create?: IdentityCreateWithoutUserInput;
+  update?: IdentityUpdateWithoutUserDataInput;
+  upsert?: IdentityUpsertWithoutUserInput;
+  connect?: IdentityWhereUniqueInput;
+}
+
+export interface CharityCreateWithoutFollowersInput {
+  acronym?: String;
+  bannerCredit?: String;
+  ein: String;
+  expensesAdministrative?: Float;
+  expensesFundraising?: Float;
+  expensesOther?: Float;
+  expensesProgram?: Float;
+  expensesUpdated?: String;
+  location: String;
+  mission: String;
+  name: String;
+  phoneNumber: String;
+  website: String;
+  events?: EventCreateManyWithoutCharityInput;
+}
+
+export interface IdentityUpdateWithoutUserDataInput {
+  provider?: IdentityProvider;
+  providerID?: String;
+}
+
+export interface HaloCreateWithoutUserInput {
+  key: String;
+}
+
+export interface IdentityUpsertWithoutUserInput {
+  update: IdentityUpdateWithoutUserDataInput;
+  create: IdentityCreateWithoutUserInput;
+}
+
+export interface IdentityCreateWithoutUserInput {
+  provider: IdentityProvider;
+  providerID: String;
+}
+
+export interface LoopUpdateManyWithoutUserInput {
+  create?: LoopCreateWithoutUserInput[] | LoopCreateWithoutUserInput;
+  delete?: LoopWhereUniqueInput[] | LoopWhereUniqueInput;
+  connect?: LoopWhereUniqueInput[] | LoopWhereUniqueInput;
+  disconnect?: LoopWhereUniqueInput[] | LoopWhereUniqueInput;
+  update?:
+    | LoopUpdateWithWhereUniqueWithoutUserInput[]
+    | LoopUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | LoopUpsertWithWhereUniqueWithoutUserInput[]
+    | LoopUpsertWithWhereUniqueWithoutUserInput;
+}
+
+export interface LoopCreateWithoutUserInput {
+  count: Int;
+  event: EventCreateOneInput;
+}
+
+export interface LoopUpdateWithWhereUniqueWithoutUserInput {
+  where: LoopWhereUniqueInput;
+  data: LoopUpdateWithoutUserDataInput;
+}
+
+export interface EventCreateInput {
+  endDate: DateTimeInput;
+  goal: Int;
+  multiplier?: Int;
+  sponsorName?: String;
+  sponsorWebsite?: String;
+  startDate: DateTimeInput;
+  charity?: CharityCreateOneWithoutEventsInput;
+  specialFundraiser?: SpecialFundraiserCreateOneWithoutEventInput;
+  donations?: TransactionCreateManyWithoutEventInput;
+}
+
+export interface LoopUpdateWithoutUserDataInput {
+  count?: Int;
+  event?: EventUpdateOneRequiredInput;
+}
+
+export interface CharityCreateWithoutEventsInput {
+  acronym?: String;
+  bannerCredit?: String;
+  ein: String;
+  expensesAdministrative?: Float;
+  expensesFundraising?: Float;
+  expensesOther?: Float;
+  expensesProgram?: Float;
+  expensesUpdated?: String;
+  location: String;
+  mission: String;
+  name: String;
+  phoneNumber: String;
+  website: String;
+  followers?: UserCreateManyWithoutFollowedCharitiesInput;
+}
+
 export interface EventUpdateOneRequiredInput {
   create?: EventCreateInput;
   update?: EventUpdateDataInput;
@@ -1960,21 +1991,15 @@ export interface EventUpdateOneRequiredInput {
   connect?: EventWhereUniqueInput;
 }
 
-export interface SpecialFundraiserSubscriptionWhereInput {
+export interface TransactionSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: SpecialFundraiserWhereInput;
-  AND?:
-    | SpecialFundraiserSubscriptionWhereInput[]
-    | SpecialFundraiserSubscriptionWhereInput;
-  OR?:
-    | SpecialFundraiserSubscriptionWhereInput[]
-    | SpecialFundraiserSubscriptionWhereInput;
-  NOT?:
-    | SpecialFundraiserSubscriptionWhereInput[]
-    | SpecialFundraiserSubscriptionWhereInput;
+  node?: TransactionWhereInput;
+  AND?: TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput;
+  OR?: TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput;
+  NOT?: TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput;
 }
 
 export interface EventUpdateDataInput {
@@ -1987,6 +2012,561 @@ export interface EventUpdateDataInput {
   charity?: CharityUpdateOneWithoutEventsInput;
   specialFundraiser?: SpecialFundraiserUpdateOneWithoutEventInput;
   donations?: TransactionUpdateManyWithoutEventInput;
+}
+
+export interface UserWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  bio?: String;
+  bio_not?: String;
+  bio_in?: String[] | String;
+  bio_not_in?: String[] | String;
+  bio_lt?: String;
+  bio_lte?: String;
+  bio_gt?: String;
+  bio_gte?: String;
+  bio_contains?: String;
+  bio_not_contains?: String;
+  bio_starts_with?: String;
+  bio_not_starts_with?: String;
+  bio_ends_with?: String;
+  bio_not_ends_with?: String;
+  email?: String;
+  email_not?: String;
+  email_in?: String[] | String;
+  email_not_in?: String[] | String;
+  email_lt?: String;
+  email_lte?: String;
+  email_gt?: String;
+  email_gte?: String;
+  email_contains?: String;
+  email_not_contains?: String;
+  email_starts_with?: String;
+  email_not_starts_with?: String;
+  email_ends_with?: String;
+  email_not_ends_with?: String;
+  nameFirst?: String;
+  nameFirst_not?: String;
+  nameFirst_in?: String[] | String;
+  nameFirst_not_in?: String[] | String;
+  nameFirst_lt?: String;
+  nameFirst_lte?: String;
+  nameFirst_gt?: String;
+  nameFirst_gte?: String;
+  nameFirst_contains?: String;
+  nameFirst_not_contains?: String;
+  nameFirst_starts_with?: String;
+  nameFirst_not_starts_with?: String;
+  nameFirst_ends_with?: String;
+  nameFirst_not_ends_with?: String;
+  nameLast?: String;
+  nameLast_not?: String;
+  nameLast_in?: String[] | String;
+  nameLast_not_in?: String[] | String;
+  nameLast_lt?: String;
+  nameLast_lte?: String;
+  nameLast_gt?: String;
+  nameLast_gte?: String;
+  nameLast_contains?: String;
+  nameLast_not_contains?: String;
+  nameLast_starts_with?: String;
+  nameLast_not_starts_with?: String;
+  nameLast_ends_with?: String;
+  nameLast_not_ends_with?: String;
+  picture?: String;
+  picture_not?: String;
+  picture_in?: String[] | String;
+  picture_not_in?: String[] | String;
+  picture_lt?: String;
+  picture_lte?: String;
+  picture_gt?: String;
+  picture_gte?: String;
+  picture_contains?: String;
+  picture_not_contains?: String;
+  picture_starts_with?: String;
+  picture_not_starts_with?: String;
+  picture_ends_with?: String;
+  picture_not_ends_with?: String;
+  securityToken?: Int;
+  securityToken_not?: Int;
+  securityToken_in?: Int[] | Int;
+  securityToken_not_in?: Int[] | Int;
+  securityToken_lt?: Int;
+  securityToken_lte?: Int;
+  securityToken_gt?: Int;
+  securityToken_gte?: Int;
+  username?: String;
+  username_not?: String;
+  username_in?: String[] | String;
+  username_not_in?: String[] | String;
+  username_lt?: String;
+  username_lte?: String;
+  username_gt?: String;
+  username_gte?: String;
+  username_contains?: String;
+  username_not_contains?: String;
+  username_starts_with?: String;
+  username_not_starts_with?: String;
+  username_ends_with?: String;
+  username_not_ends_with?: String;
+  circles_every?: CircleWhereInput;
+  circles_some?: CircleWhereInput;
+  circles_none?: CircleWhereInput;
+  circlesOwned_every?: CircleWhereInput;
+  circlesOwned_some?: CircleWhereInput;
+  circlesOwned_none?: CircleWhereInput;
+  dots_every?: DotWhereInput;
+  dots_some?: DotWhereInput;
+  dots_none?: DotWhereInput;
+  followedCharities_every?: CharityWhereInput;
+  followedCharities_some?: CharityWhereInput;
+  followedCharities_none?: CharityWhereInput;
+  halos_every?: HaloWhereInput;
+  halos_some?: HaloWhereInput;
+  halos_none?: HaloWhereInput;
+  identity?: IdentityWhereInput;
+  loops_every?: LoopWhereInput;
+  loops_some?: LoopWhereInput;
+  loops_none?: LoopWhereInput;
+  preferences?: PreferencesWhereInput;
+  transactions_every?: TransactionWhereInput;
+  transactions_some?: TransactionWhereInput;
+  transactions_none?: TransactionWhereInput;
+  AND?: UserWhereInput[] | UserWhereInput;
+  OR?: UserWhereInput[] | UserWhereInput;
+  NOT?: UserWhereInput[] | UserWhereInput;
+}
+
+export interface CharityUpdateOneWithoutEventsInput {
+  create?: CharityCreateWithoutEventsInput;
+  update?: CharityUpdateWithoutEventsDataInput;
+  upsert?: CharityUpsertWithoutEventsInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: CharityWhereUniqueInput;
+}
+
+export interface HaloSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: HaloWhereInput;
+  AND?: HaloSubscriptionWhereInput[] | HaloSubscriptionWhereInput;
+  OR?: HaloSubscriptionWhereInput[] | HaloSubscriptionWhereInput;
+  NOT?: HaloSubscriptionWhereInput[] | HaloSubscriptionWhereInput;
+}
+
+export interface CharityUpdateWithoutEventsDataInput {
+  acronym?: String;
+  bannerCredit?: String;
+  ein?: String;
+  expensesAdministrative?: Float;
+  expensesFundraising?: Float;
+  expensesOther?: Float;
+  expensesProgram?: Float;
+  expensesUpdated?: String;
+  location?: String;
+  mission?: String;
+  name?: String;
+  phoneNumber?: String;
+  website?: String;
+  followers?: UserUpdateManyWithoutFollowedCharitiesInput;
+}
+
+export interface CircleSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: CircleWhereInput;
+  AND?: CircleSubscriptionWhereInput[] | CircleSubscriptionWhereInput;
+  OR?: CircleSubscriptionWhereInput[] | CircleSubscriptionWhereInput;
+  NOT?: CircleSubscriptionWhereInput[] | CircleSubscriptionWhereInput;
+}
+
+export interface UserUpdateManyWithoutFollowedCharitiesInput {
+  create?:
+    | UserCreateWithoutFollowedCharitiesInput[]
+    | UserCreateWithoutFollowedCharitiesInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  update?:
+    | UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput[]
+    | UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput[]
+    | UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput;
+}
+
+export interface TransactionUpdateInput {
+  amount?: Int;
+  balance?: Int;
+  key?: String;
+  stripeID?: String;
+  type?: TransactionType;
+  event?: EventUpdateOneWithoutDonationsInput;
+  user?: UserUpdateOneRequiredWithoutTransactionsInput;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutFollowedCharitiesDataInput;
+}
+
+export interface EventUpdateWithoutSpecialFundraiserDataInput {
+  endDate?: DateTimeInput;
+  goal?: Int;
+  multiplier?: Int;
+  sponsorName?: String;
+  sponsorWebsite?: String;
+  startDate?: DateTimeInput;
+  charity?: CharityUpdateOneWithoutEventsInput;
+  donations?: TransactionUpdateManyWithoutEventInput;
+}
+
+export interface UserUpdateWithoutFollowedCharitiesDataInput {
+  bio?: String;
+  email?: String;
+  nameFirst?: String;
+  nameLast?: String;
+  picture?: String;
+  securityToken?: Int;
+  username?: String;
+  circles?: CircleUpdateManyWithoutUsersInput;
+  circlesOwned?: CircleUpdateManyWithoutOwnerInput;
+  dots?: DotUpdateManyWithoutUserInput;
+  halos?: HaloUpdateManyWithoutUserInput;
+  identity?: IdentityUpdateOneRequiredWithoutUserInput;
+  loops?: LoopUpdateManyWithoutUserInput;
+  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
+}
+
+export interface EventCreateWithoutSpecialFundraiserInput {
+  endDate: DateTimeInput;
+  goal: Int;
+  multiplier?: Int;
+  sponsorName?: String;
+  sponsorWebsite?: String;
+  startDate: DateTimeInput;
+  charity?: CharityCreateOneWithoutEventsInput;
+  donations?: TransactionCreateManyWithoutEventInput;
+}
+
+export interface CircleUpdateManyWithoutOwnerInput {
+  create?: CircleCreateWithoutOwnerInput[] | CircleCreateWithoutOwnerInput;
+  delete?: CircleWhereUniqueInput[] | CircleWhereUniqueInput;
+  connect?: CircleWhereUniqueInput[] | CircleWhereUniqueInput;
+  disconnect?: CircleWhereUniqueInput[] | CircleWhereUniqueInput;
+  update?:
+    | CircleUpdateWithWhereUniqueWithoutOwnerInput[]
+    | CircleUpdateWithWhereUniqueWithoutOwnerInput;
+  upsert?:
+    | CircleUpsertWithWhereUniqueWithoutOwnerInput[]
+    | CircleUpsertWithWhereUniqueWithoutOwnerInput;
+}
+
+export interface UserUpsertWithoutPreferencesInput {
+  update: UserUpdateWithoutPreferencesDataInput;
+  create: UserCreateWithoutPreferencesInput;
+}
+
+export interface CircleUpdateWithWhereUniqueWithoutOwnerInput {
+  where: CircleWhereUniqueInput;
+  data: CircleUpdateWithoutOwnerDataInput;
+}
+
+export interface PreferencesUpdateInput {
+  allowDonationEmails?: Boolean;
+  publicProfile?: Boolean;
+  user?: UserUpdateOneRequiredWithoutPreferencesInput;
+}
+
+export interface CircleUpdateWithoutOwnerDataInput {
+  description?: String;
+  name?: String;
+  open?: Boolean;
+  users?: UserUpdateManyWithoutCirclesInput;
+}
+
+export interface PreferencesCreateInput {
+  allowDonationEmails?: Boolean;
+  publicProfile?: Boolean;
+  user: UserCreateOneWithoutPreferencesInput;
+}
+
+export interface UserUpdateManyWithoutCirclesInput {
+  create?: UserCreateWithoutCirclesInput[] | UserCreateWithoutCirclesInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  update?:
+    | UserUpdateWithWhereUniqueWithoutCirclesInput[]
+    | UserUpdateWithWhereUniqueWithoutCirclesInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutCirclesInput[]
+    | UserUpsertWithWhereUniqueWithoutCirclesInput;
+}
+
+export interface UserUpdateOneRequiredWithoutLoopsInput {
+  create?: UserCreateWithoutLoopsInput;
+  update?: UserUpdateWithoutLoopsDataInput;
+  upsert?: UserUpsertWithoutLoopsInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutCirclesInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutCirclesDataInput;
+}
+
+export interface UserCreateOneWithoutLoopsInput {
+  create?: UserCreateWithoutLoopsInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateWithoutCirclesDataInput {
+  bio?: String;
+  email?: String;
+  nameFirst?: String;
+  nameLast?: String;
+  picture?: String;
+  securityToken?: Int;
+  username?: String;
+  circlesOwned?: CircleUpdateManyWithoutOwnerInput;
+  dots?: DotUpdateManyWithoutUserInput;
+  followedCharities?: CharityUpdateManyWithoutFollowersInput;
+  halos?: HaloUpdateManyWithoutUserInput;
+  identity?: IdentityUpdateOneRequiredWithoutUserInput;
+  loops?: LoopUpdateManyWithoutUserInput;
+  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
+}
+
+export interface UserUpdateWithoutIdentityDataInput {
+  bio?: String;
+  email?: String;
+  nameFirst?: String;
+  nameLast?: String;
+  picture?: String;
+  securityToken?: Int;
+  username?: String;
+  circles?: CircleUpdateManyWithoutUsersInput;
+  circlesOwned?: CircleUpdateManyWithoutOwnerInput;
+  dots?: DotUpdateManyWithoutUserInput;
+  followedCharities?: CharityUpdateManyWithoutFollowersInput;
+  halos?: HaloUpdateManyWithoutUserInput;
+  loops?: LoopUpdateManyWithoutUserInput;
+  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
+}
+
+export interface PreferencesUpdateOneRequiredWithoutUserInput {
+  create?: PreferencesCreateWithoutUserInput;
+  update?: PreferencesUpdateWithoutUserDataInput;
+  upsert?: PreferencesUpsertWithoutUserInput;
+  connect?: PreferencesWhereUniqueInput;
+}
+
+export type TransactionWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  key?: String;
+}>;
+
+export interface PreferencesUpdateWithoutUserDataInput {
+  allowDonationEmails?: Boolean;
+  publicProfile?: Boolean;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  username?: String;
+}>;
+
+export interface PreferencesUpsertWithoutUserInput {
+  update: PreferencesUpdateWithoutUserDataInput;
+  create: PreferencesCreateWithoutUserInput;
+}
+
+export interface SpecialFundraiserCreateOneWithoutEventInput {
+  create?: SpecialFundraiserCreateWithoutEventInput;
+  connect?: SpecialFundraiserWhereUniqueInput;
+}
+
+export interface TransactionUpdateManyWithoutUserInput {
+  create?:
+    | TransactionCreateWithoutUserInput[]
+    | TransactionCreateWithoutUserInput;
+  delete?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
+  connect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
+  disconnect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
+  update?:
+    | TransactionUpdateWithWhereUniqueWithoutUserInput[]
+    | TransactionUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | TransactionUpsertWithWhereUniqueWithoutUserInput[]
+    | TransactionUpsertWithWhereUniqueWithoutUserInput;
+}
+
+export interface UserCreateOneWithoutTransactionsInput {
+  create?: UserCreateWithoutTransactionsInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface TransactionUpdateWithWhereUniqueWithoutUserInput {
+  where: TransactionWhereUniqueInput;
+  data: TransactionUpdateWithoutUserDataInput;
+}
+
+export interface UserCreateOneWithoutCirclesOwnedInput {
+  create?: UserCreateWithoutCirclesOwnedInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface TransactionUpdateWithoutUserDataInput {
+  amount?: Int;
+  balance?: Int;
+  key?: String;
+  stripeID?: String;
+  type?: TransactionType;
+  event?: EventUpdateOneWithoutDonationsInput;
+}
+
+export interface CharityCreateManyWithoutFollowersInput {
+  create?:
+    | CharityCreateWithoutFollowersInput[]
+    | CharityCreateWithoutFollowersInput;
+  connect?: CharityWhereUniqueInput[] | CharityWhereUniqueInput;
+}
+
+export interface EventUpdateOneWithoutDonationsInput {
+  create?: EventCreateWithoutDonationsInput;
+  update?: EventUpdateWithoutDonationsDataInput;
+  upsert?: EventUpsertWithoutDonationsInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: EventWhereUniqueInput;
+}
+
+export interface IdentityCreateOneWithoutUserInput {
+  create?: IdentityCreateWithoutUserInput;
+  connect?: IdentityWhereUniqueInput;
+}
+
+export interface EventUpdateWithoutDonationsDataInput {
+  endDate?: DateTimeInput;
+  goal?: Int;
+  multiplier?: Int;
+  sponsorName?: String;
+  sponsorWebsite?: String;
+  startDate?: DateTimeInput;
+  charity?: CharityUpdateOneWithoutEventsInput;
+  specialFundraiser?: SpecialFundraiserUpdateOneWithoutEventInput;
+}
+
+export interface EventCreateOneInput {
+  create?: EventCreateInput;
+  connect?: EventWhereUniqueInput;
+}
+
+export interface EventUpsertWithoutDonationsInput {
+  update: EventUpdateWithoutDonationsDataInput;
+  create: EventCreateWithoutDonationsInput;
+}
+
+export interface DotWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  action?: String;
+  action_not?: String;
+  action_in?: String[] | String;
+  action_not_in?: String[] | String;
+  action_lt?: String;
+  action_lte?: String;
+  action_gt?: String;
+  action_gte?: String;
+  action_contains?: String;
+  action_not_contains?: String;
+  action_starts_with?: String;
+  action_not_starts_with?: String;
+  action_ends_with?: String;
+  action_not_ends_with?: String;
+  amount?: Int;
+  amount_not?: Int;
+  amount_in?: Int[] | Int;
+  amount_not_in?: Int[] | Int;
+  amount_lt?: Int;
+  amount_lte?: Int;
+  amount_gt?: Int;
+  amount_gte?: Int;
+  total?: Int;
+  total_not?: Int;
+  total_in?: Int[] | Int;
+  total_not_in?: Int[] | Int;
+  total_lt?: Int;
+  total_lte?: Int;
+  total_gt?: Int;
+  total_gte?: Int;
+  user?: UserWhereInput;
+  AND?: DotWhereInput[] | DotWhereInput;
+  OR?: DotWhereInput[] | DotWhereInput;
+  NOT?: DotWhereInput[] | DotWhereInput;
+}
+
+export interface TransactionUpsertWithWhereUniqueWithoutUserInput {
+  where: TransactionWhereUniqueInput;
+  update: TransactionUpdateWithoutUserDataInput;
+  create: TransactionCreateWithoutUserInput;
 }
 
 export interface CharityWhereInput {
@@ -2189,13 +2769,145 @@ export interface CharityWhereInput {
   NOT?: CharityWhereInput[] | CharityWhereInput;
 }
 
-export interface CharityUpdateOneWithoutEventsInput {
+export interface UserUpsertWithWhereUniqueWithoutCirclesInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutCirclesDataInput;
+  create: UserCreateWithoutCirclesInput;
+}
+
+export interface UserUpdateInput {
+  bio?: String;
+  email?: String;
+  nameFirst?: String;
+  nameLast?: String;
+  picture?: String;
+  securityToken?: Int;
+  username?: String;
+  circles?: CircleUpdateManyWithoutUsersInput;
+  circlesOwned?: CircleUpdateManyWithoutOwnerInput;
+  dots?: DotUpdateManyWithoutUserInput;
+  followedCharities?: CharityUpdateManyWithoutFollowersInput;
+  halos?: HaloUpdateManyWithoutUserInput;
+  identity?: IdentityUpdateOneRequiredWithoutUserInput;
+  loops?: LoopUpdateManyWithoutUserInput;
+  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
+}
+
+export interface CircleUpsertWithWhereUniqueWithoutOwnerInput {
+  where: CircleWhereUniqueInput;
+  update: CircleUpdateWithoutOwnerDataInput;
+  create: CircleCreateWithoutOwnerInput;
+}
+
+export interface EventUpdateOneRequiredWithoutSpecialFundraiserInput {
+  create?: EventCreateWithoutSpecialFundraiserInput;
+  update?: EventUpdateWithoutSpecialFundraiserDataInput;
+  upsert?: EventUpsertWithoutSpecialFundraiserInput;
+  connect?: EventWhereUniqueInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutFollowedCharitiesDataInput;
+  create: UserCreateWithoutFollowedCharitiesInput;
+}
+
+export interface UserUpdateWithoutPreferencesDataInput {
+  bio?: String;
+  email?: String;
+  nameFirst?: String;
+  nameLast?: String;
+  picture?: String;
+  securityToken?: Int;
+  username?: String;
+  circles?: CircleUpdateManyWithoutUsersInput;
+  circlesOwned?: CircleUpdateManyWithoutOwnerInput;
+  dots?: DotUpdateManyWithoutUserInput;
+  followedCharities?: CharityUpdateManyWithoutFollowersInput;
+  halos?: HaloUpdateManyWithoutUserInput;
+  identity?: IdentityUpdateOneRequiredWithoutUserInput;
+  loops?: LoopUpdateManyWithoutUserInput;
+  transactions?: TransactionUpdateManyWithoutUserInput;
+}
+
+export interface CharityUpsertWithoutEventsInput {
+  update: CharityUpdateWithoutEventsDataInput;
+  create: CharityCreateWithoutEventsInput;
+}
+
+export type LoopWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface EventUpsertNestedInput {
+  update: EventUpdateDataInput;
+  create: EventCreateInput;
+}
+
+export interface UserUpsertWithoutIdentityInput {
+  update: UserUpdateWithoutIdentityDataInput;
+  create: UserCreateWithoutIdentityInput;
+}
+
+export interface LoopUpsertWithWhereUniqueWithoutUserInput {
+  where: LoopWhereUniqueInput;
+  update: LoopUpdateWithoutUserDataInput;
+  create: LoopCreateWithoutUserInput;
+}
+
+export interface IdentityCreateInput {
+  provider: IdentityProvider;
+  providerID: String;
+  user: UserCreateOneWithoutIdentityInput;
+}
+
+export interface UserUpsertWithoutCirclesOwnedInput {
+  update: UserUpdateWithoutCirclesOwnedDataInput;
+  create: UserCreateWithoutCirclesOwnedInput;
+}
+
+export interface EventCreateManyWithoutCharityInput {
+  create?: EventCreateWithoutCharityInput[] | EventCreateWithoutCharityInput;
+  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput;
+}
+
+export interface CircleUpsertWithWhereUniqueWithoutUsersInput {
+  where: CircleWhereUniqueInput;
+  update: CircleUpdateWithoutUsersDataInput;
+  create: CircleCreateWithoutUsersInput;
+}
+
+export interface CircleCreateManyWithoutUsersInput {
+  create?: CircleCreateWithoutUsersInput[] | CircleCreateWithoutUsersInput;
+  connect?: CircleWhereUniqueInput[] | CircleWhereUniqueInput;
+}
+
+export interface UserUpsertWithoutTransactionsInput {
+  update: UserUpdateWithoutTransactionsDataInput;
+  create: UserCreateWithoutTransactionsInput;
+}
+
+export interface HaloCreateManyWithoutUserInput {
+  create?: HaloCreateWithoutUserInput[] | HaloCreateWithoutUserInput;
+  connect?: HaloWhereUniqueInput[] | HaloWhereUniqueInput;
+}
+
+export interface TransactionUpsertWithWhereUniqueWithoutEventInput {
+  where: TransactionWhereUniqueInput;
+  update: TransactionUpdateWithoutEventDataInput;
+  create: TransactionCreateWithoutEventInput;
+}
+
+export interface CharityCreateOneWithoutEventsInput {
   create?: CharityCreateWithoutEventsInput;
-  update?: CharityUpdateWithoutEventsDataInput;
-  upsert?: CharityUpsertWithoutEventsInput;
-  delete?: Boolean;
-  disconnect?: Boolean;
   connect?: CharityWhereUniqueInput;
+}
+
+export interface EventUpsertWithWhereUniqueWithoutCharityInput {
+  where: EventWhereUniqueInput;
+  update: EventUpdateWithoutCharityDataInput;
+  create: EventCreateWithoutCharityInput;
 }
 
 export interface EventWhereInput {
@@ -2299,480 +3011,14 @@ export interface EventWhereInput {
   NOT?: EventWhereInput[] | EventWhereInput;
 }
 
-export interface CharityUpdateWithoutEventsDataInput {
-  acronym?: String;
-  bannerCredit?: String;
-  ein?: String;
-  expensesAdministrative?: Float;
-  expensesFundraising?: Float;
-  expensesOther?: Float;
-  expensesProgram?: Float;
-  expensesUpdated?: String;
-  location?: String;
-  mission?: String;
-  name?: String;
-  phoneNumber?: String;
-  website?: String;
-  followers?: UserUpdateManyWithoutFollowedCharitiesInput;
-}
-
-export interface CharitySubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: CharityWhereInput;
-  AND?: CharitySubscriptionWhereInput[] | CharitySubscriptionWhereInput;
-  OR?: CharitySubscriptionWhereInput[] | CharitySubscriptionWhereInput;
-  NOT?: CharitySubscriptionWhereInput[] | CharitySubscriptionWhereInput;
-}
-
-export interface UserUpdateManyWithoutFollowedCharitiesInput {
-  create?:
-    | UserCreateWithoutFollowedCharitiesInput[]
-    | UserCreateWithoutFollowedCharitiesInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  update?:
-    | UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput[]
-    | UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput[]
-    | UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput;
-}
-
-export interface TransactionUpdateInput {
-  amount?: Int;
-  balance?: Int;
-  key?: String;
-  stripeID?: String;
-  type?: TransactionType;
-  event?: EventUpdateOneWithoutDonationsInput;
-  user?: UserUpdateOneRequiredWithoutTransactionsInput;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutFollowedCharitiesDataInput;
-}
-
-export interface EventUpdateWithoutSpecialFundraiserDataInput {
-  endDate?: DateTimeInput;
-  goal?: Int;
-  multiplier?: Int;
-  sponsorName?: String;
-  sponsorWebsite?: String;
-  startDate?: DateTimeInput;
-  charity?: CharityUpdateOneWithoutEventsInput;
-  donations?: TransactionUpdateManyWithoutEventInput;
-}
-
-export interface UserUpdateWithoutFollowedCharitiesDataInput {
-  bio?: String;
-  email?: String;
-  nameFirst?: String;
-  nameLast?: String;
-  picture?: String;
-  securityToken?: Int;
-  username?: String;
-  circles?: CircleUpdateManyWithoutUsersInput;
-  dots?: DotUpdateManyWithoutUserInput;
-  halos?: HaloUpdateManyWithoutUserInput;
-  identity?: IdentityUpdateOneRequiredWithoutUserInput;
-  loops?: LoopUpdateManyWithoutUserInput;
-  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
-  transactions?: TransactionUpdateManyWithoutUserInput;
-}
-
-export interface EventCreateWithoutSpecialFundraiserInput {
-  endDate: DateTimeInput;
-  goal: Int;
-  multiplier?: Int;
-  sponsorName?: String;
-  sponsorWebsite?: String;
-  startDate: DateTimeInput;
-  charity?: CharityCreateOneWithoutEventsInput;
-  donations?: TransactionCreateManyWithoutEventInput;
-}
-
-export interface PreferencesUpdateOneRequiredWithoutUserInput {
-  create?: PreferencesCreateWithoutUserInput;
-  update?: PreferencesUpdateWithoutUserDataInput;
-  upsert?: PreferencesUpsertWithoutUserInput;
-  connect?: PreferencesWhereUniqueInput;
-}
-
-export interface UserUpsertWithoutPreferencesInput {
-  update: UserUpdateWithoutPreferencesDataInput;
-  create: UserCreateWithoutPreferencesInput;
-}
-
-export interface PreferencesUpdateWithoutUserDataInput {
-  allowDonationEmails?: Boolean;
-  publicProfile?: Boolean;
-}
-
-export interface PreferencesUpdateInput {
-  allowDonationEmails?: Boolean;
-  publicProfile?: Boolean;
-  user?: UserUpdateOneRequiredWithoutPreferencesInput;
-}
-
-export interface PreferencesUpsertWithoutUserInput {
-  update: PreferencesUpdateWithoutUserDataInput;
-  create: PreferencesCreateWithoutUserInput;
-}
-
-export type LoopWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface TransactionUpdateManyWithoutUserInput {
-  create?:
-    | TransactionCreateWithoutUserInput[]
-    | TransactionCreateWithoutUserInput;
-  delete?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
-  connect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
-  disconnect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
-  update?:
-    | TransactionUpdateWithWhereUniqueWithoutUserInput[]
-    | TransactionUpdateWithWhereUniqueWithoutUserInput;
-  upsert?:
-    | TransactionUpsertWithWhereUniqueWithoutUserInput[]
-    | TransactionUpsertWithWhereUniqueWithoutUserInput;
-}
-
-export type PreferencesWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface TransactionUpdateWithWhereUniqueWithoutUserInput {
-  where: TransactionWhereUniqueInput;
-  data: TransactionUpdateWithoutUserDataInput;
-}
-
-export interface LoopCreateInput {
-  count: Int;
-  event: EventCreateOneInput;
-  user: UserCreateOneWithoutLoopsInput;
-}
-
-export interface TransactionUpdateWithoutUserDataInput {
-  amount?: Int;
-  balance?: Int;
-  key?: String;
-  stripeID?: String;
-  type?: TransactionType;
-  event?: EventUpdateOneWithoutDonationsInput;
-}
-
-export interface UserUpdateOneRequiredWithoutIdentityInput {
-  create?: UserCreateWithoutIdentityInput;
-  update?: UserUpdateWithoutIdentityDataInput;
-  upsert?: UserUpsertWithoutIdentityInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface EventUpdateOneWithoutDonationsInput {
-  create?: EventCreateWithoutDonationsInput;
-  update?: EventUpdateWithoutDonationsDataInput;
-  upsert?: EventUpsertWithoutDonationsInput;
-  delete?: Boolean;
-  disconnect?: Boolean;
-  connect?: EventWhereUniqueInput;
-}
-
-export interface UserCreateOneWithoutIdentityInput {
-  create?: UserCreateWithoutIdentityInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface EventUpdateWithoutDonationsDataInput {
-  endDate?: DateTimeInput;
-  goal?: Int;
-  multiplier?: Int;
-  sponsorName?: String;
-  sponsorWebsite?: String;
-  startDate?: DateTimeInput;
-  charity?: CharityUpdateOneWithoutEventsInput;
-  specialFundraiser?: SpecialFundraiserUpdateOneWithoutEventInput;
-}
-
-export interface UserUpdateWithoutHalosDataInput {
-  bio?: String;
-  email?: String;
-  nameFirst?: String;
-  nameLast?: String;
-  picture?: String;
-  securityToken?: Int;
-  username?: String;
-  circles?: CircleUpdateManyWithoutUsersInput;
-  dots?: DotUpdateManyWithoutUserInput;
-  followedCharities?: CharityUpdateManyWithoutFollowersInput;
-  identity?: IdentityUpdateOneRequiredWithoutUserInput;
-  loops?: LoopUpdateManyWithoutUserInput;
-  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
-  transactions?: TransactionUpdateManyWithoutUserInput;
-}
-
-export interface EventUpsertWithoutDonationsInput {
-  update: EventUpdateWithoutDonationsDataInput;
-  create: EventCreateWithoutDonationsInput;
-}
-
-export interface EventCreateManyWithoutCharityInput {
-  create?: EventCreateWithoutCharityInput[] | EventCreateWithoutCharityInput;
-  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput;
-}
-
-export interface TransactionUpsertWithWhereUniqueWithoutUserInput {
-  where: TransactionWhereUniqueInput;
-  update: TransactionUpdateWithoutUserDataInput;
-  create: TransactionCreateWithoutUserInput;
-}
-
-export interface TransactionCreateManyWithoutEventInput {
-  create?:
-    | TransactionCreateWithoutEventInput[]
-    | TransactionCreateWithoutEventInput;
-  connect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutFollowedCharitiesDataInput;
-  create: UserCreateWithoutFollowedCharitiesInput;
-}
-
-export interface CircleCreateManyWithoutUsersInput {
-  create?: CircleCreateWithoutUsersInput[] | CircleCreateWithoutUsersInput;
-  connect?: CircleWhereUniqueInput[] | CircleWhereUniqueInput;
-}
-
-export interface CharityUpsertWithoutEventsInput {
-  update: CharityUpdateWithoutEventsDataInput;
-  create: CharityCreateWithoutEventsInput;
-}
-
-export interface CharityCreateManyWithoutFollowersInput {
-  create?:
-    | CharityCreateWithoutFollowersInput[]
-    | CharityCreateWithoutFollowersInput;
-  connect?: CharityWhereUniqueInput[] | CharityWhereUniqueInput;
-}
-
-export interface EventUpsertNestedInput {
-  update: EventUpdateDataInput;
-  create: EventCreateInput;
-}
-
-export interface IdentityCreateOneWithoutUserInput {
-  create?: IdentityCreateWithoutUserInput;
-  connect?: IdentityWhereUniqueInput;
-}
-
-export interface LoopUpsertWithWhereUniqueWithoutUserInput {
-  where: LoopWhereUniqueInput;
-  update: LoopUpdateWithoutUserDataInput;
-  create: LoopCreateWithoutUserInput;
-}
-
-export interface EventCreateOneInput {
-  create?: EventCreateInput;
-  connect?: EventWhereUniqueInput;
-}
-
-export interface UserUpsertWithoutTransactionsInput {
-  update: UserUpdateWithoutTransactionsDataInput;
-  create: UserCreateWithoutTransactionsInput;
-}
-
-export interface UserWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  bio?: String;
-  bio_not?: String;
-  bio_in?: String[] | String;
-  bio_not_in?: String[] | String;
-  bio_lt?: String;
-  bio_lte?: String;
-  bio_gt?: String;
-  bio_gte?: String;
-  bio_contains?: String;
-  bio_not_contains?: String;
-  bio_starts_with?: String;
-  bio_not_starts_with?: String;
-  bio_ends_with?: String;
-  bio_not_ends_with?: String;
-  email?: String;
-  email_not?: String;
-  email_in?: String[] | String;
-  email_not_in?: String[] | String;
-  email_lt?: String;
-  email_lte?: String;
-  email_gt?: String;
-  email_gte?: String;
-  email_contains?: String;
-  email_not_contains?: String;
-  email_starts_with?: String;
-  email_not_starts_with?: String;
-  email_ends_with?: String;
-  email_not_ends_with?: String;
-  nameFirst?: String;
-  nameFirst_not?: String;
-  nameFirst_in?: String[] | String;
-  nameFirst_not_in?: String[] | String;
-  nameFirst_lt?: String;
-  nameFirst_lte?: String;
-  nameFirst_gt?: String;
-  nameFirst_gte?: String;
-  nameFirst_contains?: String;
-  nameFirst_not_contains?: String;
-  nameFirst_starts_with?: String;
-  nameFirst_not_starts_with?: String;
-  nameFirst_ends_with?: String;
-  nameFirst_not_ends_with?: String;
-  nameLast?: String;
-  nameLast_not?: String;
-  nameLast_in?: String[] | String;
-  nameLast_not_in?: String[] | String;
-  nameLast_lt?: String;
-  nameLast_lte?: String;
-  nameLast_gt?: String;
-  nameLast_gte?: String;
-  nameLast_contains?: String;
-  nameLast_not_contains?: String;
-  nameLast_starts_with?: String;
-  nameLast_not_starts_with?: String;
-  nameLast_ends_with?: String;
-  nameLast_not_ends_with?: String;
-  picture?: String;
-  picture_not?: String;
-  picture_in?: String[] | String;
-  picture_not_in?: String[] | String;
-  picture_lt?: String;
-  picture_lte?: String;
-  picture_gt?: String;
-  picture_gte?: String;
-  picture_contains?: String;
-  picture_not_contains?: String;
-  picture_starts_with?: String;
-  picture_not_starts_with?: String;
-  picture_ends_with?: String;
-  picture_not_ends_with?: String;
-  securityToken?: Int;
-  securityToken_not?: Int;
-  securityToken_in?: Int[] | Int;
-  securityToken_not_in?: Int[] | Int;
-  securityToken_lt?: Int;
-  securityToken_lte?: Int;
-  securityToken_gt?: Int;
-  securityToken_gte?: Int;
-  username?: String;
-  username_not?: String;
-  username_in?: String[] | String;
-  username_not_in?: String[] | String;
-  username_lt?: String;
-  username_lte?: String;
-  username_gt?: String;
-  username_gte?: String;
-  username_contains?: String;
-  username_not_contains?: String;
-  username_starts_with?: String;
-  username_not_starts_with?: String;
-  username_ends_with?: String;
-  username_not_ends_with?: String;
-  circles_every?: CircleWhereInput;
-  circles_some?: CircleWhereInput;
-  circles_none?: CircleWhereInput;
-  dots_every?: DotWhereInput;
-  dots_some?: DotWhereInput;
-  dots_none?: DotWhereInput;
-  followedCharities_every?: CharityWhereInput;
-  followedCharities_some?: CharityWhereInput;
-  followedCharities_none?: CharityWhereInput;
-  halos_every?: HaloWhereInput;
-  halos_some?: HaloWhereInput;
-  halos_none?: HaloWhereInput;
-  identity?: IdentityWhereInput;
-  loops_every?: LoopWhereInput;
-  loops_some?: LoopWhereInput;
-  loops_none?: LoopWhereInput;
-  preferences?: PreferencesWhereInput;
-  transactions_every?: TransactionWhereInput;
-  transactions_some?: TransactionWhereInput;
-  transactions_none?: TransactionWhereInput;
-  AND?: UserWhereInput[] | UserWhereInput;
-  OR?: UserWhereInput[] | UserWhereInput;
-  NOT?: UserWhereInput[] | UserWhereInput;
-}
-
-export interface TransactionUpsertWithWhereUniqueWithoutEventInput {
-  where: TransactionWhereUniqueInput;
-  update: TransactionUpdateWithoutEventDataInput;
-  create: TransactionCreateWithoutEventInput;
-}
-
-export interface DotSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: DotWhereInput;
-  AND?: DotSubscriptionWhereInput[] | DotSubscriptionWhereInput;
-  OR?: DotSubscriptionWhereInput[] | DotSubscriptionWhereInput;
-  NOT?: DotSubscriptionWhereInput[] | DotSubscriptionWhereInput;
-}
-
-export interface EventUpsertWithWhereUniqueWithoutCharityInput {
-  where: EventWhereUniqueInput;
-  update: EventUpdateWithoutCharityDataInput;
-  create: EventCreateWithoutCharityInput;
-}
-
-export interface EventUpsertWithoutSpecialFundraiserInput {
-  update: EventUpdateWithoutSpecialFundraiserDataInput;
-  create: EventCreateWithoutSpecialFundraiserInput;
-}
-
 export interface HaloCreateInput {
   key: String;
   user: UserCreateOneWithoutHalosInput;
 }
 
-export interface SpecialFundraiserCreateInput {
-  description: String;
-  name: String;
-  event: EventCreateOneWithoutSpecialFundraiserInput;
+export interface EventCreateOneWithoutSpecialFundraiserInput {
+  create?: EventCreateWithoutSpecialFundraiserInput;
+  connect?: EventWhereUniqueInput;
 }
 
 export interface EventUpdateInput {
@@ -2787,157 +3033,36 @@ export interface EventUpdateInput {
   donations?: TransactionUpdateManyWithoutEventInput;
 }
 
-export interface UserCreateOneWithoutPreferencesInput {
-  create?: UserCreateWithoutPreferencesInput;
-  connect?: UserWhereUniqueInput;
-}
+export type PreferencesWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface CircleCreateInput {
   description?: String;
   name: String;
+  open?: Boolean;
+  owner: UserCreateOneWithoutCirclesOwnedInput;
   users?: UserCreateManyWithoutCirclesInput;
 }
 
-export interface UserCreateWithoutLoopsInput {
-  bio?: String;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: String;
-  securityToken: Int;
-  username: String;
-  circles?: CircleCreateManyWithoutUsersInput;
-  dots?: DotCreateManyWithoutUserInput;
-  followedCharities?: CharityCreateManyWithoutFollowersInput;
-  halos?: HaloCreateManyWithoutUserInput;
-  identity: IdentityCreateOneWithoutUserInput;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-}
-
-export interface UserCreateManyWithoutCirclesInput {
-  create?: UserCreateWithoutCirclesInput[] | UserCreateWithoutCirclesInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-}
-
-export type TransactionWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  key?: String;
-}>;
-
-export interface UserCreateWithoutCirclesInput {
-  bio?: String;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: String;
-  securityToken: Int;
-  username: String;
-  dots?: DotCreateManyWithoutUserInput;
-  followedCharities?: CharityCreateManyWithoutFollowersInput;
-  halos?: HaloCreateManyWithoutUserInput;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: LoopCreateManyWithoutUserInput;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-}
-
-export interface UserCreateOneWithoutTransactionsInput {
-  create?: UserCreateWithoutTransactionsInput;
+export interface UserUpdateOneRequiredWithoutHalosInput {
+  create?: UserCreateWithoutHalosInput;
+  update?: UserUpdateWithoutHalosDataInput;
+  upsert?: UserUpsertWithoutHalosInput;
   connect?: UserWhereUniqueInput;
 }
 
 export interface CircleUpdateInput {
   description?: String;
   name?: String;
+  open?: Boolean;
+  owner?: UserUpdateOneRequiredWithoutCirclesOwnedInput;
   users?: UserUpdateManyWithoutCirclesInput;
 }
 
-export interface HaloCreateManyWithoutUserInput {
-  create?: HaloCreateWithoutUserInput[] | HaloCreateWithoutUserInput;
-  connect?: HaloWhereUniqueInput[] | HaloWhereUniqueInput;
-}
-
-export interface UserUpdateManyWithoutCirclesInput {
-  create?: UserCreateWithoutCirclesInput[] | UserCreateWithoutCirclesInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  update?:
-    | UserUpdateWithWhereUniqueWithoutCirclesInput[]
-    | UserUpdateWithWhereUniqueWithoutCirclesInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueWithoutCirclesInput[]
-    | UserUpsertWithWhereUniqueWithoutCirclesInput;
-}
-
-export interface TransactionSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: TransactionWhereInput;
-  AND?: TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput;
-  OR?: TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput;
-  NOT?: TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutCirclesInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutCirclesDataInput;
-}
-
-export interface UserCreateInput {
-  bio?: String;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: String;
-  securityToken: Int;
-  username: String;
-  circles?: CircleCreateManyWithoutUsersInput;
-  dots?: DotCreateManyWithoutUserInput;
-  followedCharities?: CharityCreateManyWithoutFollowersInput;
-  halos?: HaloCreateManyWithoutUserInput;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: LoopCreateManyWithoutUserInput;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: TransactionCreateManyWithoutUserInput;
-}
-
-export interface UserUpdateWithoutCirclesDataInput {
-  bio?: String;
-  email?: String;
-  nameFirst?: String;
-  nameLast?: String;
-  picture?: String;
-  securityToken?: Int;
-  username?: String;
-  dots?: DotUpdateManyWithoutUserInput;
-  followedCharities?: CharityUpdateManyWithoutFollowersInput;
-  halos?: HaloUpdateManyWithoutUserInput;
-  identity?: IdentityUpdateOneRequiredWithoutUserInput;
-  loops?: LoopUpdateManyWithoutUserInput;
-  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
-  transactions?: TransactionUpdateManyWithoutUserInput;
-}
-
-export interface UserUpdateOneRequiredWithoutPreferencesInput {
-  create?: UserCreateWithoutPreferencesInput;
-  update?: UserUpdateWithoutPreferencesDataInput;
-  upsert?: UserUpsertWithoutPreferencesInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutCirclesInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutCirclesDataInput;
-  create: UserCreateWithoutCirclesInput;
-}
-
-export interface UserUpsertWithoutIdentityInput {
-  update: UserUpdateWithoutIdentityDataInput;
-  create: UserCreateWithoutIdentityInput;
+export interface DotCreateManyWithoutUserInput {
+  create?: DotCreateWithoutUserInput[] | DotCreateWithoutUserInput;
+  connect?: DotWhereUniqueInput[] | DotWhereUniqueInput;
 }
 
 export interface DotCreateInput {
@@ -2947,9 +3072,15 @@ export interface DotCreateInput {
   user: UserCreateOneWithoutDotsInput;
 }
 
-export interface SpecialFundraiserCreateOneWithoutEventInput {
-  create?: SpecialFundraiserCreateWithoutEventInput;
-  connect?: SpecialFundraiserWhereUniqueInput;
+export interface PreferencesSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PreferencesWhereInput;
+  AND?: PreferencesSubscriptionWhereInput[] | PreferencesSubscriptionWhereInput;
+  OR?: PreferencesSubscriptionWhereInput[] | PreferencesSubscriptionWhereInput;
+  NOT?: PreferencesSubscriptionWhereInput[] | PreferencesSubscriptionWhereInput;
 }
 
 export interface UserCreateOneWithoutDotsInput {
@@ -2957,9 +3088,22 @@ export interface UserCreateOneWithoutDotsInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface LoopCreateManyWithoutUserInput {
-  create?: LoopCreateWithoutUserInput[] | LoopCreateWithoutUserInput;
-  connect?: LoopWhereUniqueInput[] | LoopWhereUniqueInput;
+export interface UserCreateWithoutPreferencesInput {
+  bio?: String;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: String;
+  securityToken: Int;
+  username: String;
+  circles?: CircleCreateManyWithoutUsersInput;
+  circlesOwned?: CircleCreateManyWithoutOwnerInput;
+  dots?: DotCreateManyWithoutUserInput;
+  followedCharities?: CharityCreateManyWithoutFollowersInput;
+  halos?: HaloCreateManyWithoutUserInput;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: LoopCreateManyWithoutUserInput;
+  transactions?: TransactionCreateManyWithoutUserInput;
 }
 
 export interface UserUpdateWithoutDotsDataInput {
@@ -2971,6 +3115,7 @@ export interface UserUpdateWithoutDotsDataInput {
   securityToken?: Int;
   username?: String;
   circles?: CircleUpdateManyWithoutUsersInput;
+  circlesOwned?: CircleUpdateManyWithoutOwnerInput;
   followedCharities?: CharityUpdateManyWithoutFollowersInput;
   halos?: HaloUpdateManyWithoutUserInput;
   identity?: IdentityUpdateOneRequiredWithoutUserInput;
@@ -3002,6 +3147,7 @@ export interface UserCreateWithoutDotsInput {
   securityToken: Int;
   username: String;
   circles?: CircleCreateManyWithoutUsersInput;
+  circlesOwned?: CircleCreateManyWithoutOwnerInput;
   followedCharities?: CharityCreateManyWithoutFollowersInput;
   halos?: HaloCreateManyWithoutUserInput;
   identity: IdentityCreateOneWithoutUserInput;
@@ -3010,48 +3156,32 @@ export interface UserCreateWithoutDotsInput {
   transactions?: TransactionCreateManyWithoutUserInput;
 }
 
-export interface IdentitySubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: IdentityWhereInput;
-  AND?: IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput;
-  OR?: IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput;
-  NOT?: IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput;
+export interface IdentityUpdateInput {
+  provider?: IdentityProvider;
+  providerID?: String;
+  user?: UserUpdateOneRequiredWithoutIdentityInput;
 }
 
-export interface DotCreateManyWithoutUserInput {
-  create?: DotCreateWithoutUserInput[] | DotCreateWithoutUserInput;
-  connect?: DotWhereUniqueInput[] | DotWhereUniqueInput;
+export interface TransactionCreateInput {
+  amount: Int;
+  balance: Int;
+  key: String;
+  stripeID?: String;
+  type: TransactionType;
+  event?: EventCreateOneWithoutDonationsInput;
+  user: UserCreateOneWithoutTransactionsInput;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  username?: String;
-}>;
-
-export interface UserUpdateWithoutLoopsDataInput {
-  bio?: String;
-  email?: String;
-  nameFirst?: String;
-  nameLast?: String;
-  picture?: String;
-  securityToken?: Int;
-  username?: String;
-  circles?: CircleUpdateManyWithoutUsersInput;
-  dots?: DotUpdateManyWithoutUserInput;
-  followedCharities?: CharityUpdateManyWithoutFollowersInput;
-  halos?: HaloUpdateManyWithoutUserInput;
-  identity?: IdentityUpdateOneRequiredWithoutUserInput;
-  preferences?: PreferencesUpdateOneRequiredWithoutUserInput;
-  transactions?: TransactionUpdateManyWithoutUserInput;
+export interface LoopCreateManyWithoutUserInput {
+  create?: LoopCreateWithoutUserInput[] | LoopCreateWithoutUserInput;
+  connect?: LoopWhereUniqueInput[] | LoopWhereUniqueInput;
 }
 
-export interface SpecialFundraiserUpdateInput {
-  description?: String;
-  name?: String;
-  event?: EventUpdateOneRequiredWithoutSpecialFundraiserInput;
+export interface TransactionCreateManyWithoutEventInput {
+  create?:
+    | TransactionCreateWithoutEventInput[]
+    | TransactionCreateWithoutEventInput;
+  connect?: TransactionWhereUniqueInput[] | TransactionWhereUniqueInput;
 }
 
 export interface NodeNode {
@@ -3101,22 +3231,20 @@ export interface UserPreviousValuesSubscription
   username: () => Promise<AsyncIterator<String>>;
 }
 
-export interface CircleConnectionNode {}
-
-export interface CircleConnection
-  extends Promise<CircleConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<CircleEdgeNode>>() => T;
-  aggregate: <T = AggregateCircle>() => T;
+export interface AggregateCharityNode {
+  count: Int;
 }
 
-export interface CircleConnectionSubscription
-  extends Promise<AsyncIterator<CircleConnectionNode>>,
+export interface AggregateCharity
+  extends Promise<AggregateCharityNode>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CircleEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCircleSubscription>() => T;
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCharitySubscription
+  extends Promise<AsyncIterator<AggregateCharityNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface EventNode {
@@ -3183,20 +3311,20 @@ export interface EventSubscription
   ) => T;
 }
 
-export interface AggregateCharityNode {
-  count: Int;
+export interface CharityEdgeNode {
+  cursor: String;
 }
 
-export interface AggregateCharity
-  extends Promise<AggregateCharityNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface CharityEdge extends Promise<CharityEdgeNode>, Fragmentable {
+  node: <T = Charity>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface AggregateCharitySubscription
-  extends Promise<AsyncIterator<AggregateCharityNode>>,
+export interface CharityEdgeSubscription
+  extends Promise<AsyncIterator<CharityEdgeNode>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = CharitySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface SpecialFundraiserNode {
@@ -3229,78 +3357,79 @@ export interface SpecialFundraiserSubscription
   event: <T = EventSubscription>() => T;
 }
 
-export interface CircleEdgeNode {
-  cursor: String;
+export interface PageInfoNode {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
 }
 
-export interface CircleEdge extends Promise<CircleEdgeNode>, Fragmentable {
-  node: <T = Circle>() => T;
-  cursor: () => Promise<String>;
+export interface PageInfo extends Promise<PageInfoNode>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
 }
 
-export interface CircleEdgeSubscription
-  extends Promise<AsyncIterator<CircleEdgeNode>>,
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfoNode>>,
     Fragmentable {
-  node: <T = CircleSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface SpecialFundraiserPreviousValuesNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  description: String;
-  name: String;
+export interface AggregateUserNode {
+  count: Int;
 }
 
-export interface SpecialFundraiserPreviousValues
-  extends Promise<SpecialFundraiserPreviousValuesNode>,
+export interface AggregateUser
+  extends Promise<AggregateUserNode>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
-  name: () => Promise<String>;
+  count: () => Promise<Int>;
 }
 
-export interface SpecialFundraiserPreviousValuesSubscription
-  extends Promise<AsyncIterator<SpecialFundraiserPreviousValuesNode>>,
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUserNode>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  description: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface BatchPayloadNode {
-  count: Long;
-}
+export interface CharityConnectionNode {}
 
-export interface BatchPayload extends Promise<BatchPayloadNode>, Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayloadNode>>,
+export interface CharityConnection
+  extends Promise<CharityConnectionNode>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<CharityEdgeNode>>() => T;
+  aggregate: <T = AggregateCharity>() => T;
 }
 
-export interface CharityEdgeNode {
-  cursor: String;
-}
-
-export interface CharityEdge extends Promise<CharityEdgeNode>, Fragmentable {
-  node: <T = Charity>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CharityEdgeSubscription
-  extends Promise<AsyncIterator<CharityEdgeNode>>,
+export interface CharityConnectionSubscription
+  extends Promise<AsyncIterator<CharityConnectionNode>>,
     Fragmentable {
-  node: <T = CharitySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CharityEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCharitySubscription>() => T;
+}
+
+export interface UserConnectionNode {}
+
+export interface UserConnection
+  extends Promise<UserConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<UserEdgeNode>>() => T;
+  aggregate: <T = AggregateUser>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
 export interface TransactionPreviousValuesNode {
@@ -3337,38 +3466,48 @@ export interface TransactionPreviousValuesSubscription
   type: () => Promise<AsyncIterator<TransactionType>>;
 }
 
-export interface UserConnectionNode {}
-
-export interface UserConnection
-  extends Promise<UserConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<UserEdgeNode>>() => T;
-  aggregate: <T = AggregateUser>() => T;
+export interface SpecialFundraiserPreviousValuesNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  description: String;
+  name: String;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnectionNode>>,
+export interface SpecialFundraiserPreviousValues
+  extends Promise<SpecialFundraiserPreviousValuesNode>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  name: () => Promise<String>;
 }
 
-export interface AggregateUserNode {
-  count: Int;
+export interface SpecialFundraiserPreviousValuesSubscription
+  extends Promise<AsyncIterator<SpecialFundraiserPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  description: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser
-  extends Promise<AggregateUserNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface UserEdgeNode {
+  cursor: String;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUserNode>>,
+export interface UserEdge extends Promise<UserEdgeNode>, Fragmentable {
+  node: <T = User>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdgeNode>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface TransactionEdgeNode {
@@ -3389,635 +3528,6 @@ export interface TransactionEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PageInfoNode {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfo extends Promise<PageInfoNode>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfoNode>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateSpecialFundraiserNode {
-  count: Int;
-}
-
-export interface AggregateSpecialFundraiser
-  extends Promise<AggregateSpecialFundraiserNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateSpecialFundraiserSubscription
-  extends Promise<AsyncIterator<AggregateSpecialFundraiserNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface TransactionSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface TransactionSubscriptionPayload
-  extends Promise<TransactionSubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = Transaction>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = TransactionPreviousValues>() => T;
-}
-
-export interface TransactionSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TransactionSubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TransactionSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TransactionPreviousValuesSubscription>() => T;
-}
-
-export interface SpecialFundraiserConnectionNode {}
-
-export interface SpecialFundraiserConnection
-  extends Promise<SpecialFundraiserConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<SpecialFundraiserEdgeNode>>() => T;
-  aggregate: <T = AggregateSpecialFundraiser>() => T;
-}
-
-export interface SpecialFundraiserConnectionSubscription
-  extends Promise<AsyncIterator<SpecialFundraiserConnectionNode>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<SpecialFundraiserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSpecialFundraiserSubscription>() => T;
-}
-
-export interface CharitySubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface CharitySubscriptionPayload
-  extends Promise<CharitySubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = Charity>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = CharityPreviousValues>() => T;
-}
-
-export interface CharitySubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<CharitySubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = CharitySubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = CharityPreviousValuesSubscription>() => T;
-}
-
-export interface AggregatePreferencesNode {
-  count: Int;
-}
-
-export interface AggregatePreferences
-  extends Promise<AggregatePreferencesNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregatePreferencesSubscription
-  extends Promise<AsyncIterator<AggregatePreferencesNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface CharityPreviousValuesNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  acronym?: String;
-  bannerCredit?: String;
-  ein: String;
-  expensesAdministrative?: Float;
-  expensesFundraising?: Float;
-  expensesOther?: Float;
-  expensesProgram?: Float;
-  expensesUpdated?: String;
-  location: String;
-  mission: String;
-  name: String;
-  phoneNumber: String;
-  website: String;
-}
-
-export interface CharityPreviousValues
-  extends Promise<CharityPreviousValuesNode>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  acronym: () => Promise<String>;
-  bannerCredit: () => Promise<String>;
-  ein: () => Promise<String>;
-  expensesAdministrative: () => Promise<Float>;
-  expensesFundraising: () => Promise<Float>;
-  expensesOther: () => Promise<Float>;
-  expensesProgram: () => Promise<Float>;
-  expensesUpdated: () => Promise<String>;
-  location: () => Promise<String>;
-  mission: () => Promise<String>;
-  name: () => Promise<String>;
-  phoneNumber: () => Promise<String>;
-  website: () => Promise<String>;
-}
-
-export interface CharityPreviousValuesSubscription
-  extends Promise<AsyncIterator<CharityPreviousValuesNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  acronym: () => Promise<AsyncIterator<String>>;
-  bannerCredit: () => Promise<AsyncIterator<String>>;
-  ein: () => Promise<AsyncIterator<String>>;
-  expensesAdministrative: () => Promise<AsyncIterator<Float>>;
-  expensesFundraising: () => Promise<AsyncIterator<Float>>;
-  expensesOther: () => Promise<AsyncIterator<Float>>;
-  expensesProgram: () => Promise<AsyncIterator<Float>>;
-  expensesUpdated: () => Promise<AsyncIterator<String>>;
-  location: () => Promise<AsyncIterator<String>>;
-  mission: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  phoneNumber: () => Promise<AsyncIterator<String>>;
-  website: () => Promise<AsyncIterator<String>>;
-}
-
-export interface PreferencesConnectionNode {}
-
-export interface PreferencesConnection
-  extends Promise<PreferencesConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<PreferencesEdgeNode>>() => T;
-  aggregate: <T = AggregatePreferences>() => T;
-}
-
-export interface PreferencesConnectionSubscription
-  extends Promise<AsyncIterator<PreferencesConnectionNode>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PreferencesEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePreferencesSubscription>() => T;
-}
-
-export interface CharityConnectionNode {}
-
-export interface CharityConnection
-  extends Promise<CharityConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<CharityEdgeNode>>() => T;
-  aggregate: <T = AggregateCharity>() => T;
-}
-
-export interface CharityConnectionSubscription
-  extends Promise<AsyncIterator<CharityConnectionNode>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CharityEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCharitySubscription>() => T;
-}
-
-export interface AggregateLoopNode {
-  count: Int;
-}
-
-export interface AggregateLoop
-  extends Promise<AggregateLoopNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateLoopSubscription
-  extends Promise<AsyncIterator<AggregateLoopNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface CircleSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface CircleSubscriptionPayload
-  extends Promise<CircleSubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = Circle>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = CirclePreviousValues>() => T;
-}
-
-export interface CircleSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<CircleSubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = CircleSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = CirclePreviousValuesSubscription>() => T;
-}
-
-export interface LoopConnectionNode {}
-
-export interface LoopConnection
-  extends Promise<LoopConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<LoopEdgeNode>>() => T;
-  aggregate: <T = AggregateLoop>() => T;
-}
-
-export interface LoopConnectionSubscription
-  extends Promise<AsyncIterator<LoopConnectionNode>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<LoopEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateLoopSubscription>() => T;
-}
-
-export interface CirclePreviousValuesNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  description?: String;
-  name: String;
-}
-
-export interface CirclePreviousValues
-  extends Promise<CirclePreviousValuesNode>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
-  name: () => Promise<String>;
-}
-
-export interface CirclePreviousValuesSubscription
-  extends Promise<AsyncIterator<CirclePreviousValuesNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  description: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-}
-
-export interface IdentityEdgeNode {
-  cursor: String;
-}
-
-export interface IdentityEdge extends Promise<IdentityEdgeNode>, Fragmentable {
-  node: <T = Identity>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface IdentityEdgeSubscription
-  extends Promise<AsyncIterator<IdentityEdgeNode>>,
-    Fragmentable {
-  node: <T = IdentitySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface PreferencesNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  allowDonationEmails: Boolean;
-  publicProfile: Boolean;
-}
-
-export interface Preferences extends Promise<PreferencesNode>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  allowDonationEmails: () => Promise<Boolean>;
-  publicProfile: () => Promise<Boolean>;
-  user: <T = User>() => T;
-}
-
-export interface PreferencesSubscription
-  extends Promise<AsyncIterator<PreferencesNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  allowDonationEmails: () => Promise<AsyncIterator<Boolean>>;
-  publicProfile: () => Promise<AsyncIterator<Boolean>>;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface TransactionNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  amount: Int;
-  balance: Int;
-  key: String;
-  stripeID?: String;
-  type: TransactionType;
-}
-
-export interface Transaction extends Promise<TransactionNode>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  amount: () => Promise<Int>;
-  balance: () => Promise<Int>;
-  key: () => Promise<String>;
-  stripeID: () => Promise<String>;
-  type: () => Promise<TransactionType>;
-  event: <T = Event>() => T;
-  user: <T = User>() => T;
-}
-
-export interface TransactionSubscription
-  extends Promise<AsyncIterator<TransactionNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  amount: () => Promise<AsyncIterator<Int>>;
-  balance: () => Promise<AsyncIterator<Int>>;
-  key: () => Promise<AsyncIterator<String>>;
-  stripeID: () => Promise<AsyncIterator<String>>;
-  type: () => Promise<AsyncIterator<TransactionType>>;
-  event: <T = EventSubscription>() => T;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface DotSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface DotSubscriptionPayload
-  extends Promise<DotSubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = Dot>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = DotPreviousValues>() => T;
-}
-
-export interface DotSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<DotSubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = DotSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = DotPreviousValuesSubscription>() => T;
-}
-
-export interface HaloEdgeNode {
-  cursor: String;
-}
-
-export interface HaloEdge extends Promise<HaloEdgeNode>, Fragmentable {
-  node: <T = Halo>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface HaloEdgeSubscription
-  extends Promise<AsyncIterator<HaloEdgeNode>>,
-    Fragmentable {
-  node: <T = HaloSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface DotPreviousValuesNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  action: String;
-  amount: Int;
-  total: Int;
-}
-
-export interface DotPreviousValues
-  extends Promise<DotPreviousValuesNode>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  action: () => Promise<String>;
-  amount: () => Promise<Int>;
-  total: () => Promise<Int>;
-}
-
-export interface DotPreviousValuesSubscription
-  extends Promise<AsyncIterator<DotPreviousValuesNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  action: () => Promise<AsyncIterator<String>>;
-  amount: () => Promise<AsyncIterator<Int>>;
-  total: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AggregateEventNode {
-  count: Int;
-}
-
-export interface AggregateEvent
-  extends Promise<AggregateEventNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateEventSubscription
-  extends Promise<AsyncIterator<AggregateEventNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface LoopNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  count: Int;
-}
-
-export interface Loop extends Promise<LoopNode>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  count: () => Promise<Int>;
-  event: <T = Event>() => T;
-  user: <T = User>() => T;
-}
-
-export interface LoopSubscription
-  extends Promise<AsyncIterator<LoopNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  count: () => Promise<AsyncIterator<Int>>;
-  event: <T = EventSubscription>() => T;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface EventConnectionNode {}
-
-export interface EventConnection
-  extends Promise<EventConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<EventEdgeNode>>() => T;
-  aggregate: <T = AggregateEvent>() => T;
-}
-
-export interface EventConnectionSubscription
-  extends Promise<AsyncIterator<EventConnectionNode>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<EventEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateEventSubscription>() => T;
-}
-
-export interface EventSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface EventSubscriptionPayload
-  extends Promise<EventSubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = Event>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = EventPreviousValues>() => T;
-}
-
-export interface EventSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<EventSubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = EventSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = EventPreviousValuesSubscription>() => T;
-}
-
-export interface DotEdgeNode {
-  cursor: String;
-}
-
-export interface DotEdge extends Promise<DotEdgeNode>, Fragmentable {
-  node: <T = Dot>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface DotEdgeSubscription
-  extends Promise<AsyncIterator<DotEdgeNode>>,
-    Fragmentable {
-  node: <T = DotSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface EventPreviousValuesNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  endDate: DateTimeOutput;
-  goal: Int;
-  multiplier?: Int;
-  sponsorName?: String;
-  sponsorWebsite?: String;
-  startDate: DateTimeOutput;
-}
-
-export interface EventPreviousValues
-  extends Promise<EventPreviousValuesNode>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  endDate: () => Promise<DateTimeOutput>;
-  goal: () => Promise<Int>;
-  multiplier: () => Promise<Int>;
-  sponsorName: () => Promise<String>;
-  sponsorWebsite: () => Promise<String>;
-  startDate: () => Promise<DateTimeOutput>;
-}
-
-export interface EventPreviousValuesSubscription
-  extends Promise<AsyncIterator<EventPreviousValuesNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  goal: () => Promise<AsyncIterator<Int>>;
-  multiplier: () => Promise<AsyncIterator<Int>>;
-  sponsorName: () => Promise<AsyncIterator<String>>;
-  sponsorWebsite: () => Promise<AsyncIterator<String>>;
-  startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface AggregateCircleNode {
-  count: Int;
-}
-
-export interface AggregateCircle
-  extends Promise<AggregateCircleNode>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCircleSubscription
-  extends Promise<AsyncIterator<AggregateCircleNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface IdentityNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  provider: IdentityProvider;
-  providerID: String;
-}
-
-export interface Identity extends Promise<IdentityNode>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  provider: () => Promise<IdentityProvider>;
-  providerID: () => Promise<String>;
-  user: <T = User>() => T;
-}
-
-export interface IdentitySubscription
-  extends Promise<AsyncIterator<IdentityNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  provider: () => Promise<AsyncIterator<IdentityProvider>>;
-  providerID: () => Promise<AsyncIterator<String>>;
-  user: <T = UserSubscription>() => T;
-}
-
 export interface AggregateTransactionNode {
   count: Int;
 }
@@ -4032,29 +3542,6 @@ export interface AggregateTransactionSubscription
   extends Promise<AsyncIterator<AggregateTransactionNode>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface HaloSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface HaloSubscriptionPayload
-  extends Promise<HaloSubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = Halo>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = HaloPreviousValues>() => T;
-}
-
-export interface HaloSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<HaloSubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = HaloSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = HaloPreviousValuesSubscription>() => T;
 }
 
 export interface SpecialFundraiserEdgeNode {
@@ -4075,421 +3562,22 @@ export interface SpecialFundraiserEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface HaloPreviousValuesNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  key: String;
-}
+export interface TransactionConnectionNode {}
 
-export interface HaloPreviousValues
-  extends Promise<HaloPreviousValuesNode>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  key: () => Promise<String>;
-}
-
-export interface HaloPreviousValuesSubscription
-  extends Promise<AsyncIterator<HaloPreviousValuesNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  key: () => Promise<AsyncIterator<String>>;
-}
-
-export interface PreferencesEdgeNode {
-  cursor: String;
-}
-
-export interface PreferencesEdge
-  extends Promise<PreferencesEdgeNode>,
-    Fragmentable {
-  node: <T = Preferences>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PreferencesEdgeSubscription
-  extends Promise<AsyncIterator<PreferencesEdgeNode>>,
-    Fragmentable {
-  node: <T = PreferencesSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface HaloNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  key: String;
-}
-
-export interface Halo extends Promise<HaloNode>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  key: () => Promise<String>;
-  user: <T = User>() => T;
-}
-
-export interface HaloSubscription
-  extends Promise<AsyncIterator<HaloNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  key: () => Promise<AsyncIterator<String>>;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface LoopEdgeNode {
-  cursor: String;
-}
-
-export interface LoopEdge extends Promise<LoopEdgeNode>, Fragmentable {
-  node: <T = Loop>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface LoopEdgeSubscription
-  extends Promise<AsyncIterator<LoopEdgeNode>>,
-    Fragmentable {
-  node: <T = LoopSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface IdentitySubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface IdentitySubscriptionPayload
-  extends Promise<IdentitySubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = Identity>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = IdentityPreviousValues>() => T;
-}
-
-export interface IdentitySubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<IdentitySubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = IdentitySubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = IdentityPreviousValuesSubscription>() => T;
-}
-
-export interface IdentityConnectionNode {}
-
-export interface IdentityConnection
-  extends Promise<IdentityConnectionNode>,
+export interface TransactionConnection
+  extends Promise<TransactionConnectionNode>,
     Fragmentable {
   pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<IdentityEdgeNode>>() => T;
-  aggregate: <T = AggregateIdentity>() => T;
+  edges: <T = FragmentableArray<TransactionEdgeNode>>() => T;
+  aggregate: <T = AggregateTransaction>() => T;
 }
 
-export interface IdentityConnectionSubscription
-  extends Promise<AsyncIterator<IdentityConnectionNode>>,
+export interface TransactionConnectionSubscription
+  extends Promise<AsyncIterator<TransactionConnectionNode>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<IdentityEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateIdentitySubscription>() => T;
-}
-
-export interface IdentityPreviousValuesNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  provider: IdentityProvider;
-  providerID: String;
-}
-
-export interface IdentityPreviousValues
-  extends Promise<IdentityPreviousValuesNode>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  provider: () => Promise<IdentityProvider>;
-  providerID: () => Promise<String>;
-}
-
-export interface IdentityPreviousValuesSubscription
-  extends Promise<AsyncIterator<IdentityPreviousValuesNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  provider: () => Promise<AsyncIterator<IdentityProvider>>;
-  providerID: () => Promise<AsyncIterator<String>>;
-}
-
-export interface HaloConnectionNode {}
-
-export interface HaloConnection
-  extends Promise<HaloConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<HaloEdgeNode>>() => T;
-  aggregate: <T = AggregateHalo>() => T;
-}
-
-export interface HaloConnectionSubscription
-  extends Promise<AsyncIterator<HaloConnectionNode>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<HaloEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateHaloSubscription>() => T;
-}
-
-export interface UserNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  bio?: String;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: String;
-  securityToken: Int;
-  username: String;
-}
-
-export interface User extends Promise<UserNode>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  bio: () => Promise<String>;
-  email: () => Promise<String>;
-  nameFirst: () => Promise<String>;
-  nameLast: () => Promise<String>;
-  picture: () => Promise<String>;
-  securityToken: () => Promise<Int>;
-  username: () => Promise<String>;
-  circles: <T = FragmentableArray<CircleNode>>(
-    args?: {
-      where?: CircleWhereInput;
-      orderBy?: CircleOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  dots: <T = FragmentableArray<DotNode>>(
-    args?: {
-      where?: DotWhereInput;
-      orderBy?: DotOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  followedCharities: <T = FragmentableArray<CharityNode>>(
-    args?: {
-      where?: CharityWhereInput;
-      orderBy?: CharityOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  halos: <T = FragmentableArray<HaloNode>>(
-    args?: {
-      where?: HaloWhereInput;
-      orderBy?: HaloOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  identity: <T = Identity>() => T;
-  loops: <T = FragmentableArray<LoopNode>>(
-    args?: {
-      where?: LoopWhereInput;
-      orderBy?: LoopOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  preferences: <T = Preferences>() => T;
-  transactions: <T = FragmentableArray<TransactionNode>>(
-    args?: {
-      where?: TransactionWhereInput;
-      orderBy?: TransactionOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<UserNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  bio: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  nameFirst: () => Promise<AsyncIterator<String>>;
-  nameLast: () => Promise<AsyncIterator<String>>;
-  picture: () => Promise<AsyncIterator<String>>;
-  securityToken: () => Promise<AsyncIterator<Int>>;
-  username: () => Promise<AsyncIterator<String>>;
-  circles: <T = Promise<AsyncIterator<CircleSubscription>>>(
-    args?: {
-      where?: CircleWhereInput;
-      orderBy?: CircleOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  dots: <T = Promise<AsyncIterator<DotSubscription>>>(
-    args?: {
-      where?: DotWhereInput;
-      orderBy?: DotOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  followedCharities: <T = Promise<AsyncIterator<CharitySubscription>>>(
-    args?: {
-      where?: CharityWhereInput;
-      orderBy?: CharityOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  halos: <T = Promise<AsyncIterator<HaloSubscription>>>(
-    args?: {
-      where?: HaloWhereInput;
-      orderBy?: HaloOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  identity: <T = IdentitySubscription>() => T;
-  loops: <T = Promise<AsyncIterator<LoopSubscription>>>(
-    args?: {
-      where?: LoopWhereInput;
-      orderBy?: LoopOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  preferences: <T = PreferencesSubscription>() => T;
-  transactions: <T = Promise<AsyncIterator<TransactionSubscription>>>(
-    args?: {
-      where?: TransactionWhereInput;
-      orderBy?: TransactionOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface AggregateDotNode {
-  count: Int;
-}
-
-export interface AggregateDot extends Promise<AggregateDotNode>, Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateDotSubscription
-  extends Promise<AsyncIterator<AggregateDotNode>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface LoopSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
-}
-
-export interface LoopSubscriptionPayload
-  extends Promise<LoopSubscriptionPayloadNode>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = Loop>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = LoopPreviousValues>() => T;
-}
-
-export interface LoopSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<LoopSubscriptionPayloadNode>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = LoopSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = LoopPreviousValuesSubscription>() => T;
-}
-
-export interface UserEdgeNode {
-  cursor: String;
-}
-
-export interface UserEdge extends Promise<UserEdgeNode>, Fragmentable {
-  node: <T = User>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdgeNode>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface LoopPreviousValuesNode {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  count: Int;
-}
-
-export interface LoopPreviousValues
-  extends Promise<LoopPreviousValuesNode>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  count: () => Promise<Int>;
-}
-
-export interface LoopPreviousValuesSubscription
-  extends Promise<AsyncIterator<LoopPreviousValuesNode>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  count: () => Promise<AsyncIterator<Int>>;
+  edges: <T = Promise<AsyncIterator<TransactionEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTransactionSubscription>() => T;
 }
 
 export interface CharityNode {
@@ -4595,6 +3683,788 @@ export interface CharitySubscription
   ) => T;
 }
 
+export interface CharitySubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface CharitySubscriptionPayload
+  extends Promise<CharitySubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = Charity>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CharityPreviousValues>() => T;
+}
+
+export interface CharitySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CharitySubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CharitySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CharityPreviousValuesSubscription>() => T;
+}
+
+export interface PreferencesEdgeNode {
+  cursor: String;
+}
+
+export interface PreferencesEdge
+  extends Promise<PreferencesEdgeNode>,
+    Fragmentable {
+  node: <T = Preferences>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PreferencesEdgeSubscription
+  extends Promise<AsyncIterator<PreferencesEdgeNode>>,
+    Fragmentable {
+  node: <T = PreferencesSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CharityPreviousValuesNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  acronym?: String;
+  bannerCredit?: String;
+  ein: String;
+  expensesAdministrative?: Float;
+  expensesFundraising?: Float;
+  expensesOther?: Float;
+  expensesProgram?: Float;
+  expensesUpdated?: String;
+  location: String;
+  mission: String;
+  name: String;
+  phoneNumber: String;
+  website: String;
+}
+
+export interface CharityPreviousValues
+  extends Promise<CharityPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  acronym: () => Promise<String>;
+  bannerCredit: () => Promise<String>;
+  ein: () => Promise<String>;
+  expensesAdministrative: () => Promise<Float>;
+  expensesFundraising: () => Promise<Float>;
+  expensesOther: () => Promise<Float>;
+  expensesProgram: () => Promise<Float>;
+  expensesUpdated: () => Promise<String>;
+  location: () => Promise<String>;
+  mission: () => Promise<String>;
+  name: () => Promise<String>;
+  phoneNumber: () => Promise<String>;
+  website: () => Promise<String>;
+}
+
+export interface CharityPreviousValuesSubscription
+  extends Promise<AsyncIterator<CharityPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  acronym: () => Promise<AsyncIterator<String>>;
+  bannerCredit: () => Promise<AsyncIterator<String>>;
+  ein: () => Promise<AsyncIterator<String>>;
+  expensesAdministrative: () => Promise<AsyncIterator<Float>>;
+  expensesFundraising: () => Promise<AsyncIterator<Float>>;
+  expensesOther: () => Promise<AsyncIterator<Float>>;
+  expensesProgram: () => Promise<AsyncIterator<Float>>;
+  expensesUpdated: () => Promise<AsyncIterator<String>>;
+  location: () => Promise<AsyncIterator<String>>;
+  mission: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  phoneNumber: () => Promise<AsyncIterator<String>>;
+  website: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface UserSubscriptionPayload
+  extends Promise<UserSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = User>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValues>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface PreferencesNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  allowDonationEmails: Boolean;
+  publicProfile: Boolean;
+}
+
+export interface Preferences extends Promise<PreferencesNode>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  allowDonationEmails: () => Promise<Boolean>;
+  publicProfile: () => Promise<Boolean>;
+  user: <T = User>() => T;
+}
+
+export interface PreferencesSubscription
+  extends Promise<AsyncIterator<PreferencesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  allowDonationEmails: () => Promise<AsyncIterator<Boolean>>;
+  publicProfile: () => Promise<AsyncIterator<Boolean>>;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface LoopEdgeNode {
+  cursor: String;
+}
+
+export interface LoopEdge extends Promise<LoopEdgeNode>, Fragmentable {
+  node: <T = Loop>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface LoopEdgeSubscription
+  extends Promise<AsyncIterator<LoopEdgeNode>>,
+    Fragmentable {
+  node: <T = LoopSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CircleSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface CircleSubscriptionPayload
+  extends Promise<CircleSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = Circle>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CirclePreviousValues>() => T;
+}
+
+export interface CircleSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CircleSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CircleSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CirclePreviousValuesSubscription>() => T;
+}
+
+export interface AggregateIdentityNode {
+  count: Int;
+}
+
+export interface AggregateIdentity
+  extends Promise<AggregateIdentityNode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateIdentitySubscription
+  extends Promise<AsyncIterator<AggregateIdentityNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CirclePreviousValuesNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  description?: String;
+  name: String;
+  open: Boolean;
+}
+
+export interface CirclePreviousValues
+  extends Promise<CirclePreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  name: () => Promise<String>;
+  open: () => Promise<Boolean>;
+}
+
+export interface CirclePreviousValuesSubscription
+  extends Promise<AsyncIterator<CirclePreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  description: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  open: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface IdentityConnectionNode {}
+
+export interface IdentityConnection
+  extends Promise<IdentityConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<IdentityEdgeNode>>() => T;
+  aggregate: <T = AggregateIdentity>() => T;
+}
+
+export interface IdentityConnectionSubscription
+  extends Promise<AsyncIterator<IdentityConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<IdentityEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateIdentitySubscription>() => T;
+}
+
+export interface LoopNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  count: Int;
+}
+
+export interface Loop extends Promise<LoopNode>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  count: () => Promise<Int>;
+  event: <T = Event>() => T;
+  user: <T = User>() => T;
+}
+
+export interface LoopSubscription
+  extends Promise<AsyncIterator<LoopNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  count: () => Promise<AsyncIterator<Int>>;
+  event: <T = EventSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface AggregateHaloNode {
+  count: Int;
+}
+
+export interface AggregateHalo
+  extends Promise<AggregateHaloNode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateHaloSubscription
+  extends Promise<AsyncIterator<AggregateHaloNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface DotSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface DotSubscriptionPayload
+  extends Promise<DotSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = Dot>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = DotPreviousValues>() => T;
+}
+
+export interface DotSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<DotSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = DotSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = DotPreviousValuesSubscription>() => T;
+}
+
+export interface HaloConnectionNode {}
+
+export interface HaloConnection
+  extends Promise<HaloConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<HaloEdgeNode>>() => T;
+  aggregate: <T = AggregateHalo>() => T;
+}
+
+export interface HaloConnectionSubscription
+  extends Promise<AsyncIterator<HaloConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<HaloEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateHaloSubscription>() => T;
+}
+
+export interface DotPreviousValuesNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  action: String;
+  amount: Int;
+  total: Int;
+}
+
+export interface DotPreviousValues
+  extends Promise<DotPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  action: () => Promise<String>;
+  amount: () => Promise<Int>;
+  total: () => Promise<Int>;
+}
+
+export interface DotPreviousValuesSubscription
+  extends Promise<AsyncIterator<DotPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  action: () => Promise<AsyncIterator<String>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  total: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface EventEdgeNode {
+  cursor: String;
+}
+
+export interface EventEdge extends Promise<EventEdgeNode>, Fragmentable {
+  node: <T = Event>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface EventEdgeSubscription
+  extends Promise<AsyncIterator<EventEdgeNode>>,
+    Fragmentable {
+  node: <T = EventSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface IdentityNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  provider: IdentityProvider;
+  providerID: String;
+}
+
+export interface Identity extends Promise<IdentityNode>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  provider: () => Promise<IdentityProvider>;
+  providerID: () => Promise<String>;
+  user: <T = User>() => T;
+}
+
+export interface IdentitySubscription
+  extends Promise<AsyncIterator<IdentityNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  provider: () => Promise<AsyncIterator<IdentityProvider>>;
+  providerID: () => Promise<AsyncIterator<String>>;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface AggregateDotNode {
+  count: Int;
+}
+
+export interface AggregateDot extends Promise<AggregateDotNode>, Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateDotSubscription
+  extends Promise<AsyncIterator<AggregateDotNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface EventSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface EventSubscriptionPayload
+  extends Promise<EventSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = Event>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = EventPreviousValues>() => T;
+}
+
+export interface EventSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<EventSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = EventSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = EventPreviousValuesSubscription>() => T;
+}
+
+export interface DotConnectionNode {}
+
+export interface DotConnection
+  extends Promise<DotConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<DotEdgeNode>>() => T;
+  aggregate: <T = AggregateDot>() => T;
+}
+
+export interface DotConnectionSubscription
+  extends Promise<AsyncIterator<DotConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<DotEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateDotSubscription>() => T;
+}
+
+export interface EventPreviousValuesNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  endDate: DateTimeOutput;
+  goal: Int;
+  multiplier?: Int;
+  sponsorName?: String;
+  sponsorWebsite?: String;
+  startDate: DateTimeOutput;
+}
+
+export interface EventPreviousValues
+  extends Promise<EventPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  endDate: () => Promise<DateTimeOutput>;
+  goal: () => Promise<Int>;
+  multiplier: () => Promise<Int>;
+  sponsorName: () => Promise<String>;
+  sponsorWebsite: () => Promise<String>;
+  startDate: () => Promise<DateTimeOutput>;
+}
+
+export interface EventPreviousValuesSubscription
+  extends Promise<AsyncIterator<EventPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+  goal: () => Promise<AsyncIterator<Int>>;
+  multiplier: () => Promise<AsyncIterator<Int>>;
+  sponsorName: () => Promise<AsyncIterator<String>>;
+  sponsorWebsite: () => Promise<AsyncIterator<String>>;
+  startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface CircleEdgeNode {
+  cursor: String;
+}
+
+export interface CircleEdge extends Promise<CircleEdgeNode>, Fragmentable {
+  node: <T = Circle>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CircleEdgeSubscription
+  extends Promise<AsyncIterator<CircleEdgeNode>>,
+    Fragmentable {
+  node: <T = CircleSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface HaloNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  key: String;
+}
+
+export interface Halo extends Promise<HaloNode>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  key: () => Promise<String>;
+  user: <T = User>() => T;
+}
+
+export interface HaloSubscription
+  extends Promise<AsyncIterator<HaloNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  key: () => Promise<AsyncIterator<String>>;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface BatchPayloadNode {
+  count: Long;
+}
+
+export interface BatchPayload extends Promise<BatchPayloadNode>, Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayloadNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface HaloSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface HaloSubscriptionPayload
+  extends Promise<HaloSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = Halo>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = HaloPreviousValues>() => T;
+}
+
+export interface HaloSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<HaloSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = HaloSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = HaloPreviousValuesSubscription>() => T;
+}
+
+export interface SpecialFundraiserConnectionNode {}
+
+export interface SpecialFundraiserConnection
+  extends Promise<SpecialFundraiserConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<SpecialFundraiserEdgeNode>>() => T;
+  aggregate: <T = AggregateSpecialFundraiser>() => T;
+}
+
+export interface SpecialFundraiserConnectionSubscription
+  extends Promise<AsyncIterator<SpecialFundraiserConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SpecialFundraiserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSpecialFundraiserSubscription>() => T;
+}
+
+export interface HaloPreviousValuesNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  key: String;
+}
+
+export interface HaloPreviousValues
+  extends Promise<HaloPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  key: () => Promise<String>;
+}
+
+export interface HaloPreviousValuesSubscription
+  extends Promise<AsyncIterator<HaloPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  key: () => Promise<AsyncIterator<String>>;
+}
+
+export interface PreferencesConnectionNode {}
+
+export interface PreferencesConnection
+  extends Promise<PreferencesConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<PreferencesEdgeNode>>() => T;
+  aggregate: <T = AggregatePreferences>() => T;
+}
+
+export interface PreferencesConnectionSubscription
+  extends Promise<AsyncIterator<PreferencesConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PreferencesEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePreferencesSubscription>() => T;
+}
+
+export interface TransactionSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface TransactionSubscriptionPayload
+  extends Promise<TransactionSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = Transaction>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TransactionPreviousValues>() => T;
+}
+
+export interface TransactionSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TransactionSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TransactionSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TransactionPreviousValuesSubscription>() => T;
+}
+
+export interface LoopConnectionNode {}
+
+export interface LoopConnection
+  extends Promise<LoopConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<LoopEdgeNode>>() => T;
+  aggregate: <T = AggregateLoop>() => T;
+}
+
+export interface LoopConnectionSubscription
+  extends Promise<AsyncIterator<LoopConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<LoopEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateLoopSubscription>() => T;
+}
+
+export interface IdentitySubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface IdentitySubscriptionPayload
+  extends Promise<IdentitySubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = Identity>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = IdentityPreviousValues>() => T;
+}
+
+export interface IdentitySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<IdentitySubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = IdentitySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = IdentityPreviousValuesSubscription>() => T;
+}
+
+export interface TransactionNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  amount: Int;
+  balance: Int;
+  key: String;
+  stripeID?: String;
+  type: TransactionType;
+}
+
+export interface Transaction extends Promise<TransactionNode>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  amount: () => Promise<Int>;
+  balance: () => Promise<Int>;
+  key: () => Promise<String>;
+  stripeID: () => Promise<String>;
+  type: () => Promise<TransactionType>;
+  event: <T = Event>() => T;
+  user: <T = User>() => T;
+}
+
+export interface TransactionSubscription
+  extends Promise<AsyncIterator<TransactionNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  balance: () => Promise<AsyncIterator<Int>>;
+  key: () => Promise<AsyncIterator<String>>;
+  stripeID: () => Promise<AsyncIterator<String>>;
+  type: () => Promise<AsyncIterator<TransactionType>>;
+  event: <T = EventSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface IdentityPreviousValuesNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  provider: IdentityProvider;
+  providerID: String;
+}
+
+export interface IdentityPreviousValues
+  extends Promise<IdentityPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  provider: () => Promise<IdentityProvider>;
+  providerID: () => Promise<String>;
+}
+
+export interface IdentityPreviousValuesSubscription
+  extends Promise<AsyncIterator<IdentityPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  provider: () => Promise<AsyncIterator<IdentityProvider>>;
+  providerID: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateEventNode {
+  count: Int;
+}
+
+export interface AggregateEvent
+  extends Promise<AggregateEventNode>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateEventSubscription
+  extends Promise<AsyncIterator<AggregateEventNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface DotNode {
   id: ID_Output;
   createdAt: DateTimeOutput;
@@ -4623,36 +4493,186 @@ export interface DotSubscription
   user: <T = UserSubscription>() => T;
 }
 
-export interface AggregateIdentityNode {
+export interface DotEdgeNode {
+  cursor: String;
+}
+
+export interface DotEdge extends Promise<DotEdgeNode>, Fragmentable {
+  node: <T = Dot>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface DotEdgeSubscription
+  extends Promise<AsyncIterator<DotEdgeNode>>,
+    Fragmentable {
+  node: <T = DotSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface LoopSubscriptionPayloadNode {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface LoopSubscriptionPayload
+  extends Promise<LoopSubscriptionPayloadNode>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = Loop>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = LoopPreviousValues>() => T;
+}
+
+export interface LoopSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<LoopSubscriptionPayloadNode>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = LoopSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = LoopPreviousValuesSubscription>() => T;
+}
+
+export interface CircleConnectionNode {}
+
+export interface CircleConnection
+  extends Promise<CircleConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<CircleEdgeNode>>() => T;
+  aggregate: <T = AggregateCircle>() => T;
+}
+
+export interface CircleConnectionSubscription
+  extends Promise<AsyncIterator<CircleConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CircleEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCircleSubscription>() => T;
+}
+
+export interface LoopPreviousValuesNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
   count: Int;
 }
 
-export interface AggregateIdentity
-  extends Promise<AggregateIdentityNode>,
+export interface LoopPreviousValues
+  extends Promise<LoopPreviousValuesNode>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  count: () => Promise<Int>;
+}
+
+export interface LoopPreviousValuesSubscription
+  extends Promise<AsyncIterator<LoopPreviousValuesNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AggregatePreferencesNode {
+  count: Int;
+}
+
+export interface AggregatePreferences
+  extends Promise<AggregatePreferencesNode>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateIdentitySubscription
-  extends Promise<AsyncIterator<AggregateIdentityNode>>,
+export interface AggregatePreferencesSubscription
+  extends Promise<AsyncIterator<AggregatePreferencesNode>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface EventEdgeNode {
+export interface CircleNode {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  description?: String;
+  name: String;
+  open: Boolean;
+}
+
+export interface Circle extends Promise<CircleNode>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  name: () => Promise<String>;
+  open: () => Promise<Boolean>;
+  owner: <T = User>() => T;
+  users: <T = FragmentableArray<UserNode>>(
+    args?: {
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface CircleSubscription
+  extends Promise<AsyncIterator<CircleNode>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  description: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  open: () => Promise<AsyncIterator<Boolean>>;
+  owner: <T = UserSubscription>() => T;
+  users: <T = Promise<AsyncIterator<UserSubscription>>>(
+    args?: {
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface IdentityEdgeNode {
   cursor: String;
 }
 
-export interface EventEdge extends Promise<EventEdgeNode>, Fragmentable {
-  node: <T = Event>() => T;
+export interface IdentityEdge extends Promise<IdentityEdgeNode>, Fragmentable {
+  node: <T = Identity>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface EventEdgeSubscription
-  extends Promise<AsyncIterator<EventEdgeNode>>,
+export interface IdentityEdgeSubscription
+  extends Promise<AsyncIterator<IdentityEdgeNode>>,
     Fragmentable {
-  node: <T = EventSubscription>() => T;
+  node: <T = IdentitySubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface EventConnectionNode {}
+
+export interface EventConnection
+  extends Promise<EventConnectionNode>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<EventEdgeNode>>() => T;
+  aggregate: <T = AggregateEvent>() => T;
+}
+
+export interface EventConnectionSubscription
+  extends Promise<AsyncIterator<EventConnectionNode>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<EventEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateEventSubscription>() => T;
 }
 
 export interface SpecialFundraiserSubscriptionPayloadNode {
@@ -4678,24 +4698,102 @@ export interface SpecialFundraiserSubscriptionPayloadSubscription
   previousValues: <T = SpecialFundraiserPreviousValuesSubscription>() => T;
 }
 
-export interface CircleNode {
+export interface UserNode {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  description?: String;
-  name: String;
+  bio?: String;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: String;
+  securityToken: Int;
+  username: String;
 }
 
-export interface Circle extends Promise<CircleNode>, Fragmentable {
+export interface User extends Promise<UserNode>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
-  name: () => Promise<String>;
-  users: <T = FragmentableArray<UserNode>>(
+  bio: () => Promise<String>;
+  email: () => Promise<String>;
+  nameFirst: () => Promise<String>;
+  nameLast: () => Promise<String>;
+  picture: () => Promise<String>;
+  securityToken: () => Promise<Int>;
+  username: () => Promise<String>;
+  circles: <T = FragmentableArray<CircleNode>>(
     args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
+      where?: CircleWhereInput;
+      orderBy?: CircleOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  circlesOwned: <T = FragmentableArray<CircleNode>>(
+    args?: {
+      where?: CircleWhereInput;
+      orderBy?: CircleOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  dots: <T = FragmentableArray<DotNode>>(
+    args?: {
+      where?: DotWhereInput;
+      orderBy?: DotOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  followedCharities: <T = FragmentableArray<CharityNode>>(
+    args?: {
+      where?: CharityWhereInput;
+      orderBy?: CharityOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  halos: <T = FragmentableArray<HaloNode>>(
+    args?: {
+      where?: HaloWhereInput;
+      orderBy?: HaloOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  identity: <T = Identity>() => T;
+  loops: <T = FragmentableArray<LoopNode>>(
+    args?: {
+      where?: LoopWhereInput;
+      orderBy?: LoopOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  preferences: <T = Preferences>() => T;
+  transactions: <T = FragmentableArray<TransactionNode>>(
+    args?: {
+      where?: TransactionWhereInput;
+      orderBy?: TransactionOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -4705,18 +4803,91 @@ export interface Circle extends Promise<CircleNode>, Fragmentable {
   ) => T;
 }
 
-export interface CircleSubscription
-  extends Promise<AsyncIterator<CircleNode>>,
+export interface UserSubscription
+  extends Promise<AsyncIterator<UserNode>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  description: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  users: <T = Promise<AsyncIterator<UserSubscription>>>(
+  bio: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  nameFirst: () => Promise<AsyncIterator<String>>;
+  nameLast: () => Promise<AsyncIterator<String>>;
+  picture: () => Promise<AsyncIterator<String>>;
+  securityToken: () => Promise<AsyncIterator<Int>>;
+  username: () => Promise<AsyncIterator<String>>;
+  circles: <T = Promise<AsyncIterator<CircleSubscription>>>(
     args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
+      where?: CircleWhereInput;
+      orderBy?: CircleOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  circlesOwned: <T = Promise<AsyncIterator<CircleSubscription>>>(
+    args?: {
+      where?: CircleWhereInput;
+      orderBy?: CircleOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  dots: <T = Promise<AsyncIterator<DotSubscription>>>(
+    args?: {
+      where?: DotWhereInput;
+      orderBy?: DotOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  followedCharities: <T = Promise<AsyncIterator<CharitySubscription>>>(
+    args?: {
+      where?: CharityWhereInput;
+      orderBy?: CharityOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  halos: <T = Promise<AsyncIterator<HaloSubscription>>>(
+    args?: {
+      where?: HaloWhereInput;
+      orderBy?: HaloOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  identity: <T = IdentitySubscription>() => T;
+  loops: <T = Promise<AsyncIterator<LoopSubscription>>>(
+    args?: {
+      where?: LoopWhereInput;
+      orderBy?: LoopOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  preferences: <T = PreferencesSubscription>() => T;
+  transactions: <T = Promise<AsyncIterator<TransactionSubscription>>>(
+    args?: {
+      where?: TransactionWhereInput;
+      orderBy?: TransactionOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -4777,88 +4948,76 @@ export interface PreferencesSubscriptionPayloadSubscription
   previousValues: <T = PreferencesPreviousValuesSubscription>() => T;
 }
 
-export interface DotConnectionNode {}
-
-export interface DotConnection
-  extends Promise<DotConnectionNode>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<DotEdgeNode>>() => T;
-  aggregate: <T = AggregateDot>() => T;
-}
-
-export interface DotConnectionSubscription
-  extends Promise<AsyncIterator<DotConnectionNode>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<DotEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateDotSubscription>() => T;
-}
-
-export interface AggregateHaloNode {
+export interface AggregateCircleNode {
   count: Int;
 }
 
-export interface AggregateHalo
-  extends Promise<AggregateHaloNode>,
+export interface AggregateCircle
+  extends Promise<AggregateCircleNode>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateHaloSubscription
-  extends Promise<AsyncIterator<AggregateHaloNode>>,
+export interface AggregateCircleSubscription
+  extends Promise<AsyncIterator<AggregateCircleNode>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface UserSubscriptionPayloadNode {
-  mutation: MutationType;
-  updatedFields?: String[];
+export interface HaloEdgeNode {
+  cursor: String;
 }
 
-export interface UserSubscriptionPayload
-  extends Promise<UserSubscriptionPayloadNode>,
+export interface HaloEdge extends Promise<HaloEdgeNode>, Fragmentable {
+  node: <T = Halo>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface HaloEdgeSubscription
+  extends Promise<AsyncIterator<HaloEdgeNode>>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = User>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValues>() => T;
+  node: <T = HaloSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayloadNode>>,
+export interface AggregateLoopNode {
+  count: Int;
+}
+
+export interface AggregateLoop
+  extends Promise<AggregateLoopNode>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface TransactionConnectionNode {}
-
-export interface TransactionConnection
-  extends Promise<TransactionConnectionNode>,
+export interface AggregateLoopSubscription
+  extends Promise<AsyncIterator<AggregateLoopNode>>,
     Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<TransactionEdgeNode>>() => T;
-  aggregate: <T = AggregateTransaction>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface TransactionConnectionSubscription
-  extends Promise<AsyncIterator<TransactionConnectionNode>>,
+export interface AggregateSpecialFundraiserNode {
+  count: Int;
+}
+
+export interface AggregateSpecialFundraiser
+  extends Promise<AggregateSpecialFundraiserNode>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TransactionEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTransactionSubscription>() => T;
+  count: () => Promise<Int>;
 }
 
-export type Long = string;
+export interface AggregateSpecialFundraiserSubscription
+  extends Promise<AsyncIterator<AggregateSpecialFundraiserNode>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
 
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type String = string;
+
+export type Long = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -4876,19 +5035,20 @@ The `Float` scalar type represents signed double-precision fractional values as 
 export type Float = number;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
-export type Boolean = boolean;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 /**
  * Type Defs

@@ -11,7 +11,8 @@ type User {
   securityToken: Int!
   username: String! @unique
 
-  circles: [Circle!]!
+  circles: [Circle!]! @relation(name: "UserCircles")
+  circlesOwned: [Circle!]! @relation(name: "UserOwnedCircles")
   dots: [Dot!]! @relation(name: "UserDots", onDelete: CASCADE)
   followedCharities: [Charity!]!
   halos: [Halo!]! @relation(name: "UserHalos", onDelete: CASCADE)
@@ -80,8 +81,10 @@ type Circle {
 
   description: String
   name: String!
+  open: Boolean! @default(value: "true")
 
-  users: [User!]!
+  owner: User! @relation(name: "UserOwnedCircles")
+  users: [User!]! @relation(name: "UserCircles")
 }
 
 type Charity {

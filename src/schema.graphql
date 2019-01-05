@@ -6,6 +6,7 @@ type Mutation {
   addFunds(amount: Int!, token: String!): addFundsPayload
   charitySuggestion(ein: String, email: String!, name: String!, representative: Boolean, url: String): Boolean
   contactMessage(email: String!, message: String!, name: String!): Boolean
+  createCircle(description: String, name: String!, open: Boolean): Boolean
   donation(amount: Int!, events: [ID!]): donationPayload
   flipFollowedCharity(ein: String!, unfollow: Boolean): Boolean
   signin(provider: String!, token: String!): signinPayload!

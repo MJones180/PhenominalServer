@@ -510,6 +510,8 @@ type Circle {
   updatedAt: DateTime!
   description: String
   name: String!
+  open: Boolean!
+  owner: User!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
@@ -522,7 +524,14 @@ type CircleConnection {
 input CircleCreateInput {
   description: String
   name: String!
+  open: Boolean
+  owner: UserCreateOneWithoutCirclesOwnedInput!
   users: UserCreateManyWithoutCirclesInput
+}
+
+input CircleCreateManyWithoutOwnerInput {
+  create: [CircleCreateWithoutOwnerInput!]
+  connect: [CircleWhereUniqueInput!]
 }
 
 input CircleCreateManyWithoutUsersInput {
@@ -530,9 +539,18 @@ input CircleCreateManyWithoutUsersInput {
   connect: [CircleWhereUniqueInput!]
 }
 
+input CircleCreateWithoutOwnerInput {
+  description: String
+  name: String!
+  open: Boolean
+  users: UserCreateManyWithoutCirclesInput
+}
+
 input CircleCreateWithoutUsersInput {
   description: String
   name: String!
+  open: Boolean
+  owner: UserCreateOneWithoutCirclesOwnedInput!
 }
 
 type CircleEdge {
@@ -551,6 +569,8 @@ enum CircleOrderByInput {
   description_DESC
   name_ASC
   name_DESC
+  open_ASC
+  open_DESC
 }
 
 type CirclePreviousValues {
@@ -559,6 +579,7 @@ type CirclePreviousValues {
   updatedAt: DateTime!
   description: String
   name: String!
+  open: Boolean!
 }
 
 type CircleSubscriptionPayload {
@@ -582,7 +603,18 @@ input CircleSubscriptionWhereInput {
 input CircleUpdateInput {
   description: String
   name: String
+  open: Boolean
+  owner: UserUpdateOneRequiredWithoutCirclesOwnedInput
   users: UserUpdateManyWithoutCirclesInput
+}
+
+input CircleUpdateManyWithoutOwnerInput {
+  create: [CircleCreateWithoutOwnerInput!]
+  delete: [CircleWhereUniqueInput!]
+  connect: [CircleWhereUniqueInput!]
+  disconnect: [CircleWhereUniqueInput!]
+  update: [CircleUpdateWithWhereUniqueWithoutOwnerInput!]
+  upsert: [CircleUpsertWithWhereUniqueWithoutOwnerInput!]
 }
 
 input CircleUpdateManyWithoutUsersInput {
@@ -594,14 +626,34 @@ input CircleUpdateManyWithoutUsersInput {
   upsert: [CircleUpsertWithWhereUniqueWithoutUsersInput!]
 }
 
+input CircleUpdateWithoutOwnerDataInput {
+  description: String
+  name: String
+  open: Boolean
+  users: UserUpdateManyWithoutCirclesInput
+}
+
 input CircleUpdateWithoutUsersDataInput {
   description: String
   name: String
+  open: Boolean
+  owner: UserUpdateOneRequiredWithoutCirclesOwnedInput
+}
+
+input CircleUpdateWithWhereUniqueWithoutOwnerInput {
+  where: CircleWhereUniqueInput!
+  data: CircleUpdateWithoutOwnerDataInput!
 }
 
 input CircleUpdateWithWhereUniqueWithoutUsersInput {
   where: CircleWhereUniqueInput!
   data: CircleUpdateWithoutUsersDataInput!
+}
+
+input CircleUpsertWithWhereUniqueWithoutOwnerInput {
+  where: CircleWhereUniqueInput!
+  update: CircleUpdateWithoutOwnerDataInput!
+  create: CircleCreateWithoutOwnerInput!
 }
 
 input CircleUpsertWithWhereUniqueWithoutUsersInput {
@@ -669,6 +721,9 @@ input CircleWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  open: Boolean
+  open_not: Boolean
+  owner: UserWhereInput
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput
@@ -2396,6 +2451,7 @@ type User {
   securityToken: Int!
   username: String!
   circles(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle!]
+  circlesOwned(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle!]
   dots(where: DotWhereInput, orderBy: DotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dot!]
   followedCharities(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charity!]
   halos(where: HaloWhereInput, orderBy: HaloOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Halo!]
@@ -2420,6 +2476,7 @@ input UserCreateInput {
   securityToken: Int!
   username: String!
   circles: CircleCreateManyWithoutUsersInput
+  circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
@@ -2437,6 +2494,11 @@ input UserCreateManyWithoutCirclesInput {
 input UserCreateManyWithoutFollowedCharitiesInput {
   create: [UserCreateWithoutFollowedCharitiesInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneWithoutCirclesOwnedInput {
+  create: UserCreateWithoutCirclesOwnedInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutDotsInput {
@@ -2477,6 +2539,25 @@ input UserCreateWithoutCirclesInput {
   picture: String
   securityToken: Int!
   username: String!
+  circlesOwned: CircleCreateManyWithoutOwnerInput
+  dots: DotCreateManyWithoutUserInput
+  followedCharities: CharityCreateManyWithoutFollowersInput
+  halos: HaloCreateManyWithoutUserInput
+  identity: IdentityCreateOneWithoutUserInput!
+  loops: LoopCreateManyWithoutUserInput
+  preferences: PreferencesCreateOneWithoutUserInput!
+  transactions: TransactionCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutCirclesOwnedInput {
+  bio: String
+  email: String!
+  nameFirst: String!
+  nameLast: String!
+  picture: String
+  securityToken: Int!
+  username: String!
+  circles: CircleCreateManyWithoutUsersInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
@@ -2495,6 +2576,7 @@ input UserCreateWithoutDotsInput {
   securityToken: Int!
   username: String!
   circles: CircleCreateManyWithoutUsersInput
+  circlesOwned: CircleCreateManyWithoutOwnerInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -2512,6 +2594,7 @@ input UserCreateWithoutFollowedCharitiesInput {
   securityToken: Int!
   username: String!
   circles: CircleCreateManyWithoutUsersInput
+  circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -2529,6 +2612,7 @@ input UserCreateWithoutHalosInput {
   securityToken: Int!
   username: String!
   circles: CircleCreateManyWithoutUsersInput
+  circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -2546,6 +2630,7 @@ input UserCreateWithoutIdentityInput {
   securityToken: Int!
   username: String!
   circles: CircleCreateManyWithoutUsersInput
+  circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
@@ -2563,6 +2648,7 @@ input UserCreateWithoutLoopsInput {
   securityToken: Int!
   username: String!
   circles: CircleCreateManyWithoutUsersInput
+  circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
@@ -2580,6 +2666,7 @@ input UserCreateWithoutPreferencesInput {
   securityToken: Int!
   username: String!
   circles: CircleCreateManyWithoutUsersInput
+  circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
@@ -2597,6 +2684,7 @@ input UserCreateWithoutTransactionsInput {
   securityToken: Int!
   username: String!
   circles: CircleCreateManyWithoutUsersInput
+  circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
@@ -2673,6 +2761,7 @@ input UserUpdateInput {
   securityToken: Int
   username: String
   circles: CircleUpdateManyWithoutUsersInput
+  circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
@@ -2698,6 +2787,13 @@ input UserUpdateManyWithoutFollowedCharitiesInput {
   disconnect: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput!]
   upsert: [UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput!]
+}
+
+input UserUpdateOneRequiredWithoutCirclesOwnedInput {
+  create: UserCreateWithoutCirclesOwnedInput
+  update: UserUpdateWithoutCirclesOwnedDataInput
+  upsert: UserUpsertWithoutCirclesOwnedInput
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneRequiredWithoutDotsInput {
@@ -2750,6 +2846,25 @@ input UserUpdateWithoutCirclesDataInput {
   picture: String
   securityToken: Int
   username: String
+  circlesOwned: CircleUpdateManyWithoutOwnerInput
+  dots: DotUpdateManyWithoutUserInput
+  followedCharities: CharityUpdateManyWithoutFollowersInput
+  halos: HaloUpdateManyWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  loops: LoopUpdateManyWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutCirclesOwnedDataInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+  circles: CircleUpdateManyWithoutUsersInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
@@ -2768,6 +2883,7 @@ input UserUpdateWithoutDotsDataInput {
   securityToken: Int
   username: String
   circles: CircleUpdateManyWithoutUsersInput
+  circlesOwned: CircleUpdateManyWithoutOwnerInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -2785,6 +2901,7 @@ input UserUpdateWithoutFollowedCharitiesDataInput {
   securityToken: Int
   username: String
   circles: CircleUpdateManyWithoutUsersInput
+  circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -2802,6 +2919,7 @@ input UserUpdateWithoutHalosDataInput {
   securityToken: Int
   username: String
   circles: CircleUpdateManyWithoutUsersInput
+  circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -2819,6 +2937,7 @@ input UserUpdateWithoutIdentityDataInput {
   securityToken: Int
   username: String
   circles: CircleUpdateManyWithoutUsersInput
+  circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
@@ -2836,6 +2955,7 @@ input UserUpdateWithoutLoopsDataInput {
   securityToken: Int
   username: String
   circles: CircleUpdateManyWithoutUsersInput
+  circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
@@ -2853,6 +2973,7 @@ input UserUpdateWithoutPreferencesDataInput {
   securityToken: Int
   username: String
   circles: CircleUpdateManyWithoutUsersInput
+  circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
@@ -2870,6 +2991,7 @@ input UserUpdateWithoutTransactionsDataInput {
   securityToken: Int
   username: String
   circles: CircleUpdateManyWithoutUsersInput
+  circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
@@ -2886,6 +3008,11 @@ input UserUpdateWithWhereUniqueWithoutCirclesInput {
 input UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutFollowedCharitiesDataInput!
+}
+
+input UserUpsertWithoutCirclesOwnedInput {
+  update: UserUpdateWithoutCirclesOwnedDataInput!
+  create: UserCreateWithoutCirclesOwnedInput!
 }
 
 input UserUpsertWithoutDotsInput {
@@ -3056,6 +3183,9 @@ input UserWhereInput {
   circles_every: CircleWhereInput
   circles_some: CircleWhereInput
   circles_none: CircleWhereInput
+  circlesOwned_every: CircleWhereInput
+  circlesOwned_some: CircleWhereInput
+  circlesOwned_none: CircleWhereInput
   dots_every: DotWhereInput
   dots_some: DotWhereInput
   dots_none: DotWhereInput
