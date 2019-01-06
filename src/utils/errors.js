@@ -7,6 +7,9 @@ module.exports = {
   InsufficientFunds: createError('InsufficientFunds', {
     message: 'Insufficient funds to process the requested donations.',
   }),
+  InvalidCircleData: createError('InvalidCircleData', {
+    message: 'Data passed to create/update the Circle is invalid.',
+  }),
   InvalidUser: createError('InvalidUser', {
     message: 'The authToken contains either a non-existant user or an invalid securityToken.',
   }),
