@@ -4,6 +4,7 @@ const _ = require('lodash');
 // All of the fields to forward
 const fields = [
   'user', 'users', 'usersConnection',
+  'circle', 'circles', 'circlesConnection',
   'charity', 'charities', 'charitiesConnection',
   'event', 'events', 'eventsConnection',
   'transaction', 'transactions', 'transactionsConnection',
