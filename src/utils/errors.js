@@ -1,6 +1,9 @@
 const { createError } = require('apollo-errors');
 
 module.exports = {
+  CircleNameExists: createError('CircleNameExists', {
+    message: 'The requested Circle name already exists.',
+  }),
   CorruptAuthToken: createError('CorruptAuthToken', {
     message: 'The sent authToken has been corrupted.',
   }),

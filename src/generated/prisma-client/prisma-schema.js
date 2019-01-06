@@ -734,6 +734,7 @@ input CircleWhereInput {
 
 input CircleWhereUniqueInput {
   id: ID
+  name: String
 }
 
 scalar DateTime

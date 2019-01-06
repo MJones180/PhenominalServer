@@ -1244,6 +1244,7 @@ export interface EventCreateWithoutDonationsInput {
 
 export type CircleWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
+  name?: String;
 }>;
 
 export interface CharityUpdateInput {

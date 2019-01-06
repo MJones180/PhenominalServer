@@ -80,7 +80,7 @@ type Circle {
   updatedAt: DateTime!
 
   description: String
-  name: String!
+  name: String! @unique
   open: Boolean! @default(value: "true")
 
   owner: User! @relation(name: "UserOwnedCircles")
