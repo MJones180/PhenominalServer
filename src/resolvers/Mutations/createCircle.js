@@ -32,10 +32,10 @@ module.exports = async (parent, params, ctx) => {
     description,
     name,
     open,
-    owner: {
+    members: {
       connect: { id },
     },
-    users: {
+    owner: {
       connect: { id },
     },
   });

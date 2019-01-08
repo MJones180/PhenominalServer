@@ -8,7 +8,8 @@ type Mutation {
   contactMessage(email: String!, message: String!, name: String!): Boolean
   createCircle(description: String, name: String!, open: Boolean): ID
   donation(amount: Int!, events: [ID!]): donationPayload
-  followCharity(ein: String!, unfollow: Boolean): Boolean
+  setFollowCharityRelation(ein: String!, unfollow: Boolean): Boolean
+  setCircleRelation(id: ID!, leave: Boolean): String
   signin(provider: String!, token: String!): signinPayload!
   updateUser(bio: String, email: String, nameFirst: String, nameLast: String, username: String, allowDonationEmails: Boolean, publicProfile: Boolean, securityToken: Boolean): Boolean
   updateUserPicture(picture: Upload!): Boolean
