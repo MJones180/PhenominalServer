@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/michael-jones/phenominal/dev
-# timestamp: Mon Jan 07 2019 12:51:45 GMT-0500 (Eastern Standard Time)
+# timestamp: Thu Jan 10 2019 15:39:44 GMT-0500 (Eastern Standard Time)
 
 type AggregateCharity {
   count: Int!
@@ -845,6 +845,7 @@ input CharityUpdateManyMutationInput {
 input CharityUpdateManyWithoutFollowersInput {
   create: [CharityCreateWithoutFollowersInput!]
   connect: [CharityWhereUniqueInput!]
+  set: [CharityWhereUniqueInput!]
   disconnect: [CharityWhereUniqueInput!]
   delete: [CharityWhereUniqueInput!]
   update: [CharityUpdateWithWhereUniqueWithoutFollowersInput!]
@@ -1757,6 +1758,7 @@ input CircleJoinRequestUpdateInput {
 input CircleJoinRequestUpdateManyWithoutCircleInput {
   create: [CircleJoinRequestCreateWithoutCircleInput!]
   connect: [CircleJoinRequestWhereUniqueInput!]
+  set: [CircleJoinRequestWhereUniqueInput!]
   disconnect: [CircleJoinRequestWhereUniqueInput!]
   delete: [CircleJoinRequestWhereUniqueInput!]
   update: [CircleJoinRequestUpdateWithWhereUniqueWithoutCircleInput!]
@@ -1767,6 +1769,7 @@ input CircleJoinRequestUpdateManyWithoutCircleInput {
 input CircleJoinRequestUpdateManyWithoutUserInput {
   create: [CircleJoinRequestCreateWithoutUserInput!]
   connect: [CircleJoinRequestWhereUniqueInput!]
+  set: [CircleJoinRequestWhereUniqueInput!]
   disconnect: [CircleJoinRequestWhereUniqueInput!]
   delete: [CircleJoinRequestWhereUniqueInput!]
   update: [CircleJoinRequestUpdateWithWhereUniqueWithoutUserInput!]
@@ -2171,6 +2174,7 @@ input CircleUpdateManyMutationInput {
 input CircleUpdateManyWithoutMembersInput {
   create: [CircleCreateWithoutMembersInput!]
   connect: [CircleWhereUniqueInput!]
+  set: [CircleWhereUniqueInput!]
   disconnect: [CircleWhereUniqueInput!]
   delete: [CircleWhereUniqueInput!]
   update: [CircleUpdateWithWhereUniqueWithoutMembersInput!]
@@ -2182,6 +2186,7 @@ input CircleUpdateManyWithoutMembersInput {
 input CircleUpdateManyWithoutOwnerInput {
   create: [CircleCreateWithoutOwnerInput!]
   connect: [CircleWhereUniqueInput!]
+  set: [CircleWhereUniqueInput!]
   disconnect: [CircleWhereUniqueInput!]
   delete: [CircleWhereUniqueInput!]
   update: [CircleUpdateWithWhereUniqueWithoutOwnerInput!]
@@ -2733,6 +2738,7 @@ input DotUpdateManyMutationInput {
 input DotUpdateManyWithoutUserInput {
   create: [DotCreateWithoutUserInput!]
   connect: [DotWhereUniqueInput!]
+  set: [DotWhereUniqueInput!]
   disconnect: [DotWhereUniqueInput!]
   delete: [DotWhereUniqueInput!]
   update: [DotUpdateWithWhereUniqueWithoutUserInput!]
@@ -3404,6 +3410,7 @@ input EventUpdateManyMutationInput {
 input EventUpdateManyWithoutCharityInput {
   create: [EventCreateWithoutCharityInput!]
   connect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
   disconnect: [EventWhereUniqueInput!]
   delete: [EventWhereUniqueInput!]
   update: [EventUpdateWithWhereUniqueWithoutCharityInput!]
@@ -3996,6 +4003,7 @@ input HaloUpdateManyMutationInput {
 input HaloUpdateManyWithoutUserInput {
   create: [HaloCreateWithoutUserInput!]
   connect: [HaloWhereUniqueInput!]
+  set: [HaloWhereUniqueInput!]
   disconnect: [HaloWhereUniqueInput!]
   delete: [HaloWhereUniqueInput!]
   update: [HaloUpdateWithWhereUniqueWithoutUserInput!]
@@ -4647,6 +4655,7 @@ input LoopUpdateManyMutationInput {
 input LoopUpdateManyWithoutUserInput {
   create: [LoopCreateWithoutUserInput!]
   connect: [LoopWhereUniqueInput!]
+  set: [LoopWhereUniqueInput!]
   disconnect: [LoopWhereUniqueInput!]
   delete: [LoopWhereUniqueInput!]
   update: [LoopUpdateWithWhereUniqueWithoutUserInput!]
@@ -5870,6 +5879,7 @@ input TransactionUpdateManyMutationInput {
 input TransactionUpdateManyWithoutEventInput {
   create: [TransactionCreateWithoutEventInput!]
   connect: [TransactionWhereUniqueInput!]
+  set: [TransactionWhereUniqueInput!]
   disconnect: [TransactionWhereUniqueInput!]
   delete: [TransactionWhereUniqueInput!]
   update: [TransactionUpdateWithWhereUniqueWithoutEventInput!]
@@ -5881,6 +5891,7 @@ input TransactionUpdateManyWithoutEventInput {
 input TransactionUpdateManyWithoutUserInput {
   create: [TransactionCreateWithoutUserInput!]
   connect: [TransactionWhereUniqueInput!]
+  set: [TransactionWhereUniqueInput!]
   disconnect: [TransactionWhereUniqueInput!]
   delete: [TransactionWhereUniqueInput!]
   update: [TransactionUpdateWithWhereUniqueWithoutUserInput!]
@@ -6925,6 +6936,7 @@ input UserUpdateManyMutationInput {
 input UserUpdateManyWithoutCirclesInput {
   create: [UserCreateWithoutCirclesInput!]
   connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   delete: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutCirclesInput!]
@@ -6936,6 +6948,7 @@ input UserUpdateManyWithoutCirclesInput {
 input UserUpdateManyWithoutFollowedCharitiesInput {
   create: [UserCreateWithoutFollowedCharitiesInput!]
   connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   delete: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput!]

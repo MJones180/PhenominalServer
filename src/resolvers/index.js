@@ -2,10 +2,12 @@ const addFunds = require('./Mutations/addFunds');
 const charitySuggestion = require('./Mutations/charitySuggestion');
 const contactMessage = require('./Mutations/contactMessage');
 const createCircle = require('./Mutations/createCircle');
+const disbandCircle = require('./Mutations/disbandCircle');
 const donation = require('./Mutations/donation');
 const setFollowCharityRelation = require('./Mutations/setFollowCharityRelation');
 const setCircleRelation = require('./Mutations/setCircleRelation');
 const signin = require('./Mutations/signin');
+const updateCircle = require('./Mutations/updateCircle');
 const updateUser = require('./Mutations/updateUser');
 const updateUserPicture = require('./Mutations/updateUserPicture');
 
@@ -23,10 +25,12 @@ module.exports = {
     charitySuggestion,
     contactMessage,
     createCircle,
+    disbandCircle,
     donation,
     setFollowCharityRelation,
     setCircleRelation,
     signin,
+    updateCircle,
     updateUser,
     updateUserPicture,
   },

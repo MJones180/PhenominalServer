@@ -7,10 +7,12 @@ type Mutation {
   charitySuggestion(ein: String, email: String!, name: String!, representative: Boolean, url: String): Boolean
   contactMessage(email: String!, message: String!, name: String!): Boolean
   createCircle(description: String, name: String!, open: Boolean): ID
+  disbandCircle(id: ID!): Boolean
   donation(amount: Int!, events: [ID!]): donationPayload
   setFollowCharityRelation(ein: String!, unfollow: Boolean): Boolean
   setCircleRelation(id: ID!, leave: Boolean): String
   signin(provider: String!, token: String!): signinPayload!
+  updateCircle(id: ID!, description: String, open: Boolean): Boolean
   updateUser(bio: String, email: String, nameFirst: String, nameLast: String, username: String, allowDonationEmails: Boolean, publicProfile: Boolean, securityToken: Boolean): Boolean
   updateUserPicture(picture: Upload!): Boolean
 }

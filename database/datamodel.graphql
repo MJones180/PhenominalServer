@@ -84,7 +84,7 @@ type Circle {
   name: String! @unique
   open: Boolean! @default(value: "true")
 
-  joinRequests: [CircleJoinRequest!]!
+  joinRequests: [CircleJoinRequest!]! @relation(name: "CircleJoinRequests", onDelete: CASCADE)
   members: [User!]! @relation(name: "UserCircles")
   owner: User! @relation(name: "UserOwnedCircles")
 }
@@ -94,7 +94,7 @@ type CircleJoinRequest {
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  circle: Circle!
+  circle: Circle! @relation(name: "CircleJoinRequests")
   user: User!
 }
 
