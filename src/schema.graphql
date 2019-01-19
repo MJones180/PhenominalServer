@@ -9,6 +9,7 @@ type Mutation {
   createCircle(description: String, name: String!, open: Boolean): ID
   disbandCircle(id: ID!): Boolean
   donation(amount: Int!, events: [ID!]): donationPayload
+  handleCircleInvite(id: ID!, join: Boolean!): Boolean
   handleCircleRequest(id: ID!, username: String!, accept: Boolean!): Boolean
   inviteCircleMember(id: ID!, username: String!): Boolean
   kickCircleMember(id: ID!, username: String!): Boolean

@@ -10,6 +10,20 @@ module.exports = async (parent, { id: circleID, description, open }, ctx) => {
   // Ensure the user is trying to edit their own Circle
   if (circleOwnerID != userID) return;
 
+  if (open) {
+    // Check if the Circle is already open
+    const { open: alreadyOpen } = await ctx.client.circle({ id: circleID });
+    // Circle was just turned to open
+    if (open != alreadyOpen) {
+      // Delete the join requests
+      await ctx.client.deleteManyCircleJoinRequests({
+        circle: {
+          id: circleID,
+        },
+      });
+    }
+  }
+
   // Description is no more than 250 characters
   if (description && trim(description).length > 250) {
     throw new ctx.utils.errors.InvalidCircleData();
