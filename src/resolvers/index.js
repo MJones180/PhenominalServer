@@ -4,6 +4,7 @@ const contactMessage = require('./Mutations/contactMessage');
 const createCircle = require('./Mutations/createCircle');
 const disbandCircle = require('./Mutations/disbandCircle');
 const donation = require('./Mutations/donation');
+const kickCircleMember = require('./Mutations/kickCircleMember');
 const setFollowCharityRelation = require('./Mutations/setFollowCharityRelation');
 const setCircleRelation = require('./Mutations/setCircleRelation');
 const signin = require('./Mutations/signin');
@@ -27,6 +28,7 @@ module.exports = {
     createCircle,
     disbandCircle,
     donation,
+    kickCircleMember,
     setFollowCharityRelation,
     setCircleRelation,
     signin,
