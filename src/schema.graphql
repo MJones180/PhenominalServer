@@ -10,6 +10,7 @@ type Mutation {
   disbandCircle(id: ID!): Boolean
   donation(amount: Int!, events: [ID!]): donationPayload
   handleCircleRequest(id: ID!, username: String!, accept: Boolean!): Boolean
+  inviteCircleMember(id: ID!, username: String!): Boolean
   kickCircleMember(id: ID!, username: String!): Boolean
   setFollowCharityRelation(ein: String!, unfollow: Boolean): Boolean
   setCircleRelation(id: ID!, leave: Boolean): String

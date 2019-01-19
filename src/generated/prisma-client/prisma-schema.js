@@ -7,6 +7,10 @@ type AggregateCircle {
   count: Int!
 }
 
+type AggregateCircleInvite {
+  count: Int!
+}
+
 type AggregateCircleJoinRequest {
   count: Int!
 }
@@ -516,6 +520,7 @@ type Circle {
   name: String!
   open: Boolean!
   joinRequests(where: CircleJoinRequestWhereInput, orderBy: CircleJoinRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CircleJoinRequest!]
+  invites(where: CircleInviteWhereInput, orderBy: CircleInviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CircleInvite!]
   members(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   owner: User!
 }
@@ -531,6 +536,7 @@ input CircleCreateInput {
   name: String!
   open: Boolean
   joinRequests: CircleJoinRequestCreateManyWithoutCircleInput
+  invites: CircleInviteCreateManyWithoutCircleInput
   members: UserCreateManyWithoutCirclesInput
   owner: UserCreateOneWithoutCirclesOwnedInput!
 }
@@ -545,15 +551,30 @@ input CircleCreateManyWithoutOwnerInput {
   connect: [CircleWhereUniqueInput!]
 }
 
+input CircleCreateOneWithoutInvitesInput {
+  create: CircleCreateWithoutInvitesInput
+  connect: CircleWhereUniqueInput
+}
+
 input CircleCreateOneWithoutJoinRequestsInput {
   create: CircleCreateWithoutJoinRequestsInput
   connect: CircleWhereUniqueInput
+}
+
+input CircleCreateWithoutInvitesInput {
+  description: String
+  name: String!
+  open: Boolean
+  joinRequests: CircleJoinRequestCreateManyWithoutCircleInput
+  members: UserCreateManyWithoutCirclesInput
+  owner: UserCreateOneWithoutCirclesOwnedInput!
 }
 
 input CircleCreateWithoutJoinRequestsInput {
   description: String
   name: String!
   open: Boolean
+  invites: CircleInviteCreateManyWithoutCircleInput
   members: UserCreateManyWithoutCirclesInput
   owner: UserCreateOneWithoutCirclesOwnedInput!
 }
@@ -563,6 +584,7 @@ input CircleCreateWithoutMembersInput {
   name: String!
   open: Boolean
   joinRequests: CircleJoinRequestCreateManyWithoutCircleInput
+  invites: CircleInviteCreateManyWithoutCircleInput
   owner: UserCreateOneWithoutCirclesOwnedInput!
 }
 
@@ -571,12 +593,183 @@ input CircleCreateWithoutOwnerInput {
   name: String!
   open: Boolean
   joinRequests: CircleJoinRequestCreateManyWithoutCircleInput
+  invites: CircleInviteCreateManyWithoutCircleInput
   members: UserCreateManyWithoutCirclesInput
 }
 
 type CircleEdge {
   node: Circle!
   cursor: String!
+}
+
+type CircleInvite {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  circle: Circle!
+  user: User!
+}
+
+type CircleInviteConnection {
+  pageInfo: PageInfo!
+  edges: [CircleInviteEdge]!
+  aggregate: AggregateCircleInvite!
+}
+
+input CircleInviteCreateInput {
+  circle: CircleCreateOneWithoutInvitesInput!
+  user: UserCreateOneWithoutCircleInvitesInput!
+}
+
+input CircleInviteCreateManyWithoutCircleInput {
+  create: [CircleInviteCreateWithoutCircleInput!]
+  connect: [CircleInviteWhereUniqueInput!]
+}
+
+input CircleInviteCreateManyWithoutUserInput {
+  create: [CircleInviteCreateWithoutUserInput!]
+  connect: [CircleInviteWhereUniqueInput!]
+}
+
+input CircleInviteCreateWithoutCircleInput {
+  user: UserCreateOneWithoutCircleInvitesInput!
+}
+
+input CircleInviteCreateWithoutUserInput {
+  circle: CircleCreateOneWithoutInvitesInput!
+}
+
+type CircleInviteEdge {
+  node: CircleInvite!
+  cursor: String!
+}
+
+enum CircleInviteOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CircleInvitePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CircleInviteSubscriptionPayload {
+  mutation: MutationType!
+  node: CircleInvite
+  updatedFields: [String!]
+  previousValues: CircleInvitePreviousValues
+}
+
+input CircleInviteSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CircleInviteWhereInput
+  AND: [CircleInviteSubscriptionWhereInput!]
+  OR: [CircleInviteSubscriptionWhereInput!]
+  NOT: [CircleInviteSubscriptionWhereInput!]
+}
+
+input CircleInviteUpdateInput {
+  circle: CircleUpdateOneRequiredWithoutInvitesInput
+  user: UserUpdateOneRequiredWithoutCircleInvitesInput
+}
+
+input CircleInviteUpdateManyWithoutCircleInput {
+  create: [CircleInviteCreateWithoutCircleInput!]
+  delete: [CircleInviteWhereUniqueInput!]
+  connect: [CircleInviteWhereUniqueInput!]
+  disconnect: [CircleInviteWhereUniqueInput!]
+  update: [CircleInviteUpdateWithWhereUniqueWithoutCircleInput!]
+  upsert: [CircleInviteUpsertWithWhereUniqueWithoutCircleInput!]
+}
+
+input CircleInviteUpdateManyWithoutUserInput {
+  create: [CircleInviteCreateWithoutUserInput!]
+  delete: [CircleInviteWhereUniqueInput!]
+  connect: [CircleInviteWhereUniqueInput!]
+  disconnect: [CircleInviteWhereUniqueInput!]
+  update: [CircleInviteUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [CircleInviteUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input CircleInviteUpdateWithoutCircleDataInput {
+  user: UserUpdateOneRequiredWithoutCircleInvitesInput
+}
+
+input CircleInviteUpdateWithoutUserDataInput {
+  circle: CircleUpdateOneRequiredWithoutInvitesInput
+}
+
+input CircleInviteUpdateWithWhereUniqueWithoutCircleInput {
+  where: CircleInviteWhereUniqueInput!
+  data: CircleInviteUpdateWithoutCircleDataInput!
+}
+
+input CircleInviteUpdateWithWhereUniqueWithoutUserInput {
+  where: CircleInviteWhereUniqueInput!
+  data: CircleInviteUpdateWithoutUserDataInput!
+}
+
+input CircleInviteUpsertWithWhereUniqueWithoutCircleInput {
+  where: CircleInviteWhereUniqueInput!
+  update: CircleInviteUpdateWithoutCircleDataInput!
+  create: CircleInviteCreateWithoutCircleInput!
+}
+
+input CircleInviteUpsertWithWhereUniqueWithoutUserInput {
+  where: CircleInviteWhereUniqueInput!
+  update: CircleInviteUpdateWithoutUserDataInput!
+  create: CircleInviteCreateWithoutUserInput!
+}
+
+input CircleInviteWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  circle: CircleWhereInput
+  user: UserWhereInput
+  AND: [CircleInviteWhereInput!]
+  OR: [CircleInviteWhereInput!]
+  NOT: [CircleInviteWhereInput!]
+}
+
+input CircleInviteWhereUniqueInput {
+  id: ID
 }
 
 type CircleJoinRequest {
@@ -796,6 +989,7 @@ input CircleUpdateInput {
   name: String
   open: Boolean
   joinRequests: CircleJoinRequestUpdateManyWithoutCircleInput
+  invites: CircleInviteUpdateManyWithoutCircleInput
   members: UserUpdateManyWithoutCirclesInput
   owner: UserUpdateOneRequiredWithoutCirclesOwnedInput
 }
@@ -818,6 +1012,13 @@ input CircleUpdateManyWithoutOwnerInput {
   upsert: [CircleUpsertWithWhereUniqueWithoutOwnerInput!]
 }
 
+input CircleUpdateOneRequiredWithoutInvitesInput {
+  create: CircleCreateWithoutInvitesInput
+  update: CircleUpdateWithoutInvitesDataInput
+  upsert: CircleUpsertWithoutInvitesInput
+  connect: CircleWhereUniqueInput
+}
+
 input CircleUpdateOneRequiredWithoutJoinRequestsInput {
   create: CircleCreateWithoutJoinRequestsInput
   update: CircleUpdateWithoutJoinRequestsDataInput
@@ -825,10 +1026,20 @@ input CircleUpdateOneRequiredWithoutJoinRequestsInput {
   connect: CircleWhereUniqueInput
 }
 
+input CircleUpdateWithoutInvitesDataInput {
+  description: String
+  name: String
+  open: Boolean
+  joinRequests: CircleJoinRequestUpdateManyWithoutCircleInput
+  members: UserUpdateManyWithoutCirclesInput
+  owner: UserUpdateOneRequiredWithoutCirclesOwnedInput
+}
+
 input CircleUpdateWithoutJoinRequestsDataInput {
   description: String
   name: String
   open: Boolean
+  invites: CircleInviteUpdateManyWithoutCircleInput
   members: UserUpdateManyWithoutCirclesInput
   owner: UserUpdateOneRequiredWithoutCirclesOwnedInput
 }
@@ -838,6 +1049,7 @@ input CircleUpdateWithoutMembersDataInput {
   name: String
   open: Boolean
   joinRequests: CircleJoinRequestUpdateManyWithoutCircleInput
+  invites: CircleInviteUpdateManyWithoutCircleInput
   owner: UserUpdateOneRequiredWithoutCirclesOwnedInput
 }
 
@@ -846,6 +1058,7 @@ input CircleUpdateWithoutOwnerDataInput {
   name: String
   open: Boolean
   joinRequests: CircleJoinRequestUpdateManyWithoutCircleInput
+  invites: CircleInviteUpdateManyWithoutCircleInput
   members: UserUpdateManyWithoutCirclesInput
 }
 
@@ -857,6 +1070,11 @@ input CircleUpdateWithWhereUniqueWithoutMembersInput {
 input CircleUpdateWithWhereUniqueWithoutOwnerInput {
   where: CircleWhereUniqueInput!
   data: CircleUpdateWithoutOwnerDataInput!
+}
+
+input CircleUpsertWithoutInvitesInput {
+  update: CircleUpdateWithoutInvitesDataInput!
+  create: CircleCreateWithoutInvitesInput!
 }
 
 input CircleUpsertWithoutJoinRequestsInput {
@@ -940,6 +1158,9 @@ input CircleWhereInput {
   joinRequests_every: CircleJoinRequestWhereInput
   joinRequests_some: CircleJoinRequestWhereInput
   joinRequests_none: CircleJoinRequestWhereInput
+  invites_every: CircleInviteWhereInput
+  invites_some: CircleInviteWhereInput
+  invites_none: CircleInviteWhereInput
   members_every: UserWhereInput
   members_some: UserWhereInput
   members_none: UserWhereInput
@@ -1957,6 +2178,12 @@ type Mutation {
   upsertCircle(where: CircleWhereUniqueInput!, create: CircleCreateInput!, update: CircleUpdateInput!): Circle!
   deleteCircle(where: CircleWhereUniqueInput!): Circle
   deleteManyCircles(where: CircleWhereInput): BatchPayload!
+  createCircleInvite(data: CircleInviteCreateInput!): CircleInvite!
+  updateCircleInvite(data: CircleInviteUpdateInput!, where: CircleInviteWhereUniqueInput!): CircleInvite
+  updateManyCircleInvites(data: CircleInviteUpdateInput!, where: CircleInviteWhereInput): BatchPayload!
+  upsertCircleInvite(where: CircleInviteWhereUniqueInput!, create: CircleInviteCreateInput!, update: CircleInviteUpdateInput!): CircleInvite!
+  deleteCircleInvite(where: CircleInviteWhereUniqueInput!): CircleInvite
+  deleteManyCircleInvites(where: CircleInviteWhereInput): BatchPayload!
   createCircleJoinRequest(data: CircleJoinRequestCreateInput!): CircleJoinRequest!
   updateCircleJoinRequest(data: CircleJoinRequestUpdateInput!, where: CircleJoinRequestWhereUniqueInput!): CircleJoinRequest
   updateManyCircleJoinRequests(data: CircleJoinRequestUpdateInput!, where: CircleJoinRequestWhereInput): BatchPayload!
@@ -2186,6 +2413,9 @@ type Query {
   circle(where: CircleWhereUniqueInput!): Circle
   circles(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle]!
   circlesConnection(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CircleConnection!
+  circleInvite(where: CircleInviteWhereUniqueInput!): CircleInvite
+  circleInvites(where: CircleInviteWhereInput, orderBy: CircleInviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CircleInvite]!
+  circleInvitesConnection(where: CircleInviteWhereInput, orderBy: CircleInviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CircleInviteConnection!
   circleJoinRequest(where: CircleJoinRequestWhereUniqueInput!): CircleJoinRequest
   circleJoinRequests(where: CircleJoinRequestWhereInput, orderBy: CircleJoinRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CircleJoinRequest]!
   circleJoinRequestsConnection(where: CircleJoinRequestWhereInput, orderBy: CircleJoinRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CircleJoinRequestConnection!
@@ -2391,6 +2621,7 @@ input SpecialFundraiserWhereUniqueInput {
 type Subscription {
   charity(where: CharitySubscriptionWhereInput): CharitySubscriptionPayload
   circle(where: CircleSubscriptionWhereInput): CircleSubscriptionPayload
+  circleInvite(where: CircleInviteSubscriptionWhereInput): CircleInviteSubscriptionPayload
   circleJoinRequest(where: CircleJoinRequestSubscriptionWhereInput): CircleJoinRequestSubscriptionPayload
   dot(where: DotSubscriptionWhereInput): DotSubscriptionPayload
   event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
@@ -2679,6 +2910,7 @@ type User {
   securityToken: Int!
   username: String!
   circleJoinRequests(where: CircleJoinRequestWhereInput, orderBy: CircleJoinRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CircleJoinRequest!]
+  circleInvites(where: CircleInviteWhereInput, orderBy: CircleInviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CircleInvite!]
   circles(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle!]
   circlesOwned(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle!]
   dots(where: DotWhereInput, orderBy: DotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dot!]
@@ -2705,6 +2937,7 @@ input UserCreateInput {
   securityToken: Int!
   username: String!
   circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
+  circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
@@ -2724,6 +2957,11 @@ input UserCreateManyWithoutCirclesInput {
 input UserCreateManyWithoutFollowedCharitiesInput {
   create: [UserCreateWithoutFollowedCharitiesInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneWithoutCircleInvitesInput {
+  create: UserCreateWithoutCircleInvitesInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutCircleJoinRequestsInput {
@@ -2766,6 +3004,26 @@ input UserCreateOneWithoutTransactionsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateWithoutCircleInvitesInput {
+  bio: String
+  email: String!
+  nameFirst: String!
+  nameLast: String!
+  picture: String
+  securityToken: Int!
+  username: String!
+  circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
+  circles: CircleCreateManyWithoutMembersInput
+  circlesOwned: CircleCreateManyWithoutOwnerInput
+  dots: DotCreateManyWithoutUserInput
+  followedCharities: CharityCreateManyWithoutFollowersInput
+  halos: HaloCreateManyWithoutUserInput
+  identity: IdentityCreateOneWithoutUserInput!
+  loops: LoopCreateManyWithoutUserInput
+  preferences: PreferencesCreateOneWithoutUserInput!
+  transactions: TransactionCreateManyWithoutUserInput
+}
+
 input UserCreateWithoutCircleJoinRequestsInput {
   bio: String
   email: String!
@@ -2774,6 +3032,7 @@ input UserCreateWithoutCircleJoinRequestsInput {
   picture: String
   securityToken: Int!
   username: String!
+  circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
@@ -2794,6 +3053,7 @@ input UserCreateWithoutCirclesInput {
   securityToken: Int!
   username: String!
   circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
+  circleInvites: CircleInviteCreateManyWithoutUserInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
@@ -2813,6 +3073,7 @@ input UserCreateWithoutCirclesOwnedInput {
   securityToken: Int!
   username: String!
   circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
+  circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
@@ -2832,6 +3093,7 @@ input UserCreateWithoutDotsInput {
   securityToken: Int!
   username: String!
   circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
+  circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   followedCharities: CharityCreateManyWithoutFollowersInput
@@ -2851,6 +3113,7 @@ input UserCreateWithoutFollowedCharitiesInput {
   securityToken: Int!
   username: String!
   circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
+  circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
@@ -2870,6 +3133,7 @@ input UserCreateWithoutHalosInput {
   securityToken: Int!
   username: String!
   circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
+  circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
@@ -2889,6 +3153,7 @@ input UserCreateWithoutIdentityInput {
   securityToken: Int!
   username: String!
   circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
+  circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
@@ -2908,6 +3173,7 @@ input UserCreateWithoutLoopsInput {
   securityToken: Int!
   username: String!
   circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
+  circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
@@ -2927,6 +3193,7 @@ input UserCreateWithoutPreferencesInput {
   securityToken: Int!
   username: String!
   circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
+  circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
@@ -2946,6 +3213,7 @@ input UserCreateWithoutTransactionsInput {
   securityToken: Int!
   username: String!
   circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
+  circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
@@ -3024,6 +3292,7 @@ input UserUpdateInput {
   securityToken: Int
   username: String
   circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
+  circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
@@ -3051,6 +3320,13 @@ input UserUpdateManyWithoutFollowedCharitiesInput {
   disconnect: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput!]
   upsert: [UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput!]
+}
+
+input UserUpdateOneRequiredWithoutCircleInvitesInput {
+  create: UserCreateWithoutCircleInvitesInput
+  update: UserUpdateWithoutCircleInvitesDataInput
+  upsert: UserUpsertWithoutCircleInvitesInput
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneRequiredWithoutCircleJoinRequestsInput {
@@ -3109,6 +3385,26 @@ input UserUpdateOneRequiredWithoutTransactionsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateWithoutCircleInvitesDataInput {
+  bio: String
+  email: String
+  nameFirst: String
+  nameLast: String
+  picture: String
+  securityToken: Int
+  username: String
+  circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
+  circles: CircleUpdateManyWithoutMembersInput
+  circlesOwned: CircleUpdateManyWithoutOwnerInput
+  dots: DotUpdateManyWithoutUserInput
+  followedCharities: CharityUpdateManyWithoutFollowersInput
+  halos: HaloUpdateManyWithoutUserInput
+  identity: IdentityUpdateOneRequiredWithoutUserInput
+  loops: LoopUpdateManyWithoutUserInput
+  preferences: PreferencesUpdateOneRequiredWithoutUserInput
+  transactions: TransactionUpdateManyWithoutUserInput
+}
+
 input UserUpdateWithoutCircleJoinRequestsDataInput {
   bio: String
   email: String
@@ -3117,6 +3413,7 @@ input UserUpdateWithoutCircleJoinRequestsDataInput {
   picture: String
   securityToken: Int
   username: String
+  circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
@@ -3137,6 +3434,7 @@ input UserUpdateWithoutCirclesDataInput {
   securityToken: Int
   username: String
   circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
+  circleInvites: CircleInviteUpdateManyWithoutUserInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
@@ -3156,6 +3454,7 @@ input UserUpdateWithoutCirclesOwnedDataInput {
   securityToken: Int
   username: String
   circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
+  circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
@@ -3175,6 +3474,7 @@ input UserUpdateWithoutDotsDataInput {
   securityToken: Int
   username: String
   circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
+  circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
@@ -3194,6 +3494,7 @@ input UserUpdateWithoutFollowedCharitiesDataInput {
   securityToken: Int
   username: String
   circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
+  circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
@@ -3213,6 +3514,7 @@ input UserUpdateWithoutHalosDataInput {
   securityToken: Int
   username: String
   circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
+  circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
@@ -3232,6 +3534,7 @@ input UserUpdateWithoutIdentityDataInput {
   securityToken: Int
   username: String
   circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
+  circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
@@ -3251,6 +3554,7 @@ input UserUpdateWithoutLoopsDataInput {
   securityToken: Int
   username: String
   circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
+  circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
@@ -3270,6 +3574,7 @@ input UserUpdateWithoutPreferencesDataInput {
   securityToken: Int
   username: String
   circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
+  circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
@@ -3289,6 +3594,7 @@ input UserUpdateWithoutTransactionsDataInput {
   securityToken: Int
   username: String
   circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
+  circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
@@ -3307,6 +3613,11 @@ input UserUpdateWithWhereUniqueWithoutCirclesInput {
 input UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutFollowedCharitiesDataInput!
+}
+
+input UserUpsertWithoutCircleInvitesInput {
+  update: UserUpdateWithoutCircleInvitesDataInput!
+  create: UserCreateWithoutCircleInvitesInput!
 }
 
 input UserUpsertWithoutCircleJoinRequestsInput {
@@ -3487,6 +3798,9 @@ input UserWhereInput {
   circleJoinRequests_every: CircleJoinRequestWhereInput
   circleJoinRequests_some: CircleJoinRequestWhereInput
   circleJoinRequests_none: CircleJoinRequestWhereInput
+  circleInvites_every: CircleInviteWhereInput
+  circleInvites_some: CircleInviteWhereInput
+  circleInvites_none: CircleInviteWhereInput
   circles_every: CircleWhereInput
   circles_some: CircleWhereInput
   circles_none: CircleWhereInput

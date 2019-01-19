@@ -12,6 +12,7 @@ type User {
   username: String! @unique
 
   circleJoinRequests: [CircleJoinRequest!]!
+  circleInvites: [CircleInvite!]!
   circles: [Circle!]! @relation(name: "UserCircles")
   circlesOwned: [Circle!]! @relation(name: "UserOwnedCircles")
   dots: [Dot!]! @relation(name: "UserDots", onDelete: CASCADE)
@@ -85,6 +86,7 @@ type Circle {
   open: Boolean! @default(value: "true")
 
   joinRequests: [CircleJoinRequest!]! @relation(name: "CircleJoinRequests", onDelete: CASCADE)
+  invites: [CircleInvite!]! @relation(name: "CircleInvites", onDelete: CASCADE)
   members: [User!]! @relation(name: "UserCircles")
   owner: User! @relation(name: "UserOwnedCircles")
 }
@@ -95,6 +97,15 @@ type CircleJoinRequest {
   updatedAt: DateTime!
 
   circle: Circle! @relation(name: "CircleJoinRequests")
+  user: User!
+}
+
+type CircleInvite {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  circle: Circle! @relation(name: "CircleInvites")
   user: User!
 }
 
