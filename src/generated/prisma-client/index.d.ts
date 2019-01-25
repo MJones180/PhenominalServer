@@ -736,6 +736,8 @@ export type HaloOrderByInput =
   | "createdAt_DESC"
   | "key_ASC"
   | "key_DESC"
+  | "tier_ASC"
+  | "tier_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
@@ -1789,6 +1791,7 @@ export interface UserUpdateWithoutCircleInvitesDataInput {
 
 export interface HaloUpdateInput {
   key?: String;
+  tier?: String;
   user?: UserUpdateOneRequiredWithoutHalosInput;
 }
 
@@ -1832,6 +1835,7 @@ export interface CircleUpdateWithWhereUniqueWithoutMembersInput {
 
 export interface HaloCreateInput {
   key: String;
+  tier?: String;
   user: UserCreateOneWithoutHalosInput;
 }
 
@@ -2069,6 +2073,20 @@ export interface HaloWhereInput {
   key_not_starts_with?: String;
   key_ends_with?: String;
   key_not_ends_with?: String;
+  tier?: String;
+  tier_not?: String;
+  tier_in?: String[] | String;
+  tier_not_in?: String[] | String;
+  tier_lt?: String;
+  tier_lte?: String;
+  tier_gt?: String;
+  tier_gte?: String;
+  tier_contains?: String;
+  tier_not_contains?: String;
+  tier_starts_with?: String;
+  tier_not_starts_with?: String;
+  tier_ends_with?: String;
+  tier_not_ends_with?: String;
   user?: UserWhereInput;
   AND?: HaloWhereInput[] | HaloWhereInput;
   OR?: HaloWhereInput[] | HaloWhereInput;
@@ -2368,6 +2386,7 @@ export interface DotUpdateWithoutUserDataInput {
 
 export interface HaloCreateWithoutUserInput {
   key: String;
+  tier?: String;
 }
 
 export interface DotUpsertWithWhereUniqueWithoutUserInput {
@@ -2902,6 +2921,7 @@ export interface EventWhereInput {
 
 export interface HaloUpdateWithoutUserDataInput {
   key?: String;
+  tier?: String;
 }
 
 export interface UserUpdateInput {
@@ -4869,12 +4889,14 @@ export interface HaloNode {
   id: ID_Output;
   createdAt: DateTimeOutput;
   key: String;
+  tier?: String;
 }
 
 export interface Halo extends Promise<HaloNode>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   key: () => Promise<String>;
+  tier: () => Promise<String>;
   user: <T = User>() => T;
 }
 
@@ -4884,6 +4906,7 @@ export interface HaloSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   key: () => Promise<AsyncIterator<String>>;
+  tier: () => Promise<AsyncIterator<String>>;
   user: <T = UserSubscription>() => T;
 }
 
@@ -5233,6 +5256,7 @@ export interface HaloPreviousValuesNode {
   id: ID_Output;
   createdAt: DateTimeOutput;
   key: String;
+  tier?: String;
 }
 
 export interface HaloPreviousValues
@@ -5241,6 +5265,7 @@ export interface HaloPreviousValues
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   key: () => Promise<String>;
+  tier: () => Promise<String>;
 }
 
 export interface HaloPreviousValuesSubscription
@@ -5249,6 +5274,7 @@ export interface HaloPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   key: () => Promise<AsyncIterator<String>>;
+  tier: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateEventNode {

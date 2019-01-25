@@ -3,6 +3,7 @@
 scalar Upload
 
 type Mutation {
+  accountAgeHalo: Boolean
   addFunds(amount: Int!, token: String!): addFundsPayload
   charitySuggestion(ein: String, email: String!, name: String!, representative: Boolean, url: String): Boolean
   contactMessage(email: String!, message: String!, name: String!): Boolean

@@ -1718,6 +1718,7 @@ type Halo {
   id: ID!
   createdAt: DateTime!
   key: String!
+  tier: String
   user: User!
 }
 
@@ -1729,6 +1730,7 @@ type HaloConnection {
 
 input HaloCreateInput {
   key: String!
+  tier: String
   user: UserCreateOneWithoutHalosInput!
 }
 
@@ -1739,6 +1741,7 @@ input HaloCreateManyWithoutUserInput {
 
 input HaloCreateWithoutUserInput {
   key: String!
+  tier: String
 }
 
 type HaloEdge {
@@ -1753,6 +1756,8 @@ enum HaloOrderByInput {
   createdAt_DESC
   key_ASC
   key_DESC
+  tier_ASC
+  tier_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -1761,6 +1766,7 @@ type HaloPreviousValues {
   id: ID!
   createdAt: DateTime!
   key: String!
+  tier: String
 }
 
 type HaloSubscriptionPayload {
@@ -1783,6 +1789,7 @@ input HaloSubscriptionWhereInput {
 
 input HaloUpdateInput {
   key: String
+  tier: String
   user: UserUpdateOneRequiredWithoutHalosInput
 }
 
@@ -1797,6 +1804,7 @@ input HaloUpdateManyWithoutUserInput {
 
 input HaloUpdateWithoutUserDataInput {
   key: String
+  tier: String
 }
 
 input HaloUpdateWithWhereUniqueWithoutUserInput {
@@ -1847,6 +1855,20 @@ input HaloWhereInput {
   key_not_starts_with: String
   key_ends_with: String
   key_not_ends_with: String
+  tier: String
+  tier_not: String
+  tier_in: [String!]
+  tier_not_in: [String!]
+  tier_lt: String
+  tier_lte: String
+  tier_gt: String
+  tier_gte: String
+  tier_contains: String
+  tier_not_contains: String
+  tier_starts_with: String
+  tier_not_starts_with: String
+  tier_ends_with: String
+  tier_not_ends_with: String
   user: UserWhereInput
   AND: [HaloWhereInput!]
   OR: [HaloWhereInput!]

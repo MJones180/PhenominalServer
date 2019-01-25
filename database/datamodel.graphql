@@ -40,6 +40,7 @@ type Halo {
   createdAt: DateTime!
 
   key: String!
+  tier: String
 
   user: User! @relation(name: "UserHalos")
 }

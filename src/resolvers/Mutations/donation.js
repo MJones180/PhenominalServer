@@ -2,8 +2,6 @@ const eachSeries = require('async/eachSeries');
 const get = require('lodash/get');
 const includes = require('lodash/includes');
 const map = require('lodash/map');
-const userDots = require('../Queries/userDots');
-const userLoops = require('../Queries/userLoops');
 
 module.exports = async (parent, { amount, events }, ctx) => (
   ctx.utils.wait(async (done, reject) => {
@@ -98,7 +96,7 @@ module.exports = async (parent, { amount, events }, ctx) => (
     const loopedEvents = await grabLoopedEvents();
 
     // Grab the user's current Loop count
-    let { count: loopCount } = await userLoops(parent, { username: user.username }, ctx);
+    let { count: loopCount } = await ctx.utils.loops.grabLoops({ username: user.username });
 
     // New Loops added
     let loopsGained = 0;
@@ -121,25 +119,11 @@ module.exports = async (parent, { amount, events }, ctx) => (
       })
     );
 
-    // Grab the user's current Dot total
-    let dotTotal = await userDots(parent, { username: user.username }, ctx);
+    // Total Dots
+    let dotTotal;
 
     // New Dots added
     let dotsGained = 0;
-
-    // Add Dots
-    const addDots = async (amount, total, boost) => (
-      ctx.client.createDot({
-        action: `Donation (Boost ${boost}x)`,
-        amount,
-        total,
-        user: {
-          connect: {
-            id: user.id,
-          },
-        },
-      })
-    );
 
     // Newly added transactions
     const transactions = [];
@@ -169,12 +153,14 @@ module.exports = async (parent, { amount, events }, ctx) => (
       const { boost } = ctx.utils.loopStage(loopCount);
       // The amount of Dots given for donating
       const dotIncrease = 50 * boost;
-      // Increase the new Dot total
-      dotTotal += dotIncrease;
       // Increase the total newly added Dots
       dotsGained += dotIncrease;
       // Add the new Dots
-      await addDots(dotIncrease, dotTotal, boost);
+      dotTotal = await ctx.utils.dots.addDots({
+        action: `Donation (Boost ${boost}x)`,
+        amount: dotIncrease,
+        username: user.username,
+      });
     }, () => {
       // Check to see if the user has confirmation emails enabled
       if (allowDonationEmails) {

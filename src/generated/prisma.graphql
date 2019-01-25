@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/michael-jones/phenominal/dev
-# timestamp: Sat Jan 19 2019 00:32:20 GMT-0500 (Eastern Standard Time)
+# timestamp: Thu Jan 24 2019 18:18:52 GMT-0500 (Eastern Standard Time)
 
 type AggregateCharity {
   count: Int!
@@ -4190,6 +4190,7 @@ type Halo implements Node {
   id: ID!
   createdAt: DateTime!
   key: String!
+  tier: String
   user: User!
 }
 
@@ -4205,6 +4206,7 @@ type HaloConnection {
 
 input HaloCreateInput {
   key: String!
+  tier: String
   user: UserCreateOneWithoutHalosInput!
 }
 
@@ -4215,6 +4217,7 @@ input HaloCreateManyWithoutUserInput {
 
 input HaloCreateWithoutUserInput {
   key: String!
+  tier: String
 }
 
 """An edge in a connection."""
@@ -4233,6 +4236,8 @@ enum HaloOrderByInput {
   createdAt_DESC
   key_ASC
   key_DESC
+  tier_ASC
+  tier_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -4241,6 +4246,7 @@ type HaloPreviousValues {
   id: ID!
   createdAt: DateTime!
   key: String!
+  tier: String
 }
 
 input HaloScalarWhereInput {
@@ -4354,6 +4360,46 @@ input HaloScalarWhereInput {
 
   """All values not ending with the given string."""
   key_not_ends_with: String
+  tier: String
+
+  """All values that are not equal to given value."""
+  tier_not: String
+
+  """All values that are contained in given list."""
+  tier_in: [String!]
+
+  """All values that are not contained in given list."""
+  tier_not_in: [String!]
+
+  """All values less than the given value."""
+  tier_lt: String
+
+  """All values less than or equal the given value."""
+  tier_lte: String
+
+  """All values greater than the given value."""
+  tier_gt: String
+
+  """All values greater than or equal the given value."""
+  tier_gte: String
+
+  """All values containing the given string."""
+  tier_contains: String
+
+  """All values not containing the given string."""
+  tier_not_contains: String
+
+  """All values starting with the given string."""
+  tier_starts_with: String
+
+  """All values not starting with the given string."""
+  tier_not_starts_with: String
+
+  """All values ending with the given string."""
+  tier_ends_with: String
+
+  """All values not ending with the given string."""
+  tier_not_ends_with: String
 }
 
 type HaloSubscriptionPayload {
@@ -4397,15 +4443,18 @@ input HaloSubscriptionWhereInput {
 
 input HaloUpdateInput {
   key: String
+  tier: String
   user: UserUpdateOneRequiredWithoutHalosInput
 }
 
 input HaloUpdateManyDataInput {
   key: String
+  tier: String
 }
 
 input HaloUpdateManyMutationInput {
   key: String
+  tier: String
 }
 
 input HaloUpdateManyWithoutUserInput {
@@ -4427,6 +4476,7 @@ input HaloUpdateManyWithWhereNestedInput {
 
 input HaloUpdateWithoutUserDataInput {
   key: String
+  tier: String
 }
 
 input HaloUpdateWithWhereUniqueWithoutUserInput {
@@ -4551,6 +4601,46 @@ input HaloWhereInput {
 
   """All values not ending with the given string."""
   key_not_ends_with: String
+  tier: String
+
+  """All values that are not equal to given value."""
+  tier_not: String
+
+  """All values that are contained in given list."""
+  tier_in: [String!]
+
+  """All values that are not contained in given list."""
+  tier_not_in: [String!]
+
+  """All values less than the given value."""
+  tier_lt: String
+
+  """All values less than or equal the given value."""
+  tier_lte: String
+
+  """All values greater than the given value."""
+  tier_gt: String
+
+  """All values greater than or equal the given value."""
+  tier_gte: String
+
+  """All values containing the given string."""
+  tier_contains: String
+
+  """All values not containing the given string."""
+  tier_not_contains: String
+
+  """All values starting with the given string."""
+  tier_starts_with: String
+
+  """All values not starting with the given string."""
+  tier_not_starts_with: String
+
+  """All values ending with the given string."""
+  tier_ends_with: String
+
+  """All values not ending with the given string."""
+  tier_not_ends_with: String
   user: UserWhereInput
 }
 

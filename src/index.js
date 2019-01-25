@@ -4,7 +4,10 @@ const { Prisma: PrismaBinding } = require('prisma-binding');
 const { prisma: prismaClient } = require('./generated/prisma-client');
 const user = require('./middleware/user');
 const aws = require('./utils/aws');
+const dots = require('./utils/dots');
 const email = require('./utils/email');
+const loops = require('./utils/loops');
+const halos = require('./utils/halos');
 const providers = require('./utils/providers');
 const errors = require('./utils/errors');
 const loopStage = require('./utils/loopStage');
@@ -13,6 +16,14 @@ const token = require('./utils/token');
 const transactionKey = require('./utils/transactionKey');
 const wait = require('./utils/wait');
 const resolvers = require('./resolvers');
+
+const binding = new PrismaBinding({
+  typeDefs: 'src/generated/prisma.graphql',
+  endpoint: process.env.PRISMA_ENDPOINT,
+  secret: process.env.PRISMA_SECRET,
+});
+
+const client = prismaClient;
 
 // Server config
 const server = new GraphQLServer({
@@ -23,15 +34,14 @@ const server = new GraphQLServer({
   },
   context: req => ({
     ...req,
-    binding: new PrismaBinding({
-      typeDefs: 'src/generated/prisma.graphql',
-      endpoint: process.env.PRISMA_ENDPOINT,
-      secret: process.env.PRISMA_SECRET,
-    }),
-    client: prismaClient,
+    binding,
+    client,
     utils: {
       aws,
+      dots: dots(client),
       email,
+      loops: loops(client),
+      halos: halos(binding, client),
       providers,
       errors,
       loopStage,

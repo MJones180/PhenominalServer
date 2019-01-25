@@ -23,7 +23,7 @@ module.exports = async (parent, params, ctx) => {
   }
 
   // Check if the Circle name already exists
-  const exists = await ctx.client.circle({ name });
+  const exists = await ctx.binding.exists.Circle({ name });
   // Throw an error if it does, must be unique
   if (exists) throw new ctx.utils.errors.CircleNameExists();
 
