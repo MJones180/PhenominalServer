@@ -22,6 +22,7 @@ const currentUser = require('./Queries/currentUser');
 const currentUserBalance = require('./Queries/currentUserBalance');
 const events = require('./Queries/events');
 const userDots = require('./Queries/userDots');
+const userHalos = require('./Queries/userHalos');
 const userLoops = require('./Queries/userLoops');
 
 module.exports = {
@@ -51,6 +52,7 @@ module.exports = {
     currentUserBalance,
     ...events,
     userDots,
+    userHalos,
     userLoops,
   },
 };

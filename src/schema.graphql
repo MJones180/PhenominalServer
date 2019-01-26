@@ -30,6 +30,7 @@ type Query {
   eventsPast(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
   eventsUpcoming(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
   userDots(username: String): Int!
+  userHalos(username: String): [userHalosPayload!]
   userLoops(username: String): userLoopsPayload!
 }
 
@@ -76,4 +77,11 @@ type userLoopsPayload {
   boost: Int
   goal: Int
   count: Int!
+}
+
+type userHalosPayload {
+  description: String!
+  dotReward: Int!
+  key: String!
+  tier: String!
 }

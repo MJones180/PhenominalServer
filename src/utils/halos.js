@@ -1,5 +1,5 @@
 // ============================
-// checkCompletion(id, username, key, val?)
+// checkCompletion(id, username, key, progress?)
 // grabHalo(key, tier?)
 // ============================
 
@@ -14,68 +14,78 @@ const PHENOMINAL = 'phenominal';
 
 // All Halos
 // ====================
-// Tiered Halo
 //  [key]: {
 //    description: val => `...${val}...`,
 //    tiers: [
 //      [requirement, dotReward, tier],
 //    ],
 //  },
-// Single Halo
-//  [key]: {
-//    description: '...',
-//    dotReward: x,
-//  },
 // ====================
 const halos = {
   accountAge: {
-    description: val => `Member for ${val} days.`,
+    description: val => `Member for ${val} days`,
     tiers: [
       [720, 100000, PHENOMINAL],
       [365, 10000, HARD],
-      [180, 5000, MODERATE],
-      [30, 1000, EASY],
+      [60, 5000, MODERATE],
+      [14, 1000, EASY],
     ],
   },
   createCircle: {
-    description: 'Created first Circle.',
-    dotReward: 5000,
+    description: () => 'Created first Circle',
+    tiers: [
+      [1, 5000, EASY],
+    ],
   },
   firstDonation: {
-    description: 'First donation.',
-    dotReward: 5000,
+    description: () => 'First donation',
+    tiers: [
+      [1, 25000, PHENOMINAL],
+    ],
   },
   followCharity: {
-    description: val => `Follow ${val} charities.`,
+    description: val => `Follow ${val} charities`,
     tiers: [
-      [365, 100000, PHENOMINAL],
+      [200, 100000, PHENOMINAL],
       [100, 10000, HARD],
       [25, 5000, MODERATE],
-      [10, 1000, EASY],
+      [10, 2500, EASY],
     ],
   },
   loopCount: {
-    description: val => `Gain ${val} Loops.`,
+    description: val => `Gain ${val} Loops`,
     tiers: [
-      [365, 100000, PHENOMINAL],
-      [100, 10000, HARD],
-      [25, 5000, MODERATE],
-      [10, 1000, EASY],
+      [500, 1000000, PHENOMINAL],
+      [100, 100000, HARD],
+      [25, 25000, MODERATE],
+      [10, 5000, EASY],
+    ],
+  },
+  newUser: {
+    description: () => 'Create an account',
+    tiers: [
+      [1, 0, EASY],
     ],
   },
   setProfilePic: {
-    description: 'Set profile picture.',
-    dotReward: 5000,
+    description: () => 'Set profile picture',
+    tiers: [
+      [1, 5000, EASY],
+    ],
   },
 };
 
 module.exports = (binding, client) => ({
   // Check if a Halo has been completed
-  checkCompletion: async (id, username, key, val) => {
-    const { tiers } = halos[key];
-    const completed = find(tiers, ([requirement]) => (val >= requirement));
-    if (completed) {
-      const [, dotReward, tier] = completed;
+  // Progress can be omitted if it is a single tier Halo
+  checkCompletion: async (id, username, key, progress = 1) => {
+    // Grab the highest tier of completion
+    const tierInfo = find(halos[key].tiers, ([requirement]) => (progress >= requirement));
+    // A Halo has been completed
+    if (tierInfo) {
+      // The tier's info
+      const [, dotReward, tier] = tierInfo;
+      // Check if the Halo already exists
       const exists = await binding.exists.Halo({
         key,
         tier,
@@ -83,6 +93,7 @@ module.exports = (binding, client) => ({
       });
       // If it is a newly achieved Halo, add it
       if (!exists) {
+        // Add the Halo
         await client.createHalo({
           key,
           tier,
@@ -90,22 +101,32 @@ module.exports = (binding, client) => ({
             connect: { id },
           },
         });
-        await dots(client).addDots({
-          action: `Halo (${key})`,
-          amount: dotReward,
-          username,
-        });
+        // Check if there is a Dot reward for completion
+        if (dotReward) {
+          // Add the Dots
+          await dots(client).addDots({
+            action: `Halo (${key})`,
+            amount: dotReward,
+            username,
+          });
+        }
       }
     }
   },
-  grabHalo: (key, tier) => {
-    const { tiers } = halos[key];
-    if (tier) {
-      const halo = find(tiers, ([,, innerTier]) => tier == innerTier);
-      const [requirement, dotReward, haloTier] = halo;
-    }
-  },
-  grabAllActiveHalos: () => {
-
+  // Grab a Halo's data
+  grabHalo: (key, searchTier) => {
+    // Grab the description and tiers
+    const { description, tiers } = halos[key];
+    // Find the tier information, if tier is omitted default to the first tier in array
+    const tierInfo = searchTier ? find(tiers, ([,, foundTier]) => searchTier == foundTier) : tiers[0];
+    // The tier info
+    const [requirement, dotReward, tier] = tierInfo;
+    // Return the data
+    return {
+      description: description(requirement),
+      dotReward,
+      key,
+      tier,
+    };
   },
 });
