@@ -6,8 +6,11 @@ module.exports = async (parent, params, ctx) => {
   // 1000 * 60  * 60  * 24   = 86400000
   const DAY = 86400000;
 
-  // Subtract the createdAt from the current date and divide by one day
-  const days = (new Date()) - (new Date(createdAt)) / DAY;
+  // Grab the amount of time since account creation
+  const timeAgo = (new Date()) - (new Date(createdAt));
+
+  // Convert the time to days
+  const days = timeAgo / DAY;
 
   // Check if the user has completed the accountAge Halo
   ctx.utils.halos.checkCompletion(id, username, 'accountAge', days);
