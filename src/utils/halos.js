@@ -23,7 +23,7 @@ const PHENOMINAL = 'phenominal';
 // ====================
 const halos = {
   accountAge: {
-    description: val => `Member for ${val} days`,
+    description: val => `User for ${val} days`,
     tiers: [
       [720, 100000, PHENOMINAL],
       [365, 10000, HARD],
@@ -32,7 +32,7 @@ const halos = {
     ],
   },
   createCircle: {
-    description: () => 'Created first Circle',
+    description: () => 'Create first Circle',
     tiers: [
       [1, 5000, EASY],
     ],
@@ -120,11 +120,10 @@ module.exports = (binding, client) => ({
     // Find the tier information, if tier is omitted default to the first tier in array
     const tierInfo = searchTier ? find(tiers, ([,, foundTier]) => searchTier == foundTier) : tiers[0];
     // The tier info
-    const [requirement, dotReward, tier] = tierInfo;
+    const [requirement,, tier] = tierInfo;
     // Return the data
     return {
       description: description(requirement),
-      dotReward,
       key,
       tier,
     };

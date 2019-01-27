@@ -81,7 +81,6 @@ type userLoopsPayload {
 
 type userHalosPayload {
   description: String!
-  dotReward: Int!
   key: String!
   tier: String!
 }
