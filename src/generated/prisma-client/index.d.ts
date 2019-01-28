@@ -1553,7 +1553,7 @@ export interface TransactionUpdateWithoutEventDataInput {
   key?: String;
   stripeID?: String;
   type?: TransactionType;
-  user?: UserUpdateOneRequiredWithoutTransactionsInput;
+  user?: UserUpdateOneWithoutTransactionsInput;
 }
 
 export interface UserCreateOneWithoutPreferencesInput {
@@ -1561,10 +1561,12 @@ export interface UserCreateOneWithoutPreferencesInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface UserUpdateOneRequiredWithoutTransactionsInput {
+export interface UserUpdateOneWithoutTransactionsInput {
   create?: UserCreateWithoutTransactionsInput;
   update?: UserUpdateWithoutTransactionsDataInput;
   upsert?: UserUpsertWithoutTransactionsInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
   connect?: UserWhereUniqueInput;
 }
 
@@ -2099,7 +2101,7 @@ export interface TransactionCreateWithoutEventInput {
   key: String;
   stripeID?: String;
   type: TransactionType;
-  user: UserCreateOneWithoutTransactionsInput;
+  user?: UserCreateOneWithoutTransactionsInput;
 }
 
 export interface DotUpdateInput {
@@ -2958,7 +2960,7 @@ export interface TransactionCreateInput {
   stripeID?: String;
   type: TransactionType;
   event?: EventCreateOneWithoutDonationsInput;
-  user: UserCreateOneWithoutTransactionsInput;
+  user?: UserCreateOneWithoutTransactionsInput;
 }
 
 export interface IdentityUpdateOneRequiredWithoutUserInput {
@@ -3367,7 +3369,7 @@ export interface TransactionUpdateInput {
   stripeID?: String;
   type?: TransactionType;
   event?: EventUpdateOneWithoutDonationsInput;
-  user?: UserUpdateOneRequiredWithoutTransactionsInput;
+  user?: UserUpdateOneWithoutTransactionsInput;
 }
 
 export interface LoopUpsertWithWhereUniqueWithoutUserInput {

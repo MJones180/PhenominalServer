@@ -11,10 +11,10 @@ type User {
   securityToken: Int!
   username: String! @unique
 
-  circleJoinRequests: [CircleJoinRequest!]!
-  circleInvites: [CircleInvite!]!
+  circleJoinRequests: [CircleJoinRequest!]! @relation(name: "UserCirclesJoinRequests", onDelete: CASCADE)
+  circleInvites: [CircleInvite!]! @relation(name: "UserCirclesInvites", onDelete: CASCADE)
   circles: [Circle!]! @relation(name: "UserCircles")
-  circlesOwned: [Circle!]! @relation(name: "UserOwnedCircles")
+  circlesOwned: [Circle!]! @relation(name: "UserOwnedCircles", onDelete: CASCADE)
   dots: [Dot!]! @relation(name: "UserDots", onDelete: CASCADE)
   followedCharities: [Charity!]!
   halos: [Halo!]! @relation(name: "UserHalos", onDelete: CASCADE)
@@ -98,7 +98,7 @@ type CircleJoinRequest {
   updatedAt: DateTime!
 
   circle: Circle! @relation(name: "CircleJoinRequests")
-  user: User!
+  user: User! @relation(name: "UserCirclesJoinRequests")
 }
 
 type CircleInvite {
@@ -107,7 +107,7 @@ type CircleInvite {
   updatedAt: DateTime!
 
   circle: Circle! @relation(name: "CircleInvites")
-  user: User!
+  user: User! @relation(name: "UserCirclesInvites")
 }
 
 type Charity {
@@ -172,7 +172,7 @@ type Transaction {
   type: TransactionType!
 
   event: Event
-  user: User!
+  user: User
 }
 
 enum IdentityProvider {

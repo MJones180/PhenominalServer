@@ -128,6 +128,9 @@ module.exports = async (parent, { amount, events }, ctx) => (
     // Newly added transactions
     const transactions = [];
 
+    // Add the firstDonation Halo if needed
+    ctx.utils.halos.checkCompletion(user.id, user.username, 'firstDonation');
+
     // Loop through each of the events
     eachSeries(events, async (eventID) => {
       // Update the balance
@@ -171,6 +174,8 @@ module.exports = async (parent, { amount, events }, ctx) => (
           user,
         });
       }
+      // Add the loopCount Halo if needed
+      ctx.utils.halos.checkCompletion(user.id, user.username, 'loopCount', loopCount);
       // Return the data back to the client
       done({
         amount,

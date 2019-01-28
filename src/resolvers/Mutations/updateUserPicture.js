@@ -1,6 +1,6 @@
 module.exports = async (parent, params, ctx) => {
-  // Grab the user's id
-  const { id, picture: oldPictureKey } = await ctx.currentUser();
+  // Grab the user's info
+  const { id, username, picture: oldPictureKey } = await ctx.currentUser();
 
   // Grab the stream and type from the picture param
   const { createReadStream, mimetype } = await params.picture;
@@ -69,4 +69,7 @@ module.exports = async (parent, params, ctx) => {
 
   // Delete the old picture
   await deleteOldPicture();
+
+  // Add the setProfilePic Halo if needed
+  ctx.utils.halos.checkCompletion(id, username, 'setProfilePic');
 };

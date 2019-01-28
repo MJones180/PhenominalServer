@@ -12,6 +12,6 @@ module.exports = async (parent, params, ctx) => {
   // Convert the time to days
   const days = timeAgo / DAY;
 
-  // Check if the user has completed the accountAge Halo
+  // Add the accountAge Halo if needed
   ctx.utils.halos.checkCompletion(id, username, 'accountAge', days);
 };

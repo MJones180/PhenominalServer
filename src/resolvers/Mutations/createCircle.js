@@ -2,8 +2,8 @@ const trim = require('lodash/trim');
 const mapValues = require('lodash/mapValues');
 
 module.exports = async (parent, params, ctx) => {
-  // Grab the user's id
-  const { id } = await ctx.currentUser();
+  // Grab the user's info
+  const { id, username } = await ctx.currentUser();
 
   // Grab the user's owned Circles
   const circles = await ctx.client.user({ id }).circlesOwned();
@@ -39,6 +39,9 @@ module.exports = async (parent, params, ctx) => {
       connect: { id },
     },
   });
+
+  // Add the createCircle Halo if needed
+  ctx.utils.halos.checkCompletion(id, username, 'createCircle');
 
   // Return the Circle's ID
   return circleID;

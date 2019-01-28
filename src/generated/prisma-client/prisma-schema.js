@@ -2665,7 +2665,7 @@ type Transaction {
   stripeID: String
   type: TransactionType!
   event: Event
-  user: User!
+  user: User
 }
 
 type TransactionConnection {
@@ -2681,7 +2681,7 @@ input TransactionCreateInput {
   stripeID: String
   type: TransactionType!
   event: EventCreateOneWithoutDonationsInput
-  user: UserCreateOneWithoutTransactionsInput!
+  user: UserCreateOneWithoutTransactionsInput
 }
 
 input TransactionCreateManyWithoutEventInput {
@@ -2700,7 +2700,7 @@ input TransactionCreateWithoutEventInput {
   key: String!
   stripeID: String
   type: TransactionType!
-  user: UserCreateOneWithoutTransactionsInput!
+  user: UserCreateOneWithoutTransactionsInput
 }
 
 input TransactionCreateWithoutUserInput {
@@ -2776,7 +2776,7 @@ input TransactionUpdateInput {
   stripeID: String
   type: TransactionType
   event: EventUpdateOneWithoutDonationsInput
-  user: UserUpdateOneRequiredWithoutTransactionsInput
+  user: UserUpdateOneWithoutTransactionsInput
 }
 
 input TransactionUpdateManyWithoutEventInput {
@@ -2803,7 +2803,7 @@ input TransactionUpdateWithoutEventDataInput {
   key: String
   stripeID: String
   type: TransactionType
-  user: UserUpdateOneRequiredWithoutTransactionsInput
+  user: UserUpdateOneWithoutTransactionsInput
 }
 
 input TransactionUpdateWithoutUserDataInput {
@@ -3400,10 +3400,12 @@ input UserUpdateOneRequiredWithoutPreferencesInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneRequiredWithoutTransactionsInput {
+input UserUpdateOneWithoutTransactionsInput {
   create: UserCreateWithoutTransactionsInput
   update: UserUpdateWithoutTransactionsDataInput
   upsert: UserUpsertWithoutTransactionsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 

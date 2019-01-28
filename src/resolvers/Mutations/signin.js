@@ -34,7 +34,7 @@ module.exports = async (parent, { provider, token }, ctx) => {
       return username;
     };
     // Create a new user and each of the relations
-    return ctx.client.createUser({
+    const user = await ctx.client.createUser({
       email,
       nameFirst: upperFirst,
       nameLast: upperLast,
@@ -50,6 +50,10 @@ module.exports = async (parent, { provider, token }, ctx) => {
         create: {},
       },
     });
+    // Add the newUser Halo if needed
+    ctx.utils.halos.checkCompletion(user.id, user.username, 'newUser');
+    // Return the user's info
+    return user;
   };
 
   // Grab the user's info

@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/michael-jones/phenominal/dev
-# timestamp: Thu Jan 24 2019 18:18:52 GMT-0500 (Eastern Standard Time)
+# timestamp: Sun Jan 27 2019 21:35:52 GMT-0500 (Eastern Standard Time)
 
 type AggregateCharity {
   count: Int!
@@ -6017,7 +6017,7 @@ type Transaction implements Node {
   stripeID: String
   type: TransactionType!
   event: Event
-  user: User!
+  user: User
 }
 
 """A connection to a list of items."""
@@ -6037,7 +6037,7 @@ input TransactionCreateInput {
   stripeID: String
   type: TransactionType!
   event: EventCreateOneWithoutDonationsInput
-  user: UserCreateOneWithoutTransactionsInput!
+  user: UserCreateOneWithoutTransactionsInput
 }
 
 input TransactionCreateManyWithoutEventInput {
@@ -6056,7 +6056,7 @@ input TransactionCreateWithoutEventInput {
   key: String!
   stripeID: String
   type: TransactionType!
-  user: UserCreateOneWithoutTransactionsInput!
+  user: UserCreateOneWithoutTransactionsInput
 }
 
 input TransactionCreateWithoutUserInput {
@@ -6364,7 +6364,7 @@ input TransactionUpdateInput {
   stripeID: String
   type: TransactionType
   event: EventUpdateOneWithoutDonationsInput
-  user: UserUpdateOneRequiredWithoutTransactionsInput
+  user: UserUpdateOneWithoutTransactionsInput
 }
 
 input TransactionUpdateManyDataInput {
@@ -6418,7 +6418,7 @@ input TransactionUpdateWithoutEventDataInput {
   key: String
   stripeID: String
   type: TransactionType
-  user: UserUpdateOneRequiredWithoutTransactionsInput
+  user: UserUpdateOneWithoutTransactionsInput
 }
 
 input TransactionUpdateWithoutUserDataInput {
@@ -7563,9 +7563,11 @@ input UserUpdateOneRequiredWithoutPreferencesInput {
   upsert: UserUpsertWithoutPreferencesInput
 }
 
-input UserUpdateOneRequiredWithoutTransactionsInput {
+input UserUpdateOneWithoutTransactionsInput {
   create: UserCreateWithoutTransactionsInput
   connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
   update: UserUpdateWithoutTransactionsDataInput
   upsert: UserUpsertWithoutTransactionsInput
 }
