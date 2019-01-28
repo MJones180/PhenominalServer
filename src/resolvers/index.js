@@ -18,6 +18,7 @@ const updateUserPicture = require('./Mutations/updateUserPicture');
 
 const _forwarded = require('./Queries/_forwarded');
 const aggregateDonations = require('./Queries/aggregateDonations');
+const allHalos = require('./Queries/allHalos');
 const currentUser = require('./Queries/currentUser');
 const currentUserBalance = require('./Queries/currentUserBalance');
 const events = require('./Queries/events');
@@ -48,6 +49,7 @@ module.exports = {
   Query: {
     ..._forwarded,
     aggregateDonations,
+    allHalos,
     currentUser,
     currentUserBalance,
     ...events,

@@ -24,6 +24,7 @@ type Mutation {
 
 type Query {
   aggregateDonations(forEvent: String, forUser: Boolean): aggregateDonationsPayload!
+  allHalos: [allHalosPayload!]
   currentUser: User
   currentUserBalance: Int!
   eventsCurrent(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
@@ -69,6 +70,17 @@ type signinPayload {
 type aggregateDonationsPayload {
   count: Int!
   total: Int!
+}
+
+type allHalosPayload {
+  key: String!
+  tiers: [allHalosTierPayload!]
+}
+
+type allHalosTierPayload {
+  description: String!
+  dotReward: Int!
+  tier: String!
 }
 
 type userLoopsPayload {

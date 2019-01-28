@@ -1,9 +1,12 @@
 // ============================
+// allHalos()
 // checkCompletion(id, username, key, progress?)
 // grabHalo(key, tier?)
 // ============================
 
 const find = require('lodash/find');
+const map = require('lodash/map');
+const reverse = require('lodash/reverse');
 const dots = require('./dots');
 
 // Tier levels
@@ -76,6 +79,20 @@ const halos = {
 };
 
 module.exports = (binding, client) => ({
+  // Grab all of the Halos
+  allHalos: () => (
+    // Loop through each Halo
+    map(halos, ({ tiers, description }, key) => ({
+      key,
+      // Loop through each tier, flip so lowest tier first
+      tiers: reverse(map(tiers, ([requirement, dotReward, tier]) => ({
+        // Generate the description
+        description: description(requirement),
+        dotReward,
+        tier,
+      }))),
+    }))
+  ),
   // Check if a Halo has been completed
   // Progress can be omitted if it is a single tier Halo
   checkCompletion: async (id, username, key, progress = 1) => {
