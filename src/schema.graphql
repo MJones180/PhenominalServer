@@ -30,6 +30,7 @@ type Query {
   eventsCurrent(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
   eventsPast(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
   eventsUpcoming(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]
+  newHaloAlert: Boolean
   userDots(username: String): Int!
   userHalos(username: String): [userHalosPayload!]
   userLoops(username: String): userLoopsPayload!
