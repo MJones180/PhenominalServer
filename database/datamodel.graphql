@@ -16,6 +16,7 @@ type User {
   circles: [Circle!]! @relation(name: "UserCircles")
   circlesOwned: [Circle!]! @relation(name: "UserOwnedCircles", onDelete: CASCADE)
   dots: [Dot!]! @relation(name: "UserDots", onDelete: CASCADE)
+  feed: [Feed!]! @relation(name: "UserFeed", onDelete: CASCADE)
   followedCharities: [Charity!]!
   halos: [Halo!]! @relation(name: "UserHalos", onDelete: CASCADE)
   identity: Identity! @relation(name: "UserIdentity", onDelete: CASCADE)
@@ -108,6 +109,19 @@ type CircleInvite {
 
   circle: Circle! @relation(name: "CircleInvites")
   user: User! @relation(name: "UserCirclesInvites")
+}
+
+type Feed {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  dots: Int
+  link: String
+  message: String!
+  type: String!
+
+  user: User! @relation(name: "UserFeed")
 }
 
 type Charity {

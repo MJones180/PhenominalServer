@@ -96,12 +96,14 @@ module.exports = (binding, client) => ({
   // Check if a Halo has been completed
   // Progress can be omitted if it is a single tier Halo
   checkCompletion: async (id, username, key, progress = 1) => {
+    // Halo info
+    const { description, tiers } = halos[key];
     // Grab the highest tier of completion
-    const tierInfo = find(halos[key].tiers, ([requirement]) => (progress >= requirement));
+    const tierInfo = find(tiers, ([requirement]) => (progress >= requirement));
     // A Halo has been completed
     if (tierInfo) {
       // The tier's info
-      const [, dotReward, tier] = tierInfo;
+      const [requirement, dotReward, tier] = tierInfo;
       // Check if the Halo already exists
       const exists = await binding.exists.Halo({
         key,
@@ -127,6 +129,15 @@ module.exports = (binding, client) => ({
             username,
           });
         }
+        // Add to the Feed
+        await client.createFeed({
+          dots: dotReward,
+          message: description(requirement),
+          type: 'HALO_COMPLETED',
+          user: {
+            connect: { id },
+          },
+        });
       }
     }
   },

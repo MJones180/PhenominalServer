@@ -30,6 +30,7 @@ module.exports = async (parent, { amount, events }, ctx) => (
           id
           event {
             charity {
+              ein
               name
             }
             specialFundraiser {
@@ -135,12 +136,14 @@ module.exports = async (parent, { amount, events }, ctx) => (
     eachSeries(events, async (eventID) => {
       // Update the balance
       balance -= amount;
-      // Submit the donation
+      // Submit the donation, grab event info
       const { id: transactionID, event } = await addDonation(eventID);
+      // Grab the event's name
+      const name = get(event, 'charity.name') || get(event, 'specialFundraiser.name');
       // Push the data to the front of the array
       transactions.unshift({
         balance,
-        event: get(event, 'charity.name') || get(event, 'specialFundraiser.name'),
+        event: name,
         id: transactionID,
       });
       // Check if the donation is Loop eligible
@@ -163,6 +166,17 @@ module.exports = async (parent, { amount, events }, ctx) => (
         action: `Donation (Boost ${boost}x)`,
         amount: dotIncrease,
         username: user.username,
+      });
+      // Add to the Feed
+      await ctx.client.createFeed({
+        dots: dotIncrease,
+        // Grab the event's EIN (for charities)
+        link: get(event, 'charity.ein'),
+        message: name,
+        type: 'DONATION',
+        user: {
+          connect: { id: user.id },
+        },
       });
     }, () => {
       // Check to see if the user has confirmation emails enabled

@@ -43,6 +43,16 @@ module.exports = async (parent, params, ctx) => {
   // Add the createCircle Halo if needed
   ctx.utils.halos.checkCompletion(id, username, 'createCircle');
 
+  // Add to the Feed
+  await ctx.client.createFeed({
+    link: circleID,
+    message: name,
+    type: 'CIRCLE_CREATED',
+    user: {
+      connect: { id },
+    },
+  });
+
   // Return the Circle's ID
   return circleID;
 };
