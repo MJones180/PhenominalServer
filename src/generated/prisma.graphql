@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/michael-jones/phenominal/dev
-# timestamp: Wed Jan 30 2019 00:10:04 GMT-0500 (Eastern Standard Time)
+# timestamp: Thu Jan 31 2019 23:08:38 GMT-0500 (Eastern Standard Time)
 
 type AggregateCharity {
   count: Int!
@@ -22,10 +22,6 @@ type AggregateDot {
 }
 
 type AggregateEvent {
-  count: Int!
-}
-
-type AggregateFeed {
   count: Int!
 }
 
@@ -4190,658 +4186,6 @@ input EventWhereUniqueInput {
   id: ID
 }
 
-type Feed implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  dots: Int
-  link: String
-  message: String!
-  type: String!
-  user: User!
-}
-
-"""A connection to a list of items."""
-type FeedConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [FeedEdge]!
-  aggregate: AggregateFeed!
-}
-
-input FeedCreateInput {
-  dots: Int
-  link: String
-  message: String!
-  type: String!
-  user: UserCreateOneWithoutFeedInput!
-}
-
-input FeedCreateManyWithoutUserInput {
-  create: [FeedCreateWithoutUserInput!]
-  connect: [FeedWhereUniqueInput!]
-}
-
-input FeedCreateWithoutUserInput {
-  dots: Int
-  link: String
-  message: String!
-  type: String!
-}
-
-"""An edge in a connection."""
-type FeedEdge {
-  """The item at the end of the edge."""
-  node: Feed!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum FeedOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  dots_ASC
-  dots_DESC
-  link_ASC
-  link_DESC
-  message_ASC
-  message_DESC
-  type_ASC
-  type_DESC
-}
-
-type FeedPreviousValues {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  dots: Int
-  link: String
-  message: String!
-  type: String!
-}
-
-input FeedScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [FeedScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [FeedScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [FeedScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  dots: Int
-
-  """All values that are not equal to given value."""
-  dots_not: Int
-
-  """All values that are contained in given list."""
-  dots_in: [Int!]
-
-  """All values that are not contained in given list."""
-  dots_not_in: [Int!]
-
-  """All values less than the given value."""
-  dots_lt: Int
-
-  """All values less than or equal the given value."""
-  dots_lte: Int
-
-  """All values greater than the given value."""
-  dots_gt: Int
-
-  """All values greater than or equal the given value."""
-  dots_gte: Int
-  link: String
-
-  """All values that are not equal to given value."""
-  link_not: String
-
-  """All values that are contained in given list."""
-  link_in: [String!]
-
-  """All values that are not contained in given list."""
-  link_not_in: [String!]
-
-  """All values less than the given value."""
-  link_lt: String
-
-  """All values less than or equal the given value."""
-  link_lte: String
-
-  """All values greater than the given value."""
-  link_gt: String
-
-  """All values greater than or equal the given value."""
-  link_gte: String
-
-  """All values containing the given string."""
-  link_contains: String
-
-  """All values not containing the given string."""
-  link_not_contains: String
-
-  """All values starting with the given string."""
-  link_starts_with: String
-
-  """All values not starting with the given string."""
-  link_not_starts_with: String
-
-  """All values ending with the given string."""
-  link_ends_with: String
-
-  """All values not ending with the given string."""
-  link_not_ends_with: String
-  message: String
-
-  """All values that are not equal to given value."""
-  message_not: String
-
-  """All values that are contained in given list."""
-  message_in: [String!]
-
-  """All values that are not contained in given list."""
-  message_not_in: [String!]
-
-  """All values less than the given value."""
-  message_lt: String
-
-  """All values less than or equal the given value."""
-  message_lte: String
-
-  """All values greater than the given value."""
-  message_gt: String
-
-  """All values greater than or equal the given value."""
-  message_gte: String
-
-  """All values containing the given string."""
-  message_contains: String
-
-  """All values not containing the given string."""
-  message_not_contains: String
-
-  """All values starting with the given string."""
-  message_starts_with: String
-
-  """All values not starting with the given string."""
-  message_not_starts_with: String
-
-  """All values ending with the given string."""
-  message_ends_with: String
-
-  """All values not ending with the given string."""
-  message_not_ends_with: String
-  type: String
-
-  """All values that are not equal to given value."""
-  type_not: String
-
-  """All values that are contained in given list."""
-  type_in: [String!]
-
-  """All values that are not contained in given list."""
-  type_not_in: [String!]
-
-  """All values less than the given value."""
-  type_lt: String
-
-  """All values less than or equal the given value."""
-  type_lte: String
-
-  """All values greater than the given value."""
-  type_gt: String
-
-  """All values greater than or equal the given value."""
-  type_gte: String
-
-  """All values containing the given string."""
-  type_contains: String
-
-  """All values not containing the given string."""
-  type_not_contains: String
-
-  """All values starting with the given string."""
-  type_starts_with: String
-
-  """All values not starting with the given string."""
-  type_not_starts_with: String
-
-  """All values ending with the given string."""
-  type_ends_with: String
-
-  """All values not ending with the given string."""
-  type_not_ends_with: String
-}
-
-type FeedSubscriptionPayload {
-  mutation: MutationType!
-  node: Feed
-  updatedFields: [String!]
-  previousValues: FeedPreviousValues
-}
-
-input FeedSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [FeedSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [FeedSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [FeedSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: FeedWhereInput
-}
-
-input FeedUpdateInput {
-  dots: Int
-  link: String
-  message: String
-  type: String
-  user: UserUpdateOneRequiredWithoutFeedInput
-}
-
-input FeedUpdateManyDataInput {
-  dots: Int
-  link: String
-  message: String
-  type: String
-}
-
-input FeedUpdateManyMutationInput {
-  dots: Int
-  link: String
-  message: String
-  type: String
-}
-
-input FeedUpdateManyWithoutUserInput {
-  create: [FeedCreateWithoutUserInput!]
-  connect: [FeedWhereUniqueInput!]
-  set: [FeedWhereUniqueInput!]
-  disconnect: [FeedWhereUniqueInput!]
-  delete: [FeedWhereUniqueInput!]
-  update: [FeedUpdateWithWhereUniqueWithoutUserInput!]
-  updateMany: [FeedUpdateManyWithWhereNestedInput!]
-  deleteMany: [FeedScalarWhereInput!]
-  upsert: [FeedUpsertWithWhereUniqueWithoutUserInput!]
-}
-
-input FeedUpdateManyWithWhereNestedInput {
-  where: FeedScalarWhereInput!
-  data: FeedUpdateManyDataInput!
-}
-
-input FeedUpdateWithoutUserDataInput {
-  dots: Int
-  link: String
-  message: String
-  type: String
-}
-
-input FeedUpdateWithWhereUniqueWithoutUserInput {
-  where: FeedWhereUniqueInput!
-  data: FeedUpdateWithoutUserDataInput!
-}
-
-input FeedUpsertWithWhereUniqueWithoutUserInput {
-  where: FeedWhereUniqueInput!
-  update: FeedUpdateWithoutUserDataInput!
-  create: FeedCreateWithoutUserInput!
-}
-
-input FeedWhereInput {
-  """Logical AND on all given filters."""
-  AND: [FeedWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [FeedWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [FeedWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  dots: Int
-
-  """All values that are not equal to given value."""
-  dots_not: Int
-
-  """All values that are contained in given list."""
-  dots_in: [Int!]
-
-  """All values that are not contained in given list."""
-  dots_not_in: [Int!]
-
-  """All values less than the given value."""
-  dots_lt: Int
-
-  """All values less than or equal the given value."""
-  dots_lte: Int
-
-  """All values greater than the given value."""
-  dots_gt: Int
-
-  """All values greater than or equal the given value."""
-  dots_gte: Int
-  link: String
-
-  """All values that are not equal to given value."""
-  link_not: String
-
-  """All values that are contained in given list."""
-  link_in: [String!]
-
-  """All values that are not contained in given list."""
-  link_not_in: [String!]
-
-  """All values less than the given value."""
-  link_lt: String
-
-  """All values less than or equal the given value."""
-  link_lte: String
-
-  """All values greater than the given value."""
-  link_gt: String
-
-  """All values greater than or equal the given value."""
-  link_gte: String
-
-  """All values containing the given string."""
-  link_contains: String
-
-  """All values not containing the given string."""
-  link_not_contains: String
-
-  """All values starting with the given string."""
-  link_starts_with: String
-
-  """All values not starting with the given string."""
-  link_not_starts_with: String
-
-  """All values ending with the given string."""
-  link_ends_with: String
-
-  """All values not ending with the given string."""
-  link_not_ends_with: String
-  message: String
-
-  """All values that are not equal to given value."""
-  message_not: String
-
-  """All values that are contained in given list."""
-  message_in: [String!]
-
-  """All values that are not contained in given list."""
-  message_not_in: [String!]
-
-  """All values less than the given value."""
-  message_lt: String
-
-  """All values less than or equal the given value."""
-  message_lte: String
-
-  """All values greater than the given value."""
-  message_gt: String
-
-  """All values greater than or equal the given value."""
-  message_gte: String
-
-  """All values containing the given string."""
-  message_contains: String
-
-  """All values not containing the given string."""
-  message_not_contains: String
-
-  """All values starting with the given string."""
-  message_starts_with: String
-
-  """All values not starting with the given string."""
-  message_not_starts_with: String
-
-  """All values ending with the given string."""
-  message_ends_with: String
-
-  """All values not ending with the given string."""
-  message_not_ends_with: String
-  type: String
-
-  """All values that are not equal to given value."""
-  type_not: String
-
-  """All values that are contained in given list."""
-  type_in: [String!]
-
-  """All values that are not contained in given list."""
-  type_not_in: [String!]
-
-  """All values less than the given value."""
-  type_lt: String
-
-  """All values less than or equal the given value."""
-  type_lte: String
-
-  """All values greater than the given value."""
-  type_gt: String
-
-  """All values greater than or equal the given value."""
-  type_gte: String
-
-  """All values containing the given string."""
-  type_contains: String
-
-  """All values not containing the given string."""
-  type_not_contains: String
-
-  """All values starting with the given string."""
-  type_starts_with: String
-
-  """All values not starting with the given string."""
-  type_not_starts_with: String
-
-  """All values ending with the given string."""
-  type_ends_with: String
-
-  """All values not ending with the given string."""
-  type_not_ends_with: String
-  user: UserWhereInput
-}
-
-input FeedWhereUniqueInput {
-  id: ID
-}
-
 type Halo implements Node {
   id: ID!
   createdAt: DateTime!
@@ -5950,7 +5294,6 @@ type Mutation {
   createCircle(data: CircleCreateInput!): Circle!
   createCircleJoinRequest(data: CircleJoinRequestCreateInput!): CircleJoinRequest!
   createCircleInvite(data: CircleInviteCreateInput!): CircleInvite!
-  createFeed(data: FeedCreateInput!): Feed!
   createCharity(data: CharityCreateInput!): Charity!
   createSpecialFundraiser(data: SpecialFundraiserCreateInput!): SpecialFundraiser!
   createTransaction(data: TransactionCreateInput!): Transaction!
@@ -5964,7 +5307,6 @@ type Mutation {
   updateCircle(data: CircleUpdateInput!, where: CircleWhereUniqueInput!): Circle
   updateCircleJoinRequest(data: CircleJoinRequestUpdateInput!, where: CircleJoinRequestWhereUniqueInput!): CircleJoinRequest
   updateCircleInvite(data: CircleInviteUpdateInput!, where: CircleInviteWhereUniqueInput!): CircleInvite
-  updateFeed(data: FeedUpdateInput!, where: FeedWhereUniqueInput!): Feed
   updateCharity(data: CharityUpdateInput!, where: CharityWhereUniqueInput!): Charity
   updateSpecialFundraiser(data: SpecialFundraiserUpdateInput!, where: SpecialFundraiserWhereUniqueInput!): SpecialFundraiser
   updateTransaction(data: TransactionUpdateInput!, where: TransactionWhereUniqueInput!): Transaction
@@ -5978,7 +5320,6 @@ type Mutation {
   deleteCircle(where: CircleWhereUniqueInput!): Circle
   deleteCircleJoinRequest(where: CircleJoinRequestWhereUniqueInput!): CircleJoinRequest
   deleteCircleInvite(where: CircleInviteWhereUniqueInput!): CircleInvite
-  deleteFeed(where: FeedWhereUniqueInput!): Feed
   deleteCharity(where: CharityWhereUniqueInput!): Charity
   deleteSpecialFundraiser(where: SpecialFundraiserWhereUniqueInput!): SpecialFundraiser
   deleteTransaction(where: TransactionWhereUniqueInput!): Transaction
@@ -5992,7 +5333,6 @@ type Mutation {
   upsertCircle(where: CircleWhereUniqueInput!, create: CircleCreateInput!, update: CircleUpdateInput!): Circle!
   upsertCircleJoinRequest(where: CircleJoinRequestWhereUniqueInput!, create: CircleJoinRequestCreateInput!, update: CircleJoinRequestUpdateInput!): CircleJoinRequest!
   upsertCircleInvite(where: CircleInviteWhereUniqueInput!, create: CircleInviteCreateInput!, update: CircleInviteUpdateInput!): CircleInvite!
-  upsertFeed(where: FeedWhereUniqueInput!, create: FeedCreateInput!, update: FeedUpdateInput!): Feed!
   upsertCharity(where: CharityWhereUniqueInput!, create: CharityCreateInput!, update: CharityUpdateInput!): Charity!
   upsertSpecialFundraiser(where: SpecialFundraiserWhereUniqueInput!, create: SpecialFundraiserCreateInput!, update: SpecialFundraiserUpdateInput!): SpecialFundraiser!
   upsertTransaction(where: TransactionWhereUniqueInput!, create: TransactionCreateInput!, update: TransactionUpdateInput!): Transaction!
@@ -6004,7 +5344,6 @@ type Mutation {
   updateManyLoops(data: LoopUpdateManyMutationInput!, where: LoopWhereInput): BatchPayload!
   updateManyPreferenceses(data: PreferencesUpdateManyMutationInput!, where: PreferencesWhereInput): BatchPayload!
   updateManyCircles(data: CircleUpdateManyMutationInput!, where: CircleWhereInput): BatchPayload!
-  updateManyFeeds(data: FeedUpdateManyMutationInput!, where: FeedWhereInput): BatchPayload!
   updateManyCharities(data: CharityUpdateManyMutationInput!, where: CharityWhereInput): BatchPayload!
   updateManySpecialFundraisers(data: SpecialFundraiserUpdateManyMutationInput!, where: SpecialFundraiserWhereInput): BatchPayload!
   updateManyTransactions(data: TransactionUpdateManyMutationInput!, where: TransactionWhereInput): BatchPayload!
@@ -6018,7 +5357,6 @@ type Mutation {
   deleteManyCircles(where: CircleWhereInput): BatchPayload!
   deleteManyCircleJoinRequests(where: CircleJoinRequestWhereInput): BatchPayload!
   deleteManyCircleInvites(where: CircleInviteWhereInput): BatchPayload!
-  deleteManyFeeds(where: FeedWhereInput): BatchPayload!
   deleteManyCharities(where: CharityWhereInput): BatchPayload!
   deleteManySpecialFundraisers(where: SpecialFundraiserWhereInput): BatchPayload!
   deleteManyTransactions(where: TransactionWhereInput): BatchPayload!
@@ -6302,7 +5640,6 @@ type Query {
   circles(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle]!
   circleJoinRequests(where: CircleJoinRequestWhereInput, orderBy: CircleJoinRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CircleJoinRequest]!
   circleInvites(where: CircleInviteWhereInput, orderBy: CircleInviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CircleInvite]!
-  feeds(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feed]!
   charities(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charity]!
   specialFundraisers(where: SpecialFundraiserWhereInput, orderBy: SpecialFundraiserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SpecialFundraiser]!
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction]!
@@ -6316,7 +5653,6 @@ type Query {
   circle(where: CircleWhereUniqueInput!): Circle
   circleJoinRequest(where: CircleJoinRequestWhereUniqueInput!): CircleJoinRequest
   circleInvite(where: CircleInviteWhereUniqueInput!): CircleInvite
-  feed(where: FeedWhereUniqueInput!): Feed
   charity(where: CharityWhereUniqueInput!): Charity
   specialFundraiser(where: SpecialFundraiserWhereUniqueInput!): SpecialFundraiser
   transaction(where: TransactionWhereUniqueInput!): Transaction
@@ -6330,7 +5666,6 @@ type Query {
   circlesConnection(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CircleConnection!
   circleJoinRequestsConnection(where: CircleJoinRequestWhereInput, orderBy: CircleJoinRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CircleJoinRequestConnection!
   circleInvitesConnection(where: CircleInviteWhereInput, orderBy: CircleInviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CircleInviteConnection!
-  feedsConnection(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedConnection!
   charitiesConnection(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CharityConnection!
   specialFundraisersConnection(where: SpecialFundraiserWhereInput, orderBy: SpecialFundraiserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SpecialFundraiserConnection!
   transactionsConnection(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransactionConnection!
@@ -6667,7 +6002,6 @@ type Subscription {
   circle(where: CircleSubscriptionWhereInput): CircleSubscriptionPayload
   circleJoinRequest(where: CircleJoinRequestSubscriptionWhereInput): CircleJoinRequestSubscriptionPayload
   circleInvite(where: CircleInviteSubscriptionWhereInput): CircleInviteSubscriptionPayload
-  feed(where: FeedSubscriptionWhereInput): FeedSubscriptionPayload
   charity(where: CharitySubscriptionWhereInput): CharitySubscriptionPayload
   specialFundraiser(where: SpecialFundraiserSubscriptionWhereInput): SpecialFundraiserSubscriptionPayload
   transaction(where: TransactionSubscriptionWhereInput): TransactionSubscriptionPayload
@@ -7348,7 +6682,6 @@ type User implements Node {
   circles(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle!]
   circlesOwned(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle!]
   dots(where: DotWhereInput, orderBy: DotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dot!]
-  feed(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feed!]
   followedCharities(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charity!]
   halos(where: HaloWhereInput, orderBy: HaloOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Halo!]
   identity: Identity!
@@ -7380,7 +6713,6 @@ input UserCreateInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -7416,11 +6748,6 @@ input UserCreateOneWithoutCirclesOwnedInput {
 
 input UserCreateOneWithoutDotsInput {
   create: UserCreateWithoutDotsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutFeedInput {
-  create: UserCreateWithoutFeedInput
   connect: UserWhereUniqueInput
 }
 
@@ -7461,7 +6788,6 @@ input UserCreateWithoutCircleInvitesInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -7482,7 +6808,6 @@ input UserCreateWithoutCircleJoinRequestsInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -7503,7 +6828,6 @@ input UserCreateWithoutCirclesInput {
   circleInvites: CircleInviteCreateManyWithoutUserInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -7524,7 +6848,6 @@ input UserCreateWithoutCirclesOwnedInput {
   circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -7545,28 +6868,6 @@ input UserCreateWithoutDotsInput {
   circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
-  feed: FeedCreateManyWithoutUserInput
-  followedCharities: CharityCreateManyWithoutFollowersInput
-  halos: HaloCreateManyWithoutUserInput
-  identity: IdentityCreateOneWithoutUserInput!
-  loops: LoopCreateManyWithoutUserInput
-  preferences: PreferencesCreateOneWithoutUserInput!
-  transactions: TransactionCreateManyWithoutUserInput
-}
-
-input UserCreateWithoutFeedInput {
-  bio: String
-  email: String!
-  nameFirst: String!
-  nameLast: String!
-  picture: String
-  securityToken: Int!
-  username: String!
-  circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
-  circleInvites: CircleInviteCreateManyWithoutUserInput
-  circles: CircleCreateManyWithoutMembersInput
-  circlesOwned: CircleCreateManyWithoutOwnerInput
-  dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -7588,7 +6889,6 @@ input UserCreateWithoutFollowedCharitiesInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
@@ -7609,7 +6909,6 @@ input UserCreateWithoutHalosInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
@@ -7630,7 +6929,6 @@ input UserCreateWithoutIdentityInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   loops: LoopCreateManyWithoutUserInput
@@ -7651,7 +6949,6 @@ input UserCreateWithoutLoopsInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -7672,7 +6969,6 @@ input UserCreateWithoutPreferencesInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -7693,7 +6989,6 @@ input UserCreateWithoutTransactionsInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -8155,7 +7450,6 @@ input UserUpdateInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -8241,13 +7535,6 @@ input UserUpdateOneRequiredWithoutDotsInput {
   upsert: UserUpsertWithoutDotsInput
 }
 
-input UserUpdateOneRequiredWithoutFeedInput {
-  create: UserCreateWithoutFeedInput
-  connect: UserWhereUniqueInput
-  update: UserUpdateWithoutFeedDataInput
-  upsert: UserUpsertWithoutFeedInput
-}
-
 input UserUpdateOneRequiredWithoutHalosInput {
   create: UserCreateWithoutHalosInput
   connect: UserWhereUniqueInput
@@ -8297,7 +7584,6 @@ input UserUpdateWithoutCircleInvitesDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -8318,7 +7604,6 @@ input UserUpdateWithoutCircleJoinRequestsDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -8339,7 +7624,6 @@ input UserUpdateWithoutCirclesDataInput {
   circleInvites: CircleInviteUpdateManyWithoutUserInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -8360,7 +7644,6 @@ input UserUpdateWithoutCirclesOwnedDataInput {
   circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -8381,28 +7664,6 @@ input UserUpdateWithoutDotsDataInput {
   circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
-  feed: FeedUpdateManyWithoutUserInput
-  followedCharities: CharityUpdateManyWithoutFollowersInput
-  halos: HaloUpdateManyWithoutUserInput
-  identity: IdentityUpdateOneRequiredWithoutUserInput
-  loops: LoopUpdateManyWithoutUserInput
-  preferences: PreferencesUpdateOneRequiredWithoutUserInput
-  transactions: TransactionUpdateManyWithoutUserInput
-}
-
-input UserUpdateWithoutFeedDataInput {
-  bio: String
-  email: String
-  nameFirst: String
-  nameLast: String
-  picture: String
-  securityToken: Int
-  username: String
-  circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
-  circleInvites: CircleInviteUpdateManyWithoutUserInput
-  circles: CircleUpdateManyWithoutMembersInput
-  circlesOwned: CircleUpdateManyWithoutOwnerInput
-  dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -8424,7 +7685,6 @@ input UserUpdateWithoutFollowedCharitiesDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
@@ -8445,7 +7705,6 @@ input UserUpdateWithoutHalosDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
@@ -8466,7 +7725,6 @@ input UserUpdateWithoutIdentityDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
@@ -8487,7 +7745,6 @@ input UserUpdateWithoutLoopsDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -8508,7 +7765,6 @@ input UserUpdateWithoutPreferencesDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -8529,7 +7785,6 @@ input UserUpdateWithoutTransactionsDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -8565,11 +7820,6 @@ input UserUpsertWithoutCirclesOwnedInput {
 input UserUpsertWithoutDotsInput {
   update: UserUpdateWithoutDotsDataInput!
   create: UserCreateWithoutDotsInput!
-}
-
-input UserUpsertWithoutFeedInput {
-  update: UserUpdateWithoutFeedDataInput!
-  create: UserCreateWithoutFeedInput!
 }
 
 input UserUpsertWithoutHalosInput {
@@ -8979,9 +8229,6 @@ input UserWhereInput {
   dots_every: DotWhereInput
   dots_some: DotWhereInput
   dots_none: DotWhereInput
-  feed_every: FeedWhereInput
-  feed_some: FeedWhereInput
-  feed_none: FeedWhereInput
   followedCharities_every: CharityWhereInput
   followedCharities_some: CharityWhereInput
   followedCharities_none: CharityWhereInput

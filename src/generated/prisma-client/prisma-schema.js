@@ -23,10 +23,6 @@ type AggregateEvent {
   count: Int!
 }
 
-type AggregateFeed {
-  count: Int!
-}
-
 type AggregateHalo {
   count: Int!
 }
@@ -1718,219 +1714,6 @@ input EventWhereUniqueInput {
   id: ID
 }
 
-type Feed {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  dots: Int
-  link: String
-  message: String!
-  type: String!
-  user: User!
-}
-
-type FeedConnection {
-  pageInfo: PageInfo!
-  edges: [FeedEdge]!
-  aggregate: AggregateFeed!
-}
-
-input FeedCreateInput {
-  dots: Int
-  link: String
-  message: String!
-  type: String!
-  user: UserCreateOneWithoutFeedInput!
-}
-
-input FeedCreateManyWithoutUserInput {
-  create: [FeedCreateWithoutUserInput!]
-  connect: [FeedWhereUniqueInput!]
-}
-
-input FeedCreateWithoutUserInput {
-  dots: Int
-  link: String
-  message: String!
-  type: String!
-}
-
-type FeedEdge {
-  node: Feed!
-  cursor: String!
-}
-
-enum FeedOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  dots_ASC
-  dots_DESC
-  link_ASC
-  link_DESC
-  message_ASC
-  message_DESC
-  type_ASC
-  type_DESC
-}
-
-type FeedPreviousValues {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  dots: Int
-  link: String
-  message: String!
-  type: String!
-}
-
-type FeedSubscriptionPayload {
-  mutation: MutationType!
-  node: Feed
-  updatedFields: [String!]
-  previousValues: FeedPreviousValues
-}
-
-input FeedSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: FeedWhereInput
-  AND: [FeedSubscriptionWhereInput!]
-  OR: [FeedSubscriptionWhereInput!]
-  NOT: [FeedSubscriptionWhereInput!]
-}
-
-input FeedUpdateInput {
-  dots: Int
-  link: String
-  message: String
-  type: String
-  user: UserUpdateOneRequiredWithoutFeedInput
-}
-
-input FeedUpdateManyWithoutUserInput {
-  create: [FeedCreateWithoutUserInput!]
-  delete: [FeedWhereUniqueInput!]
-  connect: [FeedWhereUniqueInput!]
-  disconnect: [FeedWhereUniqueInput!]
-  update: [FeedUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [FeedUpsertWithWhereUniqueWithoutUserInput!]
-}
-
-input FeedUpdateWithoutUserDataInput {
-  dots: Int
-  link: String
-  message: String
-  type: String
-}
-
-input FeedUpdateWithWhereUniqueWithoutUserInput {
-  where: FeedWhereUniqueInput!
-  data: FeedUpdateWithoutUserDataInput!
-}
-
-input FeedUpsertWithWhereUniqueWithoutUserInput {
-  where: FeedWhereUniqueInput!
-  update: FeedUpdateWithoutUserDataInput!
-  create: FeedCreateWithoutUserInput!
-}
-
-input FeedWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  dots: Int
-  dots_not: Int
-  dots_in: [Int!]
-  dots_not_in: [Int!]
-  dots_lt: Int
-  dots_lte: Int
-  dots_gt: Int
-  dots_gte: Int
-  link: String
-  link_not: String
-  link_in: [String!]
-  link_not_in: [String!]
-  link_lt: String
-  link_lte: String
-  link_gt: String
-  link_gte: String
-  link_contains: String
-  link_not_contains: String
-  link_starts_with: String
-  link_not_starts_with: String
-  link_ends_with: String
-  link_not_ends_with: String
-  message: String
-  message_not: String
-  message_in: [String!]
-  message_not_in: [String!]
-  message_lt: String
-  message_lte: String
-  message_gt: String
-  message_gte: String
-  message_contains: String
-  message_not_contains: String
-  message_starts_with: String
-  message_not_starts_with: String
-  message_ends_with: String
-  message_not_ends_with: String
-  type: String
-  type_not: String
-  type_in: [String!]
-  type_not_in: [String!]
-  type_lt: String
-  type_lte: String
-  type_gt: String
-  type_gte: String
-  type_contains: String
-  type_not_contains: String
-  type_starts_with: String
-  type_not_starts_with: String
-  type_ends_with: String
-  type_not_ends_with: String
-  user: UserWhereInput
-  AND: [FeedWhereInput!]
-  OR: [FeedWhereInput!]
-  NOT: [FeedWhereInput!]
-}
-
-input FeedWhereUniqueInput {
-  id: ID
-}
-
 type Halo {
   id: ID!
   createdAt: DateTime!
@@ -2441,12 +2224,6 @@ type Mutation {
   upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
   deleteEvent(where: EventWhereUniqueInput!): Event
   deleteManyEvents(where: EventWhereInput): BatchPayload!
-  createFeed(data: FeedCreateInput!): Feed!
-  updateFeed(data: FeedUpdateInput!, where: FeedWhereUniqueInput!): Feed
-  updateManyFeeds(data: FeedUpdateInput!, where: FeedWhereInput): BatchPayload!
-  upsertFeed(where: FeedWhereUniqueInput!, create: FeedCreateInput!, update: FeedUpdateInput!): Feed!
-  deleteFeed(where: FeedWhereUniqueInput!): Feed
-  deleteManyFeeds(where: FeedWhereInput): BatchPayload!
   createHalo(data: HaloCreateInput!): Halo!
   updateHalo(data: HaloUpdateInput!, where: HaloWhereUniqueInput!): Halo
   updateManyHaloes(data: HaloUpdateInput!, where: HaloWhereInput): BatchPayload!
@@ -2670,9 +2447,6 @@ type Query {
   event(where: EventWhereUniqueInput!): Event
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
   eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
-  feed(where: FeedWhereUniqueInput!): Feed
-  feeds(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feed]!
-  feedsConnection(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedConnection!
   halo(where: HaloWhereUniqueInput!): Halo
   haloes(where: HaloWhereInput, orderBy: HaloOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Halo]!
   haloesConnection(where: HaloWhereInput, orderBy: HaloOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HaloConnection!
@@ -2873,7 +2647,6 @@ type Subscription {
   circleJoinRequest(where: CircleJoinRequestSubscriptionWhereInput): CircleJoinRequestSubscriptionPayload
   dot(where: DotSubscriptionWhereInput): DotSubscriptionPayload
   event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
-  feed(where: FeedSubscriptionWhereInput): FeedSubscriptionPayload
   halo(where: HaloSubscriptionWhereInput): HaloSubscriptionPayload
   identity(where: IdentitySubscriptionWhereInput): IdentitySubscriptionPayload
   loop(where: LoopSubscriptionWhereInput): LoopSubscriptionPayload
@@ -3163,7 +2936,6 @@ type User {
   circles(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle!]
   circlesOwned(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle!]
   dots(where: DotWhereInput, orderBy: DotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dot!]
-  feed(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feed!]
   followedCharities(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charity!]
   halos(where: HaloWhereInput, orderBy: HaloOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Halo!]
   identity: Identity!
@@ -3191,7 +2963,6 @@ input UserCreateInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -3227,11 +2998,6 @@ input UserCreateOneWithoutCirclesOwnedInput {
 
 input UserCreateOneWithoutDotsInput {
   create: UserCreateWithoutDotsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutFeedInput {
-  create: UserCreateWithoutFeedInput
   connect: UserWhereUniqueInput
 }
 
@@ -3272,7 +3038,6 @@ input UserCreateWithoutCircleInvitesInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -3293,7 +3058,6 @@ input UserCreateWithoutCircleJoinRequestsInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -3314,7 +3078,6 @@ input UserCreateWithoutCirclesInput {
   circleInvites: CircleInviteCreateManyWithoutUserInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -3335,7 +3098,6 @@ input UserCreateWithoutCirclesOwnedInput {
   circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -3356,28 +3118,6 @@ input UserCreateWithoutDotsInput {
   circleInvites: CircleInviteCreateManyWithoutUserInput
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
-  feed: FeedCreateManyWithoutUserInput
-  followedCharities: CharityCreateManyWithoutFollowersInput
-  halos: HaloCreateManyWithoutUserInput
-  identity: IdentityCreateOneWithoutUserInput!
-  loops: LoopCreateManyWithoutUserInput
-  preferences: PreferencesCreateOneWithoutUserInput!
-  transactions: TransactionCreateManyWithoutUserInput
-}
-
-input UserCreateWithoutFeedInput {
-  bio: String
-  email: String!
-  nameFirst: String!
-  nameLast: String!
-  picture: String
-  securityToken: Int!
-  username: String!
-  circleJoinRequests: CircleJoinRequestCreateManyWithoutUserInput
-  circleInvites: CircleInviteCreateManyWithoutUserInput
-  circles: CircleCreateManyWithoutMembersInput
-  circlesOwned: CircleCreateManyWithoutOwnerInput
-  dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -3399,7 +3139,6 @@ input UserCreateWithoutFollowedCharitiesInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
@@ -3420,7 +3159,6 @@ input UserCreateWithoutHalosInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
@@ -3441,7 +3179,6 @@ input UserCreateWithoutIdentityInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   loops: LoopCreateManyWithoutUserInput
@@ -3462,7 +3199,6 @@ input UserCreateWithoutLoopsInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -3483,7 +3219,6 @@ input UserCreateWithoutPreferencesInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -3504,7 +3239,6 @@ input UserCreateWithoutTransactionsInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
-  feed: FeedCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
@@ -3584,7 +3318,6 @@ input UserUpdateInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -3639,13 +3372,6 @@ input UserUpdateOneRequiredWithoutDotsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneRequiredWithoutFeedInput {
-  create: UserCreateWithoutFeedInput
-  update: UserUpdateWithoutFeedDataInput
-  upsert: UserUpsertWithoutFeedInput
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateOneRequiredWithoutHalosInput {
   create: UserCreateWithoutHalosInput
   update: UserUpdateWithoutHalosDataInput
@@ -3695,7 +3421,6 @@ input UserUpdateWithoutCircleInvitesDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -3716,7 +3441,6 @@ input UserUpdateWithoutCircleJoinRequestsDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -3737,7 +3461,6 @@ input UserUpdateWithoutCirclesDataInput {
   circleInvites: CircleInviteUpdateManyWithoutUserInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -3758,7 +3481,6 @@ input UserUpdateWithoutCirclesOwnedDataInput {
   circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -3779,28 +3501,6 @@ input UserUpdateWithoutDotsDataInput {
   circleInvites: CircleInviteUpdateManyWithoutUserInput
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
-  feed: FeedUpdateManyWithoutUserInput
-  followedCharities: CharityUpdateManyWithoutFollowersInput
-  halos: HaloUpdateManyWithoutUserInput
-  identity: IdentityUpdateOneRequiredWithoutUserInput
-  loops: LoopUpdateManyWithoutUserInput
-  preferences: PreferencesUpdateOneRequiredWithoutUserInput
-  transactions: TransactionUpdateManyWithoutUserInput
-}
-
-input UserUpdateWithoutFeedDataInput {
-  bio: String
-  email: String
-  nameFirst: String
-  nameLast: String
-  picture: String
-  securityToken: Int
-  username: String
-  circleJoinRequests: CircleJoinRequestUpdateManyWithoutUserInput
-  circleInvites: CircleInviteUpdateManyWithoutUserInput
-  circles: CircleUpdateManyWithoutMembersInput
-  circlesOwned: CircleUpdateManyWithoutOwnerInput
-  dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -3822,7 +3522,6 @@ input UserUpdateWithoutFollowedCharitiesDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
@@ -3843,7 +3542,6 @@ input UserUpdateWithoutHalosDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
@@ -3864,7 +3562,6 @@ input UserUpdateWithoutIdentityDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
@@ -3885,7 +3582,6 @@ input UserUpdateWithoutLoopsDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -3906,7 +3602,6 @@ input UserUpdateWithoutPreferencesDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -3927,7 +3622,6 @@ input UserUpdateWithoutTransactionsDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
-  feed: FeedUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
@@ -3963,11 +3657,6 @@ input UserUpsertWithoutCirclesOwnedInput {
 input UserUpsertWithoutDotsInput {
   update: UserUpdateWithoutDotsDataInput!
   create: UserCreateWithoutDotsInput!
-}
-
-input UserUpsertWithoutFeedInput {
-  update: UserUpdateWithoutFeedDataInput!
-  create: UserCreateWithoutFeedInput!
 }
 
 input UserUpsertWithoutHalosInput {
@@ -4145,9 +3834,6 @@ input UserWhereInput {
   dots_every: DotWhereInput
   dots_some: DotWhereInput
   dots_none: DotWhereInput
-  feed_every: FeedWhereInput
-  feed_some: FeedWhereInput
-  feed_none: FeedWhereInput
   followedCharities_every: CharityWhereInput
   followedCharities_some: CharityWhereInput
   followedCharities_none: CharityWhereInput
