@@ -93,6 +93,7 @@ type userLoopsPayload {
 }
 
 type userHalosPayload {
+  date: DateTime!
   description: String!
   key: String!
   tier: String!
