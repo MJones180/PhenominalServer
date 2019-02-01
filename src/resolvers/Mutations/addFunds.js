@@ -1,5 +1,8 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
+// Set the API version
+stripe.setApiVersion('2018-11-08');
+
 module.exports = async (parent, { amount, token }, ctx) => (
   new Promise(async (done) => {
     // Grab the user's email and ID
