@@ -14,6 +14,7 @@ type Mutation {
   handleCircleRequest(id: ID!, username: String!, accept: Boolean!): Boolean
   inviteCircleMember(id: ID!, username: String!): Boolean
   kickCircleMember(id: ID!, username: String!): Boolean
+  sendFriendInvite(email: String!, message: String!): Boolean
   setFollowCharityRelation(ein: String!, unfollow: Boolean): Boolean
   setCircleRelation(id: ID!, leave: Boolean): String
   signin(provider: String!, token: String!): signinPayload!
