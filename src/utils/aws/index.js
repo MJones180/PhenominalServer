@@ -1,8 +1,5 @@
 const AWS = require('aws-sdk');
 
-// Load in the auth info
-AWS.config.loadFromPath(`${__dirname}/config.json`);
-
 // Create a new S3 connection
 const s3 = new AWS.S3({
   apiVersion: '2006-03-01',
