@@ -3,7 +3,9 @@ endpoint: ${env:PRISMA_ENDPOINT}
 generate:
   - generator: javascript-client
     output: ../src/generated/prisma-client/
+  - generator: graphql-schema
+    output: ../src/generated/
 hooks:
   post-deploy:
-    - graphql get-schema -p database
+    - prisma generate
 secret: ${env:PRISMA_SECRET}

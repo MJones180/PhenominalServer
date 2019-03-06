@@ -1,7 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { formatError } = require('apollo-errors');
 const { Prisma: PrismaBinding } = require('prisma-binding');
-const { prisma: prismaClient } = require('./generated/prisma-client');
+const { prisma: client } = require('./generated/prisma-client');
 const user = require('./middleware/user');
 const aws = require('./utils/aws');
 const dots = require('./utils/dots');
@@ -22,8 +22,6 @@ const binding = new PrismaBinding({
   endpoint: process.env.PRISMA_ENDPOINT,
   secret: process.env.PRISMA_SECRET,
 });
-
-const client = prismaClient;
 
 // Server config
 const server = new GraphQLServer({
@@ -66,8 +64,8 @@ const options = {
   formatError,
 };
 
-// Check if in production
-const { __PROD__ } = process.env;
+// Check if in prod env
+const __PROD__ = (process.env.STAGE) == 'prod';
 
 // Hide the playground in production
 if (__PROD__) options.playground = false;

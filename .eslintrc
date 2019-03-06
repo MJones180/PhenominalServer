@@ -5,10 +5,6 @@
   "extends": [
     "airbnb-base"
   ],
-  "globals": {
-    "__DEV__": false,
-    "__PROD__": false
-  },
   "plugins": [
     "import"
   ],
@@ -24,6 +20,7 @@
     "consistent-return": [0],
     "eqeqeq": [0],
     "global-require": [0],
+    "import/no-dynamic-require": [0],
     "max-len": [0],
     "no-console": [0],
     "no-param-reassign": [2, {
