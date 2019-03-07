@@ -77,7 +77,7 @@ const sync = async () => {
 };
 
 // Print the current env
-console.log('\nENV: ', process.env.__DEV__ ? 'dev' : 'prod');
+console.log('\nENV: ', process.env.STAGE);
 
 // Sync the database to the index.json
 sync();

@@ -4,11 +4,8 @@ const forEach = require('lodash/forEach');
 const jsonfile = require('jsonfile');
 const { prisma } = require('../../src/generated/prisma-client');
 
-// Grab the current env
-const env = process.env.__DEV__ ? 'dev' : 'prod';
-
 // The source file
-const source = `${__dirname}/${env}.json`;
+const source = `${__dirname}/${process.env.STAGE}.json`;
 
 // Grab the events
 const events = jsonfile.readFileSync(source);
