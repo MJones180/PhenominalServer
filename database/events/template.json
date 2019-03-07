@@ -7,6 +7,7 @@
     "name": "String: Name of special fundraiser",
     "description": "String: Description of special fundraiser"
   },
+  "files": "./dev.json && ./prod.json",
   "template": {
     "charities": [
       {

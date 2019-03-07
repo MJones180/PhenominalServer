@@ -3,6 +3,8 @@
 *.log
 node_modules
 package-lock.json
+database/events/dev.json
+database/events/prod.json
 env/.dev
 env/.prod
 env/.root
