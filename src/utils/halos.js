@@ -37,22 +37,22 @@ const halos = {
   createCircle: {
     description: () => 'Create first Circle',
     tiers: [
-      [1, 5000, EASY],
+      [1, 500, EASY],
     ],
   },
   firstDonation: {
     description: () => 'First donation',
     tiers: [
-      [1, 25000, PHENOMINAL],
+      [1, 5000, PHENOMINAL],
     ],
   },
   followCharity: {
     description: val => `Follow ${val} charities`,
     tiers: [
-      [200, 100000, PHENOMINAL],
+      [200, 50000, PHENOMINAL],
       [100, 10000, HARD],
-      [25, 5000, MODERATE],
-      [10, 2500, EASY],
+      [25, 2500, MODERATE],
+      [10, 500, EASY],
     ],
   },
   loopCount: {
@@ -73,7 +73,7 @@ const halos = {
   setProfilePic: {
     description: () => 'Set profile picture',
     tiers: [
-      [1, 5000, EASY],
+      [1, 500, EASY],
     ],
   },
 };
