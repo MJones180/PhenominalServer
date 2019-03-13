@@ -27,7 +27,7 @@
   "phoneNumber": "(612)872-7060",
   "website": "https://www.awanj.org/"
 }, {
-  "acronym": null,
+  "acronym": "®",
   "bannerCredit": "Be The Match",
   "ein": "41-1704734",
   "expensesAdministrative": 16.2,
@@ -68,6 +68,20 @@
   "name": "Israel Guide Dog Center for the Blind",
   "phoneNumber": "(215)343-9100",
   "website": "https://israelguidedog.org/"
+}, {
+  "acronym": null,
+  "bannerCredit": null,
+  "ein": "59-3097333",
+  "expensesAdministrative": 6.1,
+  "expensesFundraising": 6.3,
+  "expensesOther": 0,
+  "expensesProgram": 87.6,
+  "expensesUpdated": "06/17",
+  "location": "Tampa, FL 33609",
+  "mission": "Founded in 1991, the National Pediatric Cancer Foundation exists to raise money to fund pediatric cancer research. Our focus is to fund research which will lead to the elimination of pediatric cancer worldwide. In addition to funding valuable seed grants throughout the state of Florida, the National Pediatric Cancer Foundation has developed The Sunshine Project. This is an innovative collaboration of the nation's top doctors and researchers with one goal: to fast-track new treatments and increase the survival rate of children battling cancer. Since 2005, we have implemented the groundwork necessary to introduce less toxic, more targeted drugs into clinical trials. New compounds are currently being tested in these trials and hold great promise for children who have not experienced positive results under the standard treatment protocol.",
+  "name": "National Pediatric Cancer Foundation",
+  "phoneNumber": "(813)269-0955",
+  "website": "https://nationalpcf.org/"
 }, {
   "acronym": null,
   "bannerCredit": "Roman Kraft",
