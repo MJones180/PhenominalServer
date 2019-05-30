@@ -8,7 +8,6 @@ const fields = [
   'charity', 'charities', 'charitiesConnection',
   'event', 'events', 'eventsConnection',
   'transaction', 'transactions', 'transactionsConnection',
-  'specialFundraiser', 'specialFundraisers', 'specialFundraisersConnection',
   'identity', 'identities', 'identitiesConnection',
 ];
 

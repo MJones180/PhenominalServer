@@ -1,7 +1,7 @@
 type User {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 
   bio: String
   email: String!
@@ -18,15 +18,17 @@ type User {
   dots: [Dot!]! @relation(name: "UserDots", onDelete: CASCADE)
   followedCharities: [Charity!]!
   halos: [Halo!]! @relation(name: "UserHalos", onDelete: CASCADE)
-  identity: Identity! @relation(name: "UserIdentity", onDelete: CASCADE)
+  identity: Identity! @relation(name: "UserIdentity", onDelete: CASCADE, link: TABLE)
   loops: [Loop!]! @relation(name: "UserLoops", onDelete: CASCADE)
-  preferences: Preferences! @relation(name: "UserPreferences", onDelete: CASCADE)
+  preferences: Preferences! @relation(name: "UserPreferences", onDelete: CASCADE, link: TABLE)
   transactions: [Transaction!]!
+
+  funds: [Funds!]!
 }
 
 type Dot {
-  id: ID! @unique
-  createdAt: DateTime!
+  id: ID! @id
+  createdAt: DateTime! @createdAt
 
   action: String!
   amount: Int!
@@ -36,8 +38,8 @@ type Dot {
 }
 
 type Halo {
-  id: ID! @unique
-  createdAt: DateTime!
+  id: ID! @id
+  createdAt: DateTime! @createdAt
 
   key: String!
   tier: String
@@ -46,9 +48,9 @@ type Halo {
 }
 
 type Identity {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 
   provider: IdentityProvider!
   providerID: String! @unique
@@ -57,8 +59,8 @@ type Identity {
 }
 
 type Loop {
-  id: ID! @unique
-  createdAt: DateTime!
+  id: ID! @id
+  createdAt: DateTime! @createdAt
 
   count: Int!
 
@@ -67,24 +69,24 @@ type Loop {
 }
 
 type Preferences {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 
-  allowDonationEmails: Boolean! @default(value: "true")
-  publicProfile: Boolean! @default(value: "true")
+  allowDonationEmails: Boolean! @default(value: true)
+  publicProfile: Boolean! @default(value: true)
 
   user: User! @relation(name: "UserPreferences")
 }
 
 type Circle {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 
   description: String
   name: String! @unique
-  open: Boolean! @default(value: "true")
+  open: Boolean! @default(value: true)
 
   joinRequests: [CircleJoinRequest!]! @relation(name: "CircleJoinRequests", onDelete: CASCADE)
   invites: [CircleInvite!]! @relation(name: "CircleInvites", onDelete: CASCADE)
@@ -93,30 +95,31 @@ type Circle {
 }
 
 type CircleJoinRequest {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 
   circle: Circle! @relation(name: "CircleJoinRequests")
   user: User! @relation(name: "UserCirclesJoinRequests")
 }
 
 type CircleInvite {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 
   circle: Circle! @relation(name: "CircleInvites")
   user: User! @relation(name: "UserCirclesInvites")
 }
 
 type Charity {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 
   acronym: String
   bannerCredit: String
+  connectedAccountID: String
   ein: String! @unique
   expensesAdministrative: Float
   expensesFundraising: Float
@@ -133,54 +136,64 @@ type Charity {
   followers: [User!]!
 }
 
-type SpecialFundraiser {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-
-  description: String!
-  name: String!
-
-  event: Event!
-}
-
 type Event {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 
   endDate: DateTime!
   goal: Int!
   multiplier: Int
+  specialEvent: String
+  specialEventDescription: String
+  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime!
 
-  charity: Charity
-  specialFundraiser: SpecialFundraiser
-  donations: [Transaction!]!
+  charity: Charity!
+  donations: [Donation!]!
+}
+
+type Donation {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+
+  amount: Int!
+  batchKey: String!
+  subBalance: Int!
+  transferID: String!
+
+  event: Event
+  source: Funds
+  transaction: Transaction!
+}
+
+type Funds {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+
+  amountAdded: Int!
+  amountNet: Int!
+  chargeID: String!
+
+  donations: [Donation!]!
+  transaction: Transaction! @relation(link: TABLE)
+  user: User!
 }
 
 type Transaction {
-  id: ID! @unique
-  createdAt: DateTime!
+  id: Int! @id
+  createdAt: DateTime! @createdAt
 
-  amount: Int!
   balance: Int!
-  key: String! @unique
-  stripeID: String
-  type: TransactionType!
 
-  event: Event
-  user: User
+  donations: [Donation!]!
+  funds: Funds
+  user: User!
 }
 
 enum IdentityProvider {
   FACEBOOK
   GOOGLE
-}
-
-enum TransactionType {
-  DONATION
-  ADD_FUNDS
 }

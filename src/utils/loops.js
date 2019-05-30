@@ -29,8 +29,7 @@ module.exports = (client) => {
     // If the loop count does not exist default to 0
     const count = loopCount ? loopCount.count : 0;
     // Grab all of the stage information (contains count)
-    const stage = loopStage(count);
-    return stage;
+    return loopStage(count);
   };
   // Export the function
   return { grabLoops };

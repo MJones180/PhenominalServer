@@ -13,17 +13,14 @@ module.exports = async (resolve, root, args, ctx, info) => {
     const token = validateAuth(authorization.replace('Bearer ', ''));
     // Easy access to userID
     const { userID } = token;
-    // Grab the user's balance (and key)
+    // Grab the user's balance
     const grabBalance = async () => {
       // Grab the user's most recent transaction
       const [transaction] = await ctx.client
         .user({ id: userID })
-        .transactions({ first: 1, orderBy: 'key_DESC' });
+        .transactions({ first: 1, orderBy: 'id_DESC' });
       // If no balance, default to 0
-      const balance = (transaction && transaction.balance) || 0;
-      // Also return the transaction's key, defaults to a key number of 0
-      const key = (transaction && transaction.key) || ctx.utils.transactionKey.generate(userID, 0);
-      return { balance, key };
+      return (transaction && transaction.balance) || 0;
     };
     // Grab the user's information
     const grabInfo = async (info) => {

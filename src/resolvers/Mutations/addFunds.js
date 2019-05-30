@@ -1,47 +1,35 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 // Set the API version
-stripe.setApiVersion('2018-11-08');
+stripe.setApiVersion('2019-03-14');
 
 module.exports = async (parent, { amount, token }, ctx) => (
   new Promise(async (done) => {
-    // Grab the user's email and ID
-    const { email, grabBalance, id: userID } = await ctx.currentUser();
-
-    // Grab the user's balance (and key)
-    const balanceInfo = await grabBalance();
-    // Starting balance
-    const startingBalance = balanceInfo.balance;
-    // Grab the key number
-    let keyNumber = ctx.utils.transactionKey.getNumber(balanceInfo.key);
+    const { email, grabBalance, id: userID, nameFirst, nameLast } = await ctx.currentUser();
 
     // Add funds, returns user information as well for the confirmation
-    const addFunds = async (balance, stripeID) => {
-      const resultData = `
-        {
-          id
-          balance
-          user {
-            nameFirst
-            nameLast
-          }
-        }
-      `;
-      return ctx.binding.mutation.createTransaction({
-        data: {
-          amount,
-          balance,
-          key: ctx.utils.transactionKey.generate(userID, ++keyNumber),
-          stripeID,
-          type: 'ADD_FUNDS',
-          user: {
-            connect: {
-              id: userID,
+    const addFunds = async (amountNet, chargeID, balance) => (
+      ctx.client.createFunds({
+        amountAdded: amount,
+        amountNet,
+        chargeID,
+        transaction: {
+          create: {
+            balance,
+            user: {
+              connect: {
+                id: userID,
+              },
             },
           },
         },
-      }, resultData);
-    };
+        user: {
+          connect: {
+            id: userID,
+          },
+        },
+      })
+    );
 
     // Create the Stripe charge for the given amount (in cents)
     stripe.charges.create({
@@ -49,28 +37,21 @@ module.exports = async (parent, { amount, token }, ctx) => (
       currency: 'usd',
       description: 'Funds Addition',
       source: token,
-    }, async (err, { id: stripeID, balance_transaction }) => (
+    }, async (err, { id: chargeID, balance_transaction }) => (
       // Grab the funds the user will actually receive after processing (the net)
-      stripe.balance.retrieveTransaction(balance_transaction, async (err, { net }) => {
-        // Add the funds to the user's balance as a new transaction
-        const {
-          balance,
-          id: transactionID,
-          user: userData,
-        } = await addFunds(startingBalance + net, stripeID);
+      stripe.balanceTransactions.retrieve(balance_transaction, async (err, { net }) => {
+        const newBalance = (await grabBalance()) + net;
+        // Add the funds
+        const { id: transactionID } = await addFunds(net, chargeID, newBalance);
         // The transactional information for the confirmation
         const transactionData = {
           amountCharged: amount,
           amountReceived: net,
-          balance,
-          email,
+          balance: newBalance,
           transactionID,
         };
         // Send an email with the confirmation
-        ctx.utils.email.addFundsConfirmation({
-          transactionData,
-          userData,
-        });
+        ctx.utils.email.addFundsConfirmation(transactionData, email, nameFirst, nameLast);
         // The funds are added
         done(transactionData);
       })

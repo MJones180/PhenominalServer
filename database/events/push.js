@@ -26,23 +26,6 @@ const createCharity = async ({
   })
 );
 
-// Add a new special fundraiser event to the db
-const createSpecialFundraiser = async ({
-  endDate, goal, startDate, name, description,
-}) => (
-  prisma.createEvent({
-    endDate,
-    goal,
-    startDate,
-    specialFundraiser: {
-      create: {
-        description,
-        name,
-      },
-    },
-  })
-);
-
 // Log the changes made
 const log = (action, events) => {
   console.log(action);
@@ -61,27 +44,26 @@ const reset = () => {
 };
 
 // Handle adding events
-const push = async (path, check, create) => {
+const push = async () => {
   const pushed = [];
   // Loop through each of the events to add
-  each(events[path], (data, done) => {
+  each(events.charities, (data, done) => {
     // Ensure an actual value exists, not an empty one
-    if (data[check] != '') {
+    if (data.ein != '') {
       // Add the event to the db
-      create({ ...data });
-      pushed.push(data[check]);
+      createCharity({ ...data });
+      pushed.push(data.ein);
     }
     // End the iteration
     done();
   }, () => {
     // Log all changes
-    log(`Pushed ${path}:`, pushed);
+    log('Pushed charities:', pushed);
   });
 };
 
 // Add all events to the database
-push('charities', 'ein', createCharity);
-push('specialFundraisers', 'name', createSpecialFundraiser);
+push();
 
 // Reset the source file
 reset();

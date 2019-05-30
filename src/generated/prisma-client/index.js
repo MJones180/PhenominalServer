@@ -45,11 +45,15 @@ var models = [
     embedded: false
   },
   {
-    name: "SpecialFundraiser",
+    name: "Event",
     embedded: false
   },
   {
-    name: "Event",
+    name: "Donation",
+    embedded: false
+  },
+  {
+    name: "Funds",
     embedded: false
   },
   {
@@ -58,10 +62,6 @@ var models = [
   },
   {
     name: "IdentityProvider",
-    embedded: false
-  },
-  {
-    name: "TransactionType",
     embedded: false
   }
 ];

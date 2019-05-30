@@ -9,7 +9,7 @@ type Mutation {
   contactMessage(email: String!, message: String!, name: String!): Boolean
   createCircle(description: String, name: String!, open: Boolean): ID
   disbandCircle(id: ID!): Boolean
-  donation(amount: Int!, events: [ID!]): donationPayload
+  donation(amount: Int!, eventID: ID!): donationPayload
   handleCircleInvite(id: ID!, join: Boolean!): Boolean
   handleCircleRequest(id: ID!, username: String!, accept: Boolean!): Boolean
   inviteCircleMember(id: ID!, username: String!): Boolean
@@ -46,17 +46,13 @@ type addFundsPayload {
 
 type donationPayload {
   amount: Int!
+  balance: Int!
+  charityName: String!
   dotTotal: Int!
   dotsGained: Int!
   loopCount: Int!
-  loopsGained: Int!
-  transactions: [donationTransactionPayload!]
-}
-
-type donationTransactionPayload {
-  balance: Int!
-  event: String!
-  id: ID!
+  loopGained: Int!
+  transactionID: ID!
 }
 
 type signinPayload {

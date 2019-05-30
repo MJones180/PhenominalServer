@@ -3,9 +3,7 @@
     "goal": "Int: Amount in pennies",
     "startDate": "Date: YYYY-MM-DD",
     "endDate": "Date: YYYY-MM-DD",
-    "ein": "String: EIN of charity",
-    "name": "String: Name of special fundraiser",
-    "description": "String: Description of special fundraiser"
+    "ein": "String: EIN of charity"
   },
   "files": "./dev.json && ./prod.json",
   "template": {
@@ -15,15 +13,6 @@
         "startDate": "",
         "endDate": "",
         "ein": ""
-      }
-    ],
-    "specialFundraisers": [
-      {
-        "goal": 0,
-        "startDate": "",
-        "endDate": "",
-        "name": "",
-        "description": ""
       }
     ]
   }
