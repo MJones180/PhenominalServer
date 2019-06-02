@@ -22,14 +22,16 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
     }
 
     // ====================
-    // Process donation
+    // Process Donation
     // ====================
 
     // Charity info
     const { connectedAccountID, name: charityName } = await ctx.client.event({ id: eventID }).charity();
 
+    // Balance after donating
     const newBalance = balance - amount;
 
+    // Create the transaction that links to the donations
     const createTransaction = async () => (
       ctx.client.createTransaction({
         balance: newBalance,
@@ -37,37 +39,44 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
       })
     );
 
+    // Grab the transaction's ID
     const { id: transactionID } = await createTransaction();
 
+    // Grab the user's funds that have an active balance
     const { funds } = await ctx.binding.query.user({ where: { id: userID } },
       `{
         funds(
-          where: { donations_none: { subBalance: 0 } }
+          where: { donations_none: { chargeBalance: 0 } }
           orderBy: createdAt_ASC
         ) {
           id
           amountNet
           chargeID
           donations(first: 1, orderBy: createdAt_DESC) {
-            subBalance
+            chargeBalance
           }
         }
       }`);
 
+    // Async recursive donation processing, doesn't matter when the donations are actually processed
     const donate = (fundsIndex, amountLeft) => {
+      // Grab information on the charge (funds)
       const { amountNet, chargeID, donations, id: sourceID } = funds[fundsIndex];
-      const fundsBalance = donations.length ? donations[0].subBalance : amountNet;
-      const process = (partitionedAmount, subBalance) => (
+      // If there is already a donation from the funds, use that balance
+      const fundsBalance = donations.length ? donations[0].chargeBalance : amountNet;
+      // Make the transfer
+      const process = (partitionedAmount, chargeBalance) => (
+        // Process the transfer in Stripe
         stripe.transfers.create({
           amount: partitionedAmount,
           currency: 'usd',
           destination: connectedAccountID,
           source_transaction: chargeID,
         }).then(({ id: transferID }) => (
-          ctx.client.createDonation({
+          // Add the donation and link it to the transaction
+          ctx.client.createTransfer({
             amount: partitionedAmount,
-            batchKey: transactionID.toString(),
-            subBalance,
+            chargeBalance,
             transferID,
             event: { connect: { id: eventID } },
             source: { connect: { id: sourceID } },
@@ -75,14 +84,17 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
           })
         ))
       );
+      // Part of the original donation is still left
       if (amountLeft > fundsBalance) {
+        // Process the donation
         process(fundsBalance, 0);
+        // Prepare the next part of the donation
         donate(fundsIndex + 1, amountLeft - fundsBalance);
-      } else process(amountLeft, fundsBalance - amountLeft);
+      } else process(amountLeft, fundsBalance - amountLeft); // Donation is complete
     };
 
+    // Start the donation process
     donate(0, amount);
-
 
     // ====================
     // First Donation Halo
@@ -102,44 +114,30 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
       dateToday.setUTCHours(0, 0, 0, 0);
       // Today's date in ISO format
       dateToday.toISOString();
-      const loopExists = await ctx.client.$exists.donation({
+      const loopExists = await ctx.client.$exists.loop({
         createdAt_gte: dateToday,
       }, {
-        source: { user: { id: userID } },
+        user: { id: userID },
       });
-
-
       // Grab the user's current Loop count
       let { count: loopCount } = await ctx.utils.loops.grabLoops({ username });
-
-
       let loopGained = false;
-
       // Check if the donation is Loop eligible
       if (!loopExists) {
         loopCount += 1;
         // Add the Loop
         await ctx.client.createLoop({
-          // Increase the loopCount by 1
           count: loopCount,
-          event: {
-            connect: {
-              id: eventID,
-            },
-          },
-          user: {
-            connect: {
-              id: userID,
-            },
-          },
+          event: { connect: { id: eventID } },
+          user: { connect: { id: userID } },
         });
         // Loop gained
         loopGained = true;
       }
-
       return { loopCount, loopGained };
     };
 
+    // Update the Loops and grab the count
     const { loopCount, loopGained } = await updateLoops();
 
     // Add the loopCount Halo if needed
@@ -151,8 +149,8 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
 
     // The Dot boost, based on Loop count
     const { boost } = ctx.utils.loopStage(loopCount);
+
     // The amount of Dots given for donating
-    // Increase the total newly added Dots
     const dotsGained = 50 * boost;
 
     // Add the new Dots
@@ -166,6 +164,7 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
     // Confirmation Email
     // ====================
 
+    // Information that is used in the confirmation and response
     const transactionData = {
       amount,
       balance: newBalance,
@@ -176,7 +175,7 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
     // Grab the user's preferences
     const { allowDonationEmails } = await ctx.client.user({ id: userID }).preferences();
 
-    // Check to see if the user has confirmation emails enabled
+    // Check to see if the user has donation confirmation emails enabled
     if (allowDonationEmails) {
       // Send an email with the confirmation
       ctx.utils.email.donationConfirmation(transactionData, email, nameFirst, nameLast);

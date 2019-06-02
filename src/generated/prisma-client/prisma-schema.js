@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateCharity {
+/* GraphQL */ `type AggregateCharge {
+  count: Int!
+}
+
+type AggregateCharity {
   count: Int!
 }
 
@@ -19,19 +23,11 @@ type AggregateCircleJoinRequest {
   count: Int!
 }
 
-type AggregateDonation {
-  count: Int!
-}
-
 type AggregateDot {
   count: Int!
 }
 
 type AggregateEvent {
-  count: Int!
-}
-
-type AggregateFunds {
   count: Int!
 }
 
@@ -55,12 +51,355 @@ type AggregateTransaction {
   count: Int!
 }
 
+type AggregateTransfer {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
 
 type BatchPayload {
   count: Long!
+}
+
+type Charge {
+  id: ID!
+  createdAt: DateTime!
+  amountAdded: Int!
+  amountNet: Int!
+  chargeID: String!
+  donations(where: TransferWhereInput, orderBy: TransferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transfer!]
+  transaction: Transaction!
+  user: User!
+}
+
+type ChargeConnection {
+  pageInfo: PageInfo!
+  edges: [ChargeEdge]!
+  aggregate: AggregateCharge!
+}
+
+input ChargeCreateInput {
+  id: ID
+  amountAdded: Int!
+  amountNet: Int!
+  chargeID: String!
+  donations: TransferCreateManyWithoutSourceInput
+  transaction: TransactionCreateOneWithoutFundsInput!
+  user: UserCreateOneWithoutFundsInput!
+}
+
+input ChargeCreateManyWithoutUserInput {
+  create: [ChargeCreateWithoutUserInput!]
+  connect: [ChargeWhereUniqueInput!]
+}
+
+input ChargeCreateOneWithoutDonationsInput {
+  create: ChargeCreateWithoutDonationsInput
+  connect: ChargeWhereUniqueInput
+}
+
+input ChargeCreateOneWithoutTransactionInput {
+  create: ChargeCreateWithoutTransactionInput
+  connect: ChargeWhereUniqueInput
+}
+
+input ChargeCreateWithoutDonationsInput {
+  id: ID
+  amountAdded: Int!
+  amountNet: Int!
+  chargeID: String!
+  transaction: TransactionCreateOneWithoutFundsInput!
+  user: UserCreateOneWithoutFundsInput!
+}
+
+input ChargeCreateWithoutTransactionInput {
+  id: ID
+  amountAdded: Int!
+  amountNet: Int!
+  chargeID: String!
+  donations: TransferCreateManyWithoutSourceInput
+  user: UserCreateOneWithoutFundsInput!
+}
+
+input ChargeCreateWithoutUserInput {
+  id: ID
+  amountAdded: Int!
+  amountNet: Int!
+  chargeID: String!
+  donations: TransferCreateManyWithoutSourceInput
+  transaction: TransactionCreateOneWithoutFundsInput!
+}
+
+type ChargeEdge {
+  node: Charge!
+  cursor: String!
+}
+
+enum ChargeOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  amountAdded_ASC
+  amountAdded_DESC
+  amountNet_ASC
+  amountNet_DESC
+  chargeID_ASC
+  chargeID_DESC
+}
+
+type ChargePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  amountAdded: Int!
+  amountNet: Int!
+  chargeID: String!
+}
+
+input ChargeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  amountAdded: Int
+  amountAdded_not: Int
+  amountAdded_in: [Int!]
+  amountAdded_not_in: [Int!]
+  amountAdded_lt: Int
+  amountAdded_lte: Int
+  amountAdded_gt: Int
+  amountAdded_gte: Int
+  amountNet: Int
+  amountNet_not: Int
+  amountNet_in: [Int!]
+  amountNet_not_in: [Int!]
+  amountNet_lt: Int
+  amountNet_lte: Int
+  amountNet_gt: Int
+  amountNet_gte: Int
+  chargeID: String
+  chargeID_not: String
+  chargeID_in: [String!]
+  chargeID_not_in: [String!]
+  chargeID_lt: String
+  chargeID_lte: String
+  chargeID_gt: String
+  chargeID_gte: String
+  chargeID_contains: String
+  chargeID_not_contains: String
+  chargeID_starts_with: String
+  chargeID_not_starts_with: String
+  chargeID_ends_with: String
+  chargeID_not_ends_with: String
+  AND: [ChargeScalarWhereInput!]
+  OR: [ChargeScalarWhereInput!]
+  NOT: [ChargeScalarWhereInput!]
+}
+
+type ChargeSubscriptionPayload {
+  mutation: MutationType!
+  node: Charge
+  updatedFields: [String!]
+  previousValues: ChargePreviousValues
+}
+
+input ChargeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ChargeWhereInput
+  AND: [ChargeSubscriptionWhereInput!]
+  OR: [ChargeSubscriptionWhereInput!]
+  NOT: [ChargeSubscriptionWhereInput!]
+}
+
+input ChargeUpdateInput {
+  amountAdded: Int
+  amountNet: Int
+  chargeID: String
+  donations: TransferUpdateManyWithoutSourceInput
+  transaction: TransactionUpdateOneRequiredWithoutFundsInput
+  user: UserUpdateOneRequiredWithoutFundsInput
+}
+
+input ChargeUpdateManyDataInput {
+  amountAdded: Int
+  amountNet: Int
+  chargeID: String
+}
+
+input ChargeUpdateManyMutationInput {
+  amountAdded: Int
+  amountNet: Int
+  chargeID: String
+}
+
+input ChargeUpdateManyWithoutUserInput {
+  create: [ChargeCreateWithoutUserInput!]
+  delete: [ChargeWhereUniqueInput!]
+  connect: [ChargeWhereUniqueInput!]
+  set: [ChargeWhereUniqueInput!]
+  disconnect: [ChargeWhereUniqueInput!]
+  update: [ChargeUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ChargeUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ChargeScalarWhereInput!]
+  updateMany: [ChargeUpdateManyWithWhereNestedInput!]
+}
+
+input ChargeUpdateManyWithWhereNestedInput {
+  where: ChargeScalarWhereInput!
+  data: ChargeUpdateManyDataInput!
+}
+
+input ChargeUpdateOneWithoutDonationsInput {
+  create: ChargeCreateWithoutDonationsInput
+  update: ChargeUpdateWithoutDonationsDataInput
+  upsert: ChargeUpsertWithoutDonationsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ChargeWhereUniqueInput
+}
+
+input ChargeUpdateOneWithoutTransactionInput {
+  create: ChargeCreateWithoutTransactionInput
+  update: ChargeUpdateWithoutTransactionDataInput
+  upsert: ChargeUpsertWithoutTransactionInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ChargeWhereUniqueInput
+}
+
+input ChargeUpdateWithoutDonationsDataInput {
+  amountAdded: Int
+  amountNet: Int
+  chargeID: String
+  transaction: TransactionUpdateOneRequiredWithoutFundsInput
+  user: UserUpdateOneRequiredWithoutFundsInput
+}
+
+input ChargeUpdateWithoutTransactionDataInput {
+  amountAdded: Int
+  amountNet: Int
+  chargeID: String
+  donations: TransferUpdateManyWithoutSourceInput
+  user: UserUpdateOneRequiredWithoutFundsInput
+}
+
+input ChargeUpdateWithoutUserDataInput {
+  amountAdded: Int
+  amountNet: Int
+  chargeID: String
+  donations: TransferUpdateManyWithoutSourceInput
+  transaction: TransactionUpdateOneRequiredWithoutFundsInput
+}
+
+input ChargeUpdateWithWhereUniqueWithoutUserInput {
+  where: ChargeWhereUniqueInput!
+  data: ChargeUpdateWithoutUserDataInput!
+}
+
+input ChargeUpsertWithoutDonationsInput {
+  update: ChargeUpdateWithoutDonationsDataInput!
+  create: ChargeCreateWithoutDonationsInput!
+}
+
+input ChargeUpsertWithoutTransactionInput {
+  update: ChargeUpdateWithoutTransactionDataInput!
+  create: ChargeCreateWithoutTransactionInput!
+}
+
+input ChargeUpsertWithWhereUniqueWithoutUserInput {
+  where: ChargeWhereUniqueInput!
+  update: ChargeUpdateWithoutUserDataInput!
+  create: ChargeCreateWithoutUserInput!
+}
+
+input ChargeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  amountAdded: Int
+  amountAdded_not: Int
+  amountAdded_in: [Int!]
+  amountAdded_not_in: [Int!]
+  amountAdded_lt: Int
+  amountAdded_lte: Int
+  amountAdded_gt: Int
+  amountAdded_gte: Int
+  amountNet: Int
+  amountNet_not: Int
+  amountNet_in: [Int!]
+  amountNet_not_in: [Int!]
+  amountNet_lt: Int
+  amountNet_lte: Int
+  amountNet_gt: Int
+  amountNet_gte: Int
+  chargeID: String
+  chargeID_not: String
+  chargeID_in: [String!]
+  chargeID_not_in: [String!]
+  chargeID_lt: String
+  chargeID_lte: String
+  chargeID_gt: String
+  chargeID_gte: String
+  chargeID_contains: String
+  chargeID_not_contains: String
+  chargeID_starts_with: String
+  chargeID_not_starts_with: String
+  chargeID_ends_with: String
+  chargeID_not_ends_with: String
+  donations_every: TransferWhereInput
+  donations_some: TransferWhereInput
+  donations_none: TransferWhereInput
+  transaction: TransactionWhereInput
+  user: UserWhereInput
+  AND: [ChargeWhereInput!]
+  OR: [ChargeWhereInput!]
+  NOT: [ChargeWhereInput!]
+}
+
+input ChargeWhereUniqueInput {
+  id: ID
 }
 
 type Charity {
@@ -1640,403 +1979,6 @@ input CircleWhereUniqueInput {
 
 scalar DateTime
 
-type Donation {
-  id: ID!
-  createdAt: DateTime!
-  amount: Int!
-  batchKey: String!
-  subBalance: Int!
-  transferID: String!
-  event: Event
-  source: Funds
-  transaction: Transaction!
-}
-
-type DonationConnection {
-  pageInfo: PageInfo!
-  edges: [DonationEdge]!
-  aggregate: AggregateDonation!
-}
-
-input DonationCreateInput {
-  id: ID
-  amount: Int!
-  batchKey: String!
-  subBalance: Int!
-  transferID: String!
-  event: EventCreateOneWithoutDonationsInput
-  source: FundsCreateOneWithoutDonationsInput
-  transaction: TransactionCreateOneWithoutDonationsInput!
-}
-
-input DonationCreateManyWithoutEventInput {
-  create: [DonationCreateWithoutEventInput!]
-  connect: [DonationWhereUniqueInput!]
-}
-
-input DonationCreateManyWithoutSourceInput {
-  create: [DonationCreateWithoutSourceInput!]
-  connect: [DonationWhereUniqueInput!]
-}
-
-input DonationCreateManyWithoutTransactionInput {
-  create: [DonationCreateWithoutTransactionInput!]
-  connect: [DonationWhereUniqueInput!]
-}
-
-input DonationCreateWithoutEventInput {
-  id: ID
-  amount: Int!
-  batchKey: String!
-  subBalance: Int!
-  transferID: String!
-  source: FundsCreateOneWithoutDonationsInput
-  transaction: TransactionCreateOneWithoutDonationsInput!
-}
-
-input DonationCreateWithoutSourceInput {
-  id: ID
-  amount: Int!
-  batchKey: String!
-  subBalance: Int!
-  transferID: String!
-  event: EventCreateOneWithoutDonationsInput
-  transaction: TransactionCreateOneWithoutDonationsInput!
-}
-
-input DonationCreateWithoutTransactionInput {
-  id: ID
-  amount: Int!
-  batchKey: String!
-  subBalance: Int!
-  transferID: String!
-  event: EventCreateOneWithoutDonationsInput
-  source: FundsCreateOneWithoutDonationsInput
-}
-
-type DonationEdge {
-  node: Donation!
-  cursor: String!
-}
-
-enum DonationOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  amount_ASC
-  amount_DESC
-  batchKey_ASC
-  batchKey_DESC
-  subBalance_ASC
-  subBalance_DESC
-  transferID_ASC
-  transferID_DESC
-}
-
-type DonationPreviousValues {
-  id: ID!
-  createdAt: DateTime!
-  amount: Int!
-  batchKey: String!
-  subBalance: Int!
-  transferID: String!
-}
-
-input DonationScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  amount: Int
-  amount_not: Int
-  amount_in: [Int!]
-  amount_not_in: [Int!]
-  amount_lt: Int
-  amount_lte: Int
-  amount_gt: Int
-  amount_gte: Int
-  batchKey: String
-  batchKey_not: String
-  batchKey_in: [String!]
-  batchKey_not_in: [String!]
-  batchKey_lt: String
-  batchKey_lte: String
-  batchKey_gt: String
-  batchKey_gte: String
-  batchKey_contains: String
-  batchKey_not_contains: String
-  batchKey_starts_with: String
-  batchKey_not_starts_with: String
-  batchKey_ends_with: String
-  batchKey_not_ends_with: String
-  subBalance: Int
-  subBalance_not: Int
-  subBalance_in: [Int!]
-  subBalance_not_in: [Int!]
-  subBalance_lt: Int
-  subBalance_lte: Int
-  subBalance_gt: Int
-  subBalance_gte: Int
-  transferID: String
-  transferID_not: String
-  transferID_in: [String!]
-  transferID_not_in: [String!]
-  transferID_lt: String
-  transferID_lte: String
-  transferID_gt: String
-  transferID_gte: String
-  transferID_contains: String
-  transferID_not_contains: String
-  transferID_starts_with: String
-  transferID_not_starts_with: String
-  transferID_ends_with: String
-  transferID_not_ends_with: String
-  AND: [DonationScalarWhereInput!]
-  OR: [DonationScalarWhereInput!]
-  NOT: [DonationScalarWhereInput!]
-}
-
-type DonationSubscriptionPayload {
-  mutation: MutationType!
-  node: Donation
-  updatedFields: [String!]
-  previousValues: DonationPreviousValues
-}
-
-input DonationSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: DonationWhereInput
-  AND: [DonationSubscriptionWhereInput!]
-  OR: [DonationSubscriptionWhereInput!]
-  NOT: [DonationSubscriptionWhereInput!]
-}
-
-input DonationUpdateInput {
-  amount: Int
-  batchKey: String
-  subBalance: Int
-  transferID: String
-  event: EventUpdateOneWithoutDonationsInput
-  source: FundsUpdateOneWithoutDonationsInput
-  transaction: TransactionUpdateOneRequiredWithoutDonationsInput
-}
-
-input DonationUpdateManyDataInput {
-  amount: Int
-  batchKey: String
-  subBalance: Int
-  transferID: String
-}
-
-input DonationUpdateManyMutationInput {
-  amount: Int
-  batchKey: String
-  subBalance: Int
-  transferID: String
-}
-
-input DonationUpdateManyWithoutEventInput {
-  create: [DonationCreateWithoutEventInput!]
-  delete: [DonationWhereUniqueInput!]
-  connect: [DonationWhereUniqueInput!]
-  set: [DonationWhereUniqueInput!]
-  disconnect: [DonationWhereUniqueInput!]
-  update: [DonationUpdateWithWhereUniqueWithoutEventInput!]
-  upsert: [DonationUpsertWithWhereUniqueWithoutEventInput!]
-  deleteMany: [DonationScalarWhereInput!]
-  updateMany: [DonationUpdateManyWithWhereNestedInput!]
-}
-
-input DonationUpdateManyWithoutSourceInput {
-  create: [DonationCreateWithoutSourceInput!]
-  delete: [DonationWhereUniqueInput!]
-  connect: [DonationWhereUniqueInput!]
-  set: [DonationWhereUniqueInput!]
-  disconnect: [DonationWhereUniqueInput!]
-  update: [DonationUpdateWithWhereUniqueWithoutSourceInput!]
-  upsert: [DonationUpsertWithWhereUniqueWithoutSourceInput!]
-  deleteMany: [DonationScalarWhereInput!]
-  updateMany: [DonationUpdateManyWithWhereNestedInput!]
-}
-
-input DonationUpdateManyWithoutTransactionInput {
-  create: [DonationCreateWithoutTransactionInput!]
-  delete: [DonationWhereUniqueInput!]
-  connect: [DonationWhereUniqueInput!]
-  set: [DonationWhereUniqueInput!]
-  disconnect: [DonationWhereUniqueInput!]
-  update: [DonationUpdateWithWhereUniqueWithoutTransactionInput!]
-  upsert: [DonationUpsertWithWhereUniqueWithoutTransactionInput!]
-  deleteMany: [DonationScalarWhereInput!]
-  updateMany: [DonationUpdateManyWithWhereNestedInput!]
-}
-
-input DonationUpdateManyWithWhereNestedInput {
-  where: DonationScalarWhereInput!
-  data: DonationUpdateManyDataInput!
-}
-
-input DonationUpdateWithoutEventDataInput {
-  amount: Int
-  batchKey: String
-  subBalance: Int
-  transferID: String
-  source: FundsUpdateOneWithoutDonationsInput
-  transaction: TransactionUpdateOneRequiredWithoutDonationsInput
-}
-
-input DonationUpdateWithoutSourceDataInput {
-  amount: Int
-  batchKey: String
-  subBalance: Int
-  transferID: String
-  event: EventUpdateOneWithoutDonationsInput
-  transaction: TransactionUpdateOneRequiredWithoutDonationsInput
-}
-
-input DonationUpdateWithoutTransactionDataInput {
-  amount: Int
-  batchKey: String
-  subBalance: Int
-  transferID: String
-  event: EventUpdateOneWithoutDonationsInput
-  source: FundsUpdateOneWithoutDonationsInput
-}
-
-input DonationUpdateWithWhereUniqueWithoutEventInput {
-  where: DonationWhereUniqueInput!
-  data: DonationUpdateWithoutEventDataInput!
-}
-
-input DonationUpdateWithWhereUniqueWithoutSourceInput {
-  where: DonationWhereUniqueInput!
-  data: DonationUpdateWithoutSourceDataInput!
-}
-
-input DonationUpdateWithWhereUniqueWithoutTransactionInput {
-  where: DonationWhereUniqueInput!
-  data: DonationUpdateWithoutTransactionDataInput!
-}
-
-input DonationUpsertWithWhereUniqueWithoutEventInput {
-  where: DonationWhereUniqueInput!
-  update: DonationUpdateWithoutEventDataInput!
-  create: DonationCreateWithoutEventInput!
-}
-
-input DonationUpsertWithWhereUniqueWithoutSourceInput {
-  where: DonationWhereUniqueInput!
-  update: DonationUpdateWithoutSourceDataInput!
-  create: DonationCreateWithoutSourceInput!
-}
-
-input DonationUpsertWithWhereUniqueWithoutTransactionInput {
-  where: DonationWhereUniqueInput!
-  update: DonationUpdateWithoutTransactionDataInput!
-  create: DonationCreateWithoutTransactionInput!
-}
-
-input DonationWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  amount: Int
-  amount_not: Int
-  amount_in: [Int!]
-  amount_not_in: [Int!]
-  amount_lt: Int
-  amount_lte: Int
-  amount_gt: Int
-  amount_gte: Int
-  batchKey: String
-  batchKey_not: String
-  batchKey_in: [String!]
-  batchKey_not_in: [String!]
-  batchKey_lt: String
-  batchKey_lte: String
-  batchKey_gt: String
-  batchKey_gte: String
-  batchKey_contains: String
-  batchKey_not_contains: String
-  batchKey_starts_with: String
-  batchKey_not_starts_with: String
-  batchKey_ends_with: String
-  batchKey_not_ends_with: String
-  subBalance: Int
-  subBalance_not: Int
-  subBalance_in: [Int!]
-  subBalance_not_in: [Int!]
-  subBalance_lt: Int
-  subBalance_lte: Int
-  subBalance_gt: Int
-  subBalance_gte: Int
-  transferID: String
-  transferID_not: String
-  transferID_in: [String!]
-  transferID_not_in: [String!]
-  transferID_lt: String
-  transferID_lte: String
-  transferID_gt: String
-  transferID_gte: String
-  transferID_contains: String
-  transferID_not_contains: String
-  transferID_starts_with: String
-  transferID_not_starts_with: String
-  transferID_ends_with: String
-  transferID_not_ends_with: String
-  event: EventWhereInput
-  source: FundsWhereInput
-  transaction: TransactionWhereInput
-  AND: [DonationWhereInput!]
-  OR: [DonationWhereInput!]
-  NOT: [DonationWhereInput!]
-}
-
-input DonationWhereUniqueInput {
-  id: ID
-}
-
 type Dot {
   id: ID!
   createdAt: DateTime!
@@ -2304,7 +2246,7 @@ type Event {
   sponsorWebsite: String
   startDate: DateTime!
   charity: Charity!
-  donations(where: DonationWhereInput, orderBy: DonationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Donation!]
+  donations(where: TransferWhereInput, orderBy: TransferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transfer!]
 }
 
 type EventConnection {
@@ -2325,7 +2267,7 @@ input EventCreateInput {
   sponsorWebsite: String
   startDate: DateTime!
   charity: CharityCreateOneWithoutEventsInput!
-  donations: DonationCreateManyWithoutEventInput
+  donations: TransferCreateManyWithoutEventInput
 }
 
 input EventCreateManyWithoutCharityInput {
@@ -2354,7 +2296,7 @@ input EventCreateWithoutCharityInput {
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime!
-  donations: DonationCreateManyWithoutEventInput
+  donations: TransferCreateManyWithoutEventInput
 }
 
 input EventCreateWithoutDonationsInput {
@@ -2585,7 +2527,7 @@ input EventUpdateDataInput {
   sponsorWebsite: String
   startDate: DateTime
   charity: CharityUpdateOneRequiredWithoutEventsInput
-  donations: DonationUpdateManyWithoutEventInput
+  donations: TransferUpdateManyWithoutEventInput
 }
 
 input EventUpdateInput {
@@ -2599,7 +2541,7 @@ input EventUpdateInput {
   sponsorWebsite: String
   startDate: DateTime
   charity: CharityUpdateOneRequiredWithoutEventsInput
-  donations: DonationUpdateManyWithoutEventInput
+  donations: TransferUpdateManyWithoutEventInput
 }
 
 input EventUpdateManyDataInput {
@@ -2669,7 +2611,7 @@ input EventUpdateWithoutCharityDataInput {
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime
-  donations: DonationUpdateManyWithoutEventInput
+  donations: TransferUpdateManyWithoutEventInput
 }
 
 input EventUpdateWithoutDonationsDataInput {
@@ -2840,354 +2782,15 @@ input EventWhereInput {
   startDate_gt: DateTime
   startDate_gte: DateTime
   charity: CharityWhereInput
-  donations_every: DonationWhereInput
-  donations_some: DonationWhereInput
-  donations_none: DonationWhereInput
+  donations_every: TransferWhereInput
+  donations_some: TransferWhereInput
+  donations_none: TransferWhereInput
   AND: [EventWhereInput!]
   OR: [EventWhereInput!]
   NOT: [EventWhereInput!]
 }
 
 input EventWhereUniqueInput {
-  id: ID
-}
-
-type Funds {
-  id: ID!
-  createdAt: DateTime!
-  amountAdded: Int!
-  amountNet: Int!
-  chargeID: String!
-  donations(where: DonationWhereInput, orderBy: DonationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Donation!]
-  transaction: Transaction!
-  user: User!
-}
-
-type FundsConnection {
-  pageInfo: PageInfo!
-  edges: [FundsEdge]!
-  aggregate: AggregateFunds!
-}
-
-input FundsCreateInput {
-  id: ID
-  amountAdded: Int!
-  amountNet: Int!
-  chargeID: String!
-  donations: DonationCreateManyWithoutSourceInput
-  transaction: TransactionCreateOneWithoutFundsInput!
-  user: UserCreateOneWithoutFundsInput!
-}
-
-input FundsCreateManyWithoutUserInput {
-  create: [FundsCreateWithoutUserInput!]
-  connect: [FundsWhereUniqueInput!]
-}
-
-input FundsCreateOneWithoutDonationsInput {
-  create: FundsCreateWithoutDonationsInput
-  connect: FundsWhereUniqueInput
-}
-
-input FundsCreateOneWithoutTransactionInput {
-  create: FundsCreateWithoutTransactionInput
-  connect: FundsWhereUniqueInput
-}
-
-input FundsCreateWithoutDonationsInput {
-  id: ID
-  amountAdded: Int!
-  amountNet: Int!
-  chargeID: String!
-  transaction: TransactionCreateOneWithoutFundsInput!
-  user: UserCreateOneWithoutFundsInput!
-}
-
-input FundsCreateWithoutTransactionInput {
-  id: ID
-  amountAdded: Int!
-  amountNet: Int!
-  chargeID: String!
-  donations: DonationCreateManyWithoutSourceInput
-  user: UserCreateOneWithoutFundsInput!
-}
-
-input FundsCreateWithoutUserInput {
-  id: ID
-  amountAdded: Int!
-  amountNet: Int!
-  chargeID: String!
-  donations: DonationCreateManyWithoutSourceInput
-  transaction: TransactionCreateOneWithoutFundsInput!
-}
-
-type FundsEdge {
-  node: Funds!
-  cursor: String!
-}
-
-enum FundsOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  amountAdded_ASC
-  amountAdded_DESC
-  amountNet_ASC
-  amountNet_DESC
-  chargeID_ASC
-  chargeID_DESC
-}
-
-type FundsPreviousValues {
-  id: ID!
-  createdAt: DateTime!
-  amountAdded: Int!
-  amountNet: Int!
-  chargeID: String!
-}
-
-input FundsScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  amountAdded: Int
-  amountAdded_not: Int
-  amountAdded_in: [Int!]
-  amountAdded_not_in: [Int!]
-  amountAdded_lt: Int
-  amountAdded_lte: Int
-  amountAdded_gt: Int
-  amountAdded_gte: Int
-  amountNet: Int
-  amountNet_not: Int
-  amountNet_in: [Int!]
-  amountNet_not_in: [Int!]
-  amountNet_lt: Int
-  amountNet_lte: Int
-  amountNet_gt: Int
-  amountNet_gte: Int
-  chargeID: String
-  chargeID_not: String
-  chargeID_in: [String!]
-  chargeID_not_in: [String!]
-  chargeID_lt: String
-  chargeID_lte: String
-  chargeID_gt: String
-  chargeID_gte: String
-  chargeID_contains: String
-  chargeID_not_contains: String
-  chargeID_starts_with: String
-  chargeID_not_starts_with: String
-  chargeID_ends_with: String
-  chargeID_not_ends_with: String
-  AND: [FundsScalarWhereInput!]
-  OR: [FundsScalarWhereInput!]
-  NOT: [FundsScalarWhereInput!]
-}
-
-type FundsSubscriptionPayload {
-  mutation: MutationType!
-  node: Funds
-  updatedFields: [String!]
-  previousValues: FundsPreviousValues
-}
-
-input FundsSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: FundsWhereInput
-  AND: [FundsSubscriptionWhereInput!]
-  OR: [FundsSubscriptionWhereInput!]
-  NOT: [FundsSubscriptionWhereInput!]
-}
-
-input FundsUpdateInput {
-  amountAdded: Int
-  amountNet: Int
-  chargeID: String
-  donations: DonationUpdateManyWithoutSourceInput
-  transaction: TransactionUpdateOneRequiredWithoutFundsInput
-  user: UserUpdateOneRequiredWithoutFundsInput
-}
-
-input FundsUpdateManyDataInput {
-  amountAdded: Int
-  amountNet: Int
-  chargeID: String
-}
-
-input FundsUpdateManyMutationInput {
-  amountAdded: Int
-  amountNet: Int
-  chargeID: String
-}
-
-input FundsUpdateManyWithoutUserInput {
-  create: [FundsCreateWithoutUserInput!]
-  delete: [FundsWhereUniqueInput!]
-  connect: [FundsWhereUniqueInput!]
-  set: [FundsWhereUniqueInput!]
-  disconnect: [FundsWhereUniqueInput!]
-  update: [FundsUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [FundsUpsertWithWhereUniqueWithoutUserInput!]
-  deleteMany: [FundsScalarWhereInput!]
-  updateMany: [FundsUpdateManyWithWhereNestedInput!]
-}
-
-input FundsUpdateManyWithWhereNestedInput {
-  where: FundsScalarWhereInput!
-  data: FundsUpdateManyDataInput!
-}
-
-input FundsUpdateOneWithoutDonationsInput {
-  create: FundsCreateWithoutDonationsInput
-  update: FundsUpdateWithoutDonationsDataInput
-  upsert: FundsUpsertWithoutDonationsInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: FundsWhereUniqueInput
-}
-
-input FundsUpdateOneWithoutTransactionInput {
-  create: FundsCreateWithoutTransactionInput
-  update: FundsUpdateWithoutTransactionDataInput
-  upsert: FundsUpsertWithoutTransactionInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: FundsWhereUniqueInput
-}
-
-input FundsUpdateWithoutDonationsDataInput {
-  amountAdded: Int
-  amountNet: Int
-  chargeID: String
-  transaction: TransactionUpdateOneRequiredWithoutFundsInput
-  user: UserUpdateOneRequiredWithoutFundsInput
-}
-
-input FundsUpdateWithoutTransactionDataInput {
-  amountAdded: Int
-  amountNet: Int
-  chargeID: String
-  donations: DonationUpdateManyWithoutSourceInput
-  user: UserUpdateOneRequiredWithoutFundsInput
-}
-
-input FundsUpdateWithoutUserDataInput {
-  amountAdded: Int
-  amountNet: Int
-  chargeID: String
-  donations: DonationUpdateManyWithoutSourceInput
-  transaction: TransactionUpdateOneRequiredWithoutFundsInput
-}
-
-input FundsUpdateWithWhereUniqueWithoutUserInput {
-  where: FundsWhereUniqueInput!
-  data: FundsUpdateWithoutUserDataInput!
-}
-
-input FundsUpsertWithoutDonationsInput {
-  update: FundsUpdateWithoutDonationsDataInput!
-  create: FundsCreateWithoutDonationsInput!
-}
-
-input FundsUpsertWithoutTransactionInput {
-  update: FundsUpdateWithoutTransactionDataInput!
-  create: FundsCreateWithoutTransactionInput!
-}
-
-input FundsUpsertWithWhereUniqueWithoutUserInput {
-  where: FundsWhereUniqueInput!
-  update: FundsUpdateWithoutUserDataInput!
-  create: FundsCreateWithoutUserInput!
-}
-
-input FundsWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  amountAdded: Int
-  amountAdded_not: Int
-  amountAdded_in: [Int!]
-  amountAdded_not_in: [Int!]
-  amountAdded_lt: Int
-  amountAdded_lte: Int
-  amountAdded_gt: Int
-  amountAdded_gte: Int
-  amountNet: Int
-  amountNet_not: Int
-  amountNet_in: [Int!]
-  amountNet_not_in: [Int!]
-  amountNet_lt: Int
-  amountNet_lte: Int
-  amountNet_gt: Int
-  amountNet_gte: Int
-  chargeID: String
-  chargeID_not: String
-  chargeID_in: [String!]
-  chargeID_not_in: [String!]
-  chargeID_lt: String
-  chargeID_lte: String
-  chargeID_gt: String
-  chargeID_gte: String
-  chargeID_contains: String
-  chargeID_not_contains: String
-  chargeID_starts_with: String
-  chargeID_not_starts_with: String
-  chargeID_ends_with: String
-  chargeID_not_ends_with: String
-  donations_every: DonationWhereInput
-  donations_some: DonationWhereInput
-  donations_none: DonationWhereInput
-  transaction: TransactionWhereInput
-  user: UserWhereInput
-  AND: [FundsWhereInput!]
-  OR: [FundsWhereInput!]
-  NOT: [FundsWhereInput!]
-}
-
-input FundsWhereUniqueInput {
   id: ID
 }
 
@@ -3798,6 +3401,12 @@ input LoopWhereUniqueInput {
 }
 
 type Mutation {
+  createCharge(data: ChargeCreateInput!): Charge!
+  updateCharge(data: ChargeUpdateInput!, where: ChargeWhereUniqueInput!): Charge
+  updateManyCharges(data: ChargeUpdateManyMutationInput!, where: ChargeWhereInput): BatchPayload!
+  upsertCharge(where: ChargeWhereUniqueInput!, create: ChargeCreateInput!, update: ChargeUpdateInput!): Charge!
+  deleteCharge(where: ChargeWhereUniqueInput!): Charge
+  deleteManyCharges(where: ChargeWhereInput): BatchPayload!
   createCharity(data: CharityCreateInput!): Charity!
   updateCharity(data: CharityUpdateInput!, where: CharityWhereUniqueInput!): Charity
   updateManyCharities(data: CharityUpdateManyMutationInput!, where: CharityWhereInput): BatchPayload!
@@ -3820,12 +3429,6 @@ type Mutation {
   upsertCircleJoinRequest(where: CircleJoinRequestWhereUniqueInput!, create: CircleJoinRequestCreateInput!, update: CircleJoinRequestUpdateInput!): CircleJoinRequest!
   deleteCircleJoinRequest(where: CircleJoinRequestWhereUniqueInput!): CircleJoinRequest
   deleteManyCircleJoinRequests(where: CircleJoinRequestWhereInput): BatchPayload!
-  createDonation(data: DonationCreateInput!): Donation!
-  updateDonation(data: DonationUpdateInput!, where: DonationWhereUniqueInput!): Donation
-  updateManyDonations(data: DonationUpdateManyMutationInput!, where: DonationWhereInput): BatchPayload!
-  upsertDonation(where: DonationWhereUniqueInput!, create: DonationCreateInput!, update: DonationUpdateInput!): Donation!
-  deleteDonation(where: DonationWhereUniqueInput!): Donation
-  deleteManyDonations(where: DonationWhereInput): BatchPayload!
   createDot(data: DotCreateInput!): Dot!
   updateDot(data: DotUpdateInput!, where: DotWhereUniqueInput!): Dot
   updateManyDots(data: DotUpdateManyMutationInput!, where: DotWhereInput): BatchPayload!
@@ -3838,12 +3441,6 @@ type Mutation {
   upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
   deleteEvent(where: EventWhereUniqueInput!): Event
   deleteManyEvents(where: EventWhereInput): BatchPayload!
-  createFunds(data: FundsCreateInput!): Funds!
-  updateFunds(data: FundsUpdateInput!, where: FundsWhereUniqueInput!): Funds
-  updateManyFundses(data: FundsUpdateManyMutationInput!, where: FundsWhereInput): BatchPayload!
-  upsertFunds(where: FundsWhereUniqueInput!, create: FundsCreateInput!, update: FundsUpdateInput!): Funds!
-  deleteFunds(where: FundsWhereUniqueInput!): Funds
-  deleteManyFundses(where: FundsWhereInput): BatchPayload!
   createHalo(data: HaloCreateInput!): Halo!
   updateHalo(data: HaloUpdateInput!, where: HaloWhereUniqueInput!): Halo
   updateManyHaloes(data: HaloUpdateManyMutationInput!, where: HaloWhereInput): BatchPayload!
@@ -3874,6 +3471,12 @@ type Mutation {
   upsertTransaction(where: TransactionWhereUniqueInput!, create: TransactionCreateInput!, update: TransactionUpdateInput!): Transaction!
   deleteTransaction(where: TransactionWhereUniqueInput!): Transaction
   deleteManyTransactions(where: TransactionWhereInput): BatchPayload!
+  createTransfer(data: TransferCreateInput!): Transfer!
+  updateTransfer(data: TransferUpdateInput!, where: TransferWhereUniqueInput!): Transfer
+  updateManyTransfers(data: TransferUpdateManyMutationInput!, where: TransferWhereInput): BatchPayload!
+  upsertTransfer(where: TransferWhereUniqueInput!, create: TransferCreateInput!, update: TransferUpdateInput!): Transfer!
+  deleteTransfer(where: TransferWhereUniqueInput!): Transfer
+  deleteManyTransfers(where: TransferWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -4050,6 +3653,9 @@ input PreferencesWhereUniqueInput {
 }
 
 type Query {
+  charge(where: ChargeWhereUniqueInput!): Charge
+  charges(where: ChargeWhereInput, orderBy: ChargeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charge]!
+  chargesConnection(where: ChargeWhereInput, orderBy: ChargeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChargeConnection!
   charity(where: CharityWhereUniqueInput!): Charity
   charities(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charity]!
   charitiesConnection(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CharityConnection!
@@ -4062,18 +3668,12 @@ type Query {
   circleJoinRequest(where: CircleJoinRequestWhereUniqueInput!): CircleJoinRequest
   circleJoinRequests(where: CircleJoinRequestWhereInput, orderBy: CircleJoinRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CircleJoinRequest]!
   circleJoinRequestsConnection(where: CircleJoinRequestWhereInput, orderBy: CircleJoinRequestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CircleJoinRequestConnection!
-  donation(where: DonationWhereUniqueInput!): Donation
-  donations(where: DonationWhereInput, orderBy: DonationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Donation]!
-  donationsConnection(where: DonationWhereInput, orderBy: DonationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DonationConnection!
   dot(where: DotWhereUniqueInput!): Dot
   dots(where: DotWhereInput, orderBy: DotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dot]!
   dotsConnection(where: DotWhereInput, orderBy: DotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DotConnection!
   event(where: EventWhereUniqueInput!): Event
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
   eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
-  funds(where: FundsWhereUniqueInput!): Funds
-  fundses(where: FundsWhereInput, orderBy: FundsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Funds]!
-  fundsesConnection(where: FundsWhereInput, orderBy: FundsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FundsConnection!
   halo(where: HaloWhereUniqueInput!): Halo
   haloes(where: HaloWhereInput, orderBy: HaloOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Halo]!
   haloesConnection(where: HaloWhereInput, orderBy: HaloOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HaloConnection!
@@ -4089,6 +3689,9 @@ type Query {
   transaction(where: TransactionWhereUniqueInput!): Transaction
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction]!
   transactionsConnection(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransactionConnection!
+  transfer(where: TransferWhereUniqueInput!): Transfer
+  transfers(where: TransferWhereInput, orderBy: TransferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transfer]!
+  transfersConnection(where: TransferWhereInput, orderBy: TransferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TransferConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -4096,28 +3699,28 @@ type Query {
 }
 
 type Subscription {
+  charge(where: ChargeSubscriptionWhereInput): ChargeSubscriptionPayload
   charity(where: CharitySubscriptionWhereInput): CharitySubscriptionPayload
   circle(where: CircleSubscriptionWhereInput): CircleSubscriptionPayload
   circleInvite(where: CircleInviteSubscriptionWhereInput): CircleInviteSubscriptionPayload
   circleJoinRequest(where: CircleJoinRequestSubscriptionWhereInput): CircleJoinRequestSubscriptionPayload
-  donation(where: DonationSubscriptionWhereInput): DonationSubscriptionPayload
   dot(where: DotSubscriptionWhereInput): DotSubscriptionPayload
   event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
-  funds(where: FundsSubscriptionWhereInput): FundsSubscriptionPayload
   halo(where: HaloSubscriptionWhereInput): HaloSubscriptionPayload
   identity(where: IdentitySubscriptionWhereInput): IdentitySubscriptionPayload
   loop(where: LoopSubscriptionWhereInput): LoopSubscriptionPayload
   preferences(where: PreferencesSubscriptionWhereInput): PreferencesSubscriptionPayload
   transaction(where: TransactionSubscriptionWhereInput): TransactionSubscriptionPayload
+  transfer(where: TransferSubscriptionWhereInput): TransferSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type Transaction {
-  id: Int!
+  id: ID!
   createdAt: DateTime!
   balance: Int!
-  donations(where: DonationWhereInput, orderBy: DonationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Donation!]
-  funds: Funds
+  donations(where: TransferWhereInput, orderBy: TransferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transfer!]
+  funds: Charge
   user: User!
 }
 
@@ -4128,10 +3731,10 @@ type TransactionConnection {
 }
 
 input TransactionCreateInput {
-  id: Int
+  id: ID
   balance: Int!
-  donations: DonationCreateManyWithoutTransactionInput
-  funds: FundsCreateOneWithoutTransactionInput
+  donations: TransferCreateManyWithoutTransactionInput
+  funds: ChargeCreateOneWithoutTransactionInput
   user: UserCreateOneWithoutTransactionsInput!
 }
 
@@ -4151,24 +3754,24 @@ input TransactionCreateOneWithoutFundsInput {
 }
 
 input TransactionCreateWithoutDonationsInput {
-  id: Int
+  id: ID
   balance: Int!
-  funds: FundsCreateOneWithoutTransactionInput
+  funds: ChargeCreateOneWithoutTransactionInput
   user: UserCreateOneWithoutTransactionsInput!
 }
 
 input TransactionCreateWithoutFundsInput {
-  id: Int
+  id: ID
   balance: Int!
-  donations: DonationCreateManyWithoutTransactionInput
+  donations: TransferCreateManyWithoutTransactionInput
   user: UserCreateOneWithoutTransactionsInput!
 }
 
 input TransactionCreateWithoutUserInput {
-  id: Int
+  id: ID
   balance: Int!
-  donations: DonationCreateManyWithoutTransactionInput
-  funds: FundsCreateOneWithoutTransactionInput
+  donations: TransferCreateManyWithoutTransactionInput
+  funds: ChargeCreateOneWithoutTransactionInput
 }
 
 type TransactionEdge {
@@ -4186,20 +3789,26 @@ enum TransactionOrderByInput {
 }
 
 type TransactionPreviousValues {
-  id: Int!
+  id: ID!
   createdAt: DateTime!
   balance: Int!
 }
 
 input TransactionScalarWhereInput {
-  id: Int
-  id_not: Int
-  id_in: [Int!]
-  id_not_in: [Int!]
-  id_lt: Int
-  id_lte: Int
-  id_gt: Int
-  id_gte: Int
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -4241,8 +3850,8 @@ input TransactionSubscriptionWhereInput {
 
 input TransactionUpdateInput {
   balance: Int
-  donations: DonationUpdateManyWithoutTransactionInput
-  funds: FundsUpdateOneWithoutTransactionInput
+  donations: TransferUpdateManyWithoutTransactionInput
+  funds: ChargeUpdateOneWithoutTransactionInput
   user: UserUpdateOneRequiredWithoutTransactionsInput
 }
 
@@ -4287,20 +3896,20 @@ input TransactionUpdateOneRequiredWithoutFundsInput {
 
 input TransactionUpdateWithoutDonationsDataInput {
   balance: Int
-  funds: FundsUpdateOneWithoutTransactionInput
+  funds: ChargeUpdateOneWithoutTransactionInput
   user: UserUpdateOneRequiredWithoutTransactionsInput
 }
 
 input TransactionUpdateWithoutFundsDataInput {
   balance: Int
-  donations: DonationUpdateManyWithoutTransactionInput
+  donations: TransferUpdateManyWithoutTransactionInput
   user: UserUpdateOneRequiredWithoutTransactionsInput
 }
 
 input TransactionUpdateWithoutUserDataInput {
   balance: Int
-  donations: DonationUpdateManyWithoutTransactionInput
-  funds: FundsUpdateOneWithoutTransactionInput
+  donations: TransferUpdateManyWithoutTransactionInput
+  funds: ChargeUpdateOneWithoutTransactionInput
 }
 
 input TransactionUpdateWithWhereUniqueWithoutUserInput {
@@ -4325,14 +3934,20 @@ input TransactionUpsertWithWhereUniqueWithoutUserInput {
 }
 
 input TransactionWhereInput {
-  id: Int
-  id_not: Int
-  id_in: [Int!]
-  id_not_in: [Int!]
-  id_lt: Int
-  id_lte: Int
-  id_gt: Int
-  id_gte: Int
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -4349,10 +3964,10 @@ input TransactionWhereInput {
   balance_lte: Int
   balance_gt: Int
   balance_gte: Int
-  donations_every: DonationWhereInput
-  donations_some: DonationWhereInput
-  donations_none: DonationWhereInput
-  funds: FundsWhereInput
+  donations_every: TransferWhereInput
+  donations_some: TransferWhereInput
+  donations_none: TransferWhereInput
+  funds: ChargeWhereInput
   user: UserWhereInput
   AND: [TransactionWhereInput!]
   OR: [TransactionWhereInput!]
@@ -4360,7 +3975,362 @@ input TransactionWhereInput {
 }
 
 input TransactionWhereUniqueInput {
-  id: Int
+  id: ID
+}
+
+type Transfer {
+  id: ID!
+  createdAt: DateTime!
+  amount: Int!
+  chargeBalance: Int!
+  transferID: String!
+  event: Event
+  source: Charge
+  transaction: Transaction!
+}
+
+type TransferConnection {
+  pageInfo: PageInfo!
+  edges: [TransferEdge]!
+  aggregate: AggregateTransfer!
+}
+
+input TransferCreateInput {
+  id: ID
+  amount: Int!
+  chargeBalance: Int!
+  transferID: String!
+  event: EventCreateOneWithoutDonationsInput
+  source: ChargeCreateOneWithoutDonationsInput
+  transaction: TransactionCreateOneWithoutDonationsInput!
+}
+
+input TransferCreateManyWithoutEventInput {
+  create: [TransferCreateWithoutEventInput!]
+  connect: [TransferWhereUniqueInput!]
+}
+
+input TransferCreateManyWithoutSourceInput {
+  create: [TransferCreateWithoutSourceInput!]
+  connect: [TransferWhereUniqueInput!]
+}
+
+input TransferCreateManyWithoutTransactionInput {
+  create: [TransferCreateWithoutTransactionInput!]
+  connect: [TransferWhereUniqueInput!]
+}
+
+input TransferCreateWithoutEventInput {
+  id: ID
+  amount: Int!
+  chargeBalance: Int!
+  transferID: String!
+  source: ChargeCreateOneWithoutDonationsInput
+  transaction: TransactionCreateOneWithoutDonationsInput!
+}
+
+input TransferCreateWithoutSourceInput {
+  id: ID
+  amount: Int!
+  chargeBalance: Int!
+  transferID: String!
+  event: EventCreateOneWithoutDonationsInput
+  transaction: TransactionCreateOneWithoutDonationsInput!
+}
+
+input TransferCreateWithoutTransactionInput {
+  id: ID
+  amount: Int!
+  chargeBalance: Int!
+  transferID: String!
+  event: EventCreateOneWithoutDonationsInput
+  source: ChargeCreateOneWithoutDonationsInput
+}
+
+type TransferEdge {
+  node: Transfer!
+  cursor: String!
+}
+
+enum TransferOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  amount_ASC
+  amount_DESC
+  chargeBalance_ASC
+  chargeBalance_DESC
+  transferID_ASC
+  transferID_DESC
+}
+
+type TransferPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  amount: Int!
+  chargeBalance: Int!
+  transferID: String!
+}
+
+input TransferScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  chargeBalance: Int
+  chargeBalance_not: Int
+  chargeBalance_in: [Int!]
+  chargeBalance_not_in: [Int!]
+  chargeBalance_lt: Int
+  chargeBalance_lte: Int
+  chargeBalance_gt: Int
+  chargeBalance_gte: Int
+  transferID: String
+  transferID_not: String
+  transferID_in: [String!]
+  transferID_not_in: [String!]
+  transferID_lt: String
+  transferID_lte: String
+  transferID_gt: String
+  transferID_gte: String
+  transferID_contains: String
+  transferID_not_contains: String
+  transferID_starts_with: String
+  transferID_not_starts_with: String
+  transferID_ends_with: String
+  transferID_not_ends_with: String
+  AND: [TransferScalarWhereInput!]
+  OR: [TransferScalarWhereInput!]
+  NOT: [TransferScalarWhereInput!]
+}
+
+type TransferSubscriptionPayload {
+  mutation: MutationType!
+  node: Transfer
+  updatedFields: [String!]
+  previousValues: TransferPreviousValues
+}
+
+input TransferSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TransferWhereInput
+  AND: [TransferSubscriptionWhereInput!]
+  OR: [TransferSubscriptionWhereInput!]
+  NOT: [TransferSubscriptionWhereInput!]
+}
+
+input TransferUpdateInput {
+  amount: Int
+  chargeBalance: Int
+  transferID: String
+  event: EventUpdateOneWithoutDonationsInput
+  source: ChargeUpdateOneWithoutDonationsInput
+  transaction: TransactionUpdateOneRequiredWithoutDonationsInput
+}
+
+input TransferUpdateManyDataInput {
+  amount: Int
+  chargeBalance: Int
+  transferID: String
+}
+
+input TransferUpdateManyMutationInput {
+  amount: Int
+  chargeBalance: Int
+  transferID: String
+}
+
+input TransferUpdateManyWithoutEventInput {
+  create: [TransferCreateWithoutEventInput!]
+  delete: [TransferWhereUniqueInput!]
+  connect: [TransferWhereUniqueInput!]
+  set: [TransferWhereUniqueInput!]
+  disconnect: [TransferWhereUniqueInput!]
+  update: [TransferUpdateWithWhereUniqueWithoutEventInput!]
+  upsert: [TransferUpsertWithWhereUniqueWithoutEventInput!]
+  deleteMany: [TransferScalarWhereInput!]
+  updateMany: [TransferUpdateManyWithWhereNestedInput!]
+}
+
+input TransferUpdateManyWithoutSourceInput {
+  create: [TransferCreateWithoutSourceInput!]
+  delete: [TransferWhereUniqueInput!]
+  connect: [TransferWhereUniqueInput!]
+  set: [TransferWhereUniqueInput!]
+  disconnect: [TransferWhereUniqueInput!]
+  update: [TransferUpdateWithWhereUniqueWithoutSourceInput!]
+  upsert: [TransferUpsertWithWhereUniqueWithoutSourceInput!]
+  deleteMany: [TransferScalarWhereInput!]
+  updateMany: [TransferUpdateManyWithWhereNestedInput!]
+}
+
+input TransferUpdateManyWithoutTransactionInput {
+  create: [TransferCreateWithoutTransactionInput!]
+  delete: [TransferWhereUniqueInput!]
+  connect: [TransferWhereUniqueInput!]
+  set: [TransferWhereUniqueInput!]
+  disconnect: [TransferWhereUniqueInput!]
+  update: [TransferUpdateWithWhereUniqueWithoutTransactionInput!]
+  upsert: [TransferUpsertWithWhereUniqueWithoutTransactionInput!]
+  deleteMany: [TransferScalarWhereInput!]
+  updateMany: [TransferUpdateManyWithWhereNestedInput!]
+}
+
+input TransferUpdateManyWithWhereNestedInput {
+  where: TransferScalarWhereInput!
+  data: TransferUpdateManyDataInput!
+}
+
+input TransferUpdateWithoutEventDataInput {
+  amount: Int
+  chargeBalance: Int
+  transferID: String
+  source: ChargeUpdateOneWithoutDonationsInput
+  transaction: TransactionUpdateOneRequiredWithoutDonationsInput
+}
+
+input TransferUpdateWithoutSourceDataInput {
+  amount: Int
+  chargeBalance: Int
+  transferID: String
+  event: EventUpdateOneWithoutDonationsInput
+  transaction: TransactionUpdateOneRequiredWithoutDonationsInput
+}
+
+input TransferUpdateWithoutTransactionDataInput {
+  amount: Int
+  chargeBalance: Int
+  transferID: String
+  event: EventUpdateOneWithoutDonationsInput
+  source: ChargeUpdateOneWithoutDonationsInput
+}
+
+input TransferUpdateWithWhereUniqueWithoutEventInput {
+  where: TransferWhereUniqueInput!
+  data: TransferUpdateWithoutEventDataInput!
+}
+
+input TransferUpdateWithWhereUniqueWithoutSourceInput {
+  where: TransferWhereUniqueInput!
+  data: TransferUpdateWithoutSourceDataInput!
+}
+
+input TransferUpdateWithWhereUniqueWithoutTransactionInput {
+  where: TransferWhereUniqueInput!
+  data: TransferUpdateWithoutTransactionDataInput!
+}
+
+input TransferUpsertWithWhereUniqueWithoutEventInput {
+  where: TransferWhereUniqueInput!
+  update: TransferUpdateWithoutEventDataInput!
+  create: TransferCreateWithoutEventInput!
+}
+
+input TransferUpsertWithWhereUniqueWithoutSourceInput {
+  where: TransferWhereUniqueInput!
+  update: TransferUpdateWithoutSourceDataInput!
+  create: TransferCreateWithoutSourceInput!
+}
+
+input TransferUpsertWithWhereUniqueWithoutTransactionInput {
+  where: TransferWhereUniqueInput!
+  update: TransferUpdateWithoutTransactionDataInput!
+  create: TransferCreateWithoutTransactionInput!
+}
+
+input TransferWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  chargeBalance: Int
+  chargeBalance_not: Int
+  chargeBalance_in: [Int!]
+  chargeBalance_not_in: [Int!]
+  chargeBalance_lt: Int
+  chargeBalance_lte: Int
+  chargeBalance_gt: Int
+  chargeBalance_gte: Int
+  transferID: String
+  transferID_not: String
+  transferID_in: [String!]
+  transferID_not_in: [String!]
+  transferID_lt: String
+  transferID_lte: String
+  transferID_gt: String
+  transferID_gte: String
+  transferID_contains: String
+  transferID_not_contains: String
+  transferID_starts_with: String
+  transferID_not_starts_with: String
+  transferID_ends_with: String
+  transferID_not_ends_with: String
+  event: EventWhereInput
+  source: ChargeWhereInput
+  transaction: TransactionWhereInput
+  AND: [TransferWhereInput!]
+  OR: [TransferWhereInput!]
+  NOT: [TransferWhereInput!]
+}
+
+input TransferWhereUniqueInput {
+  id: ID
 }
 
 type User {
@@ -4380,12 +4350,12 @@ type User {
   circlesOwned(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle!]
   dots(where: DotWhereInput, orderBy: DotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dot!]
   followedCharities(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charity!]
+  funds(where: ChargeWhereInput, orderBy: ChargeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charge!]
   halos(where: HaloWhereInput, orderBy: HaloOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Halo!]
   identity: Identity!
   loops(where: LoopWhereInput, orderBy: LoopOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Loop!]
   preferences: Preferences!
   transactions(where: TransactionWhereInput, orderBy: TransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Transaction!]
-  funds(where: FundsWhereInput, orderBy: FundsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Funds!]
 }
 
 type UserConnection {
@@ -4409,12 +4379,12 @@ input UserCreateInput {
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
+  funds: ChargeCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
-  funds: FundsCreateManyWithoutUserInput
 }
 
 input UserCreateManyWithoutCirclesInput {
@@ -4491,12 +4461,12 @@ input UserCreateWithoutCircleInvitesInput {
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
+  funds: ChargeCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
-  funds: FundsCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutCircleJoinRequestsInput {
@@ -4513,12 +4483,12 @@ input UserCreateWithoutCircleJoinRequestsInput {
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
+  funds: ChargeCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
-  funds: FundsCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutCirclesInput {
@@ -4535,12 +4505,12 @@ input UserCreateWithoutCirclesInput {
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
+  funds: ChargeCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
-  funds: FundsCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutCirclesOwnedInput {
@@ -4557,12 +4527,12 @@ input UserCreateWithoutCirclesOwnedInput {
   circles: CircleCreateManyWithoutMembersInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
+  funds: ChargeCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
-  funds: FundsCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutDotsInput {
@@ -4579,12 +4549,12 @@ input UserCreateWithoutDotsInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   followedCharities: CharityCreateManyWithoutFollowersInput
+  funds: ChargeCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
-  funds: FundsCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutFollowedCharitiesInput {
@@ -4601,12 +4571,12 @@ input UserCreateWithoutFollowedCharitiesInput {
   circles: CircleCreateManyWithoutMembersInput
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
+  funds: ChargeCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
-  funds: FundsCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutFundsInput {
@@ -4646,11 +4616,11 @@ input UserCreateWithoutHalosInput {
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
+  funds: ChargeCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
-  funds: FundsCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutIdentityInput {
@@ -4668,11 +4638,11 @@ input UserCreateWithoutIdentityInput {
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
+  funds: ChargeCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
-  funds: FundsCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutLoopsInput {
@@ -4690,11 +4660,11 @@ input UserCreateWithoutLoopsInput {
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
+  funds: ChargeCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   preferences: PreferencesCreateOneWithoutUserInput!
   transactions: TransactionCreateManyWithoutUserInput
-  funds: FundsCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutPreferencesInput {
@@ -4712,11 +4682,11 @@ input UserCreateWithoutPreferencesInput {
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
+  funds: ChargeCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
   transactions: TransactionCreateManyWithoutUserInput
-  funds: FundsCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutTransactionsInput {
@@ -4734,11 +4704,11 @@ input UserCreateWithoutTransactionsInput {
   circlesOwned: CircleCreateManyWithoutOwnerInput
   dots: DotCreateManyWithoutUserInput
   followedCharities: CharityCreateManyWithoutFollowersInput
+  funds: ChargeCreateManyWithoutUserInput
   halos: HaloCreateManyWithoutUserInput
   identity: IdentityCreateOneWithoutUserInput!
   loops: LoopCreateManyWithoutUserInput
   preferences: PreferencesCreateOneWithoutUserInput!
-  funds: FundsCreateManyWithoutUserInput
 }
 
 type UserEdge {
@@ -4942,12 +4912,12 @@ input UserUpdateInput {
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
+  funds: ChargeUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
-  funds: FundsUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyDataInput {
@@ -5082,12 +5052,12 @@ input UserUpdateWithoutCircleInvitesDataInput {
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
+  funds: ChargeUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
-  funds: FundsUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutCircleJoinRequestsDataInput {
@@ -5103,12 +5073,12 @@ input UserUpdateWithoutCircleJoinRequestsDataInput {
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
+  funds: ChargeUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
-  funds: FundsUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutCirclesDataInput {
@@ -5124,12 +5094,12 @@ input UserUpdateWithoutCirclesDataInput {
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
+  funds: ChargeUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
-  funds: FundsUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutCirclesOwnedDataInput {
@@ -5145,12 +5115,12 @@ input UserUpdateWithoutCirclesOwnedDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
+  funds: ChargeUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
-  funds: FundsUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutDotsDataInput {
@@ -5166,12 +5136,12 @@ input UserUpdateWithoutDotsDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
+  funds: ChargeUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
-  funds: FundsUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutFollowedCharitiesDataInput {
@@ -5187,12 +5157,12 @@ input UserUpdateWithoutFollowedCharitiesDataInput {
   circles: CircleUpdateManyWithoutMembersInput
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
+  funds: ChargeUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
-  funds: FundsUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutFundsDataInput {
@@ -5230,11 +5200,11 @@ input UserUpdateWithoutHalosDataInput {
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
+  funds: ChargeUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
-  funds: FundsUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutIdentityDataInput {
@@ -5251,11 +5221,11 @@ input UserUpdateWithoutIdentityDataInput {
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
+  funds: ChargeUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
-  funds: FundsUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutLoopsDataInput {
@@ -5272,11 +5242,11 @@ input UserUpdateWithoutLoopsDataInput {
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
+  funds: ChargeUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
-  funds: FundsUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutPreferencesDataInput {
@@ -5293,11 +5263,11 @@ input UserUpdateWithoutPreferencesDataInput {
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
+  funds: ChargeUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
   transactions: TransactionUpdateManyWithoutUserInput
-  funds: FundsUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutTransactionsDataInput {
@@ -5314,11 +5284,11 @@ input UserUpdateWithoutTransactionsDataInput {
   circlesOwned: CircleUpdateManyWithoutOwnerInput
   dots: DotUpdateManyWithoutUserInput
   followedCharities: CharityUpdateManyWithoutFollowersInput
+  funds: ChargeUpdateManyWithoutUserInput
   halos: HaloUpdateManyWithoutUserInput
   identity: IdentityUpdateOneRequiredWithoutUserInput
   loops: LoopUpdateManyWithoutUserInput
   preferences: PreferencesUpdateOneRequiredWithoutUserInput
-  funds: FundsUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithWhereUniqueWithoutCirclesInput {
@@ -5534,6 +5504,9 @@ input UserWhereInput {
   followedCharities_every: CharityWhereInput
   followedCharities_some: CharityWhereInput
   followedCharities_none: CharityWhereInput
+  funds_every: ChargeWhereInput
+  funds_some: ChargeWhereInput
+  funds_none: ChargeWhereInput
   halos_every: HaloWhereInput
   halos_some: HaloWhereInput
   halos_none: HaloWhereInput
@@ -5545,9 +5518,6 @@ input UserWhereInput {
   transactions_every: TransactionWhereInput
   transactions_some: TransactionWhereInput
   transactions_none: TransactionWhereInput
-  funds_every: FundsWhereInput
-  funds_some: FundsWhereInput
-  funds_none: FundsWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

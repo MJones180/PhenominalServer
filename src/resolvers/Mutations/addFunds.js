@@ -5,43 +5,39 @@ stripe.setApiVersion('2019-03-14');
 
 module.exports = async (parent, { amount, token }, ctx) => (
   new Promise(async (done) => {
+    // Current user info
     const { email, grabBalance, id: userID, nameFirst, nameLast } = await ctx.currentUser();
 
-    // Add funds, returns user information as well for the confirmation
+    // Add the funds to Phenominal
     const addFunds = async (amountNet, chargeID, balance) => (
-      ctx.client.createFunds({
-        amountAdded: amount,
-        amountNet,
-        chargeID,
-        transaction: {
+      // Transaction is created first so that its ID can easily be returned
+      ctx.client.createTransaction({
+        balance,
+        // Create the funds
+        funds: {
           create: {
-            balance,
-            user: {
-              connect: {
-                id: userID,
-              },
-            },
+            amountAdded: amount,
+            amountNet,
+            chargeID,
+            user: { connect: { id: userID } },
           },
         },
-        user: {
-          connect: {
-            id: userID,
-          },
-        },
+        user: { connect: { id: userID } },
       })
     );
 
-    // Create the Stripe charge for the given amount (in cents)
+    // Process the payment in Stripe as a Charge
     stripe.charges.create({
-      amount,
+      amount, // In cents
       currency: 'usd',
       description: 'Funds Addition',
-      source: token,
+      source: token, // Payment method
     }, async (err, { id: chargeID, balance_transaction }) => (
-      // Grab the funds the user will actually receive after processing (the net)
+      // Grab the charge's net payout after fees
       stripe.balanceTransactions.retrieve(balance_transaction, async (err, { net }) => {
+        // Updated balance after the funds addition
         const newBalance = (await grabBalance()) + net;
-        // Add the funds
+        // Add the funds, grab the transaction's ID
         const { id: transactionID } = await addFunds(net, chargeID, newBalance);
         // The transactional information for the confirmation
         const transactionData = {

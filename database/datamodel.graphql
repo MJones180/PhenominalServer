@@ -17,13 +17,12 @@ type User {
   circlesOwned: [Circle!]! @relation(name: "UserOwnedCircles", onDelete: CASCADE)
   dots: [Dot!]! @relation(name: "UserDots", onDelete: CASCADE)
   followedCharities: [Charity!]!
+  funds: [Charge!]!
   halos: [Halo!]! @relation(name: "UserHalos", onDelete: CASCADE)
   identity: Identity! @relation(name: "UserIdentity", onDelete: CASCADE, link: TABLE)
   loops: [Loop!]! @relation(name: "UserLoops", onDelete: CASCADE)
   preferences: Preferences! @relation(name: "UserPreferences", onDelete: CASCADE, link: TABLE)
   transactions: [Transaction!]!
-
-  funds: [Funds!]!
 }
 
 type Dot {
@@ -152,24 +151,23 @@ type Event {
   startDate: DateTime!
 
   charity: Charity!
-  donations: [Donation!]!
+  donations: [Transfer!]!
 }
 
-type Donation {
+type Transfer {
   id: ID! @id
   createdAt: DateTime! @createdAt
 
   amount: Int!
-  batchKey: String!
-  subBalance: Int!
+  chargeBalance: Int!
   transferID: String!
 
   event: Event
-  source: Funds
+  source: Charge
   transaction: Transaction!
 }
 
-type Funds {
+type Charge {
   id: ID! @id
   createdAt: DateTime! @createdAt
 
@@ -177,19 +175,19 @@ type Funds {
   amountNet: Int!
   chargeID: String!
 
-  donations: [Donation!]!
+  donations: [Transfer!]!
   transaction: Transaction! @relation(link: TABLE)
   user: User!
 }
 
 type Transaction {
-  id: Int! @id
+  id: ID! @id
   createdAt: DateTime! @createdAt
 
   balance: Int!
 
-  donations: [Donation!]!
-  funds: Funds
+  donations: [Transfer!]!
+  funds: Charge
   user: User!
 }
 

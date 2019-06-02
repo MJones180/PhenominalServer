@@ -18,7 +18,7 @@ module.exports = async (resolve, root, args, ctx, info) => {
       // Grab the user's most recent transaction
       const [transaction] = await ctx.client
         .user({ id: userID })
-        .transactions({ first: 1, orderBy: 'id_DESC' });
+        .transactions({ first: 1, orderBy: 'createdAt_DESC' });
       // If no balance, default to 0
       return (transaction && transaction.balance) || 0;
     };

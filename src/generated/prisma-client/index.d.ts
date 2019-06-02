@@ -16,19 +16,19 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  charge: (where?: ChargeWhereInput) => Promise<boolean>;
   charity: (where?: CharityWhereInput) => Promise<boolean>;
   circle: (where?: CircleWhereInput) => Promise<boolean>;
   circleInvite: (where?: CircleInviteWhereInput) => Promise<boolean>;
   circleJoinRequest: (where?: CircleJoinRequestWhereInput) => Promise<boolean>;
-  donation: (where?: DonationWhereInput) => Promise<boolean>;
   dot: (where?: DotWhereInput) => Promise<boolean>;
   event: (where?: EventWhereInput) => Promise<boolean>;
-  funds: (where?: FundsWhereInput) => Promise<boolean>;
   halo: (where?: HaloWhereInput) => Promise<boolean>;
   identity: (where?: IdentityWhereInput) => Promise<boolean>;
   loop: (where?: LoopWhereInput) => Promise<boolean>;
   preferences: (where?: PreferencesWhereInput) => Promise<boolean>;
   transaction: (where?: TransactionWhereInput) => Promise<boolean>;
+  transfer: (where?: TransferWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -51,6 +51,25 @@ export interface Prisma {
    * Queries
    */
 
+  charge: (where: ChargeWhereUniqueInput) => ChargeNullablePromise;
+  charges: (args?: {
+    where?: ChargeWhereInput;
+    orderBy?: ChargeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Charge>;
+  chargesConnection: (args?: {
+    where?: ChargeWhereInput;
+    orderBy?: ChargeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ChargeConnectionPromise;
   charity: (where: CharityWhereUniqueInput) => CharityNullablePromise;
   charities: (args?: {
     where?: CharityWhereInput;
@@ -131,25 +150,6 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => CircleJoinRequestConnectionPromise;
-  donation: (where: DonationWhereUniqueInput) => DonationNullablePromise;
-  donations: (args?: {
-    where?: DonationWhereInput;
-    orderBy?: DonationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Donation>;
-  donationsConnection: (args?: {
-    where?: DonationWhereInput;
-    orderBy?: DonationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => DonationConnectionPromise;
   dot: (where: DotWhereUniqueInput) => DotNullablePromise;
   dots: (args?: {
     where?: DotWhereInput;
@@ -188,25 +188,6 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => EventConnectionPromise;
-  funds: (where: FundsWhereUniqueInput) => FundsNullablePromise;
-  fundses: (args?: {
-    where?: FundsWhereInput;
-    orderBy?: FundsOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Funds>;
-  fundsesConnection: (args?: {
-    where?: FundsWhereInput;
-    orderBy?: FundsOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FundsConnectionPromise;
   halo: (where: HaloWhereUniqueInput) => HaloNullablePromise;
   haloes: (args?: {
     where?: HaloWhereInput;
@@ -306,6 +287,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => TransactionConnectionPromise;
+  transfer: (where: TransferWhereUniqueInput) => TransferNullablePromise;
+  transfers: (args?: {
+    where?: TransferWhereInput;
+    orderBy?: TransferOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Transfer>;
+  transfersConnection: (args?: {
+    where?: TransferWhereInput;
+    orderBy?: TransferOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TransferConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -331,6 +331,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createCharge: (data: ChargeCreateInput) => ChargePromise;
+  updateCharge: (args: {
+    data: ChargeUpdateInput;
+    where: ChargeWhereUniqueInput;
+  }) => ChargePromise;
+  updateManyCharges: (args: {
+    data: ChargeUpdateManyMutationInput;
+    where?: ChargeWhereInput;
+  }) => BatchPayloadPromise;
+  upsertCharge: (args: {
+    where: ChargeWhereUniqueInput;
+    create: ChargeCreateInput;
+    update: ChargeUpdateInput;
+  }) => ChargePromise;
+  deleteCharge: (where: ChargeWhereUniqueInput) => ChargePromise;
+  deleteManyCharges: (where?: ChargeWhereInput) => BatchPayloadPromise;
   createCharity: (data: CharityCreateInput) => CharityPromise;
   updateCharity: (args: {
     data: CharityUpdateInput;
@@ -397,22 +413,6 @@ export interface Prisma {
   deleteManyCircleJoinRequests: (
     where?: CircleJoinRequestWhereInput
   ) => BatchPayloadPromise;
-  createDonation: (data: DonationCreateInput) => DonationPromise;
-  updateDonation: (args: {
-    data: DonationUpdateInput;
-    where: DonationWhereUniqueInput;
-  }) => DonationPromise;
-  updateManyDonations: (args: {
-    data: DonationUpdateManyMutationInput;
-    where?: DonationWhereInput;
-  }) => BatchPayloadPromise;
-  upsertDonation: (args: {
-    where: DonationWhereUniqueInput;
-    create: DonationCreateInput;
-    update: DonationUpdateInput;
-  }) => DonationPromise;
-  deleteDonation: (where: DonationWhereUniqueInput) => DonationPromise;
-  deleteManyDonations: (where?: DonationWhereInput) => BatchPayloadPromise;
   createDot: (data: DotCreateInput) => DotPromise;
   updateDot: (args: {
     data: DotUpdateInput;
@@ -445,22 +445,6 @@ export interface Prisma {
   }) => EventPromise;
   deleteEvent: (where: EventWhereUniqueInput) => EventPromise;
   deleteManyEvents: (where?: EventWhereInput) => BatchPayloadPromise;
-  createFunds: (data: FundsCreateInput) => FundsPromise;
-  updateFunds: (args: {
-    data: FundsUpdateInput;
-    where: FundsWhereUniqueInput;
-  }) => FundsPromise;
-  updateManyFundses: (args: {
-    data: FundsUpdateManyMutationInput;
-    where?: FundsWhereInput;
-  }) => BatchPayloadPromise;
-  upsertFunds: (args: {
-    where: FundsWhereUniqueInput;
-    create: FundsCreateInput;
-    update: FundsUpdateInput;
-  }) => FundsPromise;
-  deleteFunds: (where: FundsWhereUniqueInput) => FundsPromise;
-  deleteManyFundses: (where?: FundsWhereInput) => BatchPayloadPromise;
   createHalo: (data: HaloCreateInput) => HaloPromise;
   updateHalo: (args: {
     data: HaloUpdateInput;
@@ -545,6 +529,22 @@ export interface Prisma {
   deleteManyTransactions: (
     where?: TransactionWhereInput
   ) => BatchPayloadPromise;
+  createTransfer: (data: TransferCreateInput) => TransferPromise;
+  updateTransfer: (args: {
+    data: TransferUpdateInput;
+    where: TransferWhereUniqueInput;
+  }) => TransferPromise;
+  updateManyTransfers: (args: {
+    data: TransferUpdateManyMutationInput;
+    where?: TransferWhereInput;
+  }) => BatchPayloadPromise;
+  upsertTransfer: (args: {
+    where: TransferWhereUniqueInput;
+    create: TransferCreateInput;
+    update: TransferUpdateInput;
+  }) => TransferPromise;
+  deleteTransfer: (where: TransferWhereUniqueInput) => TransferPromise;
+  deleteManyTransfers: (where?: TransferWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -570,6 +570,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  charge: (
+    where?: ChargeSubscriptionWhereInput
+  ) => ChargeSubscriptionPayloadSubscription;
   charity: (
     where?: CharitySubscriptionWhereInput
   ) => CharitySubscriptionPayloadSubscription;
@@ -582,18 +585,12 @@ export interface Subscription {
   circleJoinRequest: (
     where?: CircleJoinRequestSubscriptionWhereInput
   ) => CircleJoinRequestSubscriptionPayloadSubscription;
-  donation: (
-    where?: DonationSubscriptionWhereInput
-  ) => DonationSubscriptionPayloadSubscription;
   dot: (
     where?: DotSubscriptionWhereInput
   ) => DotSubscriptionPayloadSubscription;
   event: (
     where?: EventSubscriptionWhereInput
   ) => EventSubscriptionPayloadSubscription;
-  funds: (
-    where?: FundsSubscriptionWhereInput
-  ) => FundsSubscriptionPayloadSubscription;
   halo: (
     where?: HaloSubscriptionWhereInput
   ) => HaloSubscriptionPayloadSubscription;
@@ -609,6 +606,9 @@ export interface Subscription {
   transaction: (
     where?: TransactionSubscriptionWhereInput
   ) => TransactionSubscriptionPayloadSubscription;
+  transfer: (
+    where?: TransferSubscriptionWhereInput
+  ) => TransferSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -698,47 +698,43 @@ export type CircleOrderByInput =
   | "open_ASC"
   | "open_DESC";
 
-export type FundsOrderByInput =
+export type TransactionOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
-  | "amountAdded_ASC"
-  | "amountAdded_DESC"
-  | "amountNet_ASC"
-  | "amountNet_DESC"
-  | "chargeID_ASC"
-  | "chargeID_DESC";
+  | "balance_ASC"
+  | "balance_DESC";
 
-export type UserOrderByInput =
+export type CircleInviteOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "bio_ASC"
-  | "bio_DESC"
-  | "email_ASC"
-  | "email_DESC"
-  | "nameFirst_ASC"
-  | "nameFirst_DESC"
-  | "nameLast_ASC"
-  | "nameLast_DESC"
-  | "picture_ASC"
-  | "picture_DESC"
-  | "securityToken_ASC"
-  | "securityToken_DESC"
-  | "username_ASC"
-  | "username_DESC";
+  | "updatedAt_DESC";
 
-export type LoopOrderByInput =
+export type HaloOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
-  | "count_ASC"
-  | "count_DESC";
+  | "key_ASC"
+  | "key_DESC"
+  | "tier_ASC"
+  | "tier_DESC";
+
+export type TransferOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "amount_ASC"
+  | "amount_DESC"
+  | "chargeBalance_ASC"
+  | "chargeBalance_DESC"
+  | "transferID_ASC"
+  | "transferID_DESC";
 
 export type EventOrderByInput =
   | "id_ASC"
@@ -766,19 +762,27 @@ export type EventOrderByInput =
   | "startDate_ASC"
   | "startDate_DESC";
 
-export type DonationOrderByInput =
+export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
-  | "amount_ASC"
-  | "amount_DESC"
-  | "batchKey_ASC"
-  | "batchKey_DESC"
-  | "subBalance_ASC"
-  | "subBalance_DESC"
-  | "transferID_ASC"
-  | "transferID_DESC";
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "bio_ASC"
+  | "bio_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "nameFirst_ASC"
+  | "nameFirst_DESC"
+  | "nameLast_ASC"
+  | "nameLast_DESC"
+  | "picture_ASC"
+  | "picture_DESC"
+  | "securityToken_ASC"
+  | "securityToken_DESC"
+  | "username_ASC"
+  | "username_DESC";
 
 export type CircleJoinRequestOrderByInput =
   | "id_ASC"
@@ -788,31 +792,25 @@ export type CircleJoinRequestOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type CircleInviteOrderByInput =
+export type ChargeOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | "amountAdded_ASC"
+  | "amountAdded_DESC"
+  | "amountNet_ASC"
+  | "amountNet_DESC"
+  | "chargeID_ASC"
+  | "chargeID_DESC";
 
-export type HaloOrderByInput =
+export type LoopOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
-  | "key_ASC"
-  | "key_DESC"
-  | "tier_ASC"
-  | "tier_DESC";
-
-export type TransactionOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "balance_ASC"
-  | "balance_DESC";
+  | "count_ASC"
+  | "count_DESC";
 
 export type IdentityOrderByInput =
   | "id_ASC"
@@ -828,1618 +826,36 @@ export type IdentityOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface CircleUpdateOneRequiredWithoutInvitesInput {
-  create?: Maybe<CircleCreateWithoutInvitesInput>;
-  update?: Maybe<CircleUpdateWithoutInvitesDataInput>;
-  upsert?: Maybe<CircleUpsertWithoutInvitesInput>;
-  connect?: Maybe<CircleWhereUniqueInput>;
-}
-
-export type CharityWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  ein?: Maybe<String>;
-}>;
-
-export interface CircleScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  open?: Maybe<Boolean>;
-  open_not?: Maybe<Boolean>;
-  AND?: Maybe<CircleScalarWhereInput[] | CircleScalarWhereInput>;
-  OR?: Maybe<CircleScalarWhereInput[] | CircleScalarWhereInput>;
-  NOT?: Maybe<CircleScalarWhereInput[] | CircleScalarWhereInput>;
-}
-
-export interface LoopWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  count?: Maybe<Int>;
-  count_not?: Maybe<Int>;
-  count_in?: Maybe<Int[] | Int>;
-  count_not_in?: Maybe<Int[] | Int>;
-  count_lt?: Maybe<Int>;
-  count_lte?: Maybe<Int>;
-  count_gt?: Maybe<Int>;
-  count_gte?: Maybe<Int>;
-  event?: Maybe<EventWhereInput>;
-  user?: Maybe<UserWhereInput>;
-  AND?: Maybe<LoopWhereInput[] | LoopWhereInput>;
-  OR?: Maybe<LoopWhereInput[] | LoopWhereInput>;
-  NOT?: Maybe<LoopWhereInput[] | LoopWhereInput>;
-}
-
 export interface CircleUpdateManyWithWhereNestedInput {
   where: CircleScalarWhereInput;
   data: CircleUpdateManyDataInput;
 }
 
-export interface TransactionWhereInput {
-  id?: Maybe<Int>;
-  id_not?: Maybe<Int>;
-  id_in?: Maybe<Int[] | Int>;
-  id_not_in?: Maybe<Int[] | Int>;
-  id_lt?: Maybe<Int>;
-  id_lte?: Maybe<Int>;
-  id_gt?: Maybe<Int>;
-  id_gte?: Maybe<Int>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  balance?: Maybe<Int>;
-  balance_not?: Maybe<Int>;
-  balance_in?: Maybe<Int[] | Int>;
-  balance_not_in?: Maybe<Int[] | Int>;
-  balance_lt?: Maybe<Int>;
-  balance_lte?: Maybe<Int>;
-  balance_gt?: Maybe<Int>;
-  balance_gte?: Maybe<Int>;
-  donations_every?: Maybe<DonationWhereInput>;
-  donations_some?: Maybe<DonationWhereInput>;
-  donations_none?: Maybe<DonationWhereInput>;
-  funds?: Maybe<FundsWhereInput>;
-  user?: Maybe<UserWhereInput>;
-  AND?: Maybe<TransactionWhereInput[] | TransactionWhereInput>;
-  OR?: Maybe<TransactionWhereInput[] | TransactionWhereInput>;
-  NOT?: Maybe<TransactionWhereInput[] | TransactionWhereInput>;
-}
-
-export interface CircleUpdateManyDataInput {
-  description?: Maybe<String>;
-  name?: Maybe<String>;
-  open?: Maybe<Boolean>;
-}
-
-export interface FundsWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  amountAdded?: Maybe<Int>;
-  amountAdded_not?: Maybe<Int>;
-  amountAdded_in?: Maybe<Int[] | Int>;
-  amountAdded_not_in?: Maybe<Int[] | Int>;
-  amountAdded_lt?: Maybe<Int>;
-  amountAdded_lte?: Maybe<Int>;
-  amountAdded_gt?: Maybe<Int>;
-  amountAdded_gte?: Maybe<Int>;
-  amountNet?: Maybe<Int>;
-  amountNet_not?: Maybe<Int>;
-  amountNet_in?: Maybe<Int[] | Int>;
-  amountNet_not_in?: Maybe<Int[] | Int>;
-  amountNet_lt?: Maybe<Int>;
-  amountNet_lte?: Maybe<Int>;
-  amountNet_gt?: Maybe<Int>;
-  amountNet_gte?: Maybe<Int>;
-  chargeID?: Maybe<String>;
-  chargeID_not?: Maybe<String>;
-  chargeID_in?: Maybe<String[] | String>;
-  chargeID_not_in?: Maybe<String[] | String>;
-  chargeID_lt?: Maybe<String>;
-  chargeID_lte?: Maybe<String>;
-  chargeID_gt?: Maybe<String>;
-  chargeID_gte?: Maybe<String>;
-  chargeID_contains?: Maybe<String>;
-  chargeID_not_contains?: Maybe<String>;
-  chargeID_starts_with?: Maybe<String>;
-  chargeID_not_starts_with?: Maybe<String>;
-  chargeID_ends_with?: Maybe<String>;
-  chargeID_not_ends_with?: Maybe<String>;
-  donations_every?: Maybe<DonationWhereInput>;
-  donations_some?: Maybe<DonationWhereInput>;
-  donations_none?: Maybe<DonationWhereInput>;
-  transaction?: Maybe<TransactionWhereInput>;
-  user?: Maybe<UserWhereInput>;
-  AND?: Maybe<FundsWhereInput[] | FundsWhereInput>;
-  OR?: Maybe<FundsWhereInput[] | FundsWhereInput>;
-  NOT?: Maybe<FundsWhereInput[] | FundsWhereInput>;
-}
-
-export interface FundsUpdateWithoutDonationsDataInput {
-  amountAdded?: Maybe<Int>;
-  amountNet?: Maybe<Int>;
-  chargeID?: Maybe<String>;
-  transaction?: Maybe<TransactionUpdateOneRequiredWithoutFundsInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutFundsInput>;
-}
-
-export interface UserCreateOneWithoutDotsInput {
-  create?: Maybe<UserCreateWithoutDotsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface TransactionUpdateOneRequiredWithoutFundsInput {
-  create?: Maybe<TransactionCreateWithoutFundsInput>;
-  update?: Maybe<TransactionUpdateWithoutFundsDataInput>;
-  upsert?: Maybe<TransactionUpsertWithoutFundsInput>;
-  connect?: Maybe<TransactionWhereUniqueInput>;
-}
-
-export interface DotUpdateManyWithoutUserInput {
-  create?: Maybe<DotCreateWithoutUserInput[] | DotCreateWithoutUserInput>;
-  delete?: Maybe<DotWhereUniqueInput[] | DotWhereUniqueInput>;
-  connect?: Maybe<DotWhereUniqueInput[] | DotWhereUniqueInput>;
-  set?: Maybe<DotWhereUniqueInput[] | DotWhereUniqueInput>;
-  disconnect?: Maybe<DotWhereUniqueInput[] | DotWhereUniqueInput>;
-  update?: Maybe<
-    | DotUpdateWithWhereUniqueWithoutUserInput[]
-    | DotUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | DotUpsertWithWhereUniqueWithoutUserInput[]
-    | DotUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<DotScalarWhereInput[] | DotScalarWhereInput>;
-  updateMany?: Maybe<
-    DotUpdateManyWithWhereNestedInput[] | DotUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TransactionUpdateWithoutFundsDataInput {
-  balance?: Maybe<Int>;
-  donations?: Maybe<DonationUpdateManyWithoutTransactionInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutTransactionsInput>;
-}
-
-export interface TransactionSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<TransactionWhereInput>;
-  AND?: Maybe<
-    TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput
-  >;
-}
-
-export interface DonationUpdateManyWithoutTransactionInput {
-  create?: Maybe<
-    | DonationCreateWithoutTransactionInput[]
-    | DonationCreateWithoutTransactionInput
-  >;
-  delete?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
-  connect?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
-  set?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
-  disconnect?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
-  update?: Maybe<
-    | DonationUpdateWithWhereUniqueWithoutTransactionInput[]
-    | DonationUpdateWithWhereUniqueWithoutTransactionInput
-  >;
-  upsert?: Maybe<
-    | DonationUpsertWithWhereUniqueWithoutTransactionInput[]
-    | DonationUpsertWithWhereUniqueWithoutTransactionInput
-  >;
-  deleteMany?: Maybe<DonationScalarWhereInput[] | DonationScalarWhereInput>;
-  updateMany?: Maybe<
-    | DonationUpdateManyWithWhereNestedInput[]
-    | DonationUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface LoopSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<LoopWhereInput>;
-  AND?: Maybe<LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput>;
-  OR?: Maybe<LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput>;
-  NOT?: Maybe<LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput>;
-}
-
-export interface DonationUpdateWithWhereUniqueWithoutTransactionInput {
-  where: DonationWhereUniqueInput;
-  data: DonationUpdateWithoutTransactionDataInput;
-}
-
-export interface IdentitySubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<IdentityWhereInput>;
-  AND?: Maybe<
-    IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput
-  >;
-  OR?: Maybe<IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput>;
-  NOT?: Maybe<
-    IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput
-  >;
-}
-
-export interface DonationUpdateWithoutTransactionDataInput {
-  amount?: Maybe<Int>;
-  batchKey?: Maybe<String>;
-  subBalance?: Maybe<Int>;
-  transferID?: Maybe<String>;
-  event?: Maybe<EventUpdateOneWithoutDonationsInput>;
-  source?: Maybe<FundsUpdateOneWithoutDonationsInput>;
-}
-
-export interface CircleInviteWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  circle?: Maybe<CircleWhereInput>;
-  user?: Maybe<UserWhereInput>;
-  AND?: Maybe<CircleInviteWhereInput[] | CircleInviteWhereInput>;
-  OR?: Maybe<CircleInviteWhereInput[] | CircleInviteWhereInput>;
-  NOT?: Maybe<CircleInviteWhereInput[] | CircleInviteWhereInput>;
-}
-
-export interface EventUpdateOneWithoutDonationsInput {
-  create?: Maybe<EventCreateWithoutDonationsInput>;
-  update?: Maybe<EventUpdateWithoutDonationsDataInput>;
-  upsert?: Maybe<EventUpsertWithoutDonationsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<EventWhereUniqueInput>;
-}
-
-export interface EventSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<EventWhereInput>;
-  AND?: Maybe<EventSubscriptionWhereInput[] | EventSubscriptionWhereInput>;
-  OR?: Maybe<EventSubscriptionWhereInput[] | EventSubscriptionWhereInput>;
-  NOT?: Maybe<EventSubscriptionWhereInput[] | EventSubscriptionWhereInput>;
-}
-
-export interface EventUpdateWithoutDonationsDataInput {
-  endDate?: Maybe<DateTimeInput>;
-  goal?: Maybe<Int>;
-  multiplier?: Maybe<Int>;
-  specialEvent?: Maybe<String>;
-  specialEventDescription?: Maybe<String>;
-  specialEventName?: Maybe<String>;
-  sponsorName?: Maybe<String>;
-  sponsorWebsite?: Maybe<String>;
-  startDate?: Maybe<DateTimeInput>;
-  charity?: Maybe<CharityUpdateOneRequiredWithoutEventsInput>;
-}
-
-export interface CircleJoinRequestWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  circle?: Maybe<CircleWhereInput>;
-  user?: Maybe<UserWhereInput>;
-  AND?: Maybe<CircleJoinRequestWhereInput[] | CircleJoinRequestWhereInput>;
-  OR?: Maybe<CircleJoinRequestWhereInput[] | CircleJoinRequestWhereInput>;
-  NOT?: Maybe<CircleJoinRequestWhereInput[] | CircleJoinRequestWhereInput>;
-}
-
-export interface CharityUpdateOneRequiredWithoutEventsInput {
-  create?: Maybe<CharityCreateWithoutEventsInput>;
-  update?: Maybe<CharityUpdateWithoutEventsDataInput>;
-  upsert?: Maybe<CharityUpsertWithoutEventsInput>;
-  connect?: Maybe<CharityWhereUniqueInput>;
-}
-
-export interface UserWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  bio?: Maybe<String>;
-  bio_not?: Maybe<String>;
-  bio_in?: Maybe<String[] | String>;
-  bio_not_in?: Maybe<String[] | String>;
-  bio_lt?: Maybe<String>;
-  bio_lte?: Maybe<String>;
-  bio_gt?: Maybe<String>;
-  bio_gte?: Maybe<String>;
-  bio_contains?: Maybe<String>;
-  bio_not_contains?: Maybe<String>;
-  bio_starts_with?: Maybe<String>;
-  bio_not_starts_with?: Maybe<String>;
-  bio_ends_with?: Maybe<String>;
-  bio_not_ends_with?: Maybe<String>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameFirst_not?: Maybe<String>;
-  nameFirst_in?: Maybe<String[] | String>;
-  nameFirst_not_in?: Maybe<String[] | String>;
-  nameFirst_lt?: Maybe<String>;
-  nameFirst_lte?: Maybe<String>;
-  nameFirst_gt?: Maybe<String>;
-  nameFirst_gte?: Maybe<String>;
-  nameFirst_contains?: Maybe<String>;
-  nameFirst_not_contains?: Maybe<String>;
-  nameFirst_starts_with?: Maybe<String>;
-  nameFirst_not_starts_with?: Maybe<String>;
-  nameFirst_ends_with?: Maybe<String>;
-  nameFirst_not_ends_with?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  nameLast_not?: Maybe<String>;
-  nameLast_in?: Maybe<String[] | String>;
-  nameLast_not_in?: Maybe<String[] | String>;
-  nameLast_lt?: Maybe<String>;
-  nameLast_lte?: Maybe<String>;
-  nameLast_gt?: Maybe<String>;
-  nameLast_gte?: Maybe<String>;
-  nameLast_contains?: Maybe<String>;
-  nameLast_not_contains?: Maybe<String>;
-  nameLast_starts_with?: Maybe<String>;
-  nameLast_not_starts_with?: Maybe<String>;
-  nameLast_ends_with?: Maybe<String>;
-  nameLast_not_ends_with?: Maybe<String>;
-  picture?: Maybe<String>;
-  picture_not?: Maybe<String>;
-  picture_in?: Maybe<String[] | String>;
-  picture_not_in?: Maybe<String[] | String>;
-  picture_lt?: Maybe<String>;
-  picture_lte?: Maybe<String>;
-  picture_gt?: Maybe<String>;
-  picture_gte?: Maybe<String>;
-  picture_contains?: Maybe<String>;
-  picture_not_contains?: Maybe<String>;
-  picture_starts_with?: Maybe<String>;
-  picture_not_starts_with?: Maybe<String>;
-  picture_ends_with?: Maybe<String>;
-  picture_not_ends_with?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  securityToken_not?: Maybe<Int>;
-  securityToken_in?: Maybe<Int[] | Int>;
-  securityToken_not_in?: Maybe<Int[] | Int>;
-  securityToken_lt?: Maybe<Int>;
-  securityToken_lte?: Maybe<Int>;
-  securityToken_gt?: Maybe<Int>;
-  securityToken_gte?: Maybe<Int>;
-  username?: Maybe<String>;
-  username_not?: Maybe<String>;
-  username_in?: Maybe<String[] | String>;
-  username_not_in?: Maybe<String[] | String>;
-  username_lt?: Maybe<String>;
-  username_lte?: Maybe<String>;
-  username_gt?: Maybe<String>;
-  username_gte?: Maybe<String>;
-  username_contains?: Maybe<String>;
-  username_not_contains?: Maybe<String>;
-  username_starts_with?: Maybe<String>;
-  username_not_starts_with?: Maybe<String>;
-  username_ends_with?: Maybe<String>;
-  username_not_ends_with?: Maybe<String>;
-  circleJoinRequests_every?: Maybe<CircleJoinRequestWhereInput>;
-  circleJoinRequests_some?: Maybe<CircleJoinRequestWhereInput>;
-  circleJoinRequests_none?: Maybe<CircleJoinRequestWhereInput>;
-  circleInvites_every?: Maybe<CircleInviteWhereInput>;
-  circleInvites_some?: Maybe<CircleInviteWhereInput>;
-  circleInvites_none?: Maybe<CircleInviteWhereInput>;
-  circles_every?: Maybe<CircleWhereInput>;
-  circles_some?: Maybe<CircleWhereInput>;
-  circles_none?: Maybe<CircleWhereInput>;
-  circlesOwned_every?: Maybe<CircleWhereInput>;
-  circlesOwned_some?: Maybe<CircleWhereInput>;
-  circlesOwned_none?: Maybe<CircleWhereInput>;
-  dots_every?: Maybe<DotWhereInput>;
-  dots_some?: Maybe<DotWhereInput>;
-  dots_none?: Maybe<DotWhereInput>;
-  followedCharities_every?: Maybe<CharityWhereInput>;
-  followedCharities_some?: Maybe<CharityWhereInput>;
-  followedCharities_none?: Maybe<CharityWhereInput>;
-  halos_every?: Maybe<HaloWhereInput>;
-  halos_some?: Maybe<HaloWhereInput>;
-  halos_none?: Maybe<HaloWhereInput>;
-  identity?: Maybe<IdentityWhereInput>;
-  loops_every?: Maybe<LoopWhereInput>;
-  loops_some?: Maybe<LoopWhereInput>;
-  loops_none?: Maybe<LoopWhereInput>;
-  preferences?: Maybe<PreferencesWhereInput>;
-  transactions_every?: Maybe<TransactionWhereInput>;
-  transactions_some?: Maybe<TransactionWhereInput>;
-  transactions_none?: Maybe<TransactionWhereInput>;
-  funds_every?: Maybe<FundsWhereInput>;
-  funds_some?: Maybe<FundsWhereInput>;
-  funds_none?: Maybe<FundsWhereInput>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
-}
-
-export interface CharityUpdateWithoutEventsDataInput {
-  acronym?: Maybe<String>;
-  bannerCredit?: Maybe<String>;
-  connectedAccountID?: Maybe<String>;
-  ein?: Maybe<String>;
-  expensesAdministrative?: Maybe<Float>;
-  expensesFundraising?: Maybe<Float>;
-  expensesOther?: Maybe<Float>;
-  expensesProgram?: Maybe<Float>;
-  expensesUpdated?: Maybe<String>;
-  location?: Maybe<String>;
-  mission?: Maybe<String>;
-  name?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  website?: Maybe<String>;
-  followers?: Maybe<UserUpdateManyWithoutFollowedCharitiesInput>;
-}
-
-export interface DonationSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<DonationWhereInput>;
-  AND?: Maybe<
-    DonationSubscriptionWhereInput[] | DonationSubscriptionWhereInput
-  >;
-  OR?: Maybe<DonationSubscriptionWhereInput[] | DonationSubscriptionWhereInput>;
-  NOT?: Maybe<
-    DonationSubscriptionWhereInput[] | DonationSubscriptionWhereInput
-  >;
-}
-
-export interface UserUpdateManyWithoutFollowedCharitiesInput {
-  create?: Maybe<
-    | UserCreateWithoutFollowedCharitiesInput[]
-    | UserCreateWithoutFollowedCharitiesInput
-  >;
-  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput[]
-    | UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput
-  >;
-  upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput[]
-    | UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput
-  >;
-  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  updateMany?: Maybe<
-    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface CircleInviteSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CircleInviteWhereInput>;
-  AND?: Maybe<
-    CircleInviteSubscriptionWhereInput[] | CircleInviteSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    CircleInviteSubscriptionWhereInput[] | CircleInviteSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    CircleInviteSubscriptionWhereInput[] | CircleInviteSubscriptionWhereInput
-  >;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutFollowedCharitiesDataInput;
-}
-
-export interface CharitySubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CharityWhereInput>;
-  AND?: Maybe<CharitySubscriptionWhereInput[] | CharitySubscriptionWhereInput>;
-  OR?: Maybe<CharitySubscriptionWhereInput[] | CharitySubscriptionWhereInput>;
-  NOT?: Maybe<CharitySubscriptionWhereInput[] | CharitySubscriptionWhereInput>;
-}
-
-export interface UserUpdateWithoutFollowedCharitiesDataInput {
-  bio?: Maybe<String>;
-  email?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  picture?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  username?: Maybe<String>;
-  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
-  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
-  dots?: Maybe<DotUpdateManyWithoutUserInput>;
-  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
-  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
-  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
-  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
-  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
-  funds?: Maybe<FundsUpdateManyWithoutUserInput>;
-}
-
-export interface UserUpdateManyMutationInput {
-  bio?: Maybe<String>;
-  email?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  picture?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  username?: Maybe<String>;
-}
-
-export interface CircleJoinRequestUpdateManyWithoutUserInput {
-  create?: Maybe<
-    | CircleJoinRequestCreateWithoutUserInput[]
-    | CircleJoinRequestCreateWithoutUserInput
-  >;
-  delete?: Maybe<
-    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
-  >;
-  connect?: Maybe<
-    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
-  >;
-  set?: Maybe<
-    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
-  >;
-  disconnect?: Maybe<
-    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
-  >;
-  update?: Maybe<
-    | CircleJoinRequestUpdateWithWhereUniqueWithoutUserInput[]
-    | CircleJoinRequestUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | CircleJoinRequestUpsertWithWhereUniqueWithoutUserInput[]
-    | CircleJoinRequestUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<
-    CircleJoinRequestScalarWhereInput[] | CircleJoinRequestScalarWhereInput
-  >;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  bio?: Maybe<String>;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: Maybe<String>;
-  securityToken: Int;
-  username: String;
-  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
-  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
-  dots?: Maybe<DotCreateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloCreateManyWithoutUserInput>;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: Maybe<LoopCreateManyWithoutUserInput>;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
-  funds?: Maybe<FundsCreateManyWithoutUserInput>;
-}
-
-export interface CircleJoinRequestUpdateWithWhereUniqueWithoutUserInput {
-  where: CircleJoinRequestWhereUniqueInput;
-  data: CircleJoinRequestUpdateWithoutUserDataInput;
-}
-
-export interface TransactionUpdateInput {
-  balance?: Maybe<Int>;
-  donations?: Maybe<DonationUpdateManyWithoutTransactionInput>;
-  funds?: Maybe<FundsUpdateOneWithoutTransactionInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutTransactionsInput>;
-}
-
-export interface CircleJoinRequestUpdateWithoutUserDataInput {
-  circle?: Maybe<CircleUpdateOneRequiredWithoutJoinRequestsInput>;
-}
-
-export interface TransactionCreateInput {
-  id?: Maybe<Int>;
-  balance: Int;
-  donations?: Maybe<DonationCreateManyWithoutTransactionInput>;
-  funds?: Maybe<FundsCreateOneWithoutTransactionInput>;
-  user: UserCreateOneWithoutTransactionsInput;
-}
-
-export interface CircleUpdateOneRequiredWithoutJoinRequestsInput {
-  create?: Maybe<CircleCreateWithoutJoinRequestsInput>;
-  update?: Maybe<CircleUpdateWithoutJoinRequestsDataInput>;
-  upsert?: Maybe<CircleUpsertWithoutJoinRequestsInput>;
-  connect?: Maybe<CircleWhereUniqueInput>;
-}
-
-export interface UserUpsertWithoutPreferencesInput {
-  update: UserUpdateWithoutPreferencesDataInput;
-  create: UserCreateWithoutPreferencesInput;
-}
-
-export interface CircleUpdateWithoutJoinRequestsDataInput {
-  description?: Maybe<String>;
-  name?: Maybe<String>;
-  open?: Maybe<Boolean>;
-  invites?: Maybe<CircleInviteUpdateManyWithoutCircleInput>;
-  members?: Maybe<UserUpdateManyWithoutCirclesInput>;
-  owner?: Maybe<UserUpdateOneRequiredWithoutCirclesOwnedInput>;
-}
-
-export interface UserUpdateWithoutPreferencesDataInput {
-  bio?: Maybe<String>;
-  email?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  picture?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  username?: Maybe<String>;
-  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
-  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
-  dots?: Maybe<DotUpdateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
-  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
-  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
-  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
-  funds?: Maybe<FundsUpdateManyWithoutUserInput>;
-}
-
-export interface CircleInviteUpdateManyWithoutCircleInput {
-  create?: Maybe<
-    | CircleInviteCreateWithoutCircleInput[]
-    | CircleInviteCreateWithoutCircleInput
-  >;
-  delete?: Maybe<CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput>;
-  connect?: Maybe<
-    CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput
-  >;
-  set?: Maybe<CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput>;
-  disconnect?: Maybe<
-    CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput
-  >;
-  update?: Maybe<
-    | CircleInviteUpdateWithWhereUniqueWithoutCircleInput[]
-    | CircleInviteUpdateWithWhereUniqueWithoutCircleInput
-  >;
-  upsert?: Maybe<
-    | CircleInviteUpsertWithWhereUniqueWithoutCircleInput[]
-    | CircleInviteUpsertWithWhereUniqueWithoutCircleInput
-  >;
-  deleteMany?: Maybe<
-    CircleInviteScalarWhereInput[] | CircleInviteScalarWhereInput
-  >;
-}
-
-export interface PreferencesUpdateInput {
-  allowDonationEmails?: Maybe<Boolean>;
-  publicProfile?: Maybe<Boolean>;
-  user?: Maybe<UserUpdateOneRequiredWithoutPreferencesInput>;
-}
-
-export interface CircleInviteUpdateWithWhereUniqueWithoutCircleInput {
-  where: CircleInviteWhereUniqueInput;
-  data: CircleInviteUpdateWithoutCircleDataInput;
-}
-
-export interface UserCreateWithoutPreferencesInput {
-  id?: Maybe<ID_Input>;
-  bio?: Maybe<String>;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: Maybe<String>;
-  securityToken: Int;
-  username: String;
-  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
-  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
-  dots?: Maybe<DotCreateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloCreateManyWithoutUserInput>;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: Maybe<LoopCreateManyWithoutUserInput>;
-  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
-  funds?: Maybe<FundsCreateManyWithoutUserInput>;
-}
-
-export interface CircleInviteUpdateWithoutCircleDataInput {
-  user?: Maybe<UserUpdateOneRequiredWithoutCircleInvitesInput>;
-}
-
-export interface PreferencesCreateInput {
-  id?: Maybe<ID_Input>;
-  allowDonationEmails?: Maybe<Boolean>;
-  publicProfile?: Maybe<Boolean>;
-  user: UserCreateOneWithoutPreferencesInput;
-}
-
-export interface UserUpdateOneRequiredWithoutCircleInvitesInput {
-  create?: Maybe<UserCreateWithoutCircleInvitesInput>;
-  update?: Maybe<UserUpdateWithoutCircleInvitesDataInput>;
-  upsert?: Maybe<UserUpsertWithoutCircleInvitesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface LoopUpdateManyMutationInput {
-  count?: Maybe<Int>;
-}
-
-export interface UserUpdateWithoutCircleInvitesDataInput {
-  bio?: Maybe<String>;
-  email?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  picture?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  username?: Maybe<String>;
-  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
-  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
-  dots?: Maybe<DotUpdateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
-  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
-  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
-  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
-  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
-  funds?: Maybe<FundsUpdateManyWithoutUserInput>;
-}
-
-export interface UserUpdateWithoutLoopsDataInput {
-  bio?: Maybe<String>;
-  email?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  picture?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  username?: Maybe<String>;
-  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
-  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
-  dots?: Maybe<DotUpdateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
-  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
-  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
-  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
-  funds?: Maybe<FundsUpdateManyWithoutUserInput>;
-}
-
-export interface CircleUpdateManyWithoutMembersInput {
-  create?: Maybe<
-    CircleCreateWithoutMembersInput[] | CircleCreateWithoutMembersInput
-  >;
-  delete?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
-  connect?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
-  set?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
-  disconnect?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
-  update?: Maybe<
-    | CircleUpdateWithWhereUniqueWithoutMembersInput[]
-    | CircleUpdateWithWhereUniqueWithoutMembersInput
-  >;
-  upsert?: Maybe<
-    | CircleUpsertWithWhereUniqueWithoutMembersInput[]
-    | CircleUpsertWithWhereUniqueWithoutMembersInput
-  >;
-  deleteMany?: Maybe<CircleScalarWhereInput[] | CircleScalarWhereInput>;
-  updateMany?: Maybe<
-    | CircleUpdateManyWithWhereNestedInput[]
-    | CircleUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserUpdateOneRequiredWithoutLoopsInput {
-  create?: Maybe<UserCreateWithoutLoopsInput>;
-  update?: Maybe<UserUpdateWithoutLoopsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutLoopsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface CircleUpdateWithWhereUniqueWithoutMembersInput {
-  where: CircleWhereUniqueInput;
-  data: CircleUpdateWithoutMembersDataInput;
-}
-
-export interface UserCreateWithoutLoopsInput {
-  id?: Maybe<ID_Input>;
-  bio?: Maybe<String>;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: Maybe<String>;
-  securityToken: Int;
-  username: String;
-  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
-  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
-  dots?: Maybe<DotCreateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloCreateManyWithoutUserInput>;
-  identity: IdentityCreateOneWithoutUserInput;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
-  funds?: Maybe<FundsCreateManyWithoutUserInput>;
-}
-
-export interface CircleUpdateWithoutMembersDataInput {
-  description?: Maybe<String>;
-  name?: Maybe<String>;
-  open?: Maybe<Boolean>;
-  joinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutCircleInput>;
-  invites?: Maybe<CircleInviteUpdateManyWithoutCircleInput>;
-  owner?: Maybe<UserUpdateOneRequiredWithoutCirclesOwnedInput>;
-}
-
-export interface UserCreateOneWithoutLoopsInput {
-  create?: Maybe<UserCreateWithoutLoopsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface CircleJoinRequestUpdateManyWithoutCircleInput {
-  create?: Maybe<
-    | CircleJoinRequestCreateWithoutCircleInput[]
-    | CircleJoinRequestCreateWithoutCircleInput
-  >;
-  delete?: Maybe<
-    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
-  >;
-  connect?: Maybe<
-    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
-  >;
-  set?: Maybe<
-    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
-  >;
-  disconnect?: Maybe<
-    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
-  >;
-  update?: Maybe<
-    | CircleJoinRequestUpdateWithWhereUniqueWithoutCircleInput[]
-    | CircleJoinRequestUpdateWithWhereUniqueWithoutCircleInput
-  >;
-  upsert?: Maybe<
-    | CircleJoinRequestUpsertWithWhereUniqueWithoutCircleInput[]
-    | CircleJoinRequestUpsertWithWhereUniqueWithoutCircleInput
-  >;
-  deleteMany?: Maybe<
-    CircleJoinRequestScalarWhereInput[] | CircleJoinRequestScalarWhereInput
-  >;
-}
-
-export interface IdentityUpdateManyMutationInput {
-  provider?: Maybe<IdentityProvider>;
-  providerID?: Maybe<String>;
-}
-
-export interface CircleJoinRequestUpdateWithWhereUniqueWithoutCircleInput {
-  where: CircleJoinRequestWhereUniqueInput;
-  data: CircleJoinRequestUpdateWithoutCircleDataInput;
-}
-
-export interface UserUpsertWithoutIdentityInput {
-  update: UserUpdateWithoutIdentityDataInput;
-  create: UserCreateWithoutIdentityInput;
-}
-
-export interface CircleJoinRequestUpdateWithoutCircleDataInput {
-  user?: Maybe<UserUpdateOneRequiredWithoutCircleJoinRequestsInput>;
-}
-
-export interface UserUpdateOneRequiredWithoutIdentityInput {
-  create?: Maybe<UserCreateWithoutIdentityInput>;
-  update?: Maybe<UserUpdateWithoutIdentityDataInput>;
-  upsert?: Maybe<UserUpsertWithoutIdentityInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateOneRequiredWithoutCircleJoinRequestsInput {
-  create?: Maybe<UserCreateWithoutCircleJoinRequestsInput>;
-  update?: Maybe<UserUpdateWithoutCircleJoinRequestsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutCircleJoinRequestsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface IdentityUpdateInput {
-  provider?: Maybe<IdentityProvider>;
-  providerID?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutIdentityInput>;
-}
-
-export interface UserUpdateWithoutCircleJoinRequestsDataInput {
-  bio?: Maybe<String>;
-  email?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  picture?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  username?: Maybe<String>;
-  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
-  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
-  dots?: Maybe<DotUpdateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
-  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
-  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
-  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
-  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
-  funds?: Maybe<FundsUpdateManyWithoutUserInput>;
-}
-
-export interface UserCreateOneWithoutIdentityInput {
-  create?: Maybe<UserCreateWithoutIdentityInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface CircleInviteUpdateManyWithoutUserInput {
-  create?: Maybe<
-    CircleInviteCreateWithoutUserInput[] | CircleInviteCreateWithoutUserInput
-  >;
-  delete?: Maybe<CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput>;
-  connect?: Maybe<
-    CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput
-  >;
-  set?: Maybe<CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput>;
-  disconnect?: Maybe<
-    CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput
-  >;
-  update?: Maybe<
-    | CircleInviteUpdateWithWhereUniqueWithoutUserInput[]
-    | CircleInviteUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | CircleInviteUpsertWithWhereUniqueWithoutUserInput[]
-    | CircleInviteUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<
-    CircleInviteScalarWhereInput[] | CircleInviteScalarWhereInput
-  >;
-}
-
-export interface IdentityCreateInput {
-  id?: Maybe<ID_Input>;
-  provider: IdentityProvider;
-  providerID: String;
-  user: UserCreateOneWithoutIdentityInput;
-}
-
-export interface CircleInviteUpdateWithWhereUniqueWithoutUserInput {
-  where: CircleInviteWhereUniqueInput;
-  data: CircleInviteUpdateWithoutUserDataInput;
-}
-
-export interface UserUpsertWithoutHalosInput {
-  update: UserUpdateWithoutHalosDataInput;
-  create: UserCreateWithoutHalosInput;
-}
-
-export interface CircleInviteUpdateWithoutUserDataInput {
-  circle?: Maybe<CircleUpdateOneRequiredWithoutInvitesInput>;
-}
-
-export type LoopWhereUniqueInput = AtLeastOne<{
+export type ChargeWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface UserUpdateOneRequiredWithoutDotsInput {
-  create?: Maybe<UserCreateWithoutDotsInput>;
-  update?: Maybe<UserUpdateWithoutDotsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutDotsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface HaloUpdateInput {
-  key?: Maybe<String>;
-  tier?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutHalosInput>;
-}
-
-export interface CircleUpdateWithoutInvitesDataInput {
-  description?: Maybe<String>;
-  name?: Maybe<String>;
-  open?: Maybe<Boolean>;
-  joinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutCircleInput>;
-  members?: Maybe<UserUpdateManyWithoutCirclesInput>;
-  owner?: Maybe<UserUpdateOneRequiredWithoutCirclesOwnedInput>;
-}
-
-export type PreferencesWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface UserUpdateManyWithoutCirclesInput {
+export interface CharityUpdateManyWithoutFollowersInput {
   create?: Maybe<
-    UserCreateWithoutCirclesInput[] | UserCreateWithoutCirclesInput
+    CharityCreateWithoutFollowersInput[] | CharityCreateWithoutFollowersInput
   >;
-  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  delete?: Maybe<CharityWhereUniqueInput[] | CharityWhereUniqueInput>;
+  connect?: Maybe<CharityWhereUniqueInput[] | CharityWhereUniqueInput>;
+  set?: Maybe<CharityWhereUniqueInput[] | CharityWhereUniqueInput>;
+  disconnect?: Maybe<CharityWhereUniqueInput[] | CharityWhereUniqueInput>;
   update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutCirclesInput[]
-    | UserUpdateWithWhereUniqueWithoutCirclesInput
+    | CharityUpdateWithWhereUniqueWithoutFollowersInput[]
+    | CharityUpdateWithWhereUniqueWithoutFollowersInput
   >;
   upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutCirclesInput[]
-    | UserUpsertWithWhereUniqueWithoutCirclesInput
+    | CharityUpsertWithWhereUniqueWithoutFollowersInput[]
+    | CharityUpsertWithWhereUniqueWithoutFollowersInput
   >;
-  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  deleteMany?: Maybe<CharityScalarWhereInput[] | CharityScalarWhereInput>;
   updateMany?: Maybe<
-    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+    | CharityUpdateManyWithWhereNestedInput[]
+    | CharityUpdateManyWithWhereNestedInput
   >;
-}
-
-export interface HaloCreateInput {
-  id?: Maybe<ID_Input>;
-  key: String;
-  tier?: Maybe<String>;
-  user: UserCreateOneWithoutHalosInput;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutCirclesInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutCirclesDataInput;
-}
-
-export interface FundsUpdateInput {
-  amountAdded?: Maybe<Int>;
-  amountNet?: Maybe<Int>;
-  chargeID?: Maybe<String>;
-  donations?: Maybe<DonationUpdateManyWithoutSourceInput>;
-  transaction?: Maybe<TransactionUpdateOneRequiredWithoutFundsInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutFundsInput>;
-}
-
-export interface UserUpdateWithoutCirclesDataInput {
-  bio?: Maybe<String>;
-  email?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  picture?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  username?: Maybe<String>;
-  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
-  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
-  dots?: Maybe<DotUpdateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
-  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
-  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
-  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
-  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
-  funds?: Maybe<FundsUpdateManyWithoutUserInput>;
-}
-
-export interface FundsCreateInput {
-  id?: Maybe<ID_Input>;
-  amountAdded: Int;
-  amountNet: Int;
-  chargeID: String;
-  donations?: Maybe<DonationCreateManyWithoutSourceInput>;
-  transaction: TransactionCreateOneWithoutFundsInput;
-  user: UserCreateOneWithoutFundsInput;
-}
-
-export interface CircleUpdateManyWithoutOwnerInput {
-  create?: Maybe<
-    CircleCreateWithoutOwnerInput[] | CircleCreateWithoutOwnerInput
-  >;
-  delete?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
-  connect?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
-  set?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
-  disconnect?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
-  update?: Maybe<
-    | CircleUpdateWithWhereUniqueWithoutOwnerInput[]
-    | CircleUpdateWithWhereUniqueWithoutOwnerInput
-  >;
-  upsert?: Maybe<
-    | CircleUpsertWithWhereUniqueWithoutOwnerInput[]
-    | CircleUpsertWithWhereUniqueWithoutOwnerInput
-  >;
-  deleteMany?: Maybe<CircleScalarWhereInput[] | CircleScalarWhereInput>;
-  updateMany?: Maybe<
-    | CircleUpdateManyWithWhereNestedInput[]
-    | CircleUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface EventUpdateInput {
-  endDate?: Maybe<DateTimeInput>;
-  goal?: Maybe<Int>;
-  multiplier?: Maybe<Int>;
-  specialEvent?: Maybe<String>;
-  specialEventDescription?: Maybe<String>;
-  specialEventName?: Maybe<String>;
-  sponsorName?: Maybe<String>;
-  sponsorWebsite?: Maybe<String>;
-  startDate?: Maybe<DateTimeInput>;
-  charity?: Maybe<CharityUpdateOneRequiredWithoutEventsInput>;
-  donations?: Maybe<DonationUpdateManyWithoutEventInput>;
-}
-
-export interface CircleUpdateWithWhereUniqueWithoutOwnerInput {
-  where: CircleWhereUniqueInput;
-  data: CircleUpdateWithoutOwnerDataInput;
-}
-
-export interface DotUpdateManyMutationInput {
-  action?: Maybe<String>;
-  amount?: Maybe<Int>;
-  total?: Maybe<Int>;
-}
-
-export interface CircleUpdateWithoutOwnerDataInput {
-  description?: Maybe<String>;
-  name?: Maybe<String>;
-  open?: Maybe<Boolean>;
-  joinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutCircleInput>;
-  invites?: Maybe<CircleInviteUpdateManyWithoutCircleInput>;
-  members?: Maybe<UserUpdateManyWithoutCirclesInput>;
-}
-
-export interface UserUpdateWithoutDotsDataInput {
-  bio?: Maybe<String>;
-  email?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  picture?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  username?: Maybe<String>;
-  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
-  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
-  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
-  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
-  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
-  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
-  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
-  funds?: Maybe<FundsUpdateManyWithoutUserInput>;
-}
-
-export interface CircleUpsertWithWhereUniqueWithoutOwnerInput {
-  where: CircleWhereUniqueInput;
-  update: CircleUpdateWithoutOwnerDataInput;
-  create: CircleCreateWithoutOwnerInput;
-}
-
-export interface CharityCreateInput {
-  id?: Maybe<ID_Input>;
-  acronym?: Maybe<String>;
-  bannerCredit?: Maybe<String>;
-  connectedAccountID?: Maybe<String>;
-  ein: String;
-  expensesAdministrative?: Maybe<Float>;
-  expensesFundraising?: Maybe<Float>;
-  expensesOther?: Maybe<Float>;
-  expensesProgram?: Maybe<Float>;
-  expensesUpdated?: Maybe<String>;
-  location: String;
-  mission: String;
-  name: String;
-  phoneNumber: String;
-  website: String;
-  events?: Maybe<EventCreateManyWithoutCharityInput>;
-  followers?: Maybe<UserCreateManyWithoutFollowedCharitiesInput>;
-}
-
-export interface PreferencesWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  allowDonationEmails?: Maybe<Boolean>;
-  allowDonationEmails_not?: Maybe<Boolean>;
-  publicProfile?: Maybe<Boolean>;
-  publicProfile_not?: Maybe<Boolean>;
-  user?: Maybe<UserWhereInput>;
-  AND?: Maybe<PreferencesWhereInput[] | PreferencesWhereInput>;
-  OR?: Maybe<PreferencesWhereInput[] | PreferencesWhereInput>;
-  NOT?: Maybe<PreferencesWhereInput[] | PreferencesWhereInput>;
-}
-
-export interface EventCreateWithoutCharityInput {
-  id?: Maybe<ID_Input>;
-  endDate: DateTimeInput;
-  goal: Int;
-  multiplier?: Maybe<Int>;
-  specialEvent?: Maybe<String>;
-  specialEventDescription?: Maybe<String>;
-  specialEventName?: Maybe<String>;
-  sponsorName?: Maybe<String>;
-  sponsorWebsite?: Maybe<String>;
-  startDate: DateTimeInput;
-  donations?: Maybe<DonationCreateManyWithoutEventInput>;
-}
-
-export interface DonationWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  amount?: Maybe<Int>;
-  amount_not?: Maybe<Int>;
-  amount_in?: Maybe<Int[] | Int>;
-  amount_not_in?: Maybe<Int[] | Int>;
-  amount_lt?: Maybe<Int>;
-  amount_lte?: Maybe<Int>;
-  amount_gt?: Maybe<Int>;
-  amount_gte?: Maybe<Int>;
-  batchKey?: Maybe<String>;
-  batchKey_not?: Maybe<String>;
-  batchKey_in?: Maybe<String[] | String>;
-  batchKey_not_in?: Maybe<String[] | String>;
-  batchKey_lt?: Maybe<String>;
-  batchKey_lte?: Maybe<String>;
-  batchKey_gt?: Maybe<String>;
-  batchKey_gte?: Maybe<String>;
-  batchKey_contains?: Maybe<String>;
-  batchKey_not_contains?: Maybe<String>;
-  batchKey_starts_with?: Maybe<String>;
-  batchKey_not_starts_with?: Maybe<String>;
-  batchKey_ends_with?: Maybe<String>;
-  batchKey_not_ends_with?: Maybe<String>;
-  subBalance?: Maybe<Int>;
-  subBalance_not?: Maybe<Int>;
-  subBalance_in?: Maybe<Int[] | Int>;
-  subBalance_not_in?: Maybe<Int[] | Int>;
-  subBalance_lt?: Maybe<Int>;
-  subBalance_lte?: Maybe<Int>;
-  subBalance_gt?: Maybe<Int>;
-  subBalance_gte?: Maybe<Int>;
-  transferID?: Maybe<String>;
-  transferID_not?: Maybe<String>;
-  transferID_in?: Maybe<String[] | String>;
-  transferID_not_in?: Maybe<String[] | String>;
-  transferID_lt?: Maybe<String>;
-  transferID_lte?: Maybe<String>;
-  transferID_gt?: Maybe<String>;
-  transferID_gte?: Maybe<String>;
-  transferID_contains?: Maybe<String>;
-  transferID_not_contains?: Maybe<String>;
-  transferID_starts_with?: Maybe<String>;
-  transferID_not_starts_with?: Maybe<String>;
-  transferID_ends_with?: Maybe<String>;
-  transferID_not_ends_with?: Maybe<String>;
-  event?: Maybe<EventWhereInput>;
-  source?: Maybe<FundsWhereInput>;
-  transaction?: Maybe<TransactionWhereInput>;
-  AND?: Maybe<DonationWhereInput[] | DonationWhereInput>;
-  OR?: Maybe<DonationWhereInput[] | DonationWhereInput>;
-  NOT?: Maybe<DonationWhereInput[] | DonationWhereInput>;
-}
-
-export interface DonationCreateWithoutEventInput {
-  id?: Maybe<ID_Input>;
-  amount: Int;
-  batchKey: String;
-  subBalance: Int;
-  transferID: String;
-  source?: Maybe<FundsCreateOneWithoutDonationsInput>;
-  transaction: TransactionCreateOneWithoutDonationsInput;
-}
-
-export interface IdentityWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  provider?: Maybe<IdentityProvider>;
-  provider_not?: Maybe<IdentityProvider>;
-  provider_in?: Maybe<IdentityProvider[] | IdentityProvider>;
-  provider_not_in?: Maybe<IdentityProvider[] | IdentityProvider>;
-  providerID?: Maybe<String>;
-  providerID_not?: Maybe<String>;
-  providerID_in?: Maybe<String[] | String>;
-  providerID_not_in?: Maybe<String[] | String>;
-  providerID_lt?: Maybe<String>;
-  providerID_lte?: Maybe<String>;
-  providerID_gt?: Maybe<String>;
-  providerID_gte?: Maybe<String>;
-  providerID_contains?: Maybe<String>;
-  providerID_not_contains?: Maybe<String>;
-  providerID_starts_with?: Maybe<String>;
-  providerID_not_starts_with?: Maybe<String>;
-  providerID_ends_with?: Maybe<String>;
-  providerID_not_ends_with?: Maybe<String>;
-  user?: Maybe<UserWhereInput>;
-  AND?: Maybe<IdentityWhereInput[] | IdentityWhereInput>;
-  OR?: Maybe<IdentityWhereInput[] | IdentityWhereInput>;
-  NOT?: Maybe<IdentityWhereInput[] | IdentityWhereInput>;
-}
-
-export interface FundsCreateWithoutDonationsInput {
-  id?: Maybe<ID_Input>;
-  amountAdded: Int;
-  amountNet: Int;
-  chargeID: String;
-  transaction: TransactionCreateOneWithoutFundsInput;
-  user: UserCreateOneWithoutFundsInput;
 }
 
 export interface HaloWhereInput {
@@ -2499,74 +915,188 @@ export interface HaloWhereInput {
   NOT?: Maybe<HaloWhereInput[] | HaloWhereInput>;
 }
 
-export interface TransactionCreateWithoutFundsInput {
-  id?: Maybe<Int>;
-  balance: Int;
-  donations?: Maybe<DonationCreateManyWithoutTransactionInput>;
-  user: UserCreateOneWithoutTransactionsInput;
+export interface CharityUpdateWithWhereUniqueWithoutFollowersInput {
+  where: CharityWhereUniqueInput;
+  data: CharityUpdateWithoutFollowersDataInput;
 }
 
-export interface DotUpdateWithWhereUniqueWithoutUserInput {
-  where: DotWhereUniqueInput;
-  data: DotUpdateWithoutUserDataInput;
-}
-
-export interface DonationCreateWithoutTransactionInput {
+export interface TransactionWhereInput {
   id?: Maybe<ID_Input>;
-  amount: Int;
-  batchKey: String;
-  subBalance: Int;
-  transferID: String;
-  event?: Maybe<EventCreateOneWithoutDonationsInput>;
-  source?: Maybe<FundsCreateOneWithoutDonationsInput>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  balance?: Maybe<Int>;
+  balance_not?: Maybe<Int>;
+  balance_in?: Maybe<Int[] | Int>;
+  balance_not_in?: Maybe<Int[] | Int>;
+  balance_lt?: Maybe<Int>;
+  balance_lte?: Maybe<Int>;
+  balance_gt?: Maybe<Int>;
+  balance_gte?: Maybe<Int>;
+  donations_every?: Maybe<TransferWhereInput>;
+  donations_some?: Maybe<TransferWhereInput>;
+  donations_none?: Maybe<TransferWhereInput>;
+  funds?: Maybe<ChargeWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<TransactionWhereInput[] | TransactionWhereInput>;
+  OR?: Maybe<TransactionWhereInput[] | TransactionWhereInput>;
+  NOT?: Maybe<TransactionWhereInput[] | TransactionWhereInput>;
 }
 
-export interface DotUpdateWithoutUserDataInput {
-  action?: Maybe<String>;
-  amount?: Maybe<Int>;
-  total?: Maybe<Int>;
-}
-
-export interface EventCreateWithoutDonationsInput {
-  id?: Maybe<ID_Input>;
-  endDate: DateTimeInput;
-  goal: Int;
-  multiplier?: Maybe<Int>;
-  specialEvent?: Maybe<String>;
-  specialEventDescription?: Maybe<String>;
-  specialEventName?: Maybe<String>;
-  sponsorName?: Maybe<String>;
-  sponsorWebsite?: Maybe<String>;
-  startDate: DateTimeInput;
-  charity: CharityCreateOneWithoutEventsInput;
-}
-
-export interface DotUpsertWithWhereUniqueWithoutUserInput {
-  where: DotWhereUniqueInput;
-  update: DotUpdateWithoutUserDataInput;
-  create: DotCreateWithoutUserInput;
-}
-
-export interface CharityCreateWithoutEventsInput {
-  id?: Maybe<ID_Input>;
+export interface CharityUpdateWithoutFollowersDataInput {
   acronym?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   connectedAccountID?: Maybe<String>;
-  ein: String;
+  ein?: Maybe<String>;
   expensesAdministrative?: Maybe<Float>;
   expensesFundraising?: Maybe<Float>;
   expensesOther?: Maybe<Float>;
   expensesProgram?: Maybe<Float>;
   expensesUpdated?: Maybe<String>;
-  location: String;
-  mission: String;
-  name: String;
-  phoneNumber: String;
-  website: String;
-  followers?: Maybe<UserCreateManyWithoutFollowedCharitiesInput>;
+  location?: Maybe<String>;
+  mission?: Maybe<String>;
+  name?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  website?: Maybe<String>;
+  events?: Maybe<EventUpdateManyWithoutCharityInput>;
 }
 
-export interface DotScalarWhereInput {
+export interface PreferencesWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  allowDonationEmails?: Maybe<Boolean>;
+  allowDonationEmails_not?: Maybe<Boolean>;
+  publicProfile?: Maybe<Boolean>;
+  publicProfile_not?: Maybe<Boolean>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<PreferencesWhereInput[] | PreferencesWhereInput>;
+  OR?: Maybe<PreferencesWhereInput[] | PreferencesWhereInput>;
+  NOT?: Maybe<PreferencesWhereInput[] | PreferencesWhereInput>;
+}
+
+export interface UserUpdateManyWithoutFollowedCharitiesInput {
+  create?: Maybe<
+    | UserCreateWithoutFollowedCharitiesInput[]
+    | UserCreateWithoutFollowedCharitiesInput
+  >;
+  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  update?: Maybe<
+    | UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput[]
+    | UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput
+  >;
+  upsert?: Maybe<
+    | UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput[]
+    | UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput
+  >;
+  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  updateMany?: Maybe<
+    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserCreateOneWithoutDotsInput {
+  create?: Maybe<UserCreateWithoutDotsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutFollowedCharitiesInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutFollowedCharitiesDataInput;
+}
+
+export interface EventUpdateManyWithoutCharityInput {
+  create?: Maybe<
+    EventCreateWithoutCharityInput[] | EventCreateWithoutCharityInput
+  >;
+  delete?: Maybe<EventWhereUniqueInput[] | EventWhereUniqueInput>;
+  connect?: Maybe<EventWhereUniqueInput[] | EventWhereUniqueInput>;
+  set?: Maybe<EventWhereUniqueInput[] | EventWhereUniqueInput>;
+  disconnect?: Maybe<EventWhereUniqueInput[] | EventWhereUniqueInput>;
+  update?: Maybe<
+    | EventUpdateWithWhereUniqueWithoutCharityInput[]
+    | EventUpdateWithWhereUniqueWithoutCharityInput
+  >;
+  upsert?: Maybe<
+    | EventUpsertWithWhereUniqueWithoutCharityInput[]
+    | EventUpsertWithWhereUniqueWithoutCharityInput
+  >;
+  deleteMany?: Maybe<EventScalarWhereInput[] | EventScalarWhereInput>;
+  updateMany?: Maybe<
+    EventUpdateManyWithWhereNestedInput[] | EventUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpdateWithoutFollowedCharitiesDataInput {
+  bio?: Maybe<String>;
+  email?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  picture?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  username?: Maybe<String>;
+  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
+  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
+  dots?: Maybe<DotUpdateManyWithoutUserInput>;
+  funds?: Maybe<ChargeUpdateManyWithoutUserInput>;
+  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
+  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
+  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
+  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
+  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
+}
+
+export interface DotWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -2619,910 +1149,60 @@ export interface DotScalarWhereInput {
   total_lte?: Maybe<Int>;
   total_gt?: Maybe<Int>;
   total_gte?: Maybe<Int>;
-  AND?: Maybe<DotScalarWhereInput[] | DotScalarWhereInput>;
-  OR?: Maybe<DotScalarWhereInput[] | DotScalarWhereInput>;
-  NOT?: Maybe<DotScalarWhereInput[] | DotScalarWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<DotWhereInput[] | DotWhereInput>;
+  OR?: Maybe<DotWhereInput[] | DotWhereInput>;
+  NOT?: Maybe<DotWhereInput[] | DotWhereInput>;
 }
 
-export interface UserCreateWithoutFollowedCharitiesInput {
-  id?: Maybe<ID_Input>;
-  bio?: Maybe<String>;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: Maybe<String>;
-  securityToken: Int;
-  username: String;
-  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
-  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
-  dots?: Maybe<DotCreateManyWithoutUserInput>;
-  halos?: Maybe<HaloCreateManyWithoutUserInput>;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: Maybe<LoopCreateManyWithoutUserInput>;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
-  funds?: Maybe<FundsCreateManyWithoutUserInput>;
-}
-
-export interface DotUpdateManyWithWhereNestedInput {
-  where: DotScalarWhereInput;
-  data: DotUpdateManyDataInput;
-}
-
-export interface CircleJoinRequestCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  circle: CircleCreateOneWithoutJoinRequestsInput;
-}
-
-export interface DotUpdateManyDataInput {
-  action?: Maybe<String>;
-  amount?: Maybe<Int>;
-  total?: Maybe<Int>;
-}
-
-export interface CircleCreateWithoutJoinRequestsInput {
-  id?: Maybe<ID_Input>;
-  description?: Maybe<String>;
-  name: String;
-  open?: Maybe<Boolean>;
-  invites?: Maybe<CircleInviteCreateManyWithoutCircleInput>;
-  members?: Maybe<UserCreateManyWithoutCirclesInput>;
-  owner: UserCreateOneWithoutCirclesOwnedInput;
-}
-
-export interface CharityUpdateManyWithoutFollowersInput {
+export interface CircleJoinRequestUpdateManyWithoutUserInput {
   create?: Maybe<
-    CharityCreateWithoutFollowersInput[] | CharityCreateWithoutFollowersInput
+    | CircleJoinRequestCreateWithoutUserInput[]
+    | CircleJoinRequestCreateWithoutUserInput
   >;
-  delete?: Maybe<CharityWhereUniqueInput[] | CharityWhereUniqueInput>;
-  connect?: Maybe<CharityWhereUniqueInput[] | CharityWhereUniqueInput>;
-  set?: Maybe<CharityWhereUniqueInput[] | CharityWhereUniqueInput>;
-  disconnect?: Maybe<CharityWhereUniqueInput[] | CharityWhereUniqueInput>;
+  delete?: Maybe<
+    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
+  >;
+  connect?: Maybe<
+    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
+  >;
+  set?: Maybe<
+    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
+  >;
   update?: Maybe<
-    | CharityUpdateWithWhereUniqueWithoutFollowersInput[]
-    | CharityUpdateWithWhereUniqueWithoutFollowersInput
+    | CircleJoinRequestUpdateWithWhereUniqueWithoutUserInput[]
+    | CircleJoinRequestUpdateWithWhereUniqueWithoutUserInput
   >;
   upsert?: Maybe<
-    | CharityUpsertWithWhereUniqueWithoutFollowersInput[]
-    | CharityUpsertWithWhereUniqueWithoutFollowersInput
+    | CircleJoinRequestUpsertWithWhereUniqueWithoutUserInput[]
+    | CircleJoinRequestUpsertWithWhereUniqueWithoutUserInput
   >;
-  deleteMany?: Maybe<CharityScalarWhereInput[] | CharityScalarWhereInput>;
-  updateMany?: Maybe<
-    | CharityUpdateManyWithWhereNestedInput[]
-    | CharityUpdateManyWithWhereNestedInput
+  deleteMany?: Maybe<
+    CircleJoinRequestScalarWhereInput[] | CircleJoinRequestScalarWhereInput
   >;
 }
 
-export interface CircleInviteCreateWithoutCircleInput {
-  id?: Maybe<ID_Input>;
-  user: UserCreateOneWithoutCircleInvitesInput;
-}
-
-export interface CharityUpdateWithWhereUniqueWithoutFollowersInput {
-  where: CharityWhereUniqueInput;
-  data: CharityUpdateWithoutFollowersDataInput;
-}
-
-export interface UserCreateWithoutCircleInvitesInput {
-  id?: Maybe<ID_Input>;
-  bio?: Maybe<String>;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: Maybe<String>;
-  securityToken: Int;
-  username: String;
-  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
-  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
-  dots?: Maybe<DotCreateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloCreateManyWithoutUserInput>;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: Maybe<LoopCreateManyWithoutUserInput>;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
-  funds?: Maybe<FundsCreateManyWithoutUserInput>;
-}
-
-export interface CharityUpdateWithoutFollowersDataInput {
-  acronym?: Maybe<String>;
-  bannerCredit?: Maybe<String>;
-  connectedAccountID?: Maybe<String>;
-  ein?: Maybe<String>;
-  expensesAdministrative?: Maybe<Float>;
-  expensesFundraising?: Maybe<Float>;
-  expensesOther?: Maybe<Float>;
-  expensesProgram?: Maybe<Float>;
-  expensesUpdated?: Maybe<String>;
-  location?: Maybe<String>;
-  mission?: Maybe<String>;
-  name?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  website?: Maybe<String>;
-  events?: Maybe<EventUpdateManyWithoutCharityInput>;
-}
-
-export interface CircleCreateWithoutMembersInput {
-  id?: Maybe<ID_Input>;
-  description?: Maybe<String>;
-  name: String;
-  open?: Maybe<Boolean>;
-  joinRequests?: Maybe<CircleJoinRequestCreateManyWithoutCircleInput>;
-  invites?: Maybe<CircleInviteCreateManyWithoutCircleInput>;
-  owner: UserCreateOneWithoutCirclesOwnedInput;
-}
-
-export interface CharityUpsertWithWhereUniqueWithoutFollowersInput {
-  where: CharityWhereUniqueInput;
-  update: CharityUpdateWithoutFollowersDataInput;
-  create: CharityCreateWithoutFollowersInput;
-}
-
-export interface CircleJoinRequestCreateWithoutCircleInput {
-  id?: Maybe<ID_Input>;
-  user: UserCreateOneWithoutCircleJoinRequestsInput;
-}
-
-export interface CharityScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  acronym?: Maybe<String>;
-  acronym_not?: Maybe<String>;
-  acronym_in?: Maybe<String[] | String>;
-  acronym_not_in?: Maybe<String[] | String>;
-  acronym_lt?: Maybe<String>;
-  acronym_lte?: Maybe<String>;
-  acronym_gt?: Maybe<String>;
-  acronym_gte?: Maybe<String>;
-  acronym_contains?: Maybe<String>;
-  acronym_not_contains?: Maybe<String>;
-  acronym_starts_with?: Maybe<String>;
-  acronym_not_starts_with?: Maybe<String>;
-  acronym_ends_with?: Maybe<String>;
-  acronym_not_ends_with?: Maybe<String>;
-  bannerCredit?: Maybe<String>;
-  bannerCredit_not?: Maybe<String>;
-  bannerCredit_in?: Maybe<String[] | String>;
-  bannerCredit_not_in?: Maybe<String[] | String>;
-  bannerCredit_lt?: Maybe<String>;
-  bannerCredit_lte?: Maybe<String>;
-  bannerCredit_gt?: Maybe<String>;
-  bannerCredit_gte?: Maybe<String>;
-  bannerCredit_contains?: Maybe<String>;
-  bannerCredit_not_contains?: Maybe<String>;
-  bannerCredit_starts_with?: Maybe<String>;
-  bannerCredit_not_starts_with?: Maybe<String>;
-  bannerCredit_ends_with?: Maybe<String>;
-  bannerCredit_not_ends_with?: Maybe<String>;
-  connectedAccountID?: Maybe<String>;
-  connectedAccountID_not?: Maybe<String>;
-  connectedAccountID_in?: Maybe<String[] | String>;
-  connectedAccountID_not_in?: Maybe<String[] | String>;
-  connectedAccountID_lt?: Maybe<String>;
-  connectedAccountID_lte?: Maybe<String>;
-  connectedAccountID_gt?: Maybe<String>;
-  connectedAccountID_gte?: Maybe<String>;
-  connectedAccountID_contains?: Maybe<String>;
-  connectedAccountID_not_contains?: Maybe<String>;
-  connectedAccountID_starts_with?: Maybe<String>;
-  connectedAccountID_not_starts_with?: Maybe<String>;
-  connectedAccountID_ends_with?: Maybe<String>;
-  connectedAccountID_not_ends_with?: Maybe<String>;
-  ein?: Maybe<String>;
-  ein_not?: Maybe<String>;
-  ein_in?: Maybe<String[] | String>;
-  ein_not_in?: Maybe<String[] | String>;
-  ein_lt?: Maybe<String>;
-  ein_lte?: Maybe<String>;
-  ein_gt?: Maybe<String>;
-  ein_gte?: Maybe<String>;
-  ein_contains?: Maybe<String>;
-  ein_not_contains?: Maybe<String>;
-  ein_starts_with?: Maybe<String>;
-  ein_not_starts_with?: Maybe<String>;
-  ein_ends_with?: Maybe<String>;
-  ein_not_ends_with?: Maybe<String>;
-  expensesAdministrative?: Maybe<Float>;
-  expensesAdministrative_not?: Maybe<Float>;
-  expensesAdministrative_in?: Maybe<Float[] | Float>;
-  expensesAdministrative_not_in?: Maybe<Float[] | Float>;
-  expensesAdministrative_lt?: Maybe<Float>;
-  expensesAdministrative_lte?: Maybe<Float>;
-  expensesAdministrative_gt?: Maybe<Float>;
-  expensesAdministrative_gte?: Maybe<Float>;
-  expensesFundraising?: Maybe<Float>;
-  expensesFundraising_not?: Maybe<Float>;
-  expensesFundraising_in?: Maybe<Float[] | Float>;
-  expensesFundraising_not_in?: Maybe<Float[] | Float>;
-  expensesFundraising_lt?: Maybe<Float>;
-  expensesFundraising_lte?: Maybe<Float>;
-  expensesFundraising_gt?: Maybe<Float>;
-  expensesFundraising_gte?: Maybe<Float>;
-  expensesOther?: Maybe<Float>;
-  expensesOther_not?: Maybe<Float>;
-  expensesOther_in?: Maybe<Float[] | Float>;
-  expensesOther_not_in?: Maybe<Float[] | Float>;
-  expensesOther_lt?: Maybe<Float>;
-  expensesOther_lte?: Maybe<Float>;
-  expensesOther_gt?: Maybe<Float>;
-  expensesOther_gte?: Maybe<Float>;
-  expensesProgram?: Maybe<Float>;
-  expensesProgram_not?: Maybe<Float>;
-  expensesProgram_in?: Maybe<Float[] | Float>;
-  expensesProgram_not_in?: Maybe<Float[] | Float>;
-  expensesProgram_lt?: Maybe<Float>;
-  expensesProgram_lte?: Maybe<Float>;
-  expensesProgram_gt?: Maybe<Float>;
-  expensesProgram_gte?: Maybe<Float>;
-  expensesUpdated?: Maybe<String>;
-  expensesUpdated_not?: Maybe<String>;
-  expensesUpdated_in?: Maybe<String[] | String>;
-  expensesUpdated_not_in?: Maybe<String[] | String>;
-  expensesUpdated_lt?: Maybe<String>;
-  expensesUpdated_lte?: Maybe<String>;
-  expensesUpdated_gt?: Maybe<String>;
-  expensesUpdated_gte?: Maybe<String>;
-  expensesUpdated_contains?: Maybe<String>;
-  expensesUpdated_not_contains?: Maybe<String>;
-  expensesUpdated_starts_with?: Maybe<String>;
-  expensesUpdated_not_starts_with?: Maybe<String>;
-  expensesUpdated_ends_with?: Maybe<String>;
-  expensesUpdated_not_ends_with?: Maybe<String>;
-  location?: Maybe<String>;
-  location_not?: Maybe<String>;
-  location_in?: Maybe<String[] | String>;
-  location_not_in?: Maybe<String[] | String>;
-  location_lt?: Maybe<String>;
-  location_lte?: Maybe<String>;
-  location_gt?: Maybe<String>;
-  location_gte?: Maybe<String>;
-  location_contains?: Maybe<String>;
-  location_not_contains?: Maybe<String>;
-  location_starts_with?: Maybe<String>;
-  location_not_starts_with?: Maybe<String>;
-  location_ends_with?: Maybe<String>;
-  location_not_ends_with?: Maybe<String>;
-  mission?: Maybe<String>;
-  mission_not?: Maybe<String>;
-  mission_in?: Maybe<String[] | String>;
-  mission_not_in?: Maybe<String[] | String>;
-  mission_lt?: Maybe<String>;
-  mission_lte?: Maybe<String>;
-  mission_gt?: Maybe<String>;
-  mission_gte?: Maybe<String>;
-  mission_contains?: Maybe<String>;
-  mission_not_contains?: Maybe<String>;
-  mission_starts_with?: Maybe<String>;
-  mission_not_starts_with?: Maybe<String>;
-  mission_ends_with?: Maybe<String>;
-  mission_not_ends_with?: Maybe<String>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  phoneNumber_not?: Maybe<String>;
-  phoneNumber_in?: Maybe<String[] | String>;
-  phoneNumber_not_in?: Maybe<String[] | String>;
-  phoneNumber_lt?: Maybe<String>;
-  phoneNumber_lte?: Maybe<String>;
-  phoneNumber_gt?: Maybe<String>;
-  phoneNumber_gte?: Maybe<String>;
-  phoneNumber_contains?: Maybe<String>;
-  phoneNumber_not_contains?: Maybe<String>;
-  phoneNumber_starts_with?: Maybe<String>;
-  phoneNumber_not_starts_with?: Maybe<String>;
-  phoneNumber_ends_with?: Maybe<String>;
-  phoneNumber_not_ends_with?: Maybe<String>;
-  website?: Maybe<String>;
-  website_not?: Maybe<String>;
-  website_in?: Maybe<String[] | String>;
-  website_not_in?: Maybe<String[] | String>;
-  website_lt?: Maybe<String>;
-  website_lte?: Maybe<String>;
-  website_gt?: Maybe<String>;
-  website_gte?: Maybe<String>;
-  website_contains?: Maybe<String>;
-  website_not_contains?: Maybe<String>;
-  website_starts_with?: Maybe<String>;
-  website_not_starts_with?: Maybe<String>;
-  website_ends_with?: Maybe<String>;
-  website_not_ends_with?: Maybe<String>;
-  AND?: Maybe<CharityScalarWhereInput[] | CharityScalarWhereInput>;
-  OR?: Maybe<CharityScalarWhereInput[] | CharityScalarWhereInput>;
-  NOT?: Maybe<CharityScalarWhereInput[] | CharityScalarWhereInput>;
-}
-
-export interface UserCreateWithoutCircleJoinRequestsInput {
-  id?: Maybe<ID_Input>;
-  bio?: Maybe<String>;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: Maybe<String>;
-  securityToken: Int;
-  username: String;
-  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
-  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
-  dots?: Maybe<DotCreateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloCreateManyWithoutUserInput>;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: Maybe<LoopCreateManyWithoutUserInput>;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
-  funds?: Maybe<FundsCreateManyWithoutUserInput>;
-}
-
-export interface CharityUpdateManyWithWhereNestedInput {
-  where: CharityScalarWhereInput;
-  data: CharityUpdateManyDataInput;
-}
-
-export interface CircleInviteCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  circle: CircleCreateOneWithoutInvitesInput;
-}
-
-export interface CharityUpdateManyDataInput {
-  acronym?: Maybe<String>;
-  bannerCredit?: Maybe<String>;
-  connectedAccountID?: Maybe<String>;
-  ein?: Maybe<String>;
-  expensesAdministrative?: Maybe<Float>;
-  expensesFundraising?: Maybe<Float>;
-  expensesOther?: Maybe<Float>;
-  expensesProgram?: Maybe<Float>;
-  expensesUpdated?: Maybe<String>;
-  location?: Maybe<String>;
-  mission?: Maybe<String>;
-  name?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  website?: Maybe<String>;
-}
-
-export interface CircleCreateWithoutInvitesInput {
-  id?: Maybe<ID_Input>;
-  description?: Maybe<String>;
-  name: String;
-  open?: Maybe<Boolean>;
-  joinRequests?: Maybe<CircleJoinRequestCreateManyWithoutCircleInput>;
-  members?: Maybe<UserCreateManyWithoutCirclesInput>;
-  owner: UserCreateOneWithoutCirclesOwnedInput;
-}
-
-export interface HaloUpdateManyWithoutUserInput {
-  create?: Maybe<HaloCreateWithoutUserInput[] | HaloCreateWithoutUserInput>;
-  delete?: Maybe<HaloWhereUniqueInput[] | HaloWhereUniqueInput>;
-  connect?: Maybe<HaloWhereUniqueInput[] | HaloWhereUniqueInput>;
-  set?: Maybe<HaloWhereUniqueInput[] | HaloWhereUniqueInput>;
-  disconnect?: Maybe<HaloWhereUniqueInput[] | HaloWhereUniqueInput>;
-  update?: Maybe<
-    | HaloUpdateWithWhereUniqueWithoutUserInput[]
-    | HaloUpdateWithWhereUniqueWithoutUserInput
+export interface TransferSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TransferWhereInput>;
+  AND?: Maybe<
+    TransferSubscriptionWhereInput[] | TransferSubscriptionWhereInput
   >;
-  upsert?: Maybe<
-    | HaloUpsertWithWhereUniqueWithoutUserInput[]
-    | HaloUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<HaloScalarWhereInput[] | HaloScalarWhereInput>;
-  updateMany?: Maybe<
-    HaloUpdateManyWithWhereNestedInput[] | HaloUpdateManyWithWhereNestedInput
+  OR?: Maybe<TransferSubscriptionWhereInput[] | TransferSubscriptionWhereInput>;
+  NOT?: Maybe<
+    TransferSubscriptionWhereInput[] | TransferSubscriptionWhereInput
   >;
 }
 
-export interface UserCreateWithoutCirclesInput {
-  id?: Maybe<ID_Input>;
-  bio?: Maybe<String>;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: Maybe<String>;
-  securityToken: Int;
-  username: String;
-  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
-  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
-  dots?: Maybe<DotCreateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloCreateManyWithoutUserInput>;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: Maybe<LoopCreateManyWithoutUserInput>;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
-  funds?: Maybe<FundsCreateManyWithoutUserInput>;
-}
-
-export interface HaloUpdateWithWhereUniqueWithoutUserInput {
-  where: HaloWhereUniqueInput;
-  data: HaloUpdateWithoutUserDataInput;
-}
-
-export interface CircleCreateWithoutOwnerInput {
-  id?: Maybe<ID_Input>;
-  description?: Maybe<String>;
-  name: String;
-  open?: Maybe<Boolean>;
-  joinRequests?: Maybe<CircleJoinRequestCreateManyWithoutCircleInput>;
-  invites?: Maybe<CircleInviteCreateManyWithoutCircleInput>;
-  members?: Maybe<UserCreateManyWithoutCirclesInput>;
-}
-
-export interface HaloUpdateWithoutUserDataInput {
-  key?: Maybe<String>;
-  tier?: Maybe<String>;
-}
-
-export interface DotCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  action: String;
-  amount: Int;
-  total: Int;
-}
-
-export interface HaloUpsertWithWhereUniqueWithoutUserInput {
-  where: HaloWhereUniqueInput;
-  update: HaloUpdateWithoutUserDataInput;
-  create: HaloCreateWithoutUserInput;
-}
-
-export interface CharityCreateWithoutFollowersInput {
-  id?: Maybe<ID_Input>;
-  acronym?: Maybe<String>;
-  bannerCredit?: Maybe<String>;
-  connectedAccountID?: Maybe<String>;
-  ein: String;
-  expensesAdministrative?: Maybe<Float>;
-  expensesFundraising?: Maybe<Float>;
-  expensesOther?: Maybe<Float>;
-  expensesProgram?: Maybe<Float>;
-  expensesUpdated?: Maybe<String>;
-  location: String;
-  mission: String;
-  name: String;
-  phoneNumber: String;
-  website: String;
-  events?: Maybe<EventCreateManyWithoutCharityInput>;
-}
-
-export interface HaloScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  key?: Maybe<String>;
-  key_not?: Maybe<String>;
-  key_in?: Maybe<String[] | String>;
-  key_not_in?: Maybe<String[] | String>;
-  key_lt?: Maybe<String>;
-  key_lte?: Maybe<String>;
-  key_gt?: Maybe<String>;
-  key_gte?: Maybe<String>;
-  key_contains?: Maybe<String>;
-  key_not_contains?: Maybe<String>;
-  key_starts_with?: Maybe<String>;
-  key_not_starts_with?: Maybe<String>;
-  key_ends_with?: Maybe<String>;
-  key_not_ends_with?: Maybe<String>;
-  tier?: Maybe<String>;
-  tier_not?: Maybe<String>;
-  tier_in?: Maybe<String[] | String>;
-  tier_not_in?: Maybe<String[] | String>;
-  tier_lt?: Maybe<String>;
-  tier_lte?: Maybe<String>;
-  tier_gt?: Maybe<String>;
-  tier_gte?: Maybe<String>;
-  tier_contains?: Maybe<String>;
-  tier_not_contains?: Maybe<String>;
-  tier_starts_with?: Maybe<String>;
-  tier_not_starts_with?: Maybe<String>;
-  tier_ends_with?: Maybe<String>;
-  tier_not_ends_with?: Maybe<String>;
-  AND?: Maybe<HaloScalarWhereInput[] | HaloScalarWhereInput>;
-  OR?: Maybe<HaloScalarWhereInput[] | HaloScalarWhereInput>;
-  NOT?: Maybe<HaloScalarWhereInput[] | HaloScalarWhereInput>;
-}
-
-export interface HaloCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  key: String;
-  tier?: Maybe<String>;
-}
-
-export interface HaloUpdateManyWithWhereNestedInput {
-  where: HaloScalarWhereInput;
-  data: HaloUpdateManyDataInput;
-}
-
-export interface IdentityCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  provider: IdentityProvider;
-  providerID: String;
-}
-
-export interface HaloUpdateManyDataInput {
-  key?: Maybe<String>;
-  tier?: Maybe<String>;
-}
-
-export interface LoopCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  count: Int;
-  event: EventCreateOneInput;
-}
-
-export interface IdentityUpdateOneRequiredWithoutUserInput {
-  create?: Maybe<IdentityCreateWithoutUserInput>;
-  update?: Maybe<IdentityUpdateWithoutUserDataInput>;
-  upsert?: Maybe<IdentityUpsertWithoutUserInput>;
-  connect?: Maybe<IdentityWhereUniqueInput>;
-}
-
-export interface EventCreateInput {
-  id?: Maybe<ID_Input>;
-  endDate: DateTimeInput;
-  goal: Int;
-  multiplier?: Maybe<Int>;
-  specialEvent?: Maybe<String>;
-  specialEventDescription?: Maybe<String>;
-  specialEventName?: Maybe<String>;
-  sponsorName?: Maybe<String>;
-  sponsorWebsite?: Maybe<String>;
-  startDate: DateTimeInput;
-  charity: CharityCreateOneWithoutEventsInput;
-  donations?: Maybe<DonationCreateManyWithoutEventInput>;
-}
-
-export interface IdentityUpdateWithoutUserDataInput {
-  provider?: Maybe<IdentityProvider>;
-  providerID?: Maybe<String>;
-}
-
-export interface PreferencesCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  allowDonationEmails?: Maybe<Boolean>;
-  publicProfile?: Maybe<Boolean>;
-}
-
-export interface IdentityUpsertWithoutUserInput {
-  update: IdentityUpdateWithoutUserDataInput;
-  create: IdentityCreateWithoutUserInput;
-}
-
-export interface TransactionCreateWithoutUserInput {
-  id?: Maybe<Int>;
-  balance: Int;
-  donations?: Maybe<DonationCreateManyWithoutTransactionInput>;
-  funds?: Maybe<FundsCreateOneWithoutTransactionInput>;
-}
-
-export interface LoopUpdateManyWithoutUserInput {
-  create?: Maybe<LoopCreateWithoutUserInput[] | LoopCreateWithoutUserInput>;
-  delete?: Maybe<LoopWhereUniqueInput[] | LoopWhereUniqueInput>;
-  connect?: Maybe<LoopWhereUniqueInput[] | LoopWhereUniqueInput>;
-  set?: Maybe<LoopWhereUniqueInput[] | LoopWhereUniqueInput>;
-  disconnect?: Maybe<LoopWhereUniqueInput[] | LoopWhereUniqueInput>;
-  update?: Maybe<
-    | LoopUpdateWithWhereUniqueWithoutUserInput[]
-    | LoopUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | LoopUpsertWithWhereUniqueWithoutUserInput[]
-    | LoopUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<LoopScalarWhereInput[] | LoopScalarWhereInput>;
-  updateMany?: Maybe<
-    LoopUpdateManyWithWhereNestedInput[] | LoopUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface FundsCreateWithoutTransactionInput {
-  id?: Maybe<ID_Input>;
-  amountAdded: Int;
-  amountNet: Int;
-  chargeID: String;
-  donations?: Maybe<DonationCreateManyWithoutSourceInput>;
-  user: UserCreateOneWithoutFundsInput;
-}
-
-export interface LoopUpdateWithWhereUniqueWithoutUserInput {
-  where: LoopWhereUniqueInput;
-  data: LoopUpdateWithoutUserDataInput;
-}
-
-export interface DonationCreateWithoutSourceInput {
-  id?: Maybe<ID_Input>;
-  amount: Int;
-  batchKey: String;
-  subBalance: Int;
-  transferID: String;
-  event?: Maybe<EventCreateOneWithoutDonationsInput>;
-  transaction: TransactionCreateOneWithoutDonationsInput;
-}
-
-export interface LoopUpdateWithoutUserDataInput {
-  count?: Maybe<Int>;
-  event?: Maybe<EventUpdateOneRequiredInput>;
-}
-
-export interface TransactionCreateWithoutDonationsInput {
-  id?: Maybe<Int>;
-  balance: Int;
-  funds?: Maybe<FundsCreateOneWithoutTransactionInput>;
-  user: UserCreateOneWithoutTransactionsInput;
-}
-
-export interface EventUpdateOneRequiredInput {
-  create?: Maybe<EventCreateInput>;
-  update?: Maybe<EventUpdateDataInput>;
-  upsert?: Maybe<EventUpsertNestedInput>;
-  connect?: Maybe<EventWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutTransactionsInput {
-  id?: Maybe<ID_Input>;
-  bio?: Maybe<String>;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: Maybe<String>;
-  securityToken: Int;
-  username: String;
-  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
-  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
-  dots?: Maybe<DotCreateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloCreateManyWithoutUserInput>;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: Maybe<LoopCreateManyWithoutUserInput>;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  funds?: Maybe<FundsCreateManyWithoutUserInput>;
-}
-
-export interface EventUpdateDataInput {
-  endDate?: Maybe<DateTimeInput>;
-  goal?: Maybe<Int>;
-  multiplier?: Maybe<Int>;
-  specialEvent?: Maybe<String>;
-  specialEventDescription?: Maybe<String>;
-  specialEventName?: Maybe<String>;
-  sponsorName?: Maybe<String>;
-  sponsorWebsite?: Maybe<String>;
-  startDate?: Maybe<DateTimeInput>;
-  charity?: Maybe<CharityUpdateOneRequiredWithoutEventsInput>;
-  donations?: Maybe<DonationUpdateManyWithoutEventInput>;
-}
-
-export interface FundsCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  amountAdded: Int;
-  amountNet: Int;
-  chargeID: String;
-  donations?: Maybe<DonationCreateManyWithoutSourceInput>;
-  transaction: TransactionCreateOneWithoutFundsInput;
-}
-
-export interface EventUpsertNestedInput {
-  update: EventUpdateDataInput;
-  create: EventCreateInput;
-}
-
-export interface UserCreateWithoutFundsInput {
-  id?: Maybe<ID_Input>;
-  bio?: Maybe<String>;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: Maybe<String>;
-  securityToken: Int;
-  username: String;
-  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
-  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
-  dots?: Maybe<DotCreateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloCreateManyWithoutUserInput>;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: Maybe<LoopCreateManyWithoutUserInput>;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
-}
-
-export interface LoopUpsertWithWhereUniqueWithoutUserInput {
-  where: LoopWhereUniqueInput;
-  update: LoopUpdateWithoutUserDataInput;
-  create: LoopCreateWithoutUserInput;
-}
-
-export interface UserCreateWithoutCirclesOwnedInput {
-  id?: Maybe<ID_Input>;
-  bio?: Maybe<String>;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: Maybe<String>;
-  securityToken: Int;
-  username: String;
-  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
-  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
-  dots?: Maybe<DotCreateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloCreateManyWithoutUserInput>;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: Maybe<LoopCreateManyWithoutUserInput>;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
-  funds?: Maybe<FundsCreateManyWithoutUserInput>;
-}
-
-export interface LoopScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  count?: Maybe<Int>;
-  count_not?: Maybe<Int>;
-  count_in?: Maybe<Int[] | Int>;
-  count_not_in?: Maybe<Int[] | Int>;
-  count_lt?: Maybe<Int>;
-  count_lte?: Maybe<Int>;
-  count_gt?: Maybe<Int>;
-  count_gte?: Maybe<Int>;
-  AND?: Maybe<LoopScalarWhereInput[] | LoopScalarWhereInput>;
-  OR?: Maybe<LoopScalarWhereInput[] | LoopScalarWhereInput>;
-  NOT?: Maybe<LoopScalarWhereInput[] | LoopScalarWhereInput>;
-}
-
-export interface EventUpdateManyWithoutCharityInput {
-  create?: Maybe<
-    EventCreateWithoutCharityInput[] | EventCreateWithoutCharityInput
-  >;
-  delete?: Maybe<EventWhereUniqueInput[] | EventWhereUniqueInput>;
-  connect?: Maybe<EventWhereUniqueInput[] | EventWhereUniqueInput>;
-  set?: Maybe<EventWhereUniqueInput[] | EventWhereUniqueInput>;
-  disconnect?: Maybe<EventWhereUniqueInput[] | EventWhereUniqueInput>;
-  update?: Maybe<
-    | EventUpdateWithWhereUniqueWithoutCharityInput[]
-    | EventUpdateWithWhereUniqueWithoutCharityInput
-  >;
-  upsert?: Maybe<
-    | EventUpsertWithWhereUniqueWithoutCharityInput[]
-    | EventUpsertWithWhereUniqueWithoutCharityInput
-  >;
-  deleteMany?: Maybe<EventScalarWhereInput[] | EventScalarWhereInput>;
-  updateMany?: Maybe<
-    EventUpdateManyWithWhereNestedInput[] | EventUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface LoopUpdateManyWithWhereNestedInput {
-  where: LoopScalarWhereInput;
-  data: LoopUpdateManyDataInput;
-}
-
-export interface EventUpdateWithoutCharityDataInput {
-  endDate?: Maybe<DateTimeInput>;
-  goal?: Maybe<Int>;
-  multiplier?: Maybe<Int>;
-  specialEvent?: Maybe<String>;
-  specialEventDescription?: Maybe<String>;
-  specialEventName?: Maybe<String>;
-  sponsorName?: Maybe<String>;
-  sponsorWebsite?: Maybe<String>;
-  startDate?: Maybe<DateTimeInput>;
-  donations?: Maybe<DonationUpdateManyWithoutEventInput>;
-}
-
-export interface LoopUpdateManyDataInput {
-  count?: Maybe<Int>;
-}
-
-export interface DonationUpdateWithWhereUniqueWithoutEventInput {
-  where: DonationWhereUniqueInput;
-  data: DonationUpdateWithoutEventDataInput;
-}
-
-export interface PreferencesUpdateOneRequiredWithoutUserInput {
-  create?: Maybe<PreferencesCreateWithoutUserInput>;
-  update?: Maybe<PreferencesUpdateWithoutUserDataInput>;
-  upsert?: Maybe<PreferencesUpsertWithoutUserInput>;
-  connect?: Maybe<PreferencesWhereUniqueInput>;
-}
-
-export interface FundsUpdateOneWithoutDonationsInput {
-  create?: Maybe<FundsCreateWithoutDonationsInput>;
-  update?: Maybe<FundsUpdateWithoutDonationsDataInput>;
-  upsert?: Maybe<FundsUpsertWithoutDonationsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<FundsWhereUniqueInput>;
-}
-
-export interface PreferencesUpdateWithoutUserDataInput {
-  allowDonationEmails?: Maybe<Boolean>;
-  publicProfile?: Maybe<Boolean>;
+export interface CircleJoinRequestUpdateWithWhereUniqueWithoutUserInput {
+  where: CircleJoinRequestWhereUniqueInput;
+  data: CircleJoinRequestUpdateWithoutUserDataInput;
 }
 
 export interface PreferencesSubscriptionWhereInput {
@@ -3542,47 +1222,8 @@ export interface PreferencesSubscriptionWhereInput {
   >;
 }
 
-export interface PreferencesUpsertWithoutUserInput {
-  update: PreferencesUpdateWithoutUserDataInput;
-  create: PreferencesCreateWithoutUserInput;
-}
-
-export interface HaloSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<HaloWhereInput>;
-  AND?: Maybe<HaloSubscriptionWhereInput[] | HaloSubscriptionWhereInput>;
-  OR?: Maybe<HaloSubscriptionWhereInput[] | HaloSubscriptionWhereInput>;
-  NOT?: Maybe<HaloSubscriptionWhereInput[] | HaloSubscriptionWhereInput>;
-}
-
-export interface TransactionUpdateManyWithoutUserInput {
-  create?: Maybe<
-    TransactionCreateWithoutUserInput[] | TransactionCreateWithoutUserInput
-  >;
-  delete?: Maybe<TransactionWhereUniqueInput[] | TransactionWhereUniqueInput>;
-  connect?: Maybe<TransactionWhereUniqueInput[] | TransactionWhereUniqueInput>;
-  set?: Maybe<TransactionWhereUniqueInput[] | TransactionWhereUniqueInput>;
-  disconnect?: Maybe<
-    TransactionWhereUniqueInput[] | TransactionWhereUniqueInput
-  >;
-  update?: Maybe<
-    | TransactionUpdateWithWhereUniqueWithoutUserInput[]
-    | TransactionUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | TransactionUpsertWithWhereUniqueWithoutUserInput[]
-    | TransactionUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<
-    TransactionScalarWhereInput[] | TransactionScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | TransactionUpdateManyWithWhereNestedInput[]
-    | TransactionUpdateManyWithWhereNestedInput
-  >;
+export interface CircleJoinRequestUpdateWithoutUserDataInput {
+  circle?: Maybe<CircleUpdateOneRequiredWithoutJoinRequestsInput>;
 }
 
 export interface CircleWhereInput {
@@ -3661,9 +1302,95 @@ export interface CircleWhereInput {
   NOT?: Maybe<CircleWhereInput[] | CircleWhereInput>;
 }
 
-export interface TransactionUpdateWithWhereUniqueWithoutUserInput {
-  where: TransactionWhereUniqueInput;
-  data: TransactionUpdateWithoutUserDataInput;
+export interface CircleUpdateOneRequiredWithoutJoinRequestsInput {
+  create?: Maybe<CircleCreateWithoutJoinRequestsInput>;
+  update?: Maybe<CircleUpdateWithoutJoinRequestsDataInput>;
+  upsert?: Maybe<CircleUpsertWithoutJoinRequestsInput>;
+  connect?: Maybe<CircleWhereUniqueInput>;
+}
+
+export interface CircleJoinRequestWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  circle?: Maybe<CircleWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<CircleJoinRequestWhereInput[] | CircleJoinRequestWhereInput>;
+  OR?: Maybe<CircleJoinRequestWhereInput[] | CircleJoinRequestWhereInput>;
+  NOT?: Maybe<CircleJoinRequestWhereInput[] | CircleJoinRequestWhereInput>;
+}
+
+export interface CircleUpdateWithoutJoinRequestsDataInput {
+  description?: Maybe<String>;
+  name?: Maybe<String>;
+  open?: Maybe<Boolean>;
+  invites?: Maybe<CircleInviteUpdateManyWithoutCircleInput>;
+  members?: Maybe<UserUpdateManyWithoutCirclesInput>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutCirclesOwnedInput>;
+}
+
+export interface HaloSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<HaloWhereInput>;
+  AND?: Maybe<HaloSubscriptionWhereInput[] | HaloSubscriptionWhereInput>;
+  OR?: Maybe<HaloSubscriptionWhereInput[] | HaloSubscriptionWhereInput>;
+  NOT?: Maybe<HaloSubscriptionWhereInput[] | HaloSubscriptionWhereInput>;
+}
+
+export interface CircleInviteUpdateManyWithoutCircleInput {
+  create?: Maybe<
+    | CircleInviteCreateWithoutCircleInput[]
+    | CircleInviteCreateWithoutCircleInput
+  >;
+  delete?: Maybe<CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput>;
+  connect?: Maybe<
+    CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput
+  >;
+  set?: Maybe<CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput>;
+  disconnect?: Maybe<
+    CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput
+  >;
+  update?: Maybe<
+    | CircleInviteUpdateWithWhereUniqueWithoutCircleInput[]
+    | CircleInviteUpdateWithWhereUniqueWithoutCircleInput
+  >;
+  upsert?: Maybe<
+    | CircleInviteUpsertWithWhereUniqueWithoutCircleInput[]
+    | CircleInviteUpsertWithWhereUniqueWithoutCircleInput
+  >;
+  deleteMany?: Maybe<
+    CircleInviteScalarWhereInput[] | CircleInviteScalarWhereInput
+  >;
 }
 
 export interface CharityWhereInput {
@@ -3880,10 +1607,92 @@ export interface CharityWhereInput {
   NOT?: Maybe<CharityWhereInput[] | CharityWhereInput>;
 }
 
-export interface TransactionUpdateWithoutUserDataInput {
-  balance?: Maybe<Int>;
-  donations?: Maybe<DonationUpdateManyWithoutTransactionInput>;
-  funds?: Maybe<FundsUpdateOneWithoutTransactionInput>;
+export interface CircleInviteUpdateWithWhereUniqueWithoutCircleInput {
+  where: CircleInviteWhereUniqueInput;
+  data: CircleInviteUpdateWithoutCircleDataInput;
+}
+
+export interface DotSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<DotWhereInput>;
+  AND?: Maybe<DotSubscriptionWhereInput[] | DotSubscriptionWhereInput>;
+  OR?: Maybe<DotSubscriptionWhereInput[] | DotSubscriptionWhereInput>;
+  NOT?: Maybe<DotSubscriptionWhereInput[] | DotSubscriptionWhereInput>;
+}
+
+export interface CircleInviteUpdateWithoutCircleDataInput {
+  user?: Maybe<UserUpdateOneRequiredWithoutCircleInvitesInput>;
+}
+
+export interface TransferWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  amount?: Maybe<Int>;
+  amount_not?: Maybe<Int>;
+  amount_in?: Maybe<Int[] | Int>;
+  amount_not_in?: Maybe<Int[] | Int>;
+  amount_lt?: Maybe<Int>;
+  amount_lte?: Maybe<Int>;
+  amount_gt?: Maybe<Int>;
+  amount_gte?: Maybe<Int>;
+  chargeBalance?: Maybe<Int>;
+  chargeBalance_not?: Maybe<Int>;
+  chargeBalance_in?: Maybe<Int[] | Int>;
+  chargeBalance_not_in?: Maybe<Int[] | Int>;
+  chargeBalance_lt?: Maybe<Int>;
+  chargeBalance_lte?: Maybe<Int>;
+  chargeBalance_gt?: Maybe<Int>;
+  chargeBalance_gte?: Maybe<Int>;
+  transferID?: Maybe<String>;
+  transferID_not?: Maybe<String>;
+  transferID_in?: Maybe<String[] | String>;
+  transferID_not_in?: Maybe<String[] | String>;
+  transferID_lt?: Maybe<String>;
+  transferID_lte?: Maybe<String>;
+  transferID_gt?: Maybe<String>;
+  transferID_gte?: Maybe<String>;
+  transferID_contains?: Maybe<String>;
+  transferID_not_contains?: Maybe<String>;
+  transferID_starts_with?: Maybe<String>;
+  transferID_not_starts_with?: Maybe<String>;
+  transferID_ends_with?: Maybe<String>;
+  transferID_not_ends_with?: Maybe<String>;
+  event?: Maybe<EventWhereInput>;
+  source?: Maybe<ChargeWhereInput>;
+  transaction?: Maybe<TransactionWhereInput>;
+  AND?: Maybe<TransferWhereInput[] | TransferWhereInput>;
+  OR?: Maybe<TransferWhereInput[] | TransferWhereInput>;
+  NOT?: Maybe<TransferWhereInput[] | TransferWhereInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutCircleInvitesInput {
+  create?: Maybe<UserCreateWithoutCircleInvitesInput>;
+  update?: Maybe<UserUpdateWithoutCircleInvitesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutCircleInvitesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface CircleSubscriptionWhereInput {
@@ -3897,13 +1706,59 @@ export interface CircleSubscriptionWhereInput {
   NOT?: Maybe<CircleSubscriptionWhereInput[] | CircleSubscriptionWhereInput>;
 }
 
-export interface FundsUpdateOneWithoutTransactionInput {
-  create?: Maybe<FundsCreateWithoutTransactionInput>;
-  update?: Maybe<FundsUpdateWithoutTransactionDataInput>;
-  upsert?: Maybe<FundsUpsertWithoutTransactionInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<FundsWhereUniqueInput>;
+export interface UserUpdateWithoutCircleInvitesDataInput {
+  bio?: Maybe<String>;
+  email?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  picture?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  username?: Maybe<String>;
+  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
+  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
+  dots?: Maybe<DotUpdateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeUpdateManyWithoutUserInput>;
+  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
+  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
+  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
+  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
+  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
+}
+
+export interface ChargeSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ChargeWhereInput>;
+  AND?: Maybe<ChargeSubscriptionWhereInput[] | ChargeSubscriptionWhereInput>;
+  OR?: Maybe<ChargeSubscriptionWhereInput[] | ChargeSubscriptionWhereInput>;
+  NOT?: Maybe<ChargeSubscriptionWhereInput[] | ChargeSubscriptionWhereInput>;
+}
+
+export interface CircleUpdateManyWithoutMembersInput {
+  create?: Maybe<
+    CircleCreateWithoutMembersInput[] | CircleCreateWithoutMembersInput
+  >;
+  delete?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
+  connect?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
+  set?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
+  disconnect?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
+  update?: Maybe<
+    | CircleUpdateWithWhereUniqueWithoutMembersInput[]
+    | CircleUpdateWithWhereUniqueWithoutMembersInput
+  >;
+  upsert?: Maybe<
+    | CircleUpsertWithWhereUniqueWithoutMembersInput[]
+    | CircleUpsertWithWhereUniqueWithoutMembersInput
+  >;
+  deleteMany?: Maybe<CircleScalarWhereInput[] | CircleScalarWhereInput>;
+  updateMany?: Maybe<
+    | CircleUpdateManyWithWhereNestedInput[]
+    | CircleUpdateManyWithWhereNestedInput
+  >;
 }
 
 export interface UserUpdateInput {
@@ -3920,109 +1775,212 @@ export interface UserUpdateInput {
   circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
   dots?: Maybe<DotUpdateManyWithoutUserInput>;
   followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeUpdateManyWithoutUserInput>;
   halos?: Maybe<HaloUpdateManyWithoutUserInput>;
   identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
   loops?: Maybe<LoopUpdateManyWithoutUserInput>;
   preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
-  funds?: Maybe<FundsUpdateManyWithoutUserInput>;
 }
 
-export interface FundsUpdateWithoutTransactionDataInput {
-  amountAdded?: Maybe<Int>;
-  amountNet?: Maybe<Int>;
-  chargeID?: Maybe<String>;
-  donations?: Maybe<DonationUpdateManyWithoutSourceInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutFundsInput>;
+export interface CircleUpdateWithWhereUniqueWithoutMembersInput {
+  where: CircleWhereUniqueInput;
+  data: CircleUpdateWithoutMembersDataInput;
 }
 
-export type CircleWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  name?: Maybe<String>;
-}>;
-
-export interface DonationUpdateManyWithoutSourceInput {
-  create?: Maybe<
-    DonationCreateWithoutSourceInput[] | DonationCreateWithoutSourceInput
-  >;
-  delete?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
-  connect?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
-  set?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
-  disconnect?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
-  update?: Maybe<
-    | DonationUpdateWithWhereUniqueWithoutSourceInput[]
-    | DonationUpdateWithWhereUniqueWithoutSourceInput
-  >;
-  upsert?: Maybe<
-    | DonationUpsertWithWhereUniqueWithoutSourceInput[]
-    | DonationUpsertWithWhereUniqueWithoutSourceInput
-  >;
-  deleteMany?: Maybe<DonationScalarWhereInput[] | DonationScalarWhereInput>;
-  updateMany?: Maybe<
-    | DonationUpdateManyWithWhereNestedInput[]
-    | DonationUpdateManyWithWhereNestedInput
-  >;
-}
-
-export type CircleInviteWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface DonationUpdateWithWhereUniqueWithoutSourceInput {
-  where: DonationWhereUniqueInput;
-  data: DonationUpdateWithoutSourceDataInput;
-}
-
-export type CircleJoinRequestWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface DonationUpdateWithoutSourceDataInput {
+export interface TransferUpdateManyMutationInput {
   amount?: Maybe<Int>;
-  batchKey?: Maybe<String>;
-  subBalance?: Maybe<Int>;
+  chargeBalance?: Maybe<Int>;
+  transferID?: Maybe<String>;
+}
+
+export interface CircleUpdateWithoutMembersDataInput {
+  description?: Maybe<String>;
+  name?: Maybe<String>;
+  open?: Maybe<Boolean>;
+  joinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutCircleInput>;
+  invites?: Maybe<CircleInviteUpdateManyWithoutCircleInput>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutCirclesOwnedInput>;
+}
+
+export interface TransferUpdateInput {
+  amount?: Maybe<Int>;
+  chargeBalance?: Maybe<Int>;
   transferID?: Maybe<String>;
   event?: Maybe<EventUpdateOneWithoutDonationsInput>;
+  source?: Maybe<ChargeUpdateOneWithoutDonationsInput>;
   transaction?: Maybe<TransactionUpdateOneRequiredWithoutDonationsInput>;
 }
 
-export type DonationWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface TransactionUpdateOneRequiredWithoutDonationsInput {
-  create?: Maybe<TransactionCreateWithoutDonationsInput>;
-  update?: Maybe<TransactionUpdateWithoutDonationsDataInput>;
-  upsert?: Maybe<TransactionUpsertWithoutDonationsInput>;
-  connect?: Maybe<TransactionWhereUniqueInput>;
+export interface CircleJoinRequestUpdateManyWithoutCircleInput {
+  create?: Maybe<
+    | CircleJoinRequestCreateWithoutCircleInput[]
+    | CircleJoinRequestCreateWithoutCircleInput
+  >;
+  delete?: Maybe<
+    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
+  >;
+  connect?: Maybe<
+    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
+  >;
+  set?: Maybe<
+    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
+  >;
+  update?: Maybe<
+    | CircleJoinRequestUpdateWithWhereUniqueWithoutCircleInput[]
+    | CircleJoinRequestUpdateWithWhereUniqueWithoutCircleInput
+  >;
+  upsert?: Maybe<
+    | CircleJoinRequestUpsertWithWhereUniqueWithoutCircleInput[]
+    | CircleJoinRequestUpsertWithWhereUniqueWithoutCircleInput
+  >;
+  deleteMany?: Maybe<
+    CircleJoinRequestScalarWhereInput[] | CircleJoinRequestScalarWhereInput
+  >;
 }
 
-export type DotWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface TransactionUpdateWithoutDonationsDataInput {
+export interface TransactionUpdateManyMutationInput {
   balance?: Maybe<Int>;
-  funds?: Maybe<FundsUpdateOneWithoutTransactionInput>;
+}
+
+export interface CircleJoinRequestUpdateWithWhereUniqueWithoutCircleInput {
+  where: CircleJoinRequestWhereUniqueInput;
+  data: CircleJoinRequestUpdateWithoutCircleDataInput;
+}
+
+export interface TransactionUpdateInput {
+  balance?: Maybe<Int>;
+  donations?: Maybe<TransferUpdateManyWithoutTransactionInput>;
+  funds?: Maybe<ChargeUpdateOneWithoutTransactionInput>;
   user?: Maybe<UserUpdateOneRequiredWithoutTransactionsInput>;
 }
 
-export type EventWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface CircleJoinRequestUpdateWithoutCircleDataInput {
+  user?: Maybe<UserUpdateOneRequiredWithoutCircleJoinRequestsInput>;
+}
 
-export interface UserUpdateOneRequiredWithoutTransactionsInput {
-  create?: Maybe<UserCreateWithoutTransactionsInput>;
-  update?: Maybe<UserUpdateWithoutTransactionsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutTransactionsInput>;
+export interface PreferencesUpdateManyMutationInput {
+  allowDonationEmails?: Maybe<Boolean>;
+  publicProfile?: Maybe<Boolean>;
+}
+
+export interface UserUpdateOneRequiredWithoutCircleJoinRequestsInput {
+  create?: Maybe<UserCreateWithoutCircleJoinRequestsInput>;
+  update?: Maybe<UserUpdateWithoutCircleJoinRequestsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutCircleJoinRequestsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export type FundsWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface UserUpsertWithoutPreferencesInput {
+  update: UserUpdateWithoutPreferencesDataInput;
+  create: UserCreateWithoutPreferencesInput;
+}
 
-export interface UserUpdateWithoutTransactionsDataInput {
+export interface UserUpdateWithoutCircleJoinRequestsDataInput {
+  bio?: Maybe<String>;
+  email?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  picture?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  username?: Maybe<String>;
+  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
+  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
+  dots?: Maybe<DotUpdateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeUpdateManyWithoutUserInput>;
+  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
+  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
+  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
+  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
+  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutPreferencesInput {
+  create?: Maybe<UserCreateWithoutPreferencesInput>;
+  update?: Maybe<UserUpdateWithoutPreferencesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutPreferencesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface CircleInviteUpdateManyWithoutUserInput {
+  create?: Maybe<
+    CircleInviteCreateWithoutUserInput[] | CircleInviteCreateWithoutUserInput
+  >;
+  delete?: Maybe<CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput>;
+  connect?: Maybe<
+    CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput
+  >;
+  set?: Maybe<CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput>;
+  disconnect?: Maybe<
+    CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput
+  >;
+  update?: Maybe<
+    | CircleInviteUpdateWithWhereUniqueWithoutUserInput[]
+    | CircleInviteUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | CircleInviteUpsertWithWhereUniqueWithoutUserInput[]
+    | CircleInviteUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<
+    CircleInviteScalarWhereInput[] | CircleInviteScalarWhereInput
+  >;
+}
+
+export interface PreferencesUpdateInput {
+  allowDonationEmails?: Maybe<Boolean>;
+  publicProfile?: Maybe<Boolean>;
+  user?: Maybe<UserUpdateOneRequiredWithoutPreferencesInput>;
+}
+
+export interface CircleInviteUpdateWithWhereUniqueWithoutUserInput {
+  where: CircleInviteWhereUniqueInput;
+  data: CircleInviteUpdateWithoutUserDataInput;
+}
+
+export interface UserCreateOneWithoutPreferencesInput {
+  create?: Maybe<UserCreateWithoutPreferencesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface CircleInviteUpdateWithoutUserDataInput {
+  circle?: Maybe<CircleUpdateOneRequiredWithoutInvitesInput>;
+}
+
+export interface PreferencesCreateInput {
+  id?: Maybe<ID_Input>;
+  allowDonationEmails?: Maybe<Boolean>;
+  publicProfile?: Maybe<Boolean>;
+  user: UserCreateOneWithoutPreferencesInput;
+}
+
+export interface CircleUpdateOneRequiredWithoutInvitesInput {
+  create?: Maybe<CircleCreateWithoutInvitesInput>;
+  update?: Maybe<CircleUpdateWithoutInvitesDataInput>;
+  upsert?: Maybe<CircleUpsertWithoutInvitesInput>;
+  connect?: Maybe<CircleWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutLoopsInput {
+  update: UserUpdateWithoutLoopsDataInput;
+  create: UserCreateWithoutLoopsInput;
+}
+
+export interface CircleUpdateWithoutInvitesDataInput {
+  description?: Maybe<String>;
+  name?: Maybe<String>;
+  open?: Maybe<Boolean>;
+  joinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutCircleInput>;
+  members?: Maybe<UserUpdateManyWithoutCirclesInput>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutCirclesOwnedInput>;
+}
+
+export interface UserUpdateWithoutLoopsDataInput {
   bio?: Maybe<String>;
   email?: Maybe<String>;
   nameFirst?: Maybe<String>;
@@ -4036,45 +1994,291 @@ export interface UserUpdateWithoutTransactionsDataInput {
   circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
   dots?: Maybe<DotUpdateManyWithoutUserInput>;
   followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeUpdateManyWithoutUserInput>;
+  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
+  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
+  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
+  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
+}
+
+export interface UserUpdateManyWithoutCirclesInput {
+  create?: Maybe<
+    UserCreateWithoutCirclesInput[] | UserCreateWithoutCirclesInput
+  >;
+  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  update?: Maybe<
+    | UserUpdateWithWhereUniqueWithoutCirclesInput[]
+    | UserUpdateWithWhereUniqueWithoutCirclesInput
+  >;
+  upsert?: Maybe<
+    | UserUpsertWithWhereUniqueWithoutCirclesInput[]
+    | UserUpsertWithWhereUniqueWithoutCirclesInput
+  >;
+  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  updateMany?: Maybe<
+    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface LoopUpdateInput {
+  count?: Maybe<Int>;
+  event?: Maybe<EventUpdateOneRequiredInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutLoopsInput>;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutCirclesInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutCirclesDataInput;
+}
+
+export interface UserCreateWithoutLoopsInput {
+  id?: Maybe<ID_Input>;
+  bio?: Maybe<String>;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: Maybe<String>;
+  securityToken: Int;
+  username: String;
+  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
+  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
+  dots?: Maybe<DotCreateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeCreateManyWithoutUserInput>;
+  halos?: Maybe<HaloCreateManyWithoutUserInput>;
+  identity: IdentityCreateOneWithoutUserInput;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
+}
+
+export interface UserUpdateWithoutCirclesDataInput {
+  bio?: Maybe<String>;
+  email?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  picture?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  username?: Maybe<String>;
+  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
+  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
+  dots?: Maybe<DotUpdateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeUpdateManyWithoutUserInput>;
   halos?: Maybe<HaloUpdateManyWithoutUserInput>;
   identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
   loops?: Maybe<LoopUpdateManyWithoutUserInput>;
   preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
-  funds?: Maybe<FundsUpdateManyWithoutUserInput>;
+  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
 }
 
-export type HaloWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface LoopCreateInput {
+  id?: Maybe<ID_Input>;
+  count: Int;
+  event: EventCreateOneInput;
+  user: UserCreateOneWithoutLoopsInput;
+}
 
-export interface FundsUpdateManyWithoutUserInput {
-  create?: Maybe<FundsCreateWithoutUserInput[] | FundsCreateWithoutUserInput>;
-  delete?: Maybe<FundsWhereUniqueInput[] | FundsWhereUniqueInput>;
-  connect?: Maybe<FundsWhereUniqueInput[] | FundsWhereUniqueInput>;
-  set?: Maybe<FundsWhereUniqueInput[] | FundsWhereUniqueInput>;
-  disconnect?: Maybe<FundsWhereUniqueInput[] | FundsWhereUniqueInput>;
+export interface CircleUpdateManyWithoutOwnerInput {
+  create?: Maybe<
+    CircleCreateWithoutOwnerInput[] | CircleCreateWithoutOwnerInput
+  >;
+  delete?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
+  connect?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
+  set?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
+  disconnect?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
   update?: Maybe<
-    | FundsUpdateWithWhereUniqueWithoutUserInput[]
-    | FundsUpdateWithWhereUniqueWithoutUserInput
+    | CircleUpdateWithWhereUniqueWithoutOwnerInput[]
+    | CircleUpdateWithWhereUniqueWithoutOwnerInput
   >;
   upsert?: Maybe<
-    | FundsUpsertWithWhereUniqueWithoutUserInput[]
-    | FundsUpsertWithWhereUniqueWithoutUserInput
+    | CircleUpsertWithWhereUniqueWithoutOwnerInput[]
+    | CircleUpsertWithWhereUniqueWithoutOwnerInput
   >;
-  deleteMany?: Maybe<FundsScalarWhereInput[] | FundsScalarWhereInput>;
+  deleteMany?: Maybe<CircleScalarWhereInput[] | CircleScalarWhereInput>;
   updateMany?: Maybe<
-    FundsUpdateManyWithWhereNestedInput[] | FundsUpdateManyWithWhereNestedInput
+    | CircleUpdateManyWithWhereNestedInput[]
+    | CircleUpdateManyWithWhereNestedInput
   >;
 }
 
-export type IdentityWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
+export interface IdentityUpdateManyMutationInput {
+  provider?: Maybe<IdentityProvider>;
   providerID?: Maybe<String>;
+}
+
+export interface CircleUpdateWithWhereUniqueWithoutOwnerInput {
+  where: CircleWhereUniqueInput;
+  data: CircleUpdateWithoutOwnerDataInput;
+}
+
+export interface UserUpdateWithoutIdentityDataInput {
+  bio?: Maybe<String>;
+  email?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  picture?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  username?: Maybe<String>;
+  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
+  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
+  dots?: Maybe<DotUpdateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeUpdateManyWithoutUserInput>;
+  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
+  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
+  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
+  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
+}
+
+export interface CircleUpdateWithoutOwnerDataInput {
+  description?: Maybe<String>;
+  name?: Maybe<String>;
+  open?: Maybe<Boolean>;
+  joinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutCircleInput>;
+  invites?: Maybe<CircleInviteUpdateManyWithoutCircleInput>;
+  members?: Maybe<UserUpdateManyWithoutCirclesInput>;
+}
+
+export type LoopWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
 }>;
 
-export interface FundsUpdateWithWhereUniqueWithoutUserInput {
-  where: FundsWhereUniqueInput;
-  data: FundsUpdateWithoutUserDataInput;
+export interface CircleUpsertWithWhereUniqueWithoutOwnerInput {
+  where: CircleWhereUniqueInput;
+  update: CircleUpdateWithoutOwnerDataInput;
+  create: CircleCreateWithoutOwnerInput;
+}
+
+export interface UserCreateWithoutIdentityInput {
+  id?: Maybe<ID_Input>;
+  bio?: Maybe<String>;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: Maybe<String>;
+  securityToken: Int;
+  username: String;
+  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
+  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
+  dots?: Maybe<DotCreateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeCreateManyWithoutUserInput>;
+  halos?: Maybe<HaloCreateManyWithoutUserInput>;
+  loops?: Maybe<LoopCreateManyWithoutUserInput>;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
+}
+
+export interface CircleScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  open?: Maybe<Boolean>;
+  open_not?: Maybe<Boolean>;
+  AND?: Maybe<CircleScalarWhereInput[] | CircleScalarWhereInput>;
+  OR?: Maybe<CircleScalarWhereInput[] | CircleScalarWhereInput>;
+  NOT?: Maybe<CircleScalarWhereInput[] | CircleScalarWhereInput>;
+}
+
+export type PreferencesWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateWithoutDotsDataInput {
+  bio?: Maybe<String>;
+  email?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  picture?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  username?: Maybe<String>;
+  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
+  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
+  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeUpdateManyWithoutUserInput>;
+  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
+  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
+  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
+  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
+  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
+}
+
+export interface HaloUpdateManyMutationInput {
+  key?: Maybe<String>;
+  tier?: Maybe<String>;
+}
+
+export interface CircleUpdateManyDataInput {
+  description?: Maybe<String>;
+  name?: Maybe<String>;
+  open?: Maybe<Boolean>;
 }
 
 export interface UserUpdateWithoutHalosDataInput {
@@ -4091,19 +2295,43 @@ export interface UserUpdateWithoutHalosDataInput {
   circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
   dots?: Maybe<DotUpdateManyWithoutUserInput>;
   followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeUpdateManyWithoutUserInput>;
   identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
   loops?: Maybe<LoopUpdateManyWithoutUserInput>;
   preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
   transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
-  funds?: Maybe<FundsUpdateManyWithoutUserInput>;
 }
 
-export interface FundsUpdateWithoutUserDataInput {
-  amountAdded?: Maybe<Int>;
-  amountNet?: Maybe<Int>;
-  chargeID?: Maybe<String>;
-  donations?: Maybe<DonationUpdateManyWithoutSourceInput>;
-  transaction?: Maybe<TransactionUpdateOneRequiredWithoutFundsInput>;
+export interface DotUpdateManyWithoutUserInput {
+  create?: Maybe<DotCreateWithoutUserInput[] | DotCreateWithoutUserInput>;
+  delete?: Maybe<DotWhereUniqueInput[] | DotWhereUniqueInput>;
+  connect?: Maybe<DotWhereUniqueInput[] | DotWhereUniqueInput>;
+  set?: Maybe<DotWhereUniqueInput[] | DotWhereUniqueInput>;
+  disconnect?: Maybe<DotWhereUniqueInput[] | DotWhereUniqueInput>;
+  update?: Maybe<
+    | DotUpdateWithWhereUniqueWithoutUserInput[]
+    | DotUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | DotUpsertWithWhereUniqueWithoutUserInput[]
+    | DotUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<DotScalarWhereInput[] | DotScalarWhereInput>;
+  updateMany?: Maybe<
+    DotUpdateManyWithWhereNestedInput[] | DotUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpdateOneRequiredWithoutHalosInput {
+  create?: Maybe<UserCreateWithoutHalosInput>;
+  update?: Maybe<UserUpdateWithoutHalosDataInput>;
+  upsert?: Maybe<UserUpsertWithoutHalosInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface DotUpdateWithWhereUniqueWithoutUserInput {
+  where: DotWhereUniqueInput;
+  data: DotUpdateWithoutUserDataInput;
 }
 
 export interface UserCreateWithoutHalosInput {
@@ -4121,26 +2349,257 @@ export interface UserCreateWithoutHalosInput {
   circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
   dots?: Maybe<DotCreateManyWithoutUserInput>;
   followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeCreateManyWithoutUserInput>;
   identity: IdentityCreateOneWithoutUserInput;
   loops?: Maybe<LoopCreateManyWithoutUserInput>;
   preferences: PreferencesCreateOneWithoutUserInput;
   transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
-  funds?: Maybe<FundsCreateManyWithoutUserInput>;
 }
 
-export interface FundsUpsertWithWhereUniqueWithoutUserInput {
-  where: FundsWhereUniqueInput;
-  update: FundsUpdateWithoutUserDataInput;
-  create: FundsCreateWithoutUserInput;
+export interface DotUpdateWithoutUserDataInput {
+  action?: Maybe<String>;
+  amount?: Maybe<Int>;
+  total?: Maybe<Int>;
 }
 
-export interface FundsUpdateManyMutationInput {
-  amountAdded?: Maybe<Int>;
-  amountNet?: Maybe<Int>;
-  chargeID?: Maybe<String>;
+export interface UserCreateOneWithoutHalosInput {
+  create?: Maybe<UserCreateWithoutHalosInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface FundsScalarWhereInput {
+export interface DotUpsertWithWhereUniqueWithoutUserInput {
+  where: DotWhereUniqueInput;
+  update: DotUpdateWithoutUserDataInput;
+  create: DotCreateWithoutUserInput;
+}
+
+export interface EventUpdateManyMutationInput {
+  endDate?: Maybe<DateTimeInput>;
+  goal?: Maybe<Int>;
+  multiplier?: Maybe<Int>;
+  specialEvent?: Maybe<String>;
+  specialEventDescription?: Maybe<String>;
+  specialEventName?: Maybe<String>;
+  sponsorName?: Maybe<String>;
+  sponsorWebsite?: Maybe<String>;
+  startDate?: Maybe<DateTimeInput>;
+}
+
+export interface DotScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  action?: Maybe<String>;
+  action_not?: Maybe<String>;
+  action_in?: Maybe<String[] | String>;
+  action_not_in?: Maybe<String[] | String>;
+  action_lt?: Maybe<String>;
+  action_lte?: Maybe<String>;
+  action_gt?: Maybe<String>;
+  action_gte?: Maybe<String>;
+  action_contains?: Maybe<String>;
+  action_not_contains?: Maybe<String>;
+  action_starts_with?: Maybe<String>;
+  action_not_starts_with?: Maybe<String>;
+  action_ends_with?: Maybe<String>;
+  action_not_ends_with?: Maybe<String>;
+  amount?: Maybe<Int>;
+  amount_not?: Maybe<Int>;
+  amount_in?: Maybe<Int[] | Int>;
+  amount_not_in?: Maybe<Int[] | Int>;
+  amount_lt?: Maybe<Int>;
+  amount_lte?: Maybe<Int>;
+  amount_gt?: Maybe<Int>;
+  amount_gte?: Maybe<Int>;
+  total?: Maybe<Int>;
+  total_not?: Maybe<Int>;
+  total_in?: Maybe<Int[] | Int>;
+  total_not_in?: Maybe<Int[] | Int>;
+  total_lt?: Maybe<Int>;
+  total_lte?: Maybe<Int>;
+  total_gt?: Maybe<Int>;
+  total_gte?: Maybe<Int>;
+  AND?: Maybe<DotScalarWhereInput[] | DotScalarWhereInput>;
+  OR?: Maybe<DotScalarWhereInput[] | DotScalarWhereInput>;
+  NOT?: Maybe<DotScalarWhereInput[] | DotScalarWhereInput>;
+}
+
+export interface EventUpdateInput {
+  endDate?: Maybe<DateTimeInput>;
+  goal?: Maybe<Int>;
+  multiplier?: Maybe<Int>;
+  specialEvent?: Maybe<String>;
+  specialEventDescription?: Maybe<String>;
+  specialEventName?: Maybe<String>;
+  sponsorName?: Maybe<String>;
+  sponsorWebsite?: Maybe<String>;
+  startDate?: Maybe<DateTimeInput>;
+  charity?: Maybe<CharityUpdateOneRequiredWithoutEventsInput>;
+  donations?: Maybe<TransferUpdateManyWithoutEventInput>;
+}
+
+export interface DotUpdateManyWithWhereNestedInput {
+  where: DotScalarWhereInput;
+  data: DotUpdateManyDataInput;
+}
+
+export interface UserUpsertWithoutDotsInput {
+  update: UserUpdateWithoutDotsDataInput;
+  create: UserCreateWithoutDotsInput;
+}
+
+export interface DotUpdateManyDataInput {
+  action?: Maybe<String>;
+  amount?: Maybe<Int>;
+  total?: Maybe<Int>;
+}
+
+export interface ChargeCreateInput {
+  id?: Maybe<ID_Input>;
+  amountAdded: Int;
+  amountNet: Int;
+  chargeID: String;
+  donations?: Maybe<TransferCreateManyWithoutSourceInput>;
+  transaction: TransactionCreateOneWithoutFundsInput;
+  user: UserCreateOneWithoutFundsInput;
+}
+
+export interface IdentityWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  provider?: Maybe<IdentityProvider>;
+  provider_not?: Maybe<IdentityProvider>;
+  provider_in?: Maybe<IdentityProvider[] | IdentityProvider>;
+  provider_not_in?: Maybe<IdentityProvider[] | IdentityProvider>;
+  providerID?: Maybe<String>;
+  providerID_not?: Maybe<String>;
+  providerID_in?: Maybe<String[] | String>;
+  providerID_not_in?: Maybe<String[] | String>;
+  providerID_lt?: Maybe<String>;
+  providerID_lte?: Maybe<String>;
+  providerID_gt?: Maybe<String>;
+  providerID_gte?: Maybe<String>;
+  providerID_contains?: Maybe<String>;
+  providerID_not_contains?: Maybe<String>;
+  providerID_starts_with?: Maybe<String>;
+  providerID_not_starts_with?: Maybe<String>;
+  providerID_ends_with?: Maybe<String>;
+  providerID_not_ends_with?: Maybe<String>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<IdentityWhereInput[] | IdentityWhereInput>;
+  OR?: Maybe<IdentityWhereInput[] | IdentityWhereInput>;
+  NOT?: Maybe<IdentityWhereInput[] | IdentityWhereInput>;
+}
+
+export interface TransferCreateWithoutSourceInput {
+  id?: Maybe<ID_Input>;
+  amount: Int;
+  chargeBalance: Int;
+  transferID: String;
+  event?: Maybe<EventCreateOneWithoutDonationsInput>;
+  transaction: TransactionCreateOneWithoutDonationsInput;
+}
+
+export interface LoopWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  count?: Maybe<Int>;
+  count_not?: Maybe<Int>;
+  count_in?: Maybe<Int[] | Int>;
+  count_not_in?: Maybe<Int[] | Int>;
+  count_lt?: Maybe<Int>;
+  count_lte?: Maybe<Int>;
+  count_gt?: Maybe<Int>;
+  count_gte?: Maybe<Int>;
+  event?: Maybe<EventWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<LoopWhereInput[] | LoopWhereInput>;
+  OR?: Maybe<LoopWhereInput[] | LoopWhereInput>;
+  NOT?: Maybe<LoopWhereInput[] | LoopWhereInput>;
+}
+
+export interface EventCreateWithoutDonationsInput {
+  id?: Maybe<ID_Input>;
+  endDate: DateTimeInput;
+  goal: Int;
+  multiplier?: Maybe<Int>;
+  specialEvent?: Maybe<String>;
+  specialEventDescription?: Maybe<String>;
+  specialEventName?: Maybe<String>;
+  sponsorName?: Maybe<String>;
+  sponsorWebsite?: Maybe<String>;
+  startDate: DateTimeInput;
+  charity: CharityCreateOneWithoutEventsInput;
+}
+
+export interface ChargeWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -4193,12 +2652,75 @@ export interface FundsScalarWhereInput {
   chargeID_not_starts_with?: Maybe<String>;
   chargeID_ends_with?: Maybe<String>;
   chargeID_not_ends_with?: Maybe<String>;
-  AND?: Maybe<FundsScalarWhereInput[] | FundsScalarWhereInput>;
-  OR?: Maybe<FundsScalarWhereInput[] | FundsScalarWhereInput>;
-  NOT?: Maybe<FundsScalarWhereInput[] | FundsScalarWhereInput>;
+  donations_every?: Maybe<TransferWhereInput>;
+  donations_some?: Maybe<TransferWhereInput>;
+  donations_none?: Maybe<TransferWhereInput>;
+  transaction?: Maybe<TransactionWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<ChargeWhereInput[] | ChargeWhereInput>;
+  OR?: Maybe<ChargeWhereInput[] | ChargeWhereInput>;
+  NOT?: Maybe<ChargeWhereInput[] | ChargeWhereInput>;
 }
 
-export interface EventUpdateManyMutationInput {
+export interface CharityCreateWithoutEventsInput {
+  id?: Maybe<ID_Input>;
+  acronym?: Maybe<String>;
+  bannerCredit?: Maybe<String>;
+  connectedAccountID?: Maybe<String>;
+  ein: String;
+  expensesAdministrative?: Maybe<Float>;
+  expensesFundraising?: Maybe<Float>;
+  expensesOther?: Maybe<Float>;
+  expensesProgram?: Maybe<Float>;
+  expensesUpdated?: Maybe<String>;
+  location: String;
+  mission: String;
+  name: String;
+  phoneNumber: String;
+  website: String;
+  followers?: Maybe<UserCreateManyWithoutFollowedCharitiesInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutDotsInput {
+  create?: Maybe<UserCreateWithoutDotsInput>;
+  update?: Maybe<UserUpdateWithoutDotsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutDotsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutFollowedCharitiesInput {
+  id?: Maybe<ID_Input>;
+  bio?: Maybe<String>;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: Maybe<String>;
+  securityToken: Int;
+  username: String;
+  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
+  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
+  dots?: Maybe<DotCreateManyWithoutUserInput>;
+  funds?: Maybe<ChargeCreateManyWithoutUserInput>;
+  halos?: Maybe<HaloCreateManyWithoutUserInput>;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: Maybe<LoopCreateManyWithoutUserInput>;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
+}
+
+export interface EventUpdateWithWhereUniqueWithoutCharityInput {
+  where: EventWhereUniqueInput;
+  data: EventUpdateWithoutCharityDataInput;
+}
+
+export interface CircleJoinRequestCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  circle: CircleCreateOneWithoutJoinRequestsInput;
+}
+
+export interface EventUpdateWithoutCharityDataInput {
   endDate?: Maybe<DateTimeInput>;
   goal?: Maybe<Int>;
   multiplier?: Maybe<Int>;
@@ -4208,66 +2730,266 @@ export interface EventUpdateManyMutationInput {
   sponsorName?: Maybe<String>;
   sponsorWebsite?: Maybe<String>;
   startDate?: Maybe<DateTimeInput>;
+  donations?: Maybe<TransferUpdateManyWithoutEventInput>;
 }
 
-export interface FundsUpdateManyWithWhereNestedInput {
-  where: FundsScalarWhereInput;
-  data: FundsUpdateManyDataInput;
+export interface CircleCreateWithoutJoinRequestsInput {
+  id?: Maybe<ID_Input>;
+  description?: Maybe<String>;
+  name: String;
+  open?: Maybe<Boolean>;
+  invites?: Maybe<CircleInviteCreateManyWithoutCircleInput>;
+  members?: Maybe<UserCreateManyWithoutCirclesInput>;
+  owner: UserCreateOneWithoutCirclesOwnedInput;
 }
 
-export interface UserUpsertWithoutDotsInput {
-  update: UserUpdateWithoutDotsDataInput;
-  create: UserCreateWithoutDotsInput;
+export interface TransferUpdateManyWithoutEventInput {
+  create?: Maybe<
+    TransferCreateWithoutEventInput[] | TransferCreateWithoutEventInput
+  >;
+  delete?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+  connect?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+  set?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+  disconnect?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+  update?: Maybe<
+    | TransferUpdateWithWhereUniqueWithoutEventInput[]
+    | TransferUpdateWithWhereUniqueWithoutEventInput
+  >;
+  upsert?: Maybe<
+    | TransferUpsertWithWhereUniqueWithoutEventInput[]
+    | TransferUpsertWithWhereUniqueWithoutEventInput
+  >;
+  deleteMany?: Maybe<TransferScalarWhereInput[] | TransferScalarWhereInput>;
+  updateMany?: Maybe<
+    | TransferUpdateManyWithWhereNestedInput[]
+    | TransferUpdateManyWithWhereNestedInput
+  >;
 }
 
-export interface FundsUpdateManyDataInput {
+export interface CircleInviteCreateWithoutCircleInput {
+  id?: Maybe<ID_Input>;
+  user: UserCreateOneWithoutCircleInvitesInput;
+}
+
+export interface TransferUpdateWithWhereUniqueWithoutEventInput {
+  where: TransferWhereUniqueInput;
+  data: TransferUpdateWithoutEventDataInput;
+}
+
+export interface UserCreateWithoutCircleInvitesInput {
+  id?: Maybe<ID_Input>;
+  bio?: Maybe<String>;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: Maybe<String>;
+  securityToken: Int;
+  username: String;
+  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
+  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
+  dots?: Maybe<DotCreateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeCreateManyWithoutUserInput>;
+  halos?: Maybe<HaloCreateManyWithoutUserInput>;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: Maybe<LoopCreateManyWithoutUserInput>;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
+}
+
+export interface TransferUpdateWithoutEventDataInput {
+  amount?: Maybe<Int>;
+  chargeBalance?: Maybe<Int>;
+  transferID?: Maybe<String>;
+  source?: Maybe<ChargeUpdateOneWithoutDonationsInput>;
+  transaction?: Maybe<TransactionUpdateOneRequiredWithoutDonationsInput>;
+}
+
+export interface CircleCreateWithoutMembersInput {
+  id?: Maybe<ID_Input>;
+  description?: Maybe<String>;
+  name: String;
+  open?: Maybe<Boolean>;
+  joinRequests?: Maybe<CircleJoinRequestCreateManyWithoutCircleInput>;
+  invites?: Maybe<CircleInviteCreateManyWithoutCircleInput>;
+  owner: UserCreateOneWithoutCirclesOwnedInput;
+}
+
+export interface ChargeUpdateOneWithoutDonationsInput {
+  create?: Maybe<ChargeCreateWithoutDonationsInput>;
+  update?: Maybe<ChargeUpdateWithoutDonationsDataInput>;
+  upsert?: Maybe<ChargeUpsertWithoutDonationsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ChargeWhereUniqueInput>;
+}
+
+export interface CircleJoinRequestCreateWithoutCircleInput {
+  id?: Maybe<ID_Input>;
+  user: UserCreateOneWithoutCircleJoinRequestsInput;
+}
+
+export interface ChargeUpdateWithoutDonationsDataInput {
   amountAdded?: Maybe<Int>;
   amountNet?: Maybe<Int>;
   chargeID?: Maybe<String>;
+  transaction?: Maybe<TransactionUpdateOneRequiredWithoutFundsInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutFundsInput>;
 }
 
-export interface EventCreateManyWithoutCharityInput {
+export interface UserCreateWithoutCircleJoinRequestsInput {
+  id?: Maybe<ID_Input>;
+  bio?: Maybe<String>;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: Maybe<String>;
+  securityToken: Int;
+  username: String;
+  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
+  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
+  dots?: Maybe<DotCreateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeCreateManyWithoutUserInput>;
+  halos?: Maybe<HaloCreateManyWithoutUserInput>;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: Maybe<LoopCreateManyWithoutUserInput>;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
+}
+
+export interface TransactionUpdateOneRequiredWithoutFundsInput {
+  create?: Maybe<TransactionCreateWithoutFundsInput>;
+  update?: Maybe<TransactionUpdateWithoutFundsDataInput>;
+  upsert?: Maybe<TransactionUpsertWithoutFundsInput>;
+  connect?: Maybe<TransactionWhereUniqueInput>;
+}
+
+export interface CircleInviteCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  circle: CircleCreateOneWithoutInvitesInput;
+}
+
+export interface TransactionUpdateWithoutFundsDataInput {
+  balance?: Maybe<Int>;
+  donations?: Maybe<TransferUpdateManyWithoutTransactionInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutTransactionsInput>;
+}
+
+export interface CircleCreateWithoutInvitesInput {
+  id?: Maybe<ID_Input>;
+  description?: Maybe<String>;
+  name: String;
+  open?: Maybe<Boolean>;
+  joinRequests?: Maybe<CircleJoinRequestCreateManyWithoutCircleInput>;
+  members?: Maybe<UserCreateManyWithoutCirclesInput>;
+  owner: UserCreateOneWithoutCirclesOwnedInput;
+}
+
+export interface TransferUpdateManyWithoutTransactionInput {
   create?: Maybe<
-    EventCreateWithoutCharityInput[] | EventCreateWithoutCharityInput
+    | TransferCreateWithoutTransactionInput[]
+    | TransferCreateWithoutTransactionInput
   >;
-  connect?: Maybe<EventWhereUniqueInput[] | EventWhereUniqueInput>;
-}
-
-export interface UserUpsertWithoutTransactionsInput {
-  update: UserUpdateWithoutTransactionsDataInput;
-  create: UserCreateWithoutTransactionsInput;
-}
-
-export interface FundsCreateOneWithoutDonationsInput {
-  create?: Maybe<FundsCreateWithoutDonationsInput>;
-  connect?: Maybe<FundsWhereUniqueInput>;
-}
-
-export interface TransactionUpsertWithoutDonationsInput {
-  update: TransactionUpdateWithoutDonationsDataInput;
-  create: TransactionCreateWithoutDonationsInput;
-}
-
-export interface DonationCreateManyWithoutTransactionInput {
-  create?: Maybe<
-    | DonationCreateWithoutTransactionInput[]
-    | DonationCreateWithoutTransactionInput
+  delete?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+  connect?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+  set?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+  disconnect?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+  update?: Maybe<
+    | TransferUpdateWithWhereUniqueWithoutTransactionInput[]
+    | TransferUpdateWithWhereUniqueWithoutTransactionInput
   >;
-  connect?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
+  upsert?: Maybe<
+    | TransferUpsertWithWhereUniqueWithoutTransactionInput[]
+    | TransferUpsertWithWhereUniqueWithoutTransactionInput
+  >;
+  deleteMany?: Maybe<TransferScalarWhereInput[] | TransferScalarWhereInput>;
+  updateMany?: Maybe<
+    | TransferUpdateManyWithWhereNestedInput[]
+    | TransferUpdateManyWithWhereNestedInput
+  >;
 }
 
-export interface DonationUpsertWithWhereUniqueWithoutSourceInput {
-  where: DonationWhereUniqueInput;
-  update: DonationUpdateWithoutSourceDataInput;
-  create: DonationCreateWithoutSourceInput;
+export interface UserCreateWithoutCirclesInput {
+  id?: Maybe<ID_Input>;
+  bio?: Maybe<String>;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: Maybe<String>;
+  securityToken: Int;
+  username: String;
+  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
+  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
+  dots?: Maybe<DotCreateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeCreateManyWithoutUserInput>;
+  halos?: Maybe<HaloCreateManyWithoutUserInput>;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: Maybe<LoopCreateManyWithoutUserInput>;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
 }
 
-export interface CharityCreateOneWithoutEventsInput {
-  create?: Maybe<CharityCreateWithoutEventsInput>;
-  connect?: Maybe<CharityWhereUniqueInput>;
+export interface TransferUpdateWithWhereUniqueWithoutTransactionInput {
+  where: TransferWhereUniqueInput;
+  data: TransferUpdateWithoutTransactionDataInput;
 }
 
-export interface DonationScalarWhereInput {
+export interface CircleCreateWithoutOwnerInput {
+  id?: Maybe<ID_Input>;
+  description?: Maybe<String>;
+  name: String;
+  open?: Maybe<Boolean>;
+  joinRequests?: Maybe<CircleJoinRequestCreateManyWithoutCircleInput>;
+  invites?: Maybe<CircleInviteCreateManyWithoutCircleInput>;
+  members?: Maybe<UserCreateManyWithoutCirclesInput>;
+}
+
+export interface TransferUpdateWithoutTransactionDataInput {
+  amount?: Maybe<Int>;
+  chargeBalance?: Maybe<Int>;
+  transferID?: Maybe<String>;
+  event?: Maybe<EventUpdateOneWithoutDonationsInput>;
+  source?: Maybe<ChargeUpdateOneWithoutDonationsInput>;
+}
+
+export interface DotCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  action: String;
+  amount: Int;
+  total: Int;
+}
+
+export interface TransferUpsertWithWhereUniqueWithoutTransactionInput {
+  where: TransferWhereUniqueInput;
+  update: TransferUpdateWithoutTransactionDataInput;
+  create: TransferCreateWithoutTransactionInput;
+}
+
+export interface CharityCreateWithoutFollowersInput {
+  id?: Maybe<ID_Input>;
+  acronym?: Maybe<String>;
+  bannerCredit?: Maybe<String>;
+  connectedAccountID?: Maybe<String>;
+  ein: String;
+  expensesAdministrative?: Maybe<Float>;
+  expensesFundraising?: Maybe<Float>;
+  expensesOther?: Maybe<Float>;
+  expensesProgram?: Maybe<Float>;
+  expensesUpdated?: Maybe<String>;
+  location: String;
+  mission: String;
+  name: String;
+  phoneNumber: String;
+  website: String;
+  events?: Maybe<EventCreateManyWithoutCharityInput>;
+}
+
+export interface TransferScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -4298,28 +3020,14 @@ export interface DonationScalarWhereInput {
   amount_lte?: Maybe<Int>;
   amount_gt?: Maybe<Int>;
   amount_gte?: Maybe<Int>;
-  batchKey?: Maybe<String>;
-  batchKey_not?: Maybe<String>;
-  batchKey_in?: Maybe<String[] | String>;
-  batchKey_not_in?: Maybe<String[] | String>;
-  batchKey_lt?: Maybe<String>;
-  batchKey_lte?: Maybe<String>;
-  batchKey_gt?: Maybe<String>;
-  batchKey_gte?: Maybe<String>;
-  batchKey_contains?: Maybe<String>;
-  batchKey_not_contains?: Maybe<String>;
-  batchKey_starts_with?: Maybe<String>;
-  batchKey_not_starts_with?: Maybe<String>;
-  batchKey_ends_with?: Maybe<String>;
-  batchKey_not_ends_with?: Maybe<String>;
-  subBalance?: Maybe<Int>;
-  subBalance_not?: Maybe<Int>;
-  subBalance_in?: Maybe<Int[] | Int>;
-  subBalance_not_in?: Maybe<Int[] | Int>;
-  subBalance_lt?: Maybe<Int>;
-  subBalance_lte?: Maybe<Int>;
-  subBalance_gt?: Maybe<Int>;
-  subBalance_gte?: Maybe<Int>;
+  chargeBalance?: Maybe<Int>;
+  chargeBalance_not?: Maybe<Int>;
+  chargeBalance_in?: Maybe<Int[] | Int>;
+  chargeBalance_not_in?: Maybe<Int[] | Int>;
+  chargeBalance_lt?: Maybe<Int>;
+  chargeBalance_lte?: Maybe<Int>;
+  chargeBalance_gt?: Maybe<Int>;
+  chargeBalance_gte?: Maybe<Int>;
   transferID?: Maybe<String>;
   transferID_not?: Maybe<String>;
   transferID_in?: Maybe<String[] | String>;
@@ -4334,63 +3042,69 @@ export interface DonationScalarWhereInput {
   transferID_not_starts_with?: Maybe<String>;
   transferID_ends_with?: Maybe<String>;
   transferID_not_ends_with?: Maybe<String>;
-  AND?: Maybe<DonationScalarWhereInput[] | DonationScalarWhereInput>;
-  OR?: Maybe<DonationScalarWhereInput[] | DonationScalarWhereInput>;
-  NOT?: Maybe<DonationScalarWhereInput[] | DonationScalarWhereInput>;
+  AND?: Maybe<TransferScalarWhereInput[] | TransferScalarWhereInput>;
+  OR?: Maybe<TransferScalarWhereInput[] | TransferScalarWhereInput>;
+  NOT?: Maybe<TransferScalarWhereInput[] | TransferScalarWhereInput>;
 }
 
-export interface CircleJoinRequestCreateManyWithoutUserInput {
-  create?: Maybe<
-    | CircleJoinRequestCreateWithoutUserInput[]
-    | CircleJoinRequestCreateWithoutUserInput
-  >;
-  connect?: Maybe<
-    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
-  >;
+export interface EventCreateWithoutCharityInput {
+  id?: Maybe<ID_Input>;
+  endDate: DateTimeInput;
+  goal: Int;
+  multiplier?: Maybe<Int>;
+  specialEvent?: Maybe<String>;
+  specialEventDescription?: Maybe<String>;
+  specialEventName?: Maybe<String>;
+  sponsorName?: Maybe<String>;
+  sponsorWebsite?: Maybe<String>;
+  startDate: DateTimeInput;
+  donations?: Maybe<TransferCreateManyWithoutEventInput>;
 }
 
-export interface DonationUpdateManyWithWhereNestedInput {
-  where: DonationScalarWhereInput;
-  data: DonationUpdateManyDataInput;
+export interface TransferUpdateManyWithWhereNestedInput {
+  where: TransferScalarWhereInput;
+  data: TransferUpdateManyDataInput;
 }
 
-export interface CircleInviteCreateManyWithoutCircleInput {
-  create?: Maybe<
-    | CircleInviteCreateWithoutCircleInput[]
-    | CircleInviteCreateWithoutCircleInput
-  >;
-  connect?: Maybe<
-    CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput
-  >;
+export interface TransferCreateWithoutEventInput {
+  id?: Maybe<ID_Input>;
+  amount: Int;
+  chargeBalance: Int;
+  transferID: String;
+  source?: Maybe<ChargeCreateOneWithoutDonationsInput>;
+  transaction: TransactionCreateOneWithoutDonationsInput;
 }
 
-export interface DonationUpdateManyDataInput {
+export interface TransferUpdateManyDataInput {
   amount?: Maybe<Int>;
-  batchKey?: Maybe<String>;
-  subBalance?: Maybe<Int>;
+  chargeBalance?: Maybe<Int>;
   transferID?: Maybe<String>;
 }
 
-export interface CircleCreateManyWithoutMembersInput {
-  create?: Maybe<
-    CircleCreateWithoutMembersInput[] | CircleCreateWithoutMembersInput
-  >;
-  connect?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
+export interface ChargeCreateWithoutDonationsInput {
+  id?: Maybe<ID_Input>;
+  amountAdded: Int;
+  amountNet: Int;
+  chargeID: String;
+  transaction: TransactionCreateOneWithoutFundsInput;
+  user: UserCreateOneWithoutFundsInput;
 }
 
-export interface UserUpdateOneRequiredWithoutFundsInput {
-  create?: Maybe<UserCreateWithoutFundsInput>;
-  update?: Maybe<UserUpdateWithoutFundsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutFundsInput>;
+export interface UserUpdateOneRequiredWithoutTransactionsInput {
+  create?: Maybe<UserCreateWithoutTransactionsInput>;
+  update?: Maybe<UserUpdateWithoutTransactionsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutTransactionsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateOneWithoutCircleJoinRequestsInput {
-  create?: Maybe<UserCreateWithoutCircleJoinRequestsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface TransactionCreateWithoutFundsInput {
+  id?: Maybe<ID_Input>;
+  balance: Int;
+  donations?: Maybe<TransferCreateManyWithoutTransactionInput>;
+  user: UserCreateOneWithoutTransactionsInput;
 }
 
-export interface UserUpdateWithoutFundsDataInput {
+export interface UserUpdateWithoutTransactionsDataInput {
   bio?: Maybe<String>;
   email?: Maybe<String>;
   nameFirst?: Maybe<String>;
@@ -4404,62 +3118,120 @@ export interface UserUpdateWithoutFundsDataInput {
   circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
   dots?: Maybe<DotUpdateManyWithoutUserInput>;
   followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeUpdateManyWithoutUserInput>;
   halos?: Maybe<HaloUpdateManyWithoutUserInput>;
   identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
   loops?: Maybe<LoopUpdateManyWithoutUserInput>;
   preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
-  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
 }
 
-export interface CircleCreateOneWithoutInvitesInput {
-  create?: Maybe<CircleCreateWithoutInvitesInput>;
-  connect?: Maybe<CircleWhereUniqueInput>;
+export interface TransferCreateWithoutTransactionInput {
+  id?: Maybe<ID_Input>;
+  amount: Int;
+  chargeBalance: Int;
+  transferID: String;
+  event?: Maybe<EventCreateOneWithoutDonationsInput>;
+  source?: Maybe<ChargeCreateOneWithoutDonationsInput>;
 }
 
-export interface UserUpsertWithoutFundsInput {
-  update: UserUpdateWithoutFundsDataInput;
-  create: UserCreateWithoutFundsInput;
-}
-
-export interface CircleCreateManyWithoutOwnerInput {
-  create?: Maybe<
-    CircleCreateWithoutOwnerInput[] | CircleCreateWithoutOwnerInput
+export interface ChargeUpdateManyWithoutUserInput {
+  create?: Maybe<ChargeCreateWithoutUserInput[] | ChargeCreateWithoutUserInput>;
+  delete?: Maybe<ChargeWhereUniqueInput[] | ChargeWhereUniqueInput>;
+  connect?: Maybe<ChargeWhereUniqueInput[] | ChargeWhereUniqueInput>;
+  set?: Maybe<ChargeWhereUniqueInput[] | ChargeWhereUniqueInput>;
+  disconnect?: Maybe<ChargeWhereUniqueInput[] | ChargeWhereUniqueInput>;
+  update?: Maybe<
+    | ChargeUpdateWithWhereUniqueWithoutUserInput[]
+    | ChargeUpdateWithWhereUniqueWithoutUserInput
   >;
-  connect?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
-}
-
-export interface FundsUpsertWithoutTransactionInput {
-  update: FundsUpdateWithoutTransactionDataInput;
-  create: FundsCreateWithoutTransactionInput;
-}
-
-export interface CharityCreateManyWithoutFollowersInput {
-  create?: Maybe<
-    CharityCreateWithoutFollowersInput[] | CharityCreateWithoutFollowersInput
+  upsert?: Maybe<
+    | ChargeUpsertWithWhereUniqueWithoutUserInput[]
+    | ChargeUpsertWithWhereUniqueWithoutUserInput
   >;
-  connect?: Maybe<CharityWhereUniqueInput[] | CharityWhereUniqueInput>;
+  deleteMany?: Maybe<ChargeScalarWhereInput[] | ChargeScalarWhereInput>;
+  updateMany?: Maybe<
+    | ChargeUpdateManyWithWhereNestedInput[]
+    | ChargeUpdateManyWithWhereNestedInput
+  >;
 }
 
-export interface TransactionUpsertWithWhereUniqueWithoutUserInput {
-  where: TransactionWhereUniqueInput;
-  update: TransactionUpdateWithoutUserDataInput;
-  create: TransactionCreateWithoutUserInput;
+export interface UserCreateWithoutTransactionsInput {
+  id?: Maybe<ID_Input>;
+  bio?: Maybe<String>;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: Maybe<String>;
+  securityToken: Int;
+  username: String;
+  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
+  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
+  dots?: Maybe<DotCreateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeCreateManyWithoutUserInput>;
+  halos?: Maybe<HaloCreateManyWithoutUserInput>;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: Maybe<LoopCreateManyWithoutUserInput>;
+  preferences: PreferencesCreateOneWithoutUserInput;
 }
 
-export interface IdentityCreateOneWithoutUserInput {
-  create?: Maybe<IdentityCreateWithoutUserInput>;
-  connect?: Maybe<IdentityWhereUniqueInput>;
+export interface ChargeUpdateWithWhereUniqueWithoutUserInput {
+  where: ChargeWhereUniqueInput;
+  data: ChargeUpdateWithoutUserDataInput;
 }
 
-export interface TransactionScalarWhereInput {
-  id?: Maybe<Int>;
-  id_not?: Maybe<Int>;
-  id_in?: Maybe<Int[] | Int>;
-  id_not_in?: Maybe<Int[] | Int>;
-  id_lt?: Maybe<Int>;
-  id_lte?: Maybe<Int>;
-  id_gt?: Maybe<Int>;
-  id_gte?: Maybe<Int>;
+export interface ChargeCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  amountAdded: Int;
+  amountNet: Int;
+  chargeID: String;
+  donations?: Maybe<TransferCreateManyWithoutSourceInput>;
+  transaction: TransactionCreateOneWithoutFundsInput;
+}
+
+export interface ChargeUpdateWithoutUserDataInput {
+  amountAdded?: Maybe<Int>;
+  amountNet?: Maybe<Int>;
+  chargeID?: Maybe<String>;
+  donations?: Maybe<TransferUpdateManyWithoutSourceInput>;
+  transaction?: Maybe<TransactionUpdateOneRequiredWithoutFundsInput>;
+}
+
+export interface HaloCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  key: String;
+  tier?: Maybe<String>;
+}
+
+export interface ChargeUpsertWithWhereUniqueWithoutUserInput {
+  where: ChargeWhereUniqueInput;
+  update: ChargeUpdateWithoutUserDataInput;
+  create: ChargeCreateWithoutUserInput;
+}
+
+export interface IdentityCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  provider: IdentityProvider;
+  providerID: String;
+}
+
+export interface ChargeScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -4468,59 +3240,402 @@ export interface TransactionScalarWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
-  balance?: Maybe<Int>;
-  balance_not?: Maybe<Int>;
-  balance_in?: Maybe<Int[] | Int>;
-  balance_not_in?: Maybe<Int[] | Int>;
-  balance_lt?: Maybe<Int>;
-  balance_lte?: Maybe<Int>;
-  balance_gt?: Maybe<Int>;
-  balance_gte?: Maybe<Int>;
-  AND?: Maybe<TransactionScalarWhereInput[] | TransactionScalarWhereInput>;
-  OR?: Maybe<TransactionScalarWhereInput[] | TransactionScalarWhereInput>;
-  NOT?: Maybe<TransactionScalarWhereInput[] | TransactionScalarWhereInput>;
+  amountAdded?: Maybe<Int>;
+  amountAdded_not?: Maybe<Int>;
+  amountAdded_in?: Maybe<Int[] | Int>;
+  amountAdded_not_in?: Maybe<Int[] | Int>;
+  amountAdded_lt?: Maybe<Int>;
+  amountAdded_lte?: Maybe<Int>;
+  amountAdded_gt?: Maybe<Int>;
+  amountAdded_gte?: Maybe<Int>;
+  amountNet?: Maybe<Int>;
+  amountNet_not?: Maybe<Int>;
+  amountNet_in?: Maybe<Int[] | Int>;
+  amountNet_not_in?: Maybe<Int[] | Int>;
+  amountNet_lt?: Maybe<Int>;
+  amountNet_lte?: Maybe<Int>;
+  amountNet_gt?: Maybe<Int>;
+  amountNet_gte?: Maybe<Int>;
+  chargeID?: Maybe<String>;
+  chargeID_not?: Maybe<String>;
+  chargeID_in?: Maybe<String[] | String>;
+  chargeID_not_in?: Maybe<String[] | String>;
+  chargeID_lt?: Maybe<String>;
+  chargeID_lte?: Maybe<String>;
+  chargeID_gt?: Maybe<String>;
+  chargeID_gte?: Maybe<String>;
+  chargeID_contains?: Maybe<String>;
+  chargeID_not_contains?: Maybe<String>;
+  chargeID_starts_with?: Maybe<String>;
+  chargeID_not_starts_with?: Maybe<String>;
+  chargeID_ends_with?: Maybe<String>;
+  chargeID_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ChargeScalarWhereInput[] | ChargeScalarWhereInput>;
+  OR?: Maybe<ChargeScalarWhereInput[] | ChargeScalarWhereInput>;
+  NOT?: Maybe<ChargeScalarWhereInput[] | ChargeScalarWhereInput>;
 }
 
-export interface EventCreateOneInput {
-  create?: Maybe<EventCreateInput>;
-  connect?: Maybe<EventWhereUniqueInput>;
+export interface LoopCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  count: Int;
+  event: EventCreateOneInput;
 }
 
-export interface TransactionUpdateManyWithWhereNestedInput {
-  where: TransactionScalarWhereInput;
-  data: TransactionUpdateManyDataInput;
+export interface ChargeUpdateManyWithWhereNestedInput {
+  where: ChargeScalarWhereInput;
+  data: ChargeUpdateManyDataInput;
 }
 
-export interface TransactionCreateManyWithoutUserInput {
-  create?: Maybe<
-    TransactionCreateWithoutUserInput[] | TransactionCreateWithoutUserInput
+export interface EventCreateInput {
+  id?: Maybe<ID_Input>;
+  endDate: DateTimeInput;
+  goal: Int;
+  multiplier?: Maybe<Int>;
+  specialEvent?: Maybe<String>;
+  specialEventDescription?: Maybe<String>;
+  specialEventName?: Maybe<String>;
+  sponsorName?: Maybe<String>;
+  sponsorWebsite?: Maybe<String>;
+  startDate: DateTimeInput;
+  charity: CharityCreateOneWithoutEventsInput;
+  donations?: Maybe<TransferCreateManyWithoutEventInput>;
+}
+
+export interface ChargeUpdateManyDataInput {
+  amountAdded?: Maybe<Int>;
+  amountNet?: Maybe<Int>;
+  chargeID?: Maybe<String>;
+}
+
+export interface PreferencesCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  allowDonationEmails?: Maybe<Boolean>;
+  publicProfile?: Maybe<Boolean>;
+}
+
+export interface HaloUpdateManyWithoutUserInput {
+  create?: Maybe<HaloCreateWithoutUserInput[] | HaloCreateWithoutUserInput>;
+  delete?: Maybe<HaloWhereUniqueInput[] | HaloWhereUniqueInput>;
+  connect?: Maybe<HaloWhereUniqueInput[] | HaloWhereUniqueInput>;
+  set?: Maybe<HaloWhereUniqueInput[] | HaloWhereUniqueInput>;
+  disconnect?: Maybe<HaloWhereUniqueInput[] | HaloWhereUniqueInput>;
+  update?: Maybe<
+    | HaloUpdateWithWhereUniqueWithoutUserInput[]
+    | HaloUpdateWithWhereUniqueWithoutUserInput
   >;
-  connect?: Maybe<TransactionWhereUniqueInput[] | TransactionWhereUniqueInput>;
-}
-
-export interface TransactionUpdateManyDataInput {
-  balance?: Maybe<Int>;
-}
-
-export interface DonationCreateManyWithoutSourceInput {
-  create?: Maybe<
-    DonationCreateWithoutSourceInput[] | DonationCreateWithoutSourceInput
+  upsert?: Maybe<
+    | HaloUpsertWithWhereUniqueWithoutUserInput[]
+    | HaloUpsertWithWhereUniqueWithoutUserInput
   >;
-  connect?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
+  deleteMany?: Maybe<HaloScalarWhereInput[] | HaloScalarWhereInput>;
+  updateMany?: Maybe<
+    HaloUpdateManyWithWhereNestedInput[] | HaloUpdateManyWithWhereNestedInput
+  >;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutCirclesInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutCirclesDataInput;
-  create: UserCreateWithoutCirclesInput;
+export interface UserCreateWithoutFundsInput {
+  id?: Maybe<ID_Input>;
+  bio?: Maybe<String>;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: Maybe<String>;
+  securityToken: Int;
+  username: String;
+  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
+  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
+  dots?: Maybe<DotCreateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
+  halos?: Maybe<HaloCreateManyWithoutUserInput>;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: Maybe<LoopCreateManyWithoutUserInput>;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
 }
 
-export interface UserCreateOneWithoutTransactionsInput {
-  create?: Maybe<UserCreateWithoutTransactionsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface HaloUpdateWithWhereUniqueWithoutUserInput {
+  where: HaloWhereUniqueInput;
+  data: HaloUpdateWithoutUserDataInput;
 }
 
-export interface UserScalarWhereInput {
+export interface TransactionCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  balance: Int;
+  donations?: Maybe<TransferCreateManyWithoutTransactionInput>;
+  funds?: Maybe<ChargeCreateOneWithoutTransactionInput>;
+}
+
+export interface HaloUpdateWithoutUserDataInput {
+  key?: Maybe<String>;
+  tier?: Maybe<String>;
+}
+
+export interface ChargeCreateWithoutTransactionInput {
+  id?: Maybe<ID_Input>;
+  amountAdded: Int;
+  amountNet: Int;
+  chargeID: String;
+  donations?: Maybe<TransferCreateManyWithoutSourceInput>;
+  user: UserCreateOneWithoutFundsInput;
+}
+
+export interface HaloUpsertWithWhereUniqueWithoutUserInput {
+  where: HaloWhereUniqueInput;
+  update: HaloUpdateWithoutUserDataInput;
+  create: HaloCreateWithoutUserInput;
+}
+
+export interface TransactionCreateWithoutDonationsInput {
+  id?: Maybe<ID_Input>;
+  balance: Int;
+  funds?: Maybe<ChargeCreateOneWithoutTransactionInput>;
+  user: UserCreateOneWithoutTransactionsInput;
+}
+
+export interface HaloScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  key?: Maybe<String>;
+  key_not?: Maybe<String>;
+  key_in?: Maybe<String[] | String>;
+  key_not_in?: Maybe<String[] | String>;
+  key_lt?: Maybe<String>;
+  key_lte?: Maybe<String>;
+  key_gt?: Maybe<String>;
+  key_gte?: Maybe<String>;
+  key_contains?: Maybe<String>;
+  key_not_contains?: Maybe<String>;
+  key_starts_with?: Maybe<String>;
+  key_not_starts_with?: Maybe<String>;
+  key_ends_with?: Maybe<String>;
+  key_not_ends_with?: Maybe<String>;
+  tier?: Maybe<String>;
+  tier_not?: Maybe<String>;
+  tier_in?: Maybe<String[] | String>;
+  tier_not_in?: Maybe<String[] | String>;
+  tier_lt?: Maybe<String>;
+  tier_lte?: Maybe<String>;
+  tier_gt?: Maybe<String>;
+  tier_gte?: Maybe<String>;
+  tier_contains?: Maybe<String>;
+  tier_not_contains?: Maybe<String>;
+  tier_starts_with?: Maybe<String>;
+  tier_not_starts_with?: Maybe<String>;
+  tier_ends_with?: Maybe<String>;
+  tier_not_ends_with?: Maybe<String>;
+  AND?: Maybe<HaloScalarWhereInput[] | HaloScalarWhereInput>;
+  OR?: Maybe<HaloScalarWhereInput[] | HaloScalarWhereInput>;
+  NOT?: Maybe<HaloScalarWhereInput[] | HaloScalarWhereInput>;
+}
+
+export interface UserCreateWithoutCirclesOwnedInput {
+  id?: Maybe<ID_Input>;
+  bio?: Maybe<String>;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: Maybe<String>;
+  securityToken: Int;
+  username: String;
+  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
+  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
+  dots?: Maybe<DotCreateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeCreateManyWithoutUserInput>;
+  halos?: Maybe<HaloCreateManyWithoutUserInput>;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: Maybe<LoopCreateManyWithoutUserInput>;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
+}
+
+export interface HaloUpdateManyWithWhereNestedInput {
+  where: HaloScalarWhereInput;
+  data: HaloUpdateManyDataInput;
+}
+
+export interface TransferUpdateManyWithoutSourceInput {
+  create?: Maybe<
+    TransferCreateWithoutSourceInput[] | TransferCreateWithoutSourceInput
+  >;
+  delete?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+  connect?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+  set?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+  disconnect?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+  update?: Maybe<
+    | TransferUpdateWithWhereUniqueWithoutSourceInput[]
+    | TransferUpdateWithWhereUniqueWithoutSourceInput
+  >;
+  upsert?: Maybe<
+    | TransferUpsertWithWhereUniqueWithoutSourceInput[]
+    | TransferUpsertWithWhereUniqueWithoutSourceInput
+  >;
+  deleteMany?: Maybe<TransferScalarWhereInput[] | TransferScalarWhereInput>;
+  updateMany?: Maybe<
+    | TransferUpdateManyWithWhereNestedInput[]
+    | TransferUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface HaloUpdateManyDataInput {
+  key?: Maybe<String>;
+  tier?: Maybe<String>;
+}
+
+export interface TransferUpdateWithoutSourceDataInput {
+  amount?: Maybe<Int>;
+  chargeBalance?: Maybe<Int>;
+  transferID?: Maybe<String>;
+  event?: Maybe<EventUpdateOneWithoutDonationsInput>;
+  transaction?: Maybe<TransactionUpdateOneRequiredWithoutDonationsInput>;
+}
+
+export interface IdentityUpdateOneRequiredWithoutUserInput {
+  create?: Maybe<IdentityCreateWithoutUserInput>;
+  update?: Maybe<IdentityUpdateWithoutUserDataInput>;
+  upsert?: Maybe<IdentityUpsertWithoutUserInput>;
+  connect?: Maybe<IdentityWhereUniqueInput>;
+}
+
+export interface EventUpdateWithoutDonationsDataInput {
+  endDate?: Maybe<DateTimeInput>;
+  goal?: Maybe<Int>;
+  multiplier?: Maybe<Int>;
+  specialEvent?: Maybe<String>;
+  specialEventDescription?: Maybe<String>;
+  specialEventName?: Maybe<String>;
+  sponsorName?: Maybe<String>;
+  sponsorWebsite?: Maybe<String>;
+  startDate?: Maybe<DateTimeInput>;
+  charity?: Maybe<CharityUpdateOneRequiredWithoutEventsInput>;
+}
+
+export interface IdentityUpdateWithoutUserDataInput {
+  provider?: Maybe<IdentityProvider>;
+  providerID?: Maybe<String>;
+}
+
+export interface CharityUpdateWithoutEventsDataInput {
+  acronym?: Maybe<String>;
+  bannerCredit?: Maybe<String>;
+  connectedAccountID?: Maybe<String>;
+  ein?: Maybe<String>;
+  expensesAdministrative?: Maybe<Float>;
+  expensesFundraising?: Maybe<Float>;
+  expensesOther?: Maybe<Float>;
+  expensesProgram?: Maybe<Float>;
+  expensesUpdated?: Maybe<String>;
+  location?: Maybe<String>;
+  mission?: Maybe<String>;
+  name?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  website?: Maybe<String>;
+  followers?: Maybe<UserUpdateManyWithoutFollowedCharitiesInput>;
+}
+
+export interface IdentityUpsertWithoutUserInput {
+  update: IdentityUpdateWithoutUserDataInput;
+  create: IdentityCreateWithoutUserInput;
+}
+
+export interface CircleInviteWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  circle?: Maybe<CircleWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<CircleInviteWhereInput[] | CircleInviteWhereInput>;
+  OR?: Maybe<CircleInviteWhereInput[] | CircleInviteWhereInput>;
+  NOT?: Maybe<CircleInviteWhereInput[] | CircleInviteWhereInput>;
+}
+
+export interface LoopUpdateManyWithoutUserInput {
+  create?: Maybe<LoopCreateWithoutUserInput[] | LoopCreateWithoutUserInput>;
+  delete?: Maybe<LoopWhereUniqueInput[] | LoopWhereUniqueInput>;
+  connect?: Maybe<LoopWhereUniqueInput[] | LoopWhereUniqueInput>;
+  set?: Maybe<LoopWhereUniqueInput[] | LoopWhereUniqueInput>;
+  disconnect?: Maybe<LoopWhereUniqueInput[] | LoopWhereUniqueInput>;
+  update?: Maybe<
+    | LoopUpdateWithWhereUniqueWithoutUserInput[]
+    | LoopUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | LoopUpsertWithWhereUniqueWithoutUserInput[]
+    | LoopUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<LoopScalarWhereInput[] | LoopScalarWhereInput>;
+  updateMany?: Maybe<
+    LoopUpdateManyWithWhereNestedInput[] | LoopUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface LoopSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<LoopWhereInput>;
+  AND?: Maybe<LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput>;
+  OR?: Maybe<LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput>;
+  NOT?: Maybe<LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput>;
+}
+
+export interface LoopUpdateWithWhereUniqueWithoutUserInput {
+  where: LoopWhereUniqueInput;
+  data: LoopUpdateWithoutUserDataInput;
+}
+
+export interface UserWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -4643,479 +3758,46 @@ export interface UserScalarWhereInput {
   username_not_starts_with?: Maybe<String>;
   username_ends_with?: Maybe<String>;
   username_not_ends_with?: Maybe<String>;
-  AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  circleJoinRequests_every?: Maybe<CircleJoinRequestWhereInput>;
+  circleJoinRequests_some?: Maybe<CircleJoinRequestWhereInput>;
+  circleJoinRequests_none?: Maybe<CircleJoinRequestWhereInput>;
+  circleInvites_every?: Maybe<CircleInviteWhereInput>;
+  circleInvites_some?: Maybe<CircleInviteWhereInput>;
+  circleInvites_none?: Maybe<CircleInviteWhereInput>;
+  circles_every?: Maybe<CircleWhereInput>;
+  circles_some?: Maybe<CircleWhereInput>;
+  circles_none?: Maybe<CircleWhereInput>;
+  circlesOwned_every?: Maybe<CircleWhereInput>;
+  circlesOwned_some?: Maybe<CircleWhereInput>;
+  circlesOwned_none?: Maybe<CircleWhereInput>;
+  dots_every?: Maybe<DotWhereInput>;
+  dots_some?: Maybe<DotWhereInput>;
+  dots_none?: Maybe<DotWhereInput>;
+  followedCharities_every?: Maybe<CharityWhereInput>;
+  followedCharities_some?: Maybe<CharityWhereInput>;
+  followedCharities_none?: Maybe<CharityWhereInput>;
+  funds_every?: Maybe<ChargeWhereInput>;
+  funds_some?: Maybe<ChargeWhereInput>;
+  funds_none?: Maybe<ChargeWhereInput>;
+  halos_every?: Maybe<HaloWhereInput>;
+  halos_some?: Maybe<HaloWhereInput>;
+  halos_none?: Maybe<HaloWhereInput>;
+  identity?: Maybe<IdentityWhereInput>;
+  loops_every?: Maybe<LoopWhereInput>;
+  loops_some?: Maybe<LoopWhereInput>;
+  loops_none?: Maybe<LoopWhereInput>;
+  preferences?: Maybe<PreferencesWhereInput>;
+  transactions_every?: Maybe<TransactionWhereInput>;
+  transactions_some?: Maybe<TransactionWhereInput>;
+  transactions_none?: Maybe<TransactionWhereInput>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
+  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface UserCreateOneWithoutFundsInput {
-  create?: Maybe<UserCreateWithoutFundsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput;
-  data: UserUpdateManyDataInput;
-}
-
-export interface CharityUpdateInput {
-  acronym?: Maybe<String>;
-  bannerCredit?: Maybe<String>;
-  connectedAccountID?: Maybe<String>;
-  ein?: Maybe<String>;
-  expensesAdministrative?: Maybe<Float>;
-  expensesFundraising?: Maybe<Float>;
-  expensesOther?: Maybe<Float>;
-  expensesProgram?: Maybe<Float>;
-  expensesUpdated?: Maybe<String>;
-  location?: Maybe<String>;
-  mission?: Maybe<String>;
-  name?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  website?: Maybe<String>;
-  events?: Maybe<EventUpdateManyWithoutCharityInput>;
-  followers?: Maybe<UserUpdateManyWithoutFollowedCharitiesInput>;
-}
-
-export interface UserUpdateManyDataInput {
-  bio?: Maybe<String>;
-  email?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  picture?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  username?: Maybe<String>;
-}
-
-export interface DonationUpdateManyWithoutEventInput {
-  create?: Maybe<
-    DonationCreateWithoutEventInput[] | DonationCreateWithoutEventInput
-  >;
-  delete?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
-  connect?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
-  set?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
-  disconnect?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
-  update?: Maybe<
-    | DonationUpdateWithWhereUniqueWithoutEventInput[]
-    | DonationUpdateWithWhereUniqueWithoutEventInput
-  >;
-  upsert?: Maybe<
-    | DonationUpsertWithWhereUniqueWithoutEventInput[]
-    | DonationUpsertWithWhereUniqueWithoutEventInput
-  >;
-  deleteMany?: Maybe<DonationScalarWhereInput[] | DonationScalarWhereInput>;
-  updateMany?: Maybe<
-    | DonationUpdateManyWithWhereNestedInput[]
-    | DonationUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserUpdateOneRequiredWithoutCirclesOwnedInput {
-  create?: Maybe<UserCreateWithoutCirclesOwnedInput>;
-  update?: Maybe<UserUpdateWithoutCirclesOwnedDataInput>;
-  upsert?: Maybe<UserUpsertWithoutCirclesOwnedInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface UserUpdateWithoutCirclesOwnedDataInput {
-  bio?: Maybe<String>;
-  email?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  picture?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  username?: Maybe<String>;
-  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
-  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
-  dots?: Maybe<DotUpdateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
-  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
-  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
-  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
-  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
-  funds?: Maybe<FundsUpdateManyWithoutUserInput>;
-}
-
-export interface FundsSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<FundsWhereInput>;
-  AND?: Maybe<FundsSubscriptionWhereInput[] | FundsSubscriptionWhereInput>;
-  OR?: Maybe<FundsSubscriptionWhereInput[] | FundsSubscriptionWhereInput>;
-  NOT?: Maybe<FundsSubscriptionWhereInput[] | FundsSubscriptionWhereInput>;
-}
-
-export interface UserUpsertWithoutCirclesOwnedInput {
-  update: UserUpdateWithoutCirclesOwnedDataInput;
-  create: UserCreateWithoutCirclesOwnedInput;
-}
-
-export interface CircleJoinRequestSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CircleJoinRequestWhereInput>;
-  AND?: Maybe<
-    | CircleJoinRequestSubscriptionWhereInput[]
-    | CircleJoinRequestSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    | CircleJoinRequestSubscriptionWhereInput[]
-    | CircleJoinRequestSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    | CircleJoinRequestSubscriptionWhereInput[]
-    | CircleJoinRequestSubscriptionWhereInput
-  >;
-}
-
-export interface CircleUpsertWithoutInvitesInput {
-  update: CircleUpdateWithoutInvitesDataInput;
-  create: CircleCreateWithoutInvitesInput;
-}
-
-export interface TransactionUpdateManyMutationInput {
-  balance?: Maybe<Int>;
-}
-
-export interface CircleInviteUpsertWithWhereUniqueWithoutUserInput {
-  where: CircleInviteWhereUniqueInput;
-  update: CircleInviteUpdateWithoutUserDataInput;
-  create: CircleInviteCreateWithoutUserInput;
-}
-
-export interface UserUpdateOneRequiredWithoutPreferencesInput {
-  create?: Maybe<UserCreateWithoutPreferencesInput>;
-  update?: Maybe<UserUpdateWithoutPreferencesDataInput>;
-  upsert?: Maybe<UserUpsertWithoutPreferencesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface CircleInviteScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<CircleInviteScalarWhereInput[] | CircleInviteScalarWhereInput>;
-  OR?: Maybe<CircleInviteScalarWhereInput[] | CircleInviteScalarWhereInput>;
-  NOT?: Maybe<CircleInviteScalarWhereInput[] | CircleInviteScalarWhereInput>;
-}
-
-export interface UserUpsertWithoutLoopsInput {
-  update: UserUpdateWithoutLoopsDataInput;
-  create: UserCreateWithoutLoopsInput;
-}
-
-export interface UserUpsertWithoutCircleJoinRequestsInput {
-  update: UserUpdateWithoutCircleJoinRequestsDataInput;
-  create: UserCreateWithoutCircleJoinRequestsInput;
-}
-
-export interface LoopCreateInput {
-  id?: Maybe<ID_Input>;
-  count: Int;
-  event: EventCreateOneInput;
-  user: UserCreateOneWithoutLoopsInput;
-}
-
-export interface CircleJoinRequestUpsertWithWhereUniqueWithoutCircleInput {
-  where: CircleJoinRequestWhereUniqueInput;
-  update: CircleJoinRequestUpdateWithoutCircleDataInput;
-  create: CircleJoinRequestCreateWithoutCircleInput;
-}
-
-export interface UserCreateWithoutIdentityInput {
-  id?: Maybe<ID_Input>;
-  bio?: Maybe<String>;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: Maybe<String>;
-  securityToken: Int;
-  username: String;
-  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
-  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
-  dots?: Maybe<DotCreateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloCreateManyWithoutUserInput>;
-  loops?: Maybe<LoopCreateManyWithoutUserInput>;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
-  funds?: Maybe<FundsCreateManyWithoutUserInput>;
-}
-
-export interface CircleJoinRequestScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<
-    CircleJoinRequestScalarWhereInput[] | CircleJoinRequestScalarWhereInput
-  >;
-  OR?: Maybe<
-    CircleJoinRequestScalarWhereInput[] | CircleJoinRequestScalarWhereInput
-  >;
-  NOT?: Maybe<
-    CircleJoinRequestScalarWhereInput[] | CircleJoinRequestScalarWhereInput
-  >;
-}
-
-export interface UserUpdateOneRequiredWithoutHalosInput {
-  create?: Maybe<UserCreateWithoutHalosInput>;
-  update?: Maybe<UserUpdateWithoutHalosDataInput>;
-  upsert?: Maybe<UserUpsertWithoutHalosInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface CircleUpsertWithWhereUniqueWithoutMembersInput {
-  where: CircleWhereUniqueInput;
-  update: CircleUpdateWithoutMembersDataInput;
-  create: CircleCreateWithoutMembersInput;
-}
-
-export type TransactionWhereUniqueInput = AtLeastOne<{
-  id: Maybe<Int>;
-}>;
-
-export interface UserUpsertWithoutCircleInvitesInput {
-  update: UserUpdateWithoutCircleInvitesDataInput;
-  create: UserCreateWithoutCircleInvitesInput;
-}
-
-export interface TransactionCreateOneWithoutFundsInput {
-  create?: Maybe<TransactionCreateWithoutFundsInput>;
-  connect?: Maybe<TransactionWhereUniqueInput>;
-}
-
-export interface CircleInviteUpsertWithWhereUniqueWithoutCircleInput {
-  where: CircleInviteWhereUniqueInput;
-  update: CircleInviteUpdateWithoutCircleDataInput;
-  create: CircleInviteCreateWithoutCircleInput;
-}
-
-export interface UserCreateManyWithoutFollowedCharitiesInput {
-  create?: Maybe<
-    | UserCreateWithoutFollowedCharitiesInput[]
-    | UserCreateWithoutFollowedCharitiesInput
-  >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface CircleUpsertWithoutJoinRequestsInput {
-  update: CircleUpdateWithoutJoinRequestsDataInput;
-  create: CircleCreateWithoutJoinRequestsInput;
-}
-
-export interface UserCreateOneWithoutCircleInvitesInput {
-  create?: Maybe<UserCreateWithoutCircleInvitesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface CircleJoinRequestUpsertWithWhereUniqueWithoutUserInput {
-  where: CircleJoinRequestWhereUniqueInput;
-  update: CircleJoinRequestUpdateWithoutUserDataInput;
-  create: CircleJoinRequestCreateWithoutUserInput;
-}
-
-export interface CircleInviteCreateManyWithoutUserInput {
-  create?: Maybe<
-    CircleInviteCreateWithoutUserInput[] | CircleInviteCreateWithoutUserInput
-  >;
-  connect?: Maybe<
-    CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput
-  >;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutFollowedCharitiesDataInput;
-  create: UserCreateWithoutFollowedCharitiesInput;
-}
-
-export interface DotCreateManyWithoutUserInput {
-  create?: Maybe<DotCreateWithoutUserInput[] | DotCreateWithoutUserInput>;
-  connect?: Maybe<DotWhereUniqueInput[] | DotWhereUniqueInput>;
-}
-
-export interface CharityUpsertWithoutEventsInput {
-  update: CharityUpdateWithoutEventsDataInput;
-  create: CharityCreateWithoutEventsInput;
-}
-
-export interface LoopCreateManyWithoutUserInput {
-  create?: Maybe<LoopCreateWithoutUserInput[] | LoopCreateWithoutUserInput>;
-  connect?: Maybe<LoopWhereUniqueInput[] | LoopWhereUniqueInput>;
-}
-
-export interface EventUpsertWithoutDonationsInput {
-  update: EventUpdateWithoutDonationsDataInput;
-  create: EventCreateWithoutDonationsInput;
-}
-
-export interface FundsCreateOneWithoutTransactionInput {
-  create?: Maybe<FundsCreateWithoutTransactionInput>;
-  connect?: Maybe<FundsWhereUniqueInput>;
-}
-
-export interface DonationUpsertWithWhereUniqueWithoutTransactionInput {
-  where: DonationWhereUniqueInput;
-  update: DonationUpdateWithoutTransactionDataInput;
-  create: DonationCreateWithoutTransactionInput;
-}
-
-export interface FundsCreateManyWithoutUserInput {
-  create?: Maybe<FundsCreateWithoutUserInput[] | FundsCreateWithoutUserInput>;
-  connect?: Maybe<FundsWhereUniqueInput[] | FundsWhereUniqueInput>;
-}
-
-export interface TransactionUpsertWithoutFundsInput {
-  update: TransactionUpdateWithoutFundsDataInput;
-  create: TransactionCreateWithoutFundsInput;
-}
-
-export interface EventUpdateWithWhereUniqueWithoutCharityInput {
-  where: EventWhereUniqueInput;
-  data: EventUpdateWithoutCharityDataInput;
-}
-
-export interface FundsUpsertWithoutDonationsInput {
-  update: FundsUpdateWithoutDonationsDataInput;
-  create: FundsCreateWithoutDonationsInput;
-}
-
-export interface DotWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  action?: Maybe<String>;
-  action_not?: Maybe<String>;
-  action_in?: Maybe<String[] | String>;
-  action_not_in?: Maybe<String[] | String>;
-  action_lt?: Maybe<String>;
-  action_lte?: Maybe<String>;
-  action_gt?: Maybe<String>;
-  action_gte?: Maybe<String>;
-  action_contains?: Maybe<String>;
-  action_not_contains?: Maybe<String>;
-  action_starts_with?: Maybe<String>;
-  action_not_starts_with?: Maybe<String>;
-  action_ends_with?: Maybe<String>;
-  action_not_ends_with?: Maybe<String>;
-  amount?: Maybe<Int>;
-  amount_not?: Maybe<Int>;
-  amount_in?: Maybe<Int[] | Int>;
-  amount_not_in?: Maybe<Int[] | Int>;
-  amount_lt?: Maybe<Int>;
-  amount_lte?: Maybe<Int>;
-  amount_gt?: Maybe<Int>;
-  amount_gte?: Maybe<Int>;
-  total?: Maybe<Int>;
-  total_not?: Maybe<Int>;
-  total_in?: Maybe<Int[] | Int>;
-  total_not_in?: Maybe<Int[] | Int>;
-  total_lt?: Maybe<Int>;
-  total_lte?: Maybe<Int>;
-  total_gt?: Maybe<Int>;
-  total_gte?: Maybe<Int>;
-  user?: Maybe<UserWhereInput>;
-  AND?: Maybe<DotWhereInput[] | DotWhereInput>;
-  OR?: Maybe<DotWhereInput[] | DotWhereInput>;
-  NOT?: Maybe<DotWhereInput[] | DotWhereInput>;
-}
-
-export interface DonationUpsertWithWhereUniqueWithoutEventInput {
-  where: DonationWhereUniqueInput;
-  update: DonationUpdateWithoutEventDataInput;
-  create: DonationCreateWithoutEventInput;
+export interface LoopUpdateWithoutUserDataInput {
+  count?: Maybe<Int>;
+  event?: Maybe<EventUpdateOneRequiredInput>;
 }
 
 export interface EventWhereInput {
@@ -5252,12 +3934,477 @@ export interface EventWhereInput {
   startDate_gt?: Maybe<DateTimeInput>;
   startDate_gte?: Maybe<DateTimeInput>;
   charity?: Maybe<CharityWhereInput>;
-  donations_every?: Maybe<DonationWhereInput>;
-  donations_some?: Maybe<DonationWhereInput>;
-  donations_none?: Maybe<DonationWhereInput>;
+  donations_every?: Maybe<TransferWhereInput>;
+  donations_some?: Maybe<TransferWhereInput>;
+  donations_none?: Maybe<TransferWhereInput>;
   AND?: Maybe<EventWhereInput[] | EventWhereInput>;
   OR?: Maybe<EventWhereInput[] | EventWhereInput>;
   NOT?: Maybe<EventWhereInput[] | EventWhereInput>;
+}
+
+export interface EventUpdateOneRequiredInput {
+  create?: Maybe<EventCreateInput>;
+  update?: Maybe<EventUpdateDataInput>;
+  upsert?: Maybe<EventUpsertNestedInput>;
+  connect?: Maybe<EventWhereUniqueInput>;
+}
+
+export interface CircleInviteSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CircleInviteWhereInput>;
+  AND?: Maybe<
+    CircleInviteSubscriptionWhereInput[] | CircleInviteSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    CircleInviteSubscriptionWhereInput[] | CircleInviteSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    CircleInviteSubscriptionWhereInput[] | CircleInviteSubscriptionWhereInput
+  >;
+}
+
+export interface EventUpdateDataInput {
+  endDate?: Maybe<DateTimeInput>;
+  goal?: Maybe<Int>;
+  multiplier?: Maybe<Int>;
+  specialEvent?: Maybe<String>;
+  specialEventDescription?: Maybe<String>;
+  specialEventName?: Maybe<String>;
+  sponsorName?: Maybe<String>;
+  sponsorWebsite?: Maybe<String>;
+  startDate?: Maybe<DateTimeInput>;
+  charity?: Maybe<CharityUpdateOneRequiredWithoutEventsInput>;
+  donations?: Maybe<TransferUpdateManyWithoutEventInput>;
+}
+
+export interface UserUpdateManyMutationInput {
+  bio?: Maybe<String>;
+  email?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  picture?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  username?: Maybe<String>;
+}
+
+export interface EventUpsertNestedInput {
+  update: EventUpdateDataInput;
+  create: EventCreateInput;
+}
+
+export type CharityWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  ein?: Maybe<String>;
+}>;
+
+export interface LoopUpsertWithWhereUniqueWithoutUserInput {
+  where: LoopWhereUniqueInput;
+  update: LoopUpdateWithoutUserDataInput;
+  create: LoopCreateWithoutUserInput;
+}
+
+export type CircleWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
+export interface LoopScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  count?: Maybe<Int>;
+  count_not?: Maybe<Int>;
+  count_in?: Maybe<Int[] | Int>;
+  count_not_in?: Maybe<Int[] | Int>;
+  count_lt?: Maybe<Int>;
+  count_lte?: Maybe<Int>;
+  count_gt?: Maybe<Int>;
+  count_gte?: Maybe<Int>;
+  AND?: Maybe<LoopScalarWhereInput[] | LoopScalarWhereInput>;
+  OR?: Maybe<LoopScalarWhereInput[] | LoopScalarWhereInput>;
+  NOT?: Maybe<LoopScalarWhereInput[] | LoopScalarWhereInput>;
+}
+
+export type CircleInviteWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface LoopUpdateManyWithWhereNestedInput {
+  where: LoopScalarWhereInput;
+  data: LoopUpdateManyDataInput;
+}
+
+export type CircleJoinRequestWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface LoopUpdateManyDataInput {
+  count?: Maybe<Int>;
+}
+
+export type DotWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface PreferencesUpdateOneRequiredWithoutUserInput {
+  create?: Maybe<PreferencesCreateWithoutUserInput>;
+  update?: Maybe<PreferencesUpdateWithoutUserDataInput>;
+  upsert?: Maybe<PreferencesUpsertWithoutUserInput>;
+  connect?: Maybe<PreferencesWhereUniqueInput>;
+}
+
+export type EventWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface PreferencesUpdateWithoutUserDataInput {
+  allowDonationEmails?: Maybe<Boolean>;
+  publicProfile?: Maybe<Boolean>;
+}
+
+export type HaloWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface PreferencesUpsertWithoutUserInput {
+  update: PreferencesUpdateWithoutUserDataInput;
+  create: PreferencesCreateWithoutUserInput;
+}
+
+export type IdentityWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  providerID?: Maybe<String>;
+}>;
+
+export interface UserUpsertWithoutTransactionsInput {
+  update: UserUpdateWithoutTransactionsDataInput;
+  create: UserCreateWithoutTransactionsInput;
+}
+
+export interface UserUpdateOneRequiredWithoutIdentityInput {
+  create?: Maybe<UserCreateWithoutIdentityInput>;
+  update?: Maybe<UserUpdateWithoutIdentityDataInput>;
+  upsert?: Maybe<UserUpsertWithoutIdentityInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface TransactionUpsertWithoutFundsInput {
+  update: TransactionUpdateWithoutFundsDataInput;
+  create: TransactionCreateWithoutFundsInput;
+}
+
+export interface UserCreateOneWithoutIdentityInput {
+  create?: Maybe<UserCreateWithoutIdentityInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutFundsInput {
+  create?: Maybe<UserCreateWithoutFundsInput>;
+  update?: Maybe<UserUpdateWithoutFundsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutFundsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutHalosInput {
+  update: UserUpdateWithoutHalosDataInput;
+  create: UserCreateWithoutHalosInput;
+}
+
+export interface UserUpdateWithoutFundsDataInput {
+  bio?: Maybe<String>;
+  email?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  picture?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  username?: Maybe<String>;
+  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
+  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
+  dots?: Maybe<DotUpdateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
+  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
+  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
+  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
+  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
+  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
+}
+
+export interface HaloUpdateInput {
+  key?: Maybe<String>;
+  tier?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutHalosInput>;
+}
+
+export interface TransactionUpdateManyWithoutUserInput {
+  create?: Maybe<
+    TransactionCreateWithoutUserInput[] | TransactionCreateWithoutUserInput
+  >;
+  delete?: Maybe<TransactionWhereUniqueInput[] | TransactionWhereUniqueInput>;
+  connect?: Maybe<TransactionWhereUniqueInput[] | TransactionWhereUniqueInput>;
+  set?: Maybe<TransactionWhereUniqueInput[] | TransactionWhereUniqueInput>;
+  disconnect?: Maybe<
+    TransactionWhereUniqueInput[] | TransactionWhereUniqueInput
+  >;
+  update?: Maybe<
+    | TransactionUpdateWithWhereUniqueWithoutUserInput[]
+    | TransactionUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | TransactionUpsertWithWhereUniqueWithoutUserInput[]
+    | TransactionUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<
+    TransactionScalarWhereInput[] | TransactionScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | TransactionUpdateManyWithWhereNestedInput[]
+    | TransactionUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface HaloCreateInput {
+  id?: Maybe<ID_Input>;
+  key: String;
+  tier?: Maybe<String>;
+  user: UserCreateOneWithoutHalosInput;
+}
+
+export interface TransactionUpdateWithWhereUniqueWithoutUserInput {
+  where: TransactionWhereUniqueInput;
+  data: TransactionUpdateWithoutUserDataInput;
+}
+
+export interface DotUpdateManyMutationInput {
+  action?: Maybe<String>;
+  amount?: Maybe<Int>;
+  total?: Maybe<Int>;
+}
+
+export interface TransactionUpdateWithoutUserDataInput {
+  balance?: Maybe<Int>;
+  donations?: Maybe<TransferUpdateManyWithoutTransactionInput>;
+  funds?: Maybe<ChargeUpdateOneWithoutTransactionInput>;
+}
+
+export interface TransferCreateManyWithoutSourceInput {
+  create?: Maybe<
+    TransferCreateWithoutSourceInput[] | TransferCreateWithoutSourceInput
+  >;
+  connect?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+}
+
+export interface ChargeUpdateOneWithoutTransactionInput {
+  create?: Maybe<ChargeCreateWithoutTransactionInput>;
+  update?: Maybe<ChargeUpdateWithoutTransactionDataInput>;
+  upsert?: Maybe<ChargeUpsertWithoutTransactionInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ChargeWhereUniqueInput>;
+}
+
+export interface CharityCreateOneWithoutEventsInput {
+  create?: Maybe<CharityCreateWithoutEventsInput>;
+  connect?: Maybe<CharityWhereUniqueInput>;
+}
+
+export interface ChargeUpdateWithoutTransactionDataInput {
+  amountAdded?: Maybe<Int>;
+  amountNet?: Maybe<Int>;
+  chargeID?: Maybe<String>;
+  donations?: Maybe<TransferUpdateManyWithoutSourceInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutFundsInput>;
+}
+
+export interface CircleJoinRequestCreateManyWithoutUserInput {
+  create?: Maybe<
+    | CircleJoinRequestCreateWithoutUserInput[]
+    | CircleJoinRequestCreateWithoutUserInput
+  >;
+  connect?: Maybe<
+    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
+  >;
+}
+
+export interface ChargeUpsertWithoutTransactionInput {
+  update: ChargeUpdateWithoutTransactionDataInput;
+  create: ChargeCreateWithoutTransactionInput;
+}
+
+export interface CircleInviteCreateManyWithoutCircleInput {
+  create?: Maybe<
+    | CircleInviteCreateWithoutCircleInput[]
+    | CircleInviteCreateWithoutCircleInput
+  >;
+  connect?: Maybe<
+    CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput
+  >;
+}
+
+export interface TransactionUpsertWithWhereUniqueWithoutUserInput {
+  where: TransactionWhereUniqueInput;
+  update: TransactionUpdateWithoutUserDataInput;
+  create: TransactionCreateWithoutUserInput;
+}
+
+export interface CircleCreateManyWithoutMembersInput {
+  create?: Maybe<
+    CircleCreateWithoutMembersInput[] | CircleCreateWithoutMembersInput
+  >;
+  connect?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
+}
+
+export interface TransactionScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  balance?: Maybe<Int>;
+  balance_not?: Maybe<Int>;
+  balance_in?: Maybe<Int[] | Int>;
+  balance_not_in?: Maybe<Int[] | Int>;
+  balance_lt?: Maybe<Int>;
+  balance_lte?: Maybe<Int>;
+  balance_gt?: Maybe<Int>;
+  balance_gte?: Maybe<Int>;
+  AND?: Maybe<TransactionScalarWhereInput[] | TransactionScalarWhereInput>;
+  OR?: Maybe<TransactionScalarWhereInput[] | TransactionScalarWhereInput>;
+  NOT?: Maybe<TransactionScalarWhereInput[] | TransactionScalarWhereInput>;
+}
+
+export interface UserCreateOneWithoutCircleJoinRequestsInput {
+  create?: Maybe<UserCreateWithoutCircleJoinRequestsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface TransactionUpdateManyWithWhereNestedInput {
+  where: TransactionScalarWhereInput;
+  data: TransactionUpdateManyDataInput;
+}
+
+export interface CircleCreateOneWithoutInvitesInput {
+  create?: Maybe<CircleCreateWithoutInvitesInput>;
+  connect?: Maybe<CircleWhereUniqueInput>;
+}
+
+export interface TransactionUpdateManyDataInput {
+  balance?: Maybe<Int>;
+}
+
+export interface CircleCreateManyWithoutOwnerInput {
+  create?: Maybe<
+    CircleCreateWithoutOwnerInput[] | CircleCreateWithoutOwnerInput
+  >;
+  connect?: Maybe<CircleWhereUniqueInput[] | CircleWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutFundsInput {
+  update: UserUpdateWithoutFundsDataInput;
+  create: UserCreateWithoutFundsInput;
+}
+
+export interface CharityCreateManyWithoutFollowersInput {
+  create?: Maybe<
+    CharityCreateWithoutFollowersInput[] | CharityCreateWithoutFollowersInput
+  >;
+  connect?: Maybe<CharityWhereUniqueInput[] | CharityWhereUniqueInput>;
+}
+
+export interface ChargeUpsertWithoutDonationsInput {
+  update: ChargeUpdateWithoutDonationsDataInput;
+  create: ChargeCreateWithoutDonationsInput;
+}
+
+export interface TransferCreateManyWithoutEventInput {
+  create?: Maybe<
+    TransferCreateWithoutEventInput[] | TransferCreateWithoutEventInput
+  >;
+  connect?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+}
+
+export interface TransactionUpdateOneRequiredWithoutDonationsInput {
+  create?: Maybe<TransactionCreateWithoutDonationsInput>;
+  update?: Maybe<TransactionUpdateWithoutDonationsDataInput>;
+  upsert?: Maybe<TransactionUpsertWithoutDonationsInput>;
+  connect?: Maybe<TransactionWhereUniqueInput>;
+}
+
+export interface TransactionCreateOneWithoutFundsInput {
+  create?: Maybe<TransactionCreateWithoutFundsInput>;
+  connect?: Maybe<TransactionWhereUniqueInput>;
+}
+
+export interface TransactionUpdateWithoutDonationsDataInput {
+  balance?: Maybe<Int>;
+  funds?: Maybe<ChargeUpdateOneWithoutTransactionInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutTransactionsInput>;
+}
+
+export interface UserCreateOneWithoutTransactionsInput {
+  create?: Maybe<UserCreateWithoutTransactionsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface TransactionUpsertWithoutDonationsInput {
+  update: TransactionUpdateWithoutDonationsDataInput;
+  create: TransactionCreateWithoutDonationsInput;
+}
+
+export interface HaloCreateManyWithoutUserInput {
+  create?: Maybe<HaloCreateWithoutUserInput[] | HaloCreateWithoutUserInput>;
+  connect?: Maybe<HaloWhereUniqueInput[] | HaloWhereUniqueInput>;
+}
+
+export interface TransferUpsertWithWhereUniqueWithoutEventInput {
+  where: TransferWhereUniqueInput;
+  update: TransferUpdateWithoutEventDataInput;
+  create: TransferCreateWithoutEventInput;
+}
+
+export interface LoopCreateManyWithoutUserInput {
+  create?: Maybe<LoopCreateWithoutUserInput[] | LoopCreateWithoutUserInput>;
+  connect?: Maybe<LoopWhereUniqueInput[] | LoopWhereUniqueInput>;
 }
 
 export interface EventUpsertWithWhereUniqueWithoutCharityInput {
@@ -5266,9 +4413,9 @@ export interface EventUpsertWithWhereUniqueWithoutCharityInput {
   create: EventCreateWithoutCharityInput;
 }
 
-export interface UserCreateOneWithoutPreferencesInput {
-  create?: Maybe<UserCreateWithoutPreferencesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface PreferencesCreateOneWithoutUserInput {
+  create?: Maybe<PreferencesCreateWithoutUserInput>;
+  connect?: Maybe<PreferencesWhereUniqueInput>;
 }
 
 export interface EventScalarWhereInput {
@@ -5409,25 +4556,11 @@ export interface EventScalarWhereInput {
   NOT?: Maybe<EventScalarWhereInput[] | EventScalarWhereInput>;
 }
 
-export interface UserUpdateWithoutIdentityDataInput {
-  bio?: Maybe<String>;
-  email?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  picture?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  username?: Maybe<String>;
-  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
-  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
-  dots?: Maybe<DotUpdateManyWithoutUserInput>;
-  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
-  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
-  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
-  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
-  funds?: Maybe<FundsUpdateManyWithoutUserInput>;
+export interface TransactionCreateManyWithoutUserInput {
+  create?: Maybe<
+    TransactionCreateWithoutUserInput[] | TransactionCreateWithoutUserInput
+  >;
+  connect?: Maybe<TransactionWhereUniqueInput[] | TransactionWhereUniqueInput>;
 }
 
 export interface EventUpdateManyWithWhereNestedInput {
@@ -5435,9 +4568,9 @@ export interface EventUpdateManyWithWhereNestedInput {
   data: EventUpdateManyDataInput;
 }
 
-export interface UserCreateOneWithoutHalosInput {
-  create?: Maybe<UserCreateWithoutHalosInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface TransactionCreateOneWithoutDonationsInput {
+  create?: Maybe<TransactionCreateWithoutDonationsInput>;
+  connect?: Maybe<TransactionWhereUniqueInput>;
 }
 
 export interface EventUpdateManyDataInput {
@@ -5452,11 +4585,939 @@ export interface EventUpdateManyDataInput {
   startDate?: Maybe<DateTimeInput>;
 }
 
-export interface DonationCreateManyWithoutEventInput {
-  create?: Maybe<
-    DonationCreateWithoutEventInput[] | DonationCreateWithoutEventInput
+export interface ChargeUpdateInput {
+  amountAdded?: Maybe<Int>;
+  amountNet?: Maybe<Int>;
+  chargeID?: Maybe<String>;
+  donations?: Maybe<TransferUpdateManyWithoutSourceInput>;
+  transaction?: Maybe<TransactionUpdateOneRequiredWithoutFundsInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutFundsInput>;
+}
+
+export interface CharityUpsertWithWhereUniqueWithoutFollowersInput {
+  where: CharityWhereUniqueInput;
+  update: CharityUpdateWithoutFollowersDataInput;
+  create: CharityCreateWithoutFollowersInput;
+}
+
+export interface EventUpdateOneWithoutDonationsInput {
+  create?: Maybe<EventCreateWithoutDonationsInput>;
+  update?: Maybe<EventUpdateWithoutDonationsDataInput>;
+  upsert?: Maybe<EventUpsertWithoutDonationsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<EventWhereUniqueInput>;
+}
+
+export interface CharityScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  acronym?: Maybe<String>;
+  acronym_not?: Maybe<String>;
+  acronym_in?: Maybe<String[] | String>;
+  acronym_not_in?: Maybe<String[] | String>;
+  acronym_lt?: Maybe<String>;
+  acronym_lte?: Maybe<String>;
+  acronym_gt?: Maybe<String>;
+  acronym_gte?: Maybe<String>;
+  acronym_contains?: Maybe<String>;
+  acronym_not_contains?: Maybe<String>;
+  acronym_starts_with?: Maybe<String>;
+  acronym_not_starts_with?: Maybe<String>;
+  acronym_ends_with?: Maybe<String>;
+  acronym_not_ends_with?: Maybe<String>;
+  bannerCredit?: Maybe<String>;
+  bannerCredit_not?: Maybe<String>;
+  bannerCredit_in?: Maybe<String[] | String>;
+  bannerCredit_not_in?: Maybe<String[] | String>;
+  bannerCredit_lt?: Maybe<String>;
+  bannerCredit_lte?: Maybe<String>;
+  bannerCredit_gt?: Maybe<String>;
+  bannerCredit_gte?: Maybe<String>;
+  bannerCredit_contains?: Maybe<String>;
+  bannerCredit_not_contains?: Maybe<String>;
+  bannerCredit_starts_with?: Maybe<String>;
+  bannerCredit_not_starts_with?: Maybe<String>;
+  bannerCredit_ends_with?: Maybe<String>;
+  bannerCredit_not_ends_with?: Maybe<String>;
+  connectedAccountID?: Maybe<String>;
+  connectedAccountID_not?: Maybe<String>;
+  connectedAccountID_in?: Maybe<String[] | String>;
+  connectedAccountID_not_in?: Maybe<String[] | String>;
+  connectedAccountID_lt?: Maybe<String>;
+  connectedAccountID_lte?: Maybe<String>;
+  connectedAccountID_gt?: Maybe<String>;
+  connectedAccountID_gte?: Maybe<String>;
+  connectedAccountID_contains?: Maybe<String>;
+  connectedAccountID_not_contains?: Maybe<String>;
+  connectedAccountID_starts_with?: Maybe<String>;
+  connectedAccountID_not_starts_with?: Maybe<String>;
+  connectedAccountID_ends_with?: Maybe<String>;
+  connectedAccountID_not_ends_with?: Maybe<String>;
+  ein?: Maybe<String>;
+  ein_not?: Maybe<String>;
+  ein_in?: Maybe<String[] | String>;
+  ein_not_in?: Maybe<String[] | String>;
+  ein_lt?: Maybe<String>;
+  ein_lte?: Maybe<String>;
+  ein_gt?: Maybe<String>;
+  ein_gte?: Maybe<String>;
+  ein_contains?: Maybe<String>;
+  ein_not_contains?: Maybe<String>;
+  ein_starts_with?: Maybe<String>;
+  ein_not_starts_with?: Maybe<String>;
+  ein_ends_with?: Maybe<String>;
+  ein_not_ends_with?: Maybe<String>;
+  expensesAdministrative?: Maybe<Float>;
+  expensesAdministrative_not?: Maybe<Float>;
+  expensesAdministrative_in?: Maybe<Float[] | Float>;
+  expensesAdministrative_not_in?: Maybe<Float[] | Float>;
+  expensesAdministrative_lt?: Maybe<Float>;
+  expensesAdministrative_lte?: Maybe<Float>;
+  expensesAdministrative_gt?: Maybe<Float>;
+  expensesAdministrative_gte?: Maybe<Float>;
+  expensesFundraising?: Maybe<Float>;
+  expensesFundraising_not?: Maybe<Float>;
+  expensesFundraising_in?: Maybe<Float[] | Float>;
+  expensesFundraising_not_in?: Maybe<Float[] | Float>;
+  expensesFundraising_lt?: Maybe<Float>;
+  expensesFundraising_lte?: Maybe<Float>;
+  expensesFundraising_gt?: Maybe<Float>;
+  expensesFundraising_gte?: Maybe<Float>;
+  expensesOther?: Maybe<Float>;
+  expensesOther_not?: Maybe<Float>;
+  expensesOther_in?: Maybe<Float[] | Float>;
+  expensesOther_not_in?: Maybe<Float[] | Float>;
+  expensesOther_lt?: Maybe<Float>;
+  expensesOther_lte?: Maybe<Float>;
+  expensesOther_gt?: Maybe<Float>;
+  expensesOther_gte?: Maybe<Float>;
+  expensesProgram?: Maybe<Float>;
+  expensesProgram_not?: Maybe<Float>;
+  expensesProgram_in?: Maybe<Float[] | Float>;
+  expensesProgram_not_in?: Maybe<Float[] | Float>;
+  expensesProgram_lt?: Maybe<Float>;
+  expensesProgram_lte?: Maybe<Float>;
+  expensesProgram_gt?: Maybe<Float>;
+  expensesProgram_gte?: Maybe<Float>;
+  expensesUpdated?: Maybe<String>;
+  expensesUpdated_not?: Maybe<String>;
+  expensesUpdated_in?: Maybe<String[] | String>;
+  expensesUpdated_not_in?: Maybe<String[] | String>;
+  expensesUpdated_lt?: Maybe<String>;
+  expensesUpdated_lte?: Maybe<String>;
+  expensesUpdated_gt?: Maybe<String>;
+  expensesUpdated_gte?: Maybe<String>;
+  expensesUpdated_contains?: Maybe<String>;
+  expensesUpdated_not_contains?: Maybe<String>;
+  expensesUpdated_starts_with?: Maybe<String>;
+  expensesUpdated_not_starts_with?: Maybe<String>;
+  expensesUpdated_ends_with?: Maybe<String>;
+  expensesUpdated_not_ends_with?: Maybe<String>;
+  location?: Maybe<String>;
+  location_not?: Maybe<String>;
+  location_in?: Maybe<String[] | String>;
+  location_not_in?: Maybe<String[] | String>;
+  location_lt?: Maybe<String>;
+  location_lte?: Maybe<String>;
+  location_gt?: Maybe<String>;
+  location_gte?: Maybe<String>;
+  location_contains?: Maybe<String>;
+  location_not_contains?: Maybe<String>;
+  location_starts_with?: Maybe<String>;
+  location_not_starts_with?: Maybe<String>;
+  location_ends_with?: Maybe<String>;
+  location_not_ends_with?: Maybe<String>;
+  mission?: Maybe<String>;
+  mission_not?: Maybe<String>;
+  mission_in?: Maybe<String[] | String>;
+  mission_not_in?: Maybe<String[] | String>;
+  mission_lt?: Maybe<String>;
+  mission_lte?: Maybe<String>;
+  mission_gt?: Maybe<String>;
+  mission_gte?: Maybe<String>;
+  mission_contains?: Maybe<String>;
+  mission_not_contains?: Maybe<String>;
+  mission_starts_with?: Maybe<String>;
+  mission_not_starts_with?: Maybe<String>;
+  mission_ends_with?: Maybe<String>;
+  mission_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  phoneNumber_not?: Maybe<String>;
+  phoneNumber_in?: Maybe<String[] | String>;
+  phoneNumber_not_in?: Maybe<String[] | String>;
+  phoneNumber_lt?: Maybe<String>;
+  phoneNumber_lte?: Maybe<String>;
+  phoneNumber_gt?: Maybe<String>;
+  phoneNumber_gte?: Maybe<String>;
+  phoneNumber_contains?: Maybe<String>;
+  phoneNumber_not_contains?: Maybe<String>;
+  phoneNumber_starts_with?: Maybe<String>;
+  phoneNumber_not_starts_with?: Maybe<String>;
+  phoneNumber_ends_with?: Maybe<String>;
+  phoneNumber_not_ends_with?: Maybe<String>;
+  website?: Maybe<String>;
+  website_not?: Maybe<String>;
+  website_in?: Maybe<String[] | String>;
+  website_not_in?: Maybe<String[] | String>;
+  website_lt?: Maybe<String>;
+  website_lte?: Maybe<String>;
+  website_gt?: Maybe<String>;
+  website_gte?: Maybe<String>;
+  website_contains?: Maybe<String>;
+  website_not_contains?: Maybe<String>;
+  website_starts_with?: Maybe<String>;
+  website_not_starts_with?: Maybe<String>;
+  website_ends_with?: Maybe<String>;
+  website_not_ends_with?: Maybe<String>;
+  AND?: Maybe<CharityScalarWhereInput[] | CharityScalarWhereInput>;
+  OR?: Maybe<CharityScalarWhereInput[] | CharityScalarWhereInput>;
+  NOT?: Maybe<CharityScalarWhereInput[] | CharityScalarWhereInput>;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface CharityUpdateManyWithWhereNestedInput {
+  where: CharityScalarWhereInput;
+  data: CharityUpdateManyDataInput;
+}
+
+export interface IdentitySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<IdentityWhereInput>;
+  AND?: Maybe<
+    IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput
   >;
-  connect?: Maybe<DonationWhereUniqueInput[] | DonationWhereUniqueInput>;
+  OR?: Maybe<IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput>;
+  NOT?: Maybe<
+    IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput
+  >;
+}
+
+export interface CharityUpdateManyDataInput {
+  acronym?: Maybe<String>;
+  bannerCredit?: Maybe<String>;
+  connectedAccountID?: Maybe<String>;
+  ein?: Maybe<String>;
+  expensesAdministrative?: Maybe<Float>;
+  expensesFundraising?: Maybe<Float>;
+  expensesOther?: Maybe<Float>;
+  expensesProgram?: Maybe<Float>;
+  expensesUpdated?: Maybe<String>;
+  location?: Maybe<String>;
+  mission?: Maybe<String>;
+  name?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  website?: Maybe<String>;
+}
+
+export interface CircleJoinRequestSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CircleJoinRequestWhereInput>;
+  AND?: Maybe<
+    | CircleJoinRequestSubscriptionWhereInput[]
+    | CircleJoinRequestSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | CircleJoinRequestSubscriptionWhereInput[]
+    | CircleJoinRequestSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | CircleJoinRequestSubscriptionWhereInput[]
+    | CircleJoinRequestSubscriptionWhereInput
+  >;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutCirclesInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutCirclesDataInput;
+  create: UserCreateWithoutCirclesInput;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  bio?: Maybe<String>;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: Maybe<String>;
+  securityToken: Int;
+  username: String;
+  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
+  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
+  dots?: Maybe<DotCreateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeCreateManyWithoutUserInput>;
+  halos?: Maybe<HaloCreateManyWithoutUserInput>;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: Maybe<LoopCreateManyWithoutUserInput>;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
+}
+
+export interface UserScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  bio?: Maybe<String>;
+  bio_not?: Maybe<String>;
+  bio_in?: Maybe<String[] | String>;
+  bio_not_in?: Maybe<String[] | String>;
+  bio_lt?: Maybe<String>;
+  bio_lte?: Maybe<String>;
+  bio_gt?: Maybe<String>;
+  bio_gte?: Maybe<String>;
+  bio_contains?: Maybe<String>;
+  bio_not_contains?: Maybe<String>;
+  bio_starts_with?: Maybe<String>;
+  bio_not_starts_with?: Maybe<String>;
+  bio_ends_with?: Maybe<String>;
+  bio_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameFirst_not?: Maybe<String>;
+  nameFirst_in?: Maybe<String[] | String>;
+  nameFirst_not_in?: Maybe<String[] | String>;
+  nameFirst_lt?: Maybe<String>;
+  nameFirst_lte?: Maybe<String>;
+  nameFirst_gt?: Maybe<String>;
+  nameFirst_gte?: Maybe<String>;
+  nameFirst_contains?: Maybe<String>;
+  nameFirst_not_contains?: Maybe<String>;
+  nameFirst_starts_with?: Maybe<String>;
+  nameFirst_not_starts_with?: Maybe<String>;
+  nameFirst_ends_with?: Maybe<String>;
+  nameFirst_not_ends_with?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  nameLast_not?: Maybe<String>;
+  nameLast_in?: Maybe<String[] | String>;
+  nameLast_not_in?: Maybe<String[] | String>;
+  nameLast_lt?: Maybe<String>;
+  nameLast_lte?: Maybe<String>;
+  nameLast_gt?: Maybe<String>;
+  nameLast_gte?: Maybe<String>;
+  nameLast_contains?: Maybe<String>;
+  nameLast_not_contains?: Maybe<String>;
+  nameLast_starts_with?: Maybe<String>;
+  nameLast_not_starts_with?: Maybe<String>;
+  nameLast_ends_with?: Maybe<String>;
+  nameLast_not_ends_with?: Maybe<String>;
+  picture?: Maybe<String>;
+  picture_not?: Maybe<String>;
+  picture_in?: Maybe<String[] | String>;
+  picture_not_in?: Maybe<String[] | String>;
+  picture_lt?: Maybe<String>;
+  picture_lte?: Maybe<String>;
+  picture_gt?: Maybe<String>;
+  picture_gte?: Maybe<String>;
+  picture_contains?: Maybe<String>;
+  picture_not_contains?: Maybe<String>;
+  picture_starts_with?: Maybe<String>;
+  picture_not_starts_with?: Maybe<String>;
+  picture_ends_with?: Maybe<String>;
+  picture_not_ends_with?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  securityToken_not?: Maybe<Int>;
+  securityToken_in?: Maybe<Int[] | Int>;
+  securityToken_not_in?: Maybe<Int[] | Int>;
+  securityToken_lt?: Maybe<Int>;
+  securityToken_lte?: Maybe<Int>;
+  securityToken_gt?: Maybe<Int>;
+  securityToken_gte?: Maybe<Int>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
+  AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+}
+
+export interface TransactionCreateInput {
+  id?: Maybe<ID_Input>;
+  balance: Int;
+  donations?: Maybe<TransferCreateManyWithoutTransactionInput>;
+  funds?: Maybe<ChargeCreateOneWithoutTransactionInput>;
+  user: UserCreateOneWithoutTransactionsInput;
+}
+
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
+}
+
+export interface UserCreateWithoutPreferencesInput {
+  id?: Maybe<ID_Input>;
+  bio?: Maybe<String>;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: Maybe<String>;
+  securityToken: Int;
+  username: String;
+  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
+  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
+  dots?: Maybe<DotCreateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeCreateManyWithoutUserInput>;
+  halos?: Maybe<HaloCreateManyWithoutUserInput>;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: Maybe<LoopCreateManyWithoutUserInput>;
+  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
+}
+
+export interface UserUpdateManyDataInput {
+  bio?: Maybe<String>;
+  email?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  picture?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  username?: Maybe<String>;
+}
+
+export interface UserUpdateOneRequiredWithoutLoopsInput {
+  create?: Maybe<UserCreateWithoutLoopsInput>;
+  update?: Maybe<UserUpdateWithoutLoopsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutLoopsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutCirclesOwnedInput {
+  create?: Maybe<UserCreateWithoutCirclesOwnedInput>;
+  update?: Maybe<UserUpdateWithoutCirclesOwnedDataInput>;
+  upsert?: Maybe<UserUpsertWithoutCirclesOwnedInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutIdentityInput {
+  update: UserUpdateWithoutIdentityDataInput;
+  create: UserCreateWithoutIdentityInput;
+}
+
+export interface UserUpdateWithoutCirclesOwnedDataInput {
+  bio?: Maybe<String>;
+  email?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  picture?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  username?: Maybe<String>;
+  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
+  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
+  dots?: Maybe<DotUpdateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeUpdateManyWithoutUserInput>;
+  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
+  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
+  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
+  preferences?: Maybe<PreferencesUpdateOneRequiredWithoutUserInput>;
+  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
+}
+
+export interface IdentityCreateInput {
+  id?: Maybe<ID_Input>;
+  provider: IdentityProvider;
+  providerID: String;
+  user: UserCreateOneWithoutIdentityInput;
+}
+
+export interface UserUpsertWithoutCirclesOwnedInput {
+  update: UserUpdateWithoutCirclesOwnedDataInput;
+  create: UserCreateWithoutCirclesOwnedInput;
+}
+
+export type TransferWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CircleUpsertWithoutInvitesInput {
+  update: CircleUpdateWithoutInvitesDataInput;
+  create: CircleCreateWithoutInvitesInput;
+}
+
+export interface UserCreateManyWithoutFollowedCharitiesInput {
+  create?: Maybe<
+    | UserCreateWithoutFollowedCharitiesInput[]
+    | UserCreateWithoutFollowedCharitiesInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface CircleInviteUpsertWithWhereUniqueWithoutUserInput {
+  where: CircleInviteWhereUniqueInput;
+  update: CircleInviteUpdateWithoutUserDataInput;
+  create: CircleInviteCreateWithoutUserInput;
+}
+
+export interface UserCreateOneWithoutCircleInvitesInput {
+  create?: Maybe<UserCreateWithoutCircleInvitesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface CircleInviteScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<CircleInviteScalarWhereInput[] | CircleInviteScalarWhereInput>;
+  OR?: Maybe<CircleInviteScalarWhereInput[] | CircleInviteScalarWhereInput>;
+  NOT?: Maybe<CircleInviteScalarWhereInput[] | CircleInviteScalarWhereInput>;
+}
+
+export interface CircleInviteCreateManyWithoutUserInput {
+  create?: Maybe<
+    CircleInviteCreateWithoutUserInput[] | CircleInviteCreateWithoutUserInput
+  >;
+  connect?: Maybe<
+    CircleInviteWhereUniqueInput[] | CircleInviteWhereUniqueInput
+  >;
+}
+
+export interface UserUpsertWithoutCircleJoinRequestsInput {
+  update: UserUpdateWithoutCircleJoinRequestsDataInput;
+  create: UserCreateWithoutCircleJoinRequestsInput;
+}
+
+export interface DotCreateManyWithoutUserInput {
+  create?: Maybe<DotCreateWithoutUserInput[] | DotCreateWithoutUserInput>;
+  connect?: Maybe<DotWhereUniqueInput[] | DotWhereUniqueInput>;
+}
+
+export interface CircleJoinRequestUpsertWithWhereUniqueWithoutCircleInput {
+  where: CircleJoinRequestWhereUniqueInput;
+  update: CircleJoinRequestUpdateWithoutCircleDataInput;
+  create: CircleJoinRequestCreateWithoutCircleInput;
+}
+
+export interface ChargeCreateOneWithoutDonationsInput {
+  create?: Maybe<ChargeCreateWithoutDonationsInput>;
+  connect?: Maybe<ChargeWhereUniqueInput>;
+}
+
+export interface CircleJoinRequestScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<
+    CircleJoinRequestScalarWhereInput[] | CircleJoinRequestScalarWhereInput
+  >;
+  OR?: Maybe<
+    CircleJoinRequestScalarWhereInput[] | CircleJoinRequestScalarWhereInput
+  >;
+  NOT?: Maybe<
+    CircleJoinRequestScalarWhereInput[] | CircleJoinRequestScalarWhereInput
+  >;
+}
+
+export interface ChargeCreateManyWithoutUserInput {
+  create?: Maybe<ChargeCreateWithoutUserInput[] | ChargeCreateWithoutUserInput>;
+  connect?: Maybe<ChargeWhereUniqueInput[] | ChargeWhereUniqueInput>;
+}
+
+export interface CircleUpsertWithWhereUniqueWithoutMembersInput {
+  where: CircleWhereUniqueInput;
+  update: CircleUpdateWithoutMembersDataInput;
+  create: CircleCreateWithoutMembersInput;
+}
+
+export interface EventCreateOneInput {
+  create?: Maybe<EventCreateInput>;
+  connect?: Maybe<EventWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutCircleInvitesInput {
+  update: UserUpdateWithoutCircleInvitesDataInput;
+  create: UserCreateWithoutCircleInvitesInput;
+}
+
+export interface ChargeCreateOneWithoutTransactionInput {
+  create?: Maybe<ChargeCreateWithoutTransactionInput>;
+  connect?: Maybe<ChargeWhereUniqueInput>;
+}
+
+export interface CircleInviteUpsertWithWhereUniqueWithoutCircleInput {
+  where: CircleInviteWhereUniqueInput;
+  update: CircleInviteUpdateWithoutCircleDataInput;
+  create: CircleInviteCreateWithoutCircleInput;
+}
+
+export interface TransferUpdateWithWhereUniqueWithoutSourceInput {
+  where: TransferWhereUniqueInput;
+  data: TransferUpdateWithoutSourceDataInput;
+}
+
+export interface CircleUpsertWithoutJoinRequestsInput {
+  update: CircleUpdateWithoutJoinRequestsDataInput;
+  create: CircleCreateWithoutJoinRequestsInput;
+}
+
+export interface TransactionSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TransactionWhereInput>;
+  AND?: Maybe<
+    TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput
+  >;
+}
+
+export interface CircleJoinRequestUpsertWithWhereUniqueWithoutUserInput {
+  where: CircleJoinRequestWhereUniqueInput;
+  update: CircleJoinRequestUpdateWithoutUserDataInput;
+  create: CircleJoinRequestCreateWithoutUserInput;
+}
+
+export interface CharitySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CharityWhereInput>;
+  AND?: Maybe<CharitySubscriptionWhereInput[] | CharitySubscriptionWhereInput>;
+  OR?: Maybe<CharitySubscriptionWhereInput[] | CharitySubscriptionWhereInput>;
+  NOT?: Maybe<CharitySubscriptionWhereInput[] | CharitySubscriptionWhereInput>;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutFollowedCharitiesInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutFollowedCharitiesDataInput;
+  create: UserCreateWithoutFollowedCharitiesInput;
+}
+
+export interface UserUpdateWithoutPreferencesDataInput {
+  bio?: Maybe<String>;
+  email?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  picture?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  username?: Maybe<String>;
+  circleJoinRequests?: Maybe<CircleJoinRequestUpdateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteUpdateManyWithoutUserInput>;
+  circles?: Maybe<CircleUpdateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleUpdateManyWithoutOwnerInput>;
+  dots?: Maybe<DotUpdateManyWithoutUserInput>;
+  followedCharities?: Maybe<CharityUpdateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeUpdateManyWithoutUserInput>;
+  halos?: Maybe<HaloUpdateManyWithoutUserInput>;
+  identity?: Maybe<IdentityUpdateOneRequiredWithoutUserInput>;
+  loops?: Maybe<LoopUpdateManyWithoutUserInput>;
+  transactions?: Maybe<TransactionUpdateManyWithoutUserInput>;
+}
+
+export interface CharityUpsertWithoutEventsInput {
+  update: CharityUpdateWithoutEventsDataInput;
+  create: CharityCreateWithoutEventsInput;
+}
+
+export interface UserCreateOneWithoutLoopsInput {
+  create?: Maybe<UserCreateWithoutLoopsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface EventUpsertWithoutDonationsInput {
+  update: EventUpdateWithoutDonationsDataInput;
+  create: EventCreateWithoutDonationsInput;
+}
+
+export type TransactionWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface TransferUpsertWithWhereUniqueWithoutSourceInput {
+  where: TransferWhereUniqueInput;
+  update: TransferUpdateWithoutSourceDataInput;
+  create: TransferCreateWithoutSourceInput;
+}
+
+export interface EventCreateOneWithoutDonationsInput {
+  create?: Maybe<EventCreateWithoutDonationsInput>;
+  connect?: Maybe<EventWhereUniqueInput>;
+}
+
+export interface ChargeUpdateManyMutationInput {
+  amountAdded?: Maybe<Int>;
+  amountNet?: Maybe<Int>;
+  chargeID?: Maybe<String>;
+}
+
+export interface CircleJoinRequestCreateManyWithoutCircleInput {
+  create?: Maybe<
+    | CircleJoinRequestCreateWithoutCircleInput[]
+    | CircleJoinRequestCreateWithoutCircleInput
+  >;
+  connect?: Maybe<
+    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
+  >;
+}
+
+export interface DotUpdateInput {
+  action?: Maybe<String>;
+  amount?: Maybe<Int>;
+  total?: Maybe<Int>;
+  user?: Maybe<UserUpdateOneRequiredWithoutDotsInput>;
+}
+
+export interface EventCreateManyWithoutCharityInput {
+  create?: Maybe<
+    EventCreateWithoutCharityInput[] | EventCreateWithoutCharityInput
+  >;
+  connect?: Maybe<EventWhereUniqueInput[] | EventWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutDotsInput {
+  id?: Maybe<ID_Input>;
+  bio?: Maybe<String>;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: Maybe<String>;
+  securityToken: Int;
+  username: String;
+  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
+  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
+  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
+  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
+  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
+  funds?: Maybe<ChargeCreateManyWithoutUserInput>;
+  halos?: Maybe<HaloCreateManyWithoutUserInput>;
+  identity: IdentityCreateOneWithoutUserInput;
+  loops?: Maybe<LoopCreateManyWithoutUserInput>;
+  preferences: PreferencesCreateOneWithoutUserInput;
+  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
+}
+
+export interface IdentityCreateOneWithoutUserInput {
+  create?: Maybe<IdentityCreateWithoutUserInput>;
+  connect?: Maybe<IdentityWhereUniqueInput>;
+}
+
+export interface CharityCreateInput {
+  id?: Maybe<ID_Input>;
+  acronym?: Maybe<String>;
+  bannerCredit?: Maybe<String>;
+  connectedAccountID?: Maybe<String>;
+  ein: String;
+  expensesAdministrative?: Maybe<Float>;
+  expensesFundraising?: Maybe<Float>;
+  expensesOther?: Maybe<Float>;
+  expensesProgram?: Maybe<Float>;
+  expensesUpdated?: Maybe<String>;
+  location: String;
+  mission: String;
+  name: String;
+  phoneNumber: String;
+  website: String;
+  events?: Maybe<EventCreateManyWithoutCharityInput>;
+  followers?: Maybe<UserCreateManyWithoutFollowedCharitiesInput>;
+}
+
+export interface UserCreateOneWithoutCirclesOwnedInput {
+  create?: Maybe<UserCreateWithoutCirclesOwnedInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface CharityUpdateInput {
+  acronym?: Maybe<String>;
+  bannerCredit?: Maybe<String>;
+  connectedAccountID?: Maybe<String>;
+  ein?: Maybe<String>;
+  expensesAdministrative?: Maybe<Float>;
+  expensesFundraising?: Maybe<Float>;
+  expensesOther?: Maybe<Float>;
+  expensesProgram?: Maybe<Float>;
+  expensesUpdated?: Maybe<String>;
+  location?: Maybe<String>;
+  mission?: Maybe<String>;
+  name?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  website?: Maybe<String>;
+  events?: Maybe<EventUpdateManyWithoutCharityInput>;
+  followers?: Maybe<UserUpdateManyWithoutFollowedCharitiesInput>;
+}
+
+export interface EventSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<EventWhereInput>;
+  AND?: Maybe<EventSubscriptionWhereInput[] | EventSubscriptionWhereInput>;
+  OR?: Maybe<EventSubscriptionWhereInput[] | EventSubscriptionWhereInput>;
+  NOT?: Maybe<EventSubscriptionWhereInput[] | EventSubscriptionWhereInput>;
 }
 
 export interface CharityUpdateManyMutationInput {
@@ -5476,50 +5537,8 @@ export interface CharityUpdateManyMutationInput {
   website?: Maybe<String>;
 }
 
-export interface CircleCreateOneWithoutJoinRequestsInput {
-  create?: Maybe<CircleCreateWithoutJoinRequestsInput>;
-  connect?: Maybe<CircleWhereUniqueInput>;
-}
-
-export interface DotUpdateInput {
-  action?: Maybe<String>;
-  amount?: Maybe<Int>;
-  total?: Maybe<Int>;
-  user?: Maybe<UserUpdateOneRequiredWithoutDotsInput>;
-}
-
-export interface UserCreateManyWithoutCirclesInput {
-  create?: Maybe<
-    UserCreateWithoutCirclesInput[] | UserCreateWithoutCirclesInput
-  >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutDotsInput {
-  id?: Maybe<ID_Input>;
-  bio?: Maybe<String>;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: Maybe<String>;
-  securityToken: Int;
-  username: String;
-  circleJoinRequests?: Maybe<CircleJoinRequestCreateManyWithoutUserInput>;
-  circleInvites?: Maybe<CircleInviteCreateManyWithoutUserInput>;
-  circles?: Maybe<CircleCreateManyWithoutMembersInput>;
-  circlesOwned?: Maybe<CircleCreateManyWithoutOwnerInput>;
-  followedCharities?: Maybe<CharityCreateManyWithoutFollowersInput>;
-  halos?: Maybe<HaloCreateManyWithoutUserInput>;
-  identity: IdentityCreateOneWithoutUserInput;
-  loops?: Maybe<LoopCreateManyWithoutUserInput>;
-  preferences: PreferencesCreateOneWithoutUserInput;
-  transactions?: Maybe<TransactionCreateManyWithoutUserInput>;
-  funds?: Maybe<FundsCreateManyWithoutUserInput>;
-}
-
-export interface PreferencesCreateOneWithoutUserInput {
-  create?: Maybe<PreferencesCreateWithoutUserInput>;
-  connect?: Maybe<PreferencesWhereUniqueInput>;
+export interface LoopUpdateManyMutationInput {
+  count?: Maybe<Int>;
 }
 
 export interface CircleCreateInput {
@@ -5533,10 +5552,10 @@ export interface CircleCreateInput {
   owner: UserCreateOneWithoutCirclesOwnedInput;
 }
 
-export interface UserCreateOneWithoutCirclesOwnedInput {
-  create?: Maybe<UserCreateWithoutCirclesOwnedInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  username?: Maybe<String>;
+}>;
 
 export interface CircleUpdateInput {
   description?: Maybe<String>;
@@ -5548,15 +5567,11 @@ export interface CircleUpdateInput {
   owner?: Maybe<UserUpdateOneRequiredWithoutCirclesOwnedInput>;
 }
 
-export interface DotSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<DotWhereInput>;
-  AND?: Maybe<DotSubscriptionWhereInput[] | DotSubscriptionWhereInput>;
-  OR?: Maybe<DotSubscriptionWhereInput[] | DotSubscriptionWhereInput>;
-  NOT?: Maybe<DotSubscriptionWhereInput[] | DotSubscriptionWhereInput>;
+export interface UserCreateManyWithoutCirclesInput {
+  create?: Maybe<
+    UserCreateWithoutCirclesInput[] | UserCreateWithoutCirclesInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
 }
 
 export interface CircleUpdateManyMutationInput {
@@ -5565,10 +5580,9 @@ export interface CircleUpdateManyMutationInput {
   open?: Maybe<Boolean>;
 }
 
-export interface LoopUpdateInput {
-  count?: Maybe<Int>;
-  event?: Maybe<EventUpdateOneRequiredInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutLoopsInput>;
+export interface UserCreateOneWithoutFundsInput {
+  create?: Maybe<UserCreateWithoutFundsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface CircleInviteCreateInput {
@@ -5577,45 +5591,14 @@ export interface CircleInviteCreateInput {
   user: UserCreateOneWithoutCircleInvitesInput;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  username?: Maybe<String>;
-}>;
-
-export interface CircleInviteUpdateInput {
-  circle?: Maybe<CircleUpdateOneRequiredWithoutInvitesInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutCircleInvitesInput>;
-}
-
-export interface CircleJoinRequestCreateManyWithoutCircleInput {
-  create?: Maybe<
-    | CircleJoinRequestCreateWithoutCircleInput[]
-    | CircleJoinRequestCreateWithoutCircleInput
-  >;
-  connect?: Maybe<
-    CircleJoinRequestWhereUniqueInput[] | CircleJoinRequestWhereUniqueInput
-  >;
-}
-
-export interface CircleJoinRequestCreateInput {
+export interface TransferCreateInput {
   id?: Maybe<ID_Input>;
-  circle: CircleCreateOneWithoutJoinRequestsInput;
-  user: UserCreateOneWithoutCircleJoinRequestsInput;
-}
-
-export interface TransactionCreateOneWithoutDonationsInput {
-  create?: Maybe<TransactionCreateWithoutDonationsInput>;
-  connect?: Maybe<TransactionWhereUniqueInput>;
-}
-
-export interface CircleJoinRequestUpdateInput {
-  circle?: Maybe<CircleUpdateOneRequiredWithoutJoinRequestsInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutCircleJoinRequestsInput>;
-}
-
-export interface PreferencesUpdateManyMutationInput {
-  allowDonationEmails?: Maybe<Boolean>;
-  publicProfile?: Maybe<Boolean>;
+  amount: Int;
+  chargeBalance: Int;
+  transferID: String;
+  event?: Maybe<EventCreateOneWithoutDonationsInput>;
+  source?: Maybe<ChargeCreateOneWithoutDonationsInput>;
+  transaction: TransactionCreateOneWithoutDonationsInput;
 }
 
 export interface DotCreateInput {
@@ -5626,56 +5609,46 @@ export interface DotCreateInput {
   user: UserCreateOneWithoutDotsInput;
 }
 
-export interface DonationUpdateManyMutationInput {
-  amount?: Maybe<Int>;
-  batchKey?: Maybe<String>;
-  subBalance?: Maybe<Int>;
-  transferID?: Maybe<String>;
+export interface CircleJoinRequestUpdateInput {
+  circle?: Maybe<CircleUpdateOneRequiredWithoutJoinRequestsInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutCircleJoinRequestsInput>;
 }
 
-export interface DonationUpdateInput {
-  amount?: Maybe<Int>;
-  batchKey?: Maybe<String>;
-  subBalance?: Maybe<Int>;
-  transferID?: Maybe<String>;
-  event?: Maybe<EventUpdateOneWithoutDonationsInput>;
-  source?: Maybe<FundsUpdateOneWithoutDonationsInput>;
-  transaction?: Maybe<TransactionUpdateOneRequiredWithoutDonationsInput>;
-}
-
-export interface DonationCreateInput {
+export interface CircleJoinRequestCreateInput {
   id?: Maybe<ID_Input>;
-  amount: Int;
-  batchKey: String;
-  subBalance: Int;
-  transferID: String;
-  event?: Maybe<EventCreateOneWithoutDonationsInput>;
-  source?: Maybe<FundsCreateOneWithoutDonationsInput>;
-  transaction: TransactionCreateOneWithoutDonationsInput;
+  circle: CircleCreateOneWithoutJoinRequestsInput;
+  user: UserCreateOneWithoutCircleJoinRequestsInput;
 }
 
-export interface HaloUpdateManyMutationInput {
-  key?: Maybe<String>;
-  tier?: Maybe<String>;
+export interface CircleInviteUpdateInput {
+  circle?: Maybe<CircleUpdateOneRequiredWithoutInvitesInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutCircleInvitesInput>;
 }
 
-export interface DonationUpdateWithoutEventDataInput {
-  amount?: Maybe<Int>;
-  batchKey?: Maybe<String>;
-  subBalance?: Maybe<Int>;
-  transferID?: Maybe<String>;
-  source?: Maybe<FundsUpdateOneWithoutDonationsInput>;
-  transaction?: Maybe<TransactionUpdateOneRequiredWithoutDonationsInput>;
+export interface IdentityUpdateInput {
+  provider?: Maybe<IdentityProvider>;
+  providerID?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutIdentityInput>;
 }
 
-export interface HaloCreateManyWithoutUserInput {
-  create?: Maybe<HaloCreateWithoutUserInput[] | HaloCreateWithoutUserInput>;
-  connect?: Maybe<HaloWhereUniqueInput[] | HaloWhereUniqueInput>;
+export interface CharityUpdateOneRequiredWithoutEventsInput {
+  create?: Maybe<CharityCreateWithoutEventsInput>;
+  update?: Maybe<CharityUpdateWithoutEventsDataInput>;
+  upsert?: Maybe<CharityUpsertWithoutEventsInput>;
+  connect?: Maybe<CharityWhereUniqueInput>;
 }
 
-export interface EventCreateOneWithoutDonationsInput {
-  create?: Maybe<EventCreateWithoutDonationsInput>;
-  connect?: Maybe<EventWhereUniqueInput>;
+export interface TransferCreateManyWithoutTransactionInput {
+  create?: Maybe<
+    | TransferCreateWithoutTransactionInput[]
+    | TransferCreateWithoutTransactionInput
+  >;
+  connect?: Maybe<TransferWhereUniqueInput[] | TransferWhereUniqueInput>;
+}
+
+export interface CircleCreateOneWithoutJoinRequestsInput {
+  create?: Maybe<CircleCreateWithoutJoinRequestsInput>;
+  connect?: Maybe<CircleWhereUniqueInput>;
 }
 
 export interface NodeNode {
@@ -5723,6 +5696,68 @@ export interface UserPreviousValuesSubscription
   picture: () => Promise<AsyncIterator<String>>;
   securityToken: () => Promise<AsyncIterator<Int>>;
   username: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ChargeEdge {
+  node: Charge;
+  cursor: String;
+}
+
+export interface ChargeEdgePromise extends Promise<ChargeEdge>, Fragmentable {
+  node: <T = ChargePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ChargeEdgeSubscription
+  extends Promise<AsyncIterator<ChargeEdge>>,
+    Fragmentable {
+  node: <T = ChargeSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface Transfer {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  amount: Int;
+  chargeBalance: Int;
+  transferID: String;
+}
+
+export interface TransferPromise extends Promise<Transfer>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  amount: () => Promise<Int>;
+  chargeBalance: () => Promise<Int>;
+  transferID: () => Promise<String>;
+  event: <T = EventPromise>() => T;
+  source: <T = ChargePromise>() => T;
+  transaction: <T = TransactionPromise>() => T;
+}
+
+export interface TransferSubscription
+  extends Promise<AsyncIterator<Transfer>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  chargeBalance: () => Promise<AsyncIterator<Int>>;
+  transferID: () => Promise<AsyncIterator<String>>;
+  event: <T = EventSubscription>() => T;
+  source: <T = ChargeSubscription>() => T;
+  transaction: <T = TransactionSubscription>() => T;
+}
+
+export interface TransferNullablePromise
+  extends Promise<Transfer | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  amount: () => Promise<Int>;
+  chargeBalance: () => Promise<Int>;
+  transferID: () => Promise<String>;
+  event: <T = EventPromise>() => T;
+  source: <T = ChargePromise>() => T;
+  transaction: <T = TransactionPromise>() => T;
 }
 
 export interface PageInfo {
@@ -5777,9 +5812,9 @@ export interface EventPromise extends Promise<Event>, Fragmentable {
   sponsorWebsite: () => Promise<String>;
   startDate: () => Promise<DateTimeOutput>;
   charity: <T = CharityPromise>() => T;
-  donations: <T = FragmentableArray<Donation>>(args?: {
-    where?: DonationWhereInput;
-    orderBy?: DonationOrderByInput;
+  donations: <T = FragmentableArray<Transfer>>(args?: {
+    where?: TransferWhereInput;
+    orderBy?: TransferOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -5804,9 +5839,9 @@ export interface EventSubscription
   sponsorWebsite: () => Promise<AsyncIterator<String>>;
   startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
   charity: <T = CharitySubscription>() => T;
-  donations: <T = Promise<AsyncIterator<DonationSubscription>>>(args?: {
-    where?: DonationWhereInput;
-    orderBy?: DonationOrderByInput;
+  donations: <T = Promise<AsyncIterator<TransferSubscription>>>(args?: {
+    where?: TransferWhereInput;
+    orderBy?: TransferOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -5831,9 +5866,9 @@ export interface EventNullablePromise
   sponsorWebsite: () => Promise<String>;
   startDate: () => Promise<DateTimeOutput>;
   charity: <T = CharityPromise>() => T;
-  donations: <T = FragmentableArray<Donation>>(args?: {
-    where?: DonationWhereInput;
-    orderBy?: DonationOrderByInput;
+  donations: <T = FragmentableArray<Transfer>>(args?: {
+    where?: TransferWhereInput;
+    orderBy?: TransferOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -5842,102 +5877,102 @@ export interface EventNullablePromise
   }) => T;
 }
 
-export interface AggregateCharity {
+export interface ChargeConnection {
+  pageInfo: PageInfo;
+  edges: ChargeEdge[];
+}
+
+export interface ChargeConnectionPromise
+  extends Promise<ChargeConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ChargeEdge>>() => T;
+  aggregate: <T = AggregateChargePromise>() => T;
+}
+
+export interface ChargeConnectionSubscription
+  extends Promise<AsyncIterator<ChargeConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ChargeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateChargeSubscription>() => T;
+}
+
+export interface AggregateUser {
   count: Int;
 }
 
-export interface AggregateCharityPromise
-  extends Promise<AggregateCharity>,
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateCharitySubscription
-  extends Promise<AsyncIterator<AggregateCharity>>,
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PreferencesPreviousValues {
+export interface Transaction {
   id: ID_Output;
   createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  allowDonationEmails: Boolean;
-  publicProfile: Boolean;
+  balance: Int;
 }
 
-export interface PreferencesPreviousValuesPromise
-  extends Promise<PreferencesPreviousValues>,
-    Fragmentable {
+export interface TransactionPromise extends Promise<Transaction>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  allowDonationEmails: () => Promise<Boolean>;
-  publicProfile: () => Promise<Boolean>;
+  balance: () => Promise<Int>;
+  donations: <T = FragmentableArray<Transfer>>(args?: {
+    where?: TransferWhereInput;
+    orderBy?: TransferOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  funds: <T = ChargePromise>() => T;
+  user: <T = UserPromise>() => T;
 }
 
-export interface PreferencesPreviousValuesSubscription
-  extends Promise<AsyncIterator<PreferencesPreviousValues>>,
+export interface TransactionSubscription
+  extends Promise<AsyncIterator<Transaction>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  allowDonationEmails: () => Promise<AsyncIterator<Boolean>>;
-  publicProfile: () => Promise<AsyncIterator<Boolean>>;
+  balance: () => Promise<AsyncIterator<Int>>;
+  donations: <T = Promise<AsyncIterator<TransferSubscription>>>(args?: {
+    where?: TransferWhereInput;
+    orderBy?: TransferOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  funds: <T = ChargeSubscription>() => T;
+  user: <T = UserSubscription>() => T;
 }
 
-export interface CharityEdge {
-  node: Charity;
-  cursor: String;
-}
-
-export interface CharityEdgePromise extends Promise<CharityEdge>, Fragmentable {
-  node: <T = CharityPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CharityEdgeSubscription
-  extends Promise<AsyncIterator<CharityEdge>>,
+export interface TransactionNullablePromise
+  extends Promise<Transaction | null>,
     Fragmentable {
-  node: <T = CharitySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface CharityConnection {
-  pageInfo: PageInfo;
-  edges: CharityEdge[];
-}
-
-export interface CharityConnectionPromise
-  extends Promise<CharityConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CharityEdge>>() => T;
-  aggregate: <T = AggregateCharityPromise>() => T;
-}
-
-export interface CharityConnectionSubscription
-  extends Promise<AsyncIterator<CharityConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CharityEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCharitySubscription>() => T;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  balance: () => Promise<Int>;
+  donations: <T = FragmentableArray<Transfer>>(args?: {
+    where?: TransferWhereInput;
+    orderBy?: TransferOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  funds: <T = ChargePromise>() => T;
+  user: <T = UserPromise>() => T;
 }
 
 export interface UserConnection {
@@ -5961,20 +5996,225 @@ export interface UserConnectionSubscription
   aggregate: <T = AggregateUserSubscription>() => T;
 }
 
-export interface AggregateUser {
+export interface Charge {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  amountAdded: Int;
+  amountNet: Int;
+  chargeID: String;
+}
+
+export interface ChargePromise extends Promise<Charge>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  amountAdded: () => Promise<Int>;
+  amountNet: () => Promise<Int>;
+  chargeID: () => Promise<String>;
+  donations: <T = FragmentableArray<Transfer>>(args?: {
+    where?: TransferWhereInput;
+    orderBy?: TransferOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  transaction: <T = TransactionPromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface ChargeSubscription
+  extends Promise<AsyncIterator<Charge>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  amountAdded: () => Promise<AsyncIterator<Int>>;
+  amountNet: () => Promise<AsyncIterator<Int>>;
+  chargeID: () => Promise<AsyncIterator<String>>;
+  donations: <T = Promise<AsyncIterator<TransferSubscription>>>(args?: {
+    where?: TransferWhereInput;
+    orderBy?: TransferOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  transaction: <T = TransactionSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface ChargeNullablePromise
+  extends Promise<Charge | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  amountAdded: () => Promise<Int>;
+  amountNet: () => Promise<Int>;
+  chargeID: () => Promise<String>;
+  donations: <T = FragmentableArray<Transfer>>(args?: {
+    where?: TransferWhereInput;
+    orderBy?: TransferOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  transaction: <T = TransactionPromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface TransferEdge {
+  node: Transfer;
+  cursor: String;
+}
+
+export interface TransferEdgePromise
+  extends Promise<TransferEdge>,
+    Fragmentable {
+  node: <T = TransferPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TransferEdgeSubscription
+  extends Promise<AsyncIterator<TransferEdge>>,
+    Fragmentable {
+  node: <T = TransferSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ChargeSubscriptionPayload {
+  mutation: MutationType;
+  node: Charge;
+  updatedFields: String[];
+  previousValues: ChargePreviousValues;
+}
+
+export interface ChargeSubscriptionPayloadPromise
+  extends Promise<ChargeSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ChargePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ChargePreviousValuesPromise>() => T;
+}
+
+export interface ChargeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ChargeSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ChargeSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ChargePreviousValuesSubscription>() => T;
+}
+
+export interface AggregateTransaction {
   count: Int;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface AggregateTransactionPromise
+  extends Promise<AggregateTransaction>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface AggregateTransactionSubscription
+  extends Promise<AsyncIterator<AggregateTransaction>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ChargePreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  amountAdded: Int;
+  amountNet: Int;
+  chargeID: String;
+}
+
+export interface ChargePreviousValuesPromise
+  extends Promise<ChargePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  amountAdded: () => Promise<Int>;
+  amountNet: () => Promise<Int>;
+  chargeID: () => Promise<String>;
+}
+
+export interface ChargePreviousValuesSubscription
+  extends Promise<AsyncIterator<ChargePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  amountAdded: () => Promise<AsyncIterator<Int>>;
+  amountNet: () => Promise<AsyncIterator<Int>>;
+  chargeID: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TransactionConnection {
+  pageInfo: PageInfo;
+  edges: TransactionEdge[];
+}
+
+export interface TransactionConnectionPromise
+  extends Promise<TransactionConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TransactionEdge>>() => T;
+  aggregate: <T = AggregateTransactionPromise>() => T;
+}
+
+export interface TransactionConnectionSubscription
+  extends Promise<AsyncIterator<TransactionConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TransactionEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTransactionSubscription>() => T;
+}
+
+export interface TransferConnection {
+  pageInfo: PageInfo;
+  edges: TransferEdge[];
+}
+
+export interface TransferConnectionPromise
+  extends Promise<TransferConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TransferEdge>>() => T;
+  aggregate: <T = AggregateTransferPromise>() => T;
+}
+
+export interface TransferConnectionSubscription
+  extends Promise<AsyncIterator<TransferConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TransferEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTransferSubscription>() => T;
+}
+
+export interface TransactionPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  balance: Int;
+}
+
+export interface TransactionPreviousValuesPromise
+  extends Promise<TransactionPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  balance: () => Promise<Int>;
+}
+
+export interface TransactionPreviousValuesSubscription
+  extends Promise<AsyncIterator<TransactionPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  balance: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface TransactionEdge {
@@ -5996,53 +6236,23 @@ export interface TransactionEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface Donation {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  amount: Int;
-  batchKey: String;
-  subBalance: Int;
-  transferID: String;
+export interface PreferencesEdge {
+  node: Preferences;
+  cursor: String;
 }
 
-export interface DonationPromise extends Promise<Donation>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  amount: () => Promise<Int>;
-  batchKey: () => Promise<String>;
-  subBalance: () => Promise<Int>;
-  transferID: () => Promise<String>;
-  event: <T = EventPromise>() => T;
-  source: <T = FundsPromise>() => T;
-  transaction: <T = TransactionPromise>() => T;
-}
-
-export interface DonationSubscription
-  extends Promise<AsyncIterator<Donation>>,
+export interface PreferencesEdgePromise
+  extends Promise<PreferencesEdge>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  amount: () => Promise<AsyncIterator<Int>>;
-  batchKey: () => Promise<AsyncIterator<String>>;
-  subBalance: () => Promise<AsyncIterator<Int>>;
-  transferID: () => Promise<AsyncIterator<String>>;
-  event: <T = EventSubscription>() => T;
-  source: <T = FundsSubscription>() => T;
-  transaction: <T = TransactionSubscription>() => T;
+  node: <T = PreferencesPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface DonationNullablePromise
-  extends Promise<Donation | null>,
+export interface PreferencesEdgeSubscription
+  extends Promise<AsyncIterator<PreferencesEdge>>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  amount: () => Promise<Int>;
-  batchKey: () => Promise<String>;
-  subBalance: () => Promise<Int>;
-  transferID: () => Promise<String>;
-  event: <T = EventPromise>() => T;
-  source: <T = FundsPromise>() => T;
-  transaction: <T = TransactionPromise>() => T;
+  node: <T = PreferencesSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregatePreferences {
@@ -6061,43 +6271,20 @@ export interface AggregatePreferencesSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface Preferences {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  allowDonationEmails: Boolean;
-  publicProfile: Boolean;
+export interface AggregateLoop {
+  count: Int;
 }
 
-export interface PreferencesPromise extends Promise<Preferences>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  allowDonationEmails: () => Promise<Boolean>;
-  publicProfile: () => Promise<Boolean>;
-  user: <T = UserPromise>() => T;
-}
-
-export interface PreferencesSubscription
-  extends Promise<AsyncIterator<Preferences>>,
+export interface AggregateLoopPromise
+  extends Promise<AggregateLoop>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  allowDonationEmails: () => Promise<AsyncIterator<Boolean>>;
-  publicProfile: () => Promise<AsyncIterator<Boolean>>;
-  user: <T = UserSubscription>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface PreferencesNullablePromise
-  extends Promise<Preferences | null>,
+export interface AggregateLoopSubscription
+  extends Promise<AsyncIterator<AggregateLoop>>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  allowDonationEmails: () => Promise<Boolean>;
-  publicProfile: () => Promise<Boolean>;
-  user: <T = UserPromise>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface PreferencesConnection {
@@ -6121,42 +6308,25 @@ export interface PreferencesConnectionSubscription
   aggregate: <T = AggregatePreferencesSubscription>() => T;
 }
 
-export interface TransactionPreviousValues {
-  id: Int;
-  createdAt: DateTimeOutput;
-  balance: Int;
+export interface LoopConnection {
+  pageInfo: PageInfo;
+  edges: LoopEdge[];
 }
 
-export interface TransactionPreviousValuesPromise
-  extends Promise<TransactionPreviousValues>,
+export interface LoopConnectionPromise
+  extends Promise<LoopConnection>,
     Fragmentable {
-  id: () => Promise<Int>;
-  createdAt: () => Promise<DateTimeOutput>;
-  balance: () => Promise<Int>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<LoopEdge>>() => T;
+  aggregate: <T = AggregateLoopPromise>() => T;
 }
 
-export interface TransactionPreviousValuesSubscription
-  extends Promise<AsyncIterator<TransactionPreviousValues>>,
+export interface LoopConnectionSubscription
+  extends Promise<AsyncIterator<LoopConnection>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<Int>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  balance: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AggregateLoop {
-  count: Int;
-}
-
-export interface AggregateLoopPromise
-  extends Promise<AggregateLoop>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateLoopSubscription
-  extends Promise<AsyncIterator<AggregateLoop>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<LoopEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateLoopSubscription>() => T;
 }
 
 export interface CharitySubscriptionPayload {
@@ -6184,25 +6354,23 @@ export interface CharitySubscriptionPayloadSubscription
   previousValues: <T = CharityPreviousValuesSubscription>() => T;
 }
 
-export interface LoopConnection {
-  pageInfo: PageInfo;
-  edges: LoopEdge[];
+export interface IdentityEdge {
+  node: Identity;
+  cursor: String;
 }
 
-export interface LoopConnectionPromise
-  extends Promise<LoopConnection>,
+export interface IdentityEdgePromise
+  extends Promise<IdentityEdge>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<LoopEdge>>() => T;
-  aggregate: <T = AggregateLoopPromise>() => T;
+  node: <T = IdentityPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface LoopConnectionSubscription
-  extends Promise<AsyncIterator<LoopConnection>>,
+export interface IdentityEdgeSubscription
+  extends Promise<AsyncIterator<IdentityEdge>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<LoopEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateLoopSubscription>() => T;
+  node: <T = IdentitySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface CharityPreviousValues {
@@ -6267,1802 +6435,6 @@ export interface CharityPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   phoneNumber: () => Promise<AsyncIterator<String>>;
   website: () => Promise<AsyncIterator<String>>;
-}
-
-export interface IdentityEdge {
-  node: Identity;
-  cursor: String;
-}
-
-export interface IdentityEdgePromise
-  extends Promise<IdentityEdge>,
-    Fragmentable {
-  node: <T = IdentityPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface IdentityEdgeSubscription
-  extends Promise<AsyncIterator<IdentityEdge>>,
-    Fragmentable {
-  node: <T = IdentitySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface Loop {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  count: Int;
-}
-
-export interface LoopPromise extends Promise<Loop>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  count: () => Promise<Int>;
-  event: <T = EventPromise>() => T;
-  user: <T = UserPromise>() => T;
-}
-
-export interface LoopSubscription
-  extends Promise<AsyncIterator<Loop>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  count: () => Promise<AsyncIterator<Int>>;
-  event: <T = EventSubscription>() => T;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface LoopNullablePromise
-  extends Promise<Loop | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  count: () => Promise<Int>;
-  event: <T = EventPromise>() => T;
-  user: <T = UserPromise>() => T;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface CircleSubscriptionPayload {
-  mutation: MutationType;
-  node: Circle;
-  updatedFields: String[];
-  previousValues: CirclePreviousValues;
-}
-
-export interface CircleSubscriptionPayloadPromise
-  extends Promise<CircleSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = CirclePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = CirclePreviousValuesPromise>() => T;
-}
-
-export interface CircleSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<CircleSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = CircleSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = CirclePreviousValuesSubscription>() => T;
-}
-
-export interface HaloEdge {
-  node: Halo;
-  cursor: String;
-}
-
-export interface HaloEdgePromise extends Promise<HaloEdge>, Fragmentable {
-  node: <T = HaloPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface HaloEdgeSubscription
-  extends Promise<AsyncIterator<HaloEdge>>,
-    Fragmentable {
-  node: <T = HaloSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface CirclePreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  description?: String;
-  name: String;
-  open: Boolean;
-}
-
-export interface CirclePreviousValuesPromise
-  extends Promise<CirclePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
-  name: () => Promise<String>;
-  open: () => Promise<Boolean>;
-}
-
-export interface CirclePreviousValuesSubscription
-  extends Promise<AsyncIterator<CirclePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  description: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  open: () => Promise<AsyncIterator<Boolean>>;
-}
-
-export interface AggregateFunds {
-  count: Int;
-}
-
-export interface AggregateFundsPromise
-  extends Promise<AggregateFunds>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateFundsSubscription
-  extends Promise<AsyncIterator<AggregateFunds>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface TransactionSubscriptionPayload {
-  mutation: MutationType;
-  node: Transaction;
-  updatedFields: String[];
-  previousValues: TransactionPreviousValues;
-}
-
-export interface TransactionSubscriptionPayloadPromise
-  extends Promise<TransactionSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = TransactionPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = TransactionPreviousValuesPromise>() => T;
-}
-
-export interface TransactionSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TransactionSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TransactionSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TransactionPreviousValuesSubscription>() => T;
-}
-
-export interface FundsConnection {
-  pageInfo: PageInfo;
-  edges: FundsEdge[];
-}
-
-export interface FundsConnectionPromise
-  extends Promise<FundsConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<FundsEdge>>() => T;
-  aggregate: <T = AggregateFundsPromise>() => T;
-}
-
-export interface FundsConnectionSubscription
-  extends Promise<AsyncIterator<FundsConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<FundsEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateFundsSubscription>() => T;
-}
-
-export interface CircleInviteSubscriptionPayload {
-  mutation: MutationType;
-  node: CircleInvite;
-  updatedFields: String[];
-  previousValues: CircleInvitePreviousValues;
-}
-
-export interface CircleInviteSubscriptionPayloadPromise
-  extends Promise<CircleInviteSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = CircleInvitePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = CircleInvitePreviousValuesPromise>() => T;
-}
-
-export interface CircleInviteSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<CircleInviteSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = CircleInviteSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = CircleInvitePreviousValuesSubscription>() => T;
-}
-
-export interface EventEdge {
-  node: Event;
-  cursor: String;
-}
-
-export interface EventEdgePromise extends Promise<EventEdge>, Fragmentable {
-  node: <T = EventPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface EventEdgeSubscription
-  extends Promise<AsyncIterator<EventEdge>>,
-    Fragmentable {
-  node: <T = EventSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface CircleInvitePreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface CircleInvitePreviousValuesPromise
-  extends Promise<CircleInvitePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface CircleInvitePreviousValuesSubscription
-  extends Promise<AsyncIterator<CircleInvitePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface AggregateDot {
-  count: Int;
-}
-
-export interface AggregateDotPromise
-  extends Promise<AggregateDot>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateDotSubscription
-  extends Promise<AsyncIterator<AggregateDot>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Identity {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  provider: IdentityProvider;
-  providerID: String;
-}
-
-export interface IdentityPromise extends Promise<Identity>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  provider: () => Promise<IdentityProvider>;
-  providerID: () => Promise<String>;
-  user: <T = UserPromise>() => T;
-}
-
-export interface IdentitySubscription
-  extends Promise<AsyncIterator<Identity>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  provider: () => Promise<AsyncIterator<IdentityProvider>>;
-  providerID: () => Promise<AsyncIterator<String>>;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface IdentityNullablePromise
-  extends Promise<Identity | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  provider: () => Promise<IdentityProvider>;
-  providerID: () => Promise<String>;
-  user: <T = UserPromise>() => T;
-}
-
-export interface DotConnection {
-  pageInfo: PageInfo;
-  edges: DotEdge[];
-}
-
-export interface DotConnectionPromise
-  extends Promise<DotConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<DotEdge>>() => T;
-  aggregate: <T = AggregateDotPromise>() => T;
-}
-
-export interface DotConnectionSubscription
-  extends Promise<AsyncIterator<DotConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<DotEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateDotSubscription>() => T;
-}
-
-export interface CircleJoinRequestSubscriptionPayload {
-  mutation: MutationType;
-  node: CircleJoinRequest;
-  updatedFields: String[];
-  previousValues: CircleJoinRequestPreviousValues;
-}
-
-export interface CircleJoinRequestSubscriptionPayloadPromise
-  extends Promise<CircleJoinRequestSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = CircleJoinRequestPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = CircleJoinRequestPreviousValuesPromise>() => T;
-}
-
-export interface CircleJoinRequestSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<CircleJoinRequestSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = CircleJoinRequestSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = CircleJoinRequestPreviousValuesSubscription>() => T;
-}
-
-export interface DonationEdge {
-  node: Donation;
-  cursor: String;
-}
-
-export interface DonationEdgePromise
-  extends Promise<DonationEdge>,
-    Fragmentable {
-  node: <T = DonationPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface DonationEdgeSubscription
-  extends Promise<AsyncIterator<DonationEdge>>,
-    Fragmentable {
-  node: <T = DonationSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface CircleJoinRequestPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface CircleJoinRequestPreviousValuesPromise
-  extends Promise<CircleJoinRequestPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface CircleJoinRequestPreviousValuesSubscription
-  extends Promise<AsyncIterator<CircleJoinRequestPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface AggregateCircleJoinRequest {
-  count: Int;
-}
-
-export interface AggregateCircleJoinRequestPromise
-  extends Promise<AggregateCircleJoinRequest>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCircleJoinRequestSubscription
-  extends Promise<AsyncIterator<AggregateCircleJoinRequest>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Halo {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  key: String;
-  tier?: String;
-}
-
-export interface HaloPromise extends Promise<Halo>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  key: () => Promise<String>;
-  tier: () => Promise<String>;
-  user: <T = UserPromise>() => T;
-}
-
-export interface HaloSubscription
-  extends Promise<AsyncIterator<Halo>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  key: () => Promise<AsyncIterator<String>>;
-  tier: () => Promise<AsyncIterator<String>>;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface HaloNullablePromise
-  extends Promise<Halo | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  key: () => Promise<String>;
-  tier: () => Promise<String>;
-  user: <T = UserPromise>() => T;
-}
-
-export interface CircleJoinRequestConnection {
-  pageInfo: PageInfo;
-  edges: CircleJoinRequestEdge[];
-}
-
-export interface CircleJoinRequestConnectionPromise
-  extends Promise<CircleJoinRequestConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CircleJoinRequestEdge>>() => T;
-  aggregate: <T = AggregateCircleJoinRequestPromise>() => T;
-}
-
-export interface CircleJoinRequestConnectionSubscription
-  extends Promise<AsyncIterator<CircleJoinRequestConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CircleJoinRequestEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCircleJoinRequestSubscription>() => T;
-}
-
-export interface DonationSubscriptionPayload {
-  mutation: MutationType;
-  node: Donation;
-  updatedFields: String[];
-  previousValues: DonationPreviousValues;
-}
-
-export interface DonationSubscriptionPayloadPromise
-  extends Promise<DonationSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = DonationPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = DonationPreviousValuesPromise>() => T;
-}
-
-export interface DonationSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<DonationSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = DonationSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = DonationPreviousValuesSubscription>() => T;
-}
-
-export interface CircleInviteEdge {
-  node: CircleInvite;
-  cursor: String;
-}
-
-export interface CircleInviteEdgePromise
-  extends Promise<CircleInviteEdge>,
-    Fragmentable {
-  node: <T = CircleInvitePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CircleInviteEdgeSubscription
-  extends Promise<AsyncIterator<CircleInviteEdge>>,
-    Fragmentable {
-  node: <T = CircleInviteSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface DonationPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  amount: Int;
-  batchKey: String;
-  subBalance: Int;
-  transferID: String;
-}
-
-export interface DonationPreviousValuesPromise
-  extends Promise<DonationPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  amount: () => Promise<Int>;
-  batchKey: () => Promise<String>;
-  subBalance: () => Promise<Int>;
-  transferID: () => Promise<String>;
-}
-
-export interface DonationPreviousValuesSubscription
-  extends Promise<AsyncIterator<DonationPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  amount: () => Promise<AsyncIterator<Int>>;
-  batchKey: () => Promise<AsyncIterator<String>>;
-  subBalance: () => Promise<AsyncIterator<Int>>;
-  transferID: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateCircle {
-  count: Int;
-}
-
-export interface AggregateCirclePromise
-  extends Promise<AggregateCircle>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCircleSubscription
-  extends Promise<AsyncIterator<AggregateCircle>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Dot {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  action: String;
-  amount: Int;
-  total: Int;
-}
-
-export interface DotPromise extends Promise<Dot>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  action: () => Promise<String>;
-  amount: () => Promise<Int>;
-  total: () => Promise<Int>;
-  user: <T = UserPromise>() => T;
-}
-
-export interface DotSubscription
-  extends Promise<AsyncIterator<Dot>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  action: () => Promise<AsyncIterator<String>>;
-  amount: () => Promise<AsyncIterator<Int>>;
-  total: () => Promise<AsyncIterator<Int>>;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface DotNullablePromise extends Promise<Dot | null>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  action: () => Promise<String>;
-  amount: () => Promise<Int>;
-  total: () => Promise<Int>;
-  user: <T = UserPromise>() => T;
-}
-
-export interface CircleConnection {
-  pageInfo: PageInfo;
-  edges: CircleEdge[];
-}
-
-export interface CircleConnectionPromise
-  extends Promise<CircleConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CircleEdge>>() => T;
-  aggregate: <T = AggregateCirclePromise>() => T;
-}
-
-export interface CircleConnectionSubscription
-  extends Promise<AsyncIterator<CircleConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CircleEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCircleSubscription>() => T;
-}
-
-export interface DotSubscriptionPayload {
-  mutation: MutationType;
-  node: Dot;
-  updatedFields: String[];
-  previousValues: DotPreviousValues;
-}
-
-export interface DotSubscriptionPayloadPromise
-  extends Promise<DotSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = DotPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = DotPreviousValuesPromise>() => T;
-}
-
-export interface DotSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<DotSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = DotSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = DotPreviousValuesSubscription>() => T;
-}
-
-export interface AggregateTransaction {
-  count: Int;
-}
-
-export interface AggregateTransactionPromise
-  extends Promise<AggregateTransaction>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateTransactionSubscription
-  extends Promise<AsyncIterator<AggregateTransaction>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface DotPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  action: String;
-  amount: Int;
-  total: Int;
-}
-
-export interface DotPreviousValuesPromise
-  extends Promise<DotPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  action: () => Promise<String>;
-  amount: () => Promise<Int>;
-  total: () => Promise<Int>;
-}
-
-export interface DotPreviousValuesSubscription
-  extends Promise<AsyncIterator<DotPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  action: () => Promise<AsyncIterator<String>>;
-  amount: () => Promise<AsyncIterator<Int>>;
-  total: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface PreferencesEdge {
-  node: Preferences;
-  cursor: String;
-}
-
-export interface PreferencesEdgePromise
-  extends Promise<PreferencesEdge>,
-    Fragmentable {
-  node: <T = PreferencesPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PreferencesEdgeSubscription
-  extends Promise<AsyncIterator<PreferencesEdge>>,
-    Fragmentable {
-  node: <T = PreferencesSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface Funds {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  amountAdded: Int;
-  amountNet: Int;
-  chargeID: String;
-}
-
-export interface FundsPromise extends Promise<Funds>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  amountAdded: () => Promise<Int>;
-  amountNet: () => Promise<Int>;
-  chargeID: () => Promise<String>;
-  donations: <T = FragmentableArray<Donation>>(args?: {
-    where?: DonationWhereInput;
-    orderBy?: DonationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  transaction: <T = TransactionPromise>() => T;
-  user: <T = UserPromise>() => T;
-}
-
-export interface FundsSubscription
-  extends Promise<AsyncIterator<Funds>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  amountAdded: () => Promise<AsyncIterator<Int>>;
-  amountNet: () => Promise<AsyncIterator<Int>>;
-  chargeID: () => Promise<AsyncIterator<String>>;
-  donations: <T = Promise<AsyncIterator<DonationSubscription>>>(args?: {
-    where?: DonationWhereInput;
-    orderBy?: DonationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  transaction: <T = TransactionSubscription>() => T;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface FundsNullablePromise
-  extends Promise<Funds | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  amountAdded: () => Promise<Int>;
-  amountNet: () => Promise<Int>;
-  chargeID: () => Promise<String>;
-  donations: <T = FragmentableArray<Donation>>(args?: {
-    where?: DonationWhereInput;
-    orderBy?: DonationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  transaction: <T = TransactionPromise>() => T;
-  user: <T = UserPromise>() => T;
-}
-
-export interface LoopEdge {
-  node: Loop;
-  cursor: String;
-}
-
-export interface LoopEdgePromise extends Promise<LoopEdge>, Fragmentable {
-  node: <T = LoopPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface LoopEdgeSubscription
-  extends Promise<AsyncIterator<LoopEdge>>,
-    Fragmentable {
-  node: <T = LoopSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface EventSubscriptionPayload {
-  mutation: MutationType;
-  node: Event;
-  updatedFields: String[];
-  previousValues: EventPreviousValues;
-}
-
-export interface EventSubscriptionPayloadPromise
-  extends Promise<EventSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = EventPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = EventPreviousValuesPromise>() => T;
-}
-
-export interface EventSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<EventSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = EventSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = EventPreviousValuesSubscription>() => T;
-}
-
-export interface IdentityConnection {
-  pageInfo: PageInfo;
-  edges: IdentityEdge[];
-}
-
-export interface IdentityConnectionPromise
-  extends Promise<IdentityConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<IdentityEdge>>() => T;
-  aggregate: <T = AggregateIdentityPromise>() => T;
-}
-
-export interface IdentityConnectionSubscription
-  extends Promise<AsyncIterator<IdentityConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<IdentityEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateIdentitySubscription>() => T;
-}
-
-export interface EventPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  endDate: DateTimeOutput;
-  goal: Int;
-  multiplier?: Int;
-  specialEvent?: String;
-  specialEventDescription?: String;
-  specialEventName?: String;
-  sponsorName?: String;
-  sponsorWebsite?: String;
-  startDate: DateTimeOutput;
-}
-
-export interface EventPreviousValuesPromise
-  extends Promise<EventPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  endDate: () => Promise<DateTimeOutput>;
-  goal: () => Promise<Int>;
-  multiplier: () => Promise<Int>;
-  specialEvent: () => Promise<String>;
-  specialEventDescription: () => Promise<String>;
-  specialEventName: () => Promise<String>;
-  sponsorName: () => Promise<String>;
-  sponsorWebsite: () => Promise<String>;
-  startDate: () => Promise<DateTimeOutput>;
-}
-
-export interface EventPreviousValuesSubscription
-  extends Promise<AsyncIterator<EventPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  goal: () => Promise<AsyncIterator<Int>>;
-  multiplier: () => Promise<AsyncIterator<Int>>;
-  specialEvent: () => Promise<AsyncIterator<String>>;
-  specialEventDescription: () => Promise<AsyncIterator<String>>;
-  specialEventName: () => Promise<AsyncIterator<String>>;
-  sponsorName: () => Promise<AsyncIterator<String>>;
-  sponsorWebsite: () => Promise<AsyncIterator<String>>;
-  startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface HaloConnection {
-  pageInfo: PageInfo;
-  edges: HaloEdge[];
-}
-
-export interface HaloConnectionPromise
-  extends Promise<HaloConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<HaloEdge>>() => T;
-  aggregate: <T = AggregateHaloPromise>() => T;
-}
-
-export interface HaloConnectionSubscription
-  extends Promise<AsyncIterator<HaloConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<HaloEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateHaloSubscription>() => T;
-}
-
-export interface CircleInvite {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface CircleInvitePromise
-  extends Promise<CircleInvite>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  circle: <T = CirclePromise>() => T;
-  user: <T = UserPromise>() => T;
-}
-
-export interface CircleInviteSubscription
-  extends Promise<AsyncIterator<CircleInvite>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  circle: <T = CircleSubscription>() => T;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface CircleInviteNullablePromise
-  extends Promise<CircleInvite | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  circle: <T = CirclePromise>() => T;
-  user: <T = UserPromise>() => T;
-}
-
-export interface AggregateEvent {
-  count: Int;
-}
-
-export interface AggregateEventPromise
-  extends Promise<AggregateEvent>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateEventSubscription
-  extends Promise<AsyncIterator<AggregateEvent>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface FundsSubscriptionPayload {
-  mutation: MutationType;
-  node: Funds;
-  updatedFields: String[];
-  previousValues: FundsPreviousValues;
-}
-
-export interface FundsSubscriptionPayloadPromise
-  extends Promise<FundsSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = FundsPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = FundsPreviousValuesPromise>() => T;
-}
-
-export interface FundsSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<FundsSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = FundsSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = FundsPreviousValuesSubscription>() => T;
-}
-
-export interface DotEdge {
-  node: Dot;
-  cursor: String;
-}
-
-export interface DotEdgePromise extends Promise<DotEdge>, Fragmentable {
-  node: <T = DotPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface DotEdgeSubscription
-  extends Promise<AsyncIterator<DotEdge>>,
-    Fragmentable {
-  node: <T = DotSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface FundsPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  amountAdded: Int;
-  amountNet: Int;
-  chargeID: String;
-}
-
-export interface FundsPreviousValuesPromise
-  extends Promise<FundsPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  amountAdded: () => Promise<Int>;
-  amountNet: () => Promise<Int>;
-  chargeID: () => Promise<String>;
-}
-
-export interface FundsPreviousValuesSubscription
-  extends Promise<AsyncIterator<FundsPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  amountAdded: () => Promise<AsyncIterator<Int>>;
-  amountNet: () => Promise<AsyncIterator<Int>>;
-  chargeID: () => Promise<AsyncIterator<String>>;
-}
-
-export interface DonationConnection {
-  pageInfo: PageInfo;
-  edges: DonationEdge[];
-}
-
-export interface DonationConnectionPromise
-  extends Promise<DonationConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<DonationEdge>>() => T;
-  aggregate: <T = AggregateDonationPromise>() => T;
-}
-
-export interface DonationConnectionSubscription
-  extends Promise<AsyncIterator<DonationConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<DonationEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateDonationSubscription>() => T;
-}
-
-export interface Circle {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  description?: String;
-  name: String;
-  open: Boolean;
-}
-
-export interface CirclePromise extends Promise<Circle>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
-  name: () => Promise<String>;
-  open: () => Promise<Boolean>;
-  joinRequests: <T = FragmentableArray<CircleJoinRequest>>(args?: {
-    where?: CircleJoinRequestWhereInput;
-    orderBy?: CircleJoinRequestOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  invites: <T = FragmentableArray<CircleInvite>>(args?: {
-    where?: CircleInviteWhereInput;
-    orderBy?: CircleInviteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  members: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  owner: <T = UserPromise>() => T;
-}
-
-export interface CircleSubscription
-  extends Promise<AsyncIterator<Circle>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  description: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  open: () => Promise<AsyncIterator<Boolean>>;
-  joinRequests: <
-    T = Promise<AsyncIterator<CircleJoinRequestSubscription>>
-  >(args?: {
-    where?: CircleJoinRequestWhereInput;
-    orderBy?: CircleJoinRequestOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  invites: <T = Promise<AsyncIterator<CircleInviteSubscription>>>(args?: {
-    where?: CircleInviteWhereInput;
-    orderBy?: CircleInviteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  members: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  owner: <T = UserSubscription>() => T;
-}
-
-export interface CircleNullablePromise
-  extends Promise<Circle | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
-  name: () => Promise<String>;
-  open: () => Promise<Boolean>;
-  joinRequests: <T = FragmentableArray<CircleJoinRequest>>(args?: {
-    where?: CircleJoinRequestWhereInput;
-    orderBy?: CircleJoinRequestOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  invites: <T = FragmentableArray<CircleInvite>>(args?: {
-    where?: CircleInviteWhereInput;
-    orderBy?: CircleInviteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  members: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  owner: <T = UserPromise>() => T;
-}
-
-export interface AggregateCircleInvite {
-  count: Int;
-}
-
-export interface AggregateCircleInvitePromise
-  extends Promise<AggregateCircleInvite>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCircleInviteSubscription
-  extends Promise<AsyncIterator<AggregateCircleInvite>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface HaloSubscriptionPayload {
-  mutation: MutationType;
-  node: Halo;
-  updatedFields: String[];
-  previousValues: HaloPreviousValues;
-}
-
-export interface HaloSubscriptionPayloadPromise
-  extends Promise<HaloSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = HaloPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = HaloPreviousValuesPromise>() => T;
-}
-
-export interface HaloSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<HaloSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = HaloSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = HaloPreviousValuesSubscription>() => T;
-}
-
-export interface CircleEdge {
-  node: Circle;
-  cursor: String;
-}
-
-export interface CircleEdgePromise extends Promise<CircleEdge>, Fragmentable {
-  node: <T = CirclePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CircleEdgeSubscription
-  extends Promise<AsyncIterator<CircleEdge>>,
-    Fragmentable {
-  node: <T = CircleSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface HaloPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  key: String;
-  tier?: String;
-}
-
-export interface HaloPreviousValuesPromise
-  extends Promise<HaloPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  key: () => Promise<String>;
-  tier: () => Promise<String>;
-}
-
-export interface HaloPreviousValuesSubscription
-  extends Promise<AsyncIterator<HaloPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  key: () => Promise<AsyncIterator<String>>;
-  tier: () => Promise<AsyncIterator<String>>;
-}
-
-export interface TransactionConnection {
-  pageInfo: PageInfo;
-  edges: TransactionEdge[];
-}
-
-export interface TransactionConnectionPromise
-  extends Promise<TransactionConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<TransactionEdge>>() => T;
-  aggregate: <T = AggregateTransactionPromise>() => T;
-}
-
-export interface TransactionConnectionSubscription
-  extends Promise<AsyncIterator<TransactionConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TransactionEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTransactionSubscription>() => T;
-}
-
-export interface CircleJoinRequest {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface CircleJoinRequestPromise
-  extends Promise<CircleJoinRequest>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  circle: <T = CirclePromise>() => T;
-  user: <T = UserPromise>() => T;
-}
-
-export interface CircleJoinRequestSubscription
-  extends Promise<AsyncIterator<CircleJoinRequest>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  circle: <T = CircleSubscription>() => T;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface CircleJoinRequestNullablePromise
-  extends Promise<CircleJoinRequest | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  circle: <T = CirclePromise>() => T;
-  user: <T = UserPromise>() => T;
-}
-
-export interface AggregateIdentity {
-  count: Int;
-}
-
-export interface AggregateIdentityPromise
-  extends Promise<AggregateIdentity>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateIdentitySubscription
-  extends Promise<AsyncIterator<AggregateIdentity>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface IdentitySubscriptionPayload {
-  mutation: MutationType;
-  node: Identity;
-  updatedFields: String[];
-  previousValues: IdentityPreviousValues;
-}
-
-export interface IdentitySubscriptionPayloadPromise
-  extends Promise<IdentitySubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = IdentityPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = IdentityPreviousValuesPromise>() => T;
-}
-
-export interface IdentitySubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<IdentitySubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = IdentitySubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = IdentityPreviousValuesSubscription>() => T;
-}
-
-export interface FundsEdge {
-  node: Funds;
-  cursor: String;
-}
-
-export interface FundsEdgePromise extends Promise<FundsEdge>, Fragmentable {
-  node: <T = FundsPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface FundsEdgeSubscription
-  extends Promise<AsyncIterator<FundsEdge>>,
-    Fragmentable {
-  node: <T = FundsSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface IdentityPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  provider: IdentityProvider;
-  providerID: String;
-}
-
-export interface IdentityPreviousValuesPromise
-  extends Promise<IdentityPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  provider: () => Promise<IdentityProvider>;
-  providerID: () => Promise<String>;
-}
-
-export interface IdentityPreviousValuesSubscription
-  extends Promise<AsyncIterator<IdentityPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  provider: () => Promise<AsyncIterator<IdentityProvider>>;
-  providerID: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateDonation {
-  count: Int;
-}
-
-export interface AggregateDonationPromise
-  extends Promise<AggregateDonation>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateDonationSubscription
-  extends Promise<AsyncIterator<AggregateDonation>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface User {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  bio?: String;
-  email: String;
-  nameFirst: String;
-  nameLast: String;
-  picture?: String;
-  securityToken: Int;
-  username: String;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  bio: () => Promise<String>;
-  email: () => Promise<String>;
-  nameFirst: () => Promise<String>;
-  nameLast: () => Promise<String>;
-  picture: () => Promise<String>;
-  securityToken: () => Promise<Int>;
-  username: () => Promise<String>;
-  circleJoinRequests: <T = FragmentableArray<CircleJoinRequest>>(args?: {
-    where?: CircleJoinRequestWhereInput;
-    orderBy?: CircleJoinRequestOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  circleInvites: <T = FragmentableArray<CircleInvite>>(args?: {
-    where?: CircleInviteWhereInput;
-    orderBy?: CircleInviteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  circles: <T = FragmentableArray<Circle>>(args?: {
-    where?: CircleWhereInput;
-    orderBy?: CircleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  circlesOwned: <T = FragmentableArray<Circle>>(args?: {
-    where?: CircleWhereInput;
-    orderBy?: CircleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  dots: <T = FragmentableArray<Dot>>(args?: {
-    where?: DotWhereInput;
-    orderBy?: DotOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  followedCharities: <T = FragmentableArray<Charity>>(args?: {
-    where?: CharityWhereInput;
-    orderBy?: CharityOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  halos: <T = FragmentableArray<Halo>>(args?: {
-    where?: HaloWhereInput;
-    orderBy?: HaloOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  identity: <T = IdentityPromise>() => T;
-  loops: <T = FragmentableArray<Loop>>(args?: {
-    where?: LoopWhereInput;
-    orderBy?: LoopOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  preferences: <T = PreferencesPromise>() => T;
-  transactions: <T = FragmentableArray<Transaction>>(args?: {
-    where?: TransactionWhereInput;
-    orderBy?: TransactionOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  funds: <T = FragmentableArray<Funds>>(args?: {
-    where?: FundsWhereInput;
-    orderBy?: FundsOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  bio: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  nameFirst: () => Promise<AsyncIterator<String>>;
-  nameLast: () => Promise<AsyncIterator<String>>;
-  picture: () => Promise<AsyncIterator<String>>;
-  securityToken: () => Promise<AsyncIterator<Int>>;
-  username: () => Promise<AsyncIterator<String>>;
-  circleJoinRequests: <
-    T = Promise<AsyncIterator<CircleJoinRequestSubscription>>
-  >(args?: {
-    where?: CircleJoinRequestWhereInput;
-    orderBy?: CircleJoinRequestOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  circleInvites: <T = Promise<AsyncIterator<CircleInviteSubscription>>>(args?: {
-    where?: CircleInviteWhereInput;
-    orderBy?: CircleInviteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  circles: <T = Promise<AsyncIterator<CircleSubscription>>>(args?: {
-    where?: CircleWhereInput;
-    orderBy?: CircleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  circlesOwned: <T = Promise<AsyncIterator<CircleSubscription>>>(args?: {
-    where?: CircleWhereInput;
-    orderBy?: CircleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  dots: <T = Promise<AsyncIterator<DotSubscription>>>(args?: {
-    where?: DotWhereInput;
-    orderBy?: DotOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  followedCharities: <T = Promise<AsyncIterator<CharitySubscription>>>(args?: {
-    where?: CharityWhereInput;
-    orderBy?: CharityOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  halos: <T = Promise<AsyncIterator<HaloSubscription>>>(args?: {
-    where?: HaloWhereInput;
-    orderBy?: HaloOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  identity: <T = IdentitySubscription>() => T;
-  loops: <T = Promise<AsyncIterator<LoopSubscription>>>(args?: {
-    where?: LoopWhereInput;
-    orderBy?: LoopOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  preferences: <T = PreferencesSubscription>() => T;
-  transactions: <T = Promise<AsyncIterator<TransactionSubscription>>>(args?: {
-    where?: TransactionWhereInput;
-    orderBy?: TransactionOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  funds: <T = Promise<AsyncIterator<FundsSubscription>>>(args?: {
-    where?: FundsWhereInput;
-    orderBy?: FundsOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  bio: () => Promise<String>;
-  email: () => Promise<String>;
-  nameFirst: () => Promise<String>;
-  nameLast: () => Promise<String>;
-  picture: () => Promise<String>;
-  securityToken: () => Promise<Int>;
-  username: () => Promise<String>;
-  circleJoinRequests: <T = FragmentableArray<CircleJoinRequest>>(args?: {
-    where?: CircleJoinRequestWhereInput;
-    orderBy?: CircleJoinRequestOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  circleInvites: <T = FragmentableArray<CircleInvite>>(args?: {
-    where?: CircleInviteWhereInput;
-    orderBy?: CircleInviteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  circles: <T = FragmentableArray<Circle>>(args?: {
-    where?: CircleWhereInput;
-    orderBy?: CircleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  circlesOwned: <T = FragmentableArray<Circle>>(args?: {
-    where?: CircleWhereInput;
-    orderBy?: CircleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  dots: <T = FragmentableArray<Dot>>(args?: {
-    where?: DotWhereInput;
-    orderBy?: DotOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  followedCharities: <T = FragmentableArray<Charity>>(args?: {
-    where?: CharityWhereInput;
-    orderBy?: CharityOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  halos: <T = FragmentableArray<Halo>>(args?: {
-    where?: HaloWhereInput;
-    orderBy?: HaloOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  identity: <T = IdentityPromise>() => T;
-  loops: <T = FragmentableArray<Loop>>(args?: {
-    where?: LoopWhereInput;
-    orderBy?: LoopOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  preferences: <T = PreferencesPromise>() => T;
-  transactions: <T = FragmentableArray<Transaction>>(args?: {
-    where?: TransactionWhereInput;
-    orderBy?: TransactionOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  funds: <T = FragmentableArray<Funds>>(args?: {
-    where?: FundsWhereInput;
-    orderBy?: FundsOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface CircleInviteConnection {
-  pageInfo: PageInfo;
-  edges: CircleInviteEdge[];
-}
-
-export interface CircleInviteConnectionPromise
-  extends Promise<CircleInviteConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CircleInviteEdge>>() => T;
-  aggregate: <T = AggregateCircleInvitePromise>() => T;
-}
-
-export interface CircleInviteConnectionSubscription
-  extends Promise<AsyncIterator<CircleInviteConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CircleInviteEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCircleInviteSubscription>() => T;
 }
 
 export interface Charity {
@@ -8203,112 +6575,1168 @@ export interface CharityNullablePromise
   }) => T;
 }
 
-export interface PreferencesSubscriptionPayload {
-  mutation: MutationType;
-  node: Preferences;
-  updatedFields: String[];
-  previousValues: PreferencesPreviousValues;
-}
-
-export interface PreferencesSubscriptionPayloadPromise
-  extends Promise<PreferencesSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PreferencesPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PreferencesPreviousValuesPromise>() => T;
-}
-
-export interface PreferencesSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PreferencesSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PreferencesSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PreferencesPreviousValuesSubscription>() => T;
-}
-
-export interface Transaction {
-  id: Int;
+export interface Preferences {
+  id: ID_Output;
   createdAt: DateTimeOutput;
-  balance: Int;
+  updatedAt: DateTimeOutput;
+  allowDonationEmails: Boolean;
+  publicProfile: Boolean;
 }
 
-export interface TransactionPromise extends Promise<Transaction>, Fragmentable {
-  id: () => Promise<Int>;
+export interface PreferencesPromise extends Promise<Preferences>, Fragmentable {
+  id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
-  balance: () => Promise<Int>;
-  donations: <T = FragmentableArray<Donation>>(args?: {
-    where?: DonationWhereInput;
-    orderBy?: DonationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  funds: <T = FundsPromise>() => T;
+  updatedAt: () => Promise<DateTimeOutput>;
+  allowDonationEmails: () => Promise<Boolean>;
+  publicProfile: () => Promise<Boolean>;
   user: <T = UserPromise>() => T;
 }
 
-export interface TransactionSubscription
-  extends Promise<AsyncIterator<Transaction>>,
+export interface PreferencesSubscription
+  extends Promise<AsyncIterator<Preferences>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<Int>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  balance: () => Promise<AsyncIterator<Int>>;
-  donations: <T = Promise<AsyncIterator<DonationSubscription>>>(args?: {
-    where?: DonationWhereInput;
-    orderBy?: DonationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  funds: <T = FundsSubscription>() => T;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  allowDonationEmails: () => Promise<AsyncIterator<Boolean>>;
+  publicProfile: () => Promise<AsyncIterator<Boolean>>;
   user: <T = UserSubscription>() => T;
 }
 
-export interface TransactionNullablePromise
-  extends Promise<Transaction | null>,
+export interface PreferencesNullablePromise
+  extends Promise<Preferences | null>,
     Fragmentable {
-  id: () => Promise<Int>;
+  id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
-  balance: () => Promise<Int>;
-  donations: <T = FragmentableArray<Donation>>(args?: {
-    where?: DonationWhereInput;
-    orderBy?: DonationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  funds: <T = FundsPromise>() => T;
+  updatedAt: () => Promise<DateTimeOutput>;
+  allowDonationEmails: () => Promise<Boolean>;
+  publicProfile: () => Promise<Boolean>;
   user: <T = UserPromise>() => T;
 }
 
-export interface LoopPreviousValues {
+export interface HaloEdge {
+  node: Halo;
+  cursor: String;
+}
+
+export interface HaloEdgePromise extends Promise<HaloEdge>, Fragmentable {
+  node: <T = HaloPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface HaloEdgeSubscription
+  extends Promise<AsyncIterator<HaloEdge>>,
+    Fragmentable {
+  node: <T = HaloSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CircleSubscriptionPayload {
+  mutation: MutationType;
+  node: Circle;
+  updatedFields: String[];
+  previousValues: CirclePreviousValues;
+}
+
+export interface CircleSubscriptionPayloadPromise
+  extends Promise<CircleSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CirclePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CirclePreviousValuesPromise>() => T;
+}
+
+export interface CircleSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CircleSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CircleSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CirclePreviousValuesSubscription>() => T;
+}
+
+export interface AggregateEvent {
+  count: Int;
+}
+
+export interface AggregateEventPromise
+  extends Promise<AggregateEvent>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateEventSubscription
+  extends Promise<AsyncIterator<AggregateEvent>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CirclePreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  description?: String;
+  name: String;
+  open: Boolean;
+}
+
+export interface CirclePreviousValuesPromise
+  extends Promise<CirclePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  name: () => Promise<String>;
+  open: () => Promise<Boolean>;
+}
+
+export interface CirclePreviousValuesSubscription
+  extends Promise<AsyncIterator<CirclePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  description: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  open: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface EventConnection {
+  pageInfo: PageInfo;
+  edges: EventEdge[];
+}
+
+export interface EventConnectionPromise
+  extends Promise<EventConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<EventEdge>>() => T;
+  aggregate: <T = AggregateEventPromise>() => T;
+}
+
+export interface EventConnectionSubscription
+  extends Promise<AsyncIterator<EventConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<EventEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateEventSubscription>() => T;
+}
+
+export interface Loop {
   id: ID_Output;
   createdAt: DateTimeOutput;
   count: Int;
 }
 
-export interface LoopPreviousValuesPromise
-  extends Promise<LoopPreviousValues>,
-    Fragmentable {
+export interface LoopPromise extends Promise<Loop>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   count: () => Promise<Int>;
+  event: <T = EventPromise>() => T;
+  user: <T = UserPromise>() => T;
 }
 
-export interface LoopPreviousValuesSubscription
-  extends Promise<AsyncIterator<LoopPreviousValues>>,
+export interface LoopSubscription
+  extends Promise<AsyncIterator<Loop>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   count: () => Promise<AsyncIterator<Int>>;
+  event: <T = EventSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface LoopNullablePromise
+  extends Promise<Loop | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  count: () => Promise<Int>;
+  event: <T = EventPromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface DotEdge {
+  node: Dot;
+  cursor: String;
+}
+
+export interface DotEdgePromise extends Promise<DotEdge>, Fragmentable {
+  node: <T = DotPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface DotEdgeSubscription
+  extends Promise<AsyncIterator<DotEdge>>,
+    Fragmentable {
+  node: <T = DotSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CircleInviteSubscriptionPayload {
+  mutation: MutationType;
+  node: CircleInvite;
+  updatedFields: String[];
+  previousValues: CircleInvitePreviousValues;
+}
+
+export interface CircleInviteSubscriptionPayloadPromise
+  extends Promise<CircleInviteSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CircleInvitePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CircleInvitePreviousValuesPromise>() => T;
+}
+
+export interface CircleInviteSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CircleInviteSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CircleInviteSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CircleInvitePreviousValuesSubscription>() => T;
+}
+
+export interface AggregateCircleJoinRequest {
+  count: Int;
+}
+
+export interface AggregateCircleJoinRequestPromise
+  extends Promise<AggregateCircleJoinRequest>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCircleJoinRequestSubscription
+  extends Promise<AsyncIterator<AggregateCircleJoinRequest>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CircleInvitePreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface CircleInvitePreviousValuesPromise
+  extends Promise<CircleInvitePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface CircleInvitePreviousValuesSubscription
+  extends Promise<AsyncIterator<CircleInvitePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface CircleJoinRequestConnection {
+  pageInfo: PageInfo;
+  edges: CircleJoinRequestEdge[];
+}
+
+export interface CircleJoinRequestConnectionPromise
+  extends Promise<CircleJoinRequestConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CircleJoinRequestEdge>>() => T;
+  aggregate: <T = AggregateCircleJoinRequestPromise>() => T;
+}
+
+export interface CircleJoinRequestConnectionSubscription
+  extends Promise<AsyncIterator<CircleJoinRequestConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CircleJoinRequestEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCircleJoinRequestSubscription>() => T;
+}
+
+export interface Identity {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  provider: IdentityProvider;
+  providerID: String;
+}
+
+export interface IdentityPromise extends Promise<Identity>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  provider: () => Promise<IdentityProvider>;
+  providerID: () => Promise<String>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface IdentitySubscription
+  extends Promise<AsyncIterator<Identity>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  provider: () => Promise<AsyncIterator<IdentityProvider>>;
+  providerID: () => Promise<AsyncIterator<String>>;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface IdentityNullablePromise
+  extends Promise<Identity | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  provider: () => Promise<IdentityProvider>;
+  providerID: () => Promise<String>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface CircleInviteEdge {
+  node: CircleInvite;
+  cursor: String;
+}
+
+export interface CircleInviteEdgePromise
+  extends Promise<CircleInviteEdge>,
+    Fragmentable {
+  node: <T = CircleInvitePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CircleInviteEdgeSubscription
+  extends Promise<AsyncIterator<CircleInviteEdge>>,
+    Fragmentable {
+  node: <T = CircleInviteSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CircleJoinRequestSubscriptionPayload {
+  mutation: MutationType;
+  node: CircleJoinRequest;
+  updatedFields: String[];
+  previousValues: CircleJoinRequestPreviousValues;
+}
+
+export interface CircleJoinRequestSubscriptionPayloadPromise
+  extends Promise<CircleJoinRequestSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CircleJoinRequestPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CircleJoinRequestPreviousValuesPromise>() => T;
+}
+
+export interface CircleJoinRequestSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CircleJoinRequestSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CircleJoinRequestSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CircleJoinRequestPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateCircle {
+  count: Int;
+}
+
+export interface AggregateCirclePromise
+  extends Promise<AggregateCircle>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCircleSubscription
+  extends Promise<AsyncIterator<AggregateCircle>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CircleJoinRequestPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface CircleJoinRequestPreviousValuesPromise
+  extends Promise<CircleJoinRequestPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface CircleJoinRequestPreviousValuesSubscription
+  extends Promise<AsyncIterator<CircleJoinRequestPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface CircleConnection {
+  pageInfo: PageInfo;
+  edges: CircleEdge[];
+}
+
+export interface CircleConnectionPromise
+  extends Promise<CircleConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CircleEdge>>() => T;
+  aggregate: <T = AggregateCirclePromise>() => T;
+}
+
+export interface CircleConnectionSubscription
+  extends Promise<AsyncIterator<CircleConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CircleEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCircleSubscription>() => T;
+}
+
+export interface Halo {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  key: String;
+  tier?: String;
+}
+
+export interface HaloPromise extends Promise<Halo>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  key: () => Promise<String>;
+  tier: () => Promise<String>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface HaloSubscription
+  extends Promise<AsyncIterator<Halo>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  key: () => Promise<AsyncIterator<String>>;
+  tier: () => Promise<AsyncIterator<String>>;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface HaloNullablePromise
+  extends Promise<Halo | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  key: () => Promise<String>;
+  tier: () => Promise<String>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface CharityEdge {
+  node: Charity;
+  cursor: String;
+}
+
+export interface CharityEdgePromise extends Promise<CharityEdge>, Fragmentable {
+  node: <T = CharityPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CharityEdgeSubscription
+  extends Promise<AsyncIterator<CharityEdge>>,
+    Fragmentable {
+  node: <T = CharitySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface DotSubscriptionPayload {
+  mutation: MutationType;
+  node: Dot;
+  updatedFields: String[];
+  previousValues: DotPreviousValues;
+}
+
+export interface DotSubscriptionPayloadPromise
+  extends Promise<DotSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = DotPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = DotPreviousValuesPromise>() => T;
+}
+
+export interface DotSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<DotSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = DotSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = DotPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateCharge {
+  count: Int;
+}
+
+export interface AggregateChargePromise
+  extends Promise<AggregateCharge>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateChargeSubscription
+  extends Promise<AsyncIterator<AggregateCharge>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface DotPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  action: String;
+  amount: Int;
+  total: Int;
+}
+
+export interface DotPreviousValuesPromise
+  extends Promise<DotPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  action: () => Promise<String>;
+  amount: () => Promise<Int>;
+  total: () => Promise<Int>;
+}
+
+export interface DotPreviousValuesSubscription
+  extends Promise<AsyncIterator<DotPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  action: () => Promise<AsyncIterator<String>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  total: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TransferPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  amount: Int;
+  chargeBalance: Int;
+  transferID: String;
+}
+
+export interface TransferPreviousValuesPromise
+  extends Promise<TransferPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  amount: () => Promise<Int>;
+  chargeBalance: () => Promise<Int>;
+  transferID: () => Promise<String>;
+}
+
+export interface TransferPreviousValuesSubscription
+  extends Promise<AsyncIterator<TransferPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  chargeBalance: () => Promise<AsyncIterator<Int>>;
+  transferID: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TransferSubscriptionPayload {
+  mutation: MutationType;
+  node: Transfer;
+  updatedFields: String[];
+  previousValues: TransferPreviousValues;
+}
+
+export interface TransferSubscriptionPayloadPromise
+  extends Promise<TransferSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TransferPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TransferPreviousValuesPromise>() => T;
+}
+
+export interface TransferSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TransferSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TransferSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TransferPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateTransfer {
+  count: Int;
+}
+
+export interface AggregateTransferPromise
+  extends Promise<AggregateTransfer>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTransferSubscription
+  extends Promise<AsyncIterator<AggregateTransfer>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface EventSubscriptionPayload {
+  mutation: MutationType;
+  node: Event;
+  updatedFields: String[];
+  previousValues: EventPreviousValues;
+}
+
+export interface EventSubscriptionPayloadPromise
+  extends Promise<EventSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = EventPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = EventPreviousValuesPromise>() => T;
+}
+
+export interface EventSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<EventSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = EventSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = EventPreviousValuesSubscription>() => T;
+}
+
+export interface LoopEdge {
+  node: Loop;
+  cursor: String;
+}
+
+export interface LoopEdgePromise extends Promise<LoopEdge>, Fragmentable {
+  node: <T = LoopPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface LoopEdgeSubscription
+  extends Promise<AsyncIterator<LoopEdge>>,
+    Fragmentable {
+  node: <T = LoopSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface EventPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  endDate: DateTimeOutput;
+  goal: Int;
+  multiplier?: Int;
+  specialEvent?: String;
+  specialEventDescription?: String;
+  specialEventName?: String;
+  sponsorName?: String;
+  sponsorWebsite?: String;
+  startDate: DateTimeOutput;
+}
+
+export interface EventPreviousValuesPromise
+  extends Promise<EventPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  endDate: () => Promise<DateTimeOutput>;
+  goal: () => Promise<Int>;
+  multiplier: () => Promise<Int>;
+  specialEvent: () => Promise<String>;
+  specialEventDescription: () => Promise<String>;
+  specialEventName: () => Promise<String>;
+  sponsorName: () => Promise<String>;
+  sponsorWebsite: () => Promise<String>;
+  startDate: () => Promise<DateTimeOutput>;
+}
+
+export interface EventPreviousValuesSubscription
+  extends Promise<AsyncIterator<EventPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+  goal: () => Promise<AsyncIterator<Int>>;
+  multiplier: () => Promise<AsyncIterator<Int>>;
+  specialEvent: () => Promise<AsyncIterator<String>>;
+  specialEventDescription: () => Promise<AsyncIterator<String>>;
+  specialEventName: () => Promise<AsyncIterator<String>>;
+  sponsorName: () => Promise<AsyncIterator<String>>;
+  sponsorWebsite: () => Promise<AsyncIterator<String>>;
+  startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface IdentityConnection {
+  pageInfo: PageInfo;
+  edges: IdentityEdge[];
+}
+
+export interface IdentityConnectionPromise
+  extends Promise<IdentityConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<IdentityEdge>>() => T;
+  aggregate: <T = AggregateIdentityPromise>() => T;
+}
+
+export interface IdentityConnectionSubscription
+  extends Promise<AsyncIterator<IdentityConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<IdentityEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateIdentitySubscription>() => T;
+}
+
+export interface Dot {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  action: String;
+  amount: Int;
+  total: Int;
+}
+
+export interface DotPromise extends Promise<Dot>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  action: () => Promise<String>;
+  amount: () => Promise<Int>;
+  total: () => Promise<Int>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface DotSubscription
+  extends Promise<AsyncIterator<Dot>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  action: () => Promise<AsyncIterator<String>>;
+  amount: () => Promise<AsyncIterator<Int>>;
+  total: () => Promise<AsyncIterator<Int>>;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface DotNullablePromise extends Promise<Dot | null>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  action: () => Promise<String>;
+  amount: () => Promise<Int>;
+  total: () => Promise<Int>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface HaloConnection {
+  pageInfo: PageInfo;
+  edges: HaloEdge[];
+}
+
+export interface HaloConnectionPromise
+  extends Promise<HaloConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<HaloEdge>>() => T;
+  aggregate: <T = AggregateHaloPromise>() => T;
+}
+
+export interface HaloConnectionSubscription
+  extends Promise<AsyncIterator<HaloConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<HaloEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateHaloSubscription>() => T;
+}
+
+export interface HaloSubscriptionPayload {
+  mutation: MutationType;
+  node: Halo;
+  updatedFields: String[];
+  previousValues: HaloPreviousValues;
+}
+
+export interface HaloSubscriptionPayloadPromise
+  extends Promise<HaloSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = HaloPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = HaloPreviousValuesPromise>() => T;
+}
+
+export interface HaloSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<HaloSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = HaloSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = HaloPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateDot {
+  count: Int;
+}
+
+export interface AggregateDotPromise
+  extends Promise<AggregateDot>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateDotSubscription
+  extends Promise<AsyncIterator<AggregateDot>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface HaloPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  key: String;
+  tier?: String;
+}
+
+export interface HaloPreviousValuesPromise
+  extends Promise<HaloPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  key: () => Promise<String>;
+  tier: () => Promise<String>;
+}
+
+export interface HaloPreviousValuesSubscription
+  extends Promise<AsyncIterator<HaloPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  key: () => Promise<AsyncIterator<String>>;
+  tier: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CircleJoinRequestEdge {
+  node: CircleJoinRequest;
+  cursor: String;
+}
+
+export interface CircleJoinRequestEdgePromise
+  extends Promise<CircleJoinRequestEdge>,
+    Fragmentable {
+  node: <T = CircleJoinRequestPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CircleJoinRequestEdgeSubscription
+  extends Promise<AsyncIterator<CircleJoinRequestEdge>>,
+    Fragmentable {
+  node: <T = CircleJoinRequestSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CircleInvite {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface CircleInvitePromise
+  extends Promise<CircleInvite>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  circle: <T = CirclePromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface CircleInviteSubscription
+  extends Promise<AsyncIterator<CircleInvite>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  circle: <T = CircleSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface CircleInviteNullablePromise
+  extends Promise<CircleInvite | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  circle: <T = CirclePromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface CircleInviteConnection {
+  pageInfo: PageInfo;
+  edges: CircleInviteEdge[];
+}
+
+export interface CircleInviteConnectionPromise
+  extends Promise<CircleInviteConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CircleInviteEdge>>() => T;
+  aggregate: <T = AggregateCircleInvitePromise>() => T;
+}
+
+export interface CircleInviteConnectionSubscription
+  extends Promise<AsyncIterator<CircleInviteConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CircleInviteEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCircleInviteSubscription>() => T;
+}
+
+export interface IdentitySubscriptionPayload {
+  mutation: MutationType;
+  node: Identity;
+  updatedFields: String[];
+  previousValues: IdentityPreviousValues;
+}
+
+export interface IdentitySubscriptionPayloadPromise
+  extends Promise<IdentitySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = IdentityPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = IdentityPreviousValuesPromise>() => T;
+}
+
+export interface IdentitySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<IdentitySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = IdentitySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = IdentityPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateCharity {
+  count: Int;
+}
+
+export interface AggregateCharityPromise
+  extends Promise<AggregateCharity>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCharitySubscription
+  extends Promise<AsyncIterator<AggregateCharity>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface IdentityPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  provider: IdentityProvider;
+  providerID: String;
+}
+
+export interface IdentityPreviousValuesPromise
+  extends Promise<IdentityPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  provider: () => Promise<IdentityProvider>;
+  providerID: () => Promise<String>;
+}
+
+export interface IdentityPreviousValuesSubscription
+  extends Promise<AsyncIterator<IdentityPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  provider: () => Promise<AsyncIterator<IdentityProvider>>;
+  providerID: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface Circle {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  description?: String;
+  name: String;
+  open: Boolean;
+}
+
+export interface CirclePromise extends Promise<Circle>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  name: () => Promise<String>;
+  open: () => Promise<Boolean>;
+  joinRequests: <T = FragmentableArray<CircleJoinRequest>>(args?: {
+    where?: CircleJoinRequestWhereInput;
+    orderBy?: CircleJoinRequestOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  invites: <T = FragmentableArray<CircleInvite>>(args?: {
+    where?: CircleInviteWhereInput;
+    orderBy?: CircleInviteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  members: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  owner: <T = UserPromise>() => T;
+}
+
+export interface CircleSubscription
+  extends Promise<AsyncIterator<Circle>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  description: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  open: () => Promise<AsyncIterator<Boolean>>;
+  joinRequests: <
+    T = Promise<AsyncIterator<CircleJoinRequestSubscription>>
+  >(args?: {
+    where?: CircleJoinRequestWhereInput;
+    orderBy?: CircleJoinRequestOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  invites: <T = Promise<AsyncIterator<CircleInviteSubscription>>>(args?: {
+    where?: CircleInviteWhereInput;
+    orderBy?: CircleInviteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  members: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  owner: <T = UserSubscription>() => T;
+}
+
+export interface CircleNullablePromise
+  extends Promise<Circle | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  name: () => Promise<String>;
+  open: () => Promise<Boolean>;
+  joinRequests: <T = FragmentableArray<CircleJoinRequest>>(args?: {
+    where?: CircleJoinRequestWhereInput;
+    orderBy?: CircleJoinRequestOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  invites: <T = FragmentableArray<CircleInvite>>(args?: {
+    where?: CircleInviteWhereInput;
+    orderBy?: CircleInviteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  members: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  owner: <T = UserPromise>() => T;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
 export interface LoopSubscriptionPayload {
@@ -8352,6 +7780,102 @@ export interface AggregateHaloSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface LoopPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  count: Int;
+}
+
+export interface LoopPreviousValuesPromise
+  extends Promise<LoopPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  count: () => Promise<Int>;
+}
+
+export interface LoopPreviousValuesSubscription
+  extends Promise<AsyncIterator<LoopPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface DotConnection {
+  pageInfo: PageInfo;
+  edges: DotEdge[];
+}
+
+export interface DotConnectionPromise
+  extends Promise<DotConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<DotEdge>>() => T;
+  aggregate: <T = AggregateDotPromise>() => T;
+}
+
+export interface DotConnectionSubscription
+  extends Promise<AsyncIterator<DotConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<DotEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateDotSubscription>() => T;
+}
+
+export interface CircleJoinRequest {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface CircleJoinRequestPromise
+  extends Promise<CircleJoinRequest>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  circle: <T = CirclePromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface CircleJoinRequestSubscription
+  extends Promise<AsyncIterator<CircleJoinRequest>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  circle: <T = CircleSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface CircleJoinRequestNullablePromise
+  extends Promise<CircleJoinRequest | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  circle: <T = CirclePromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface CircleEdge {
+  node: Circle;
+  cursor: String;
+}
+
+export interface CircleEdgePromise extends Promise<CircleEdge>, Fragmentable {
+  node: <T = CirclePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CircleEdgeSubscription
+  extends Promise<AsyncIterator<CircleEdge>>,
+    Fragmentable {
+  node: <T = CircleSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
 export interface UserEdge {
   node: User;
   cursor: String;
@@ -8369,53 +7893,494 @@ export interface UserEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface CircleJoinRequestEdge {
-  node: CircleJoinRequest;
+export interface TransactionSubscriptionPayload {
+  mutation: MutationType;
+  node: Transaction;
+  updatedFields: String[];
+  previousValues: TransactionPreviousValues;
+}
+
+export interface TransactionSubscriptionPayloadPromise
+  extends Promise<TransactionSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TransactionPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TransactionPreviousValuesPromise>() => T;
+}
+
+export interface TransactionSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TransactionSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TransactionSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TransactionPreviousValuesSubscription>() => T;
+}
+
+export interface User {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  bio?: String;
+  email: String;
+  nameFirst: String;
+  nameLast: String;
+  picture?: String;
+  securityToken: Int;
+  username: String;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  bio: () => Promise<String>;
+  email: () => Promise<String>;
+  nameFirst: () => Promise<String>;
+  nameLast: () => Promise<String>;
+  picture: () => Promise<String>;
+  securityToken: () => Promise<Int>;
+  username: () => Promise<String>;
+  circleJoinRequests: <T = FragmentableArray<CircleJoinRequest>>(args?: {
+    where?: CircleJoinRequestWhereInput;
+    orderBy?: CircleJoinRequestOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  circleInvites: <T = FragmentableArray<CircleInvite>>(args?: {
+    where?: CircleInviteWhereInput;
+    orderBy?: CircleInviteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  circles: <T = FragmentableArray<Circle>>(args?: {
+    where?: CircleWhereInput;
+    orderBy?: CircleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  circlesOwned: <T = FragmentableArray<Circle>>(args?: {
+    where?: CircleWhereInput;
+    orderBy?: CircleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  dots: <T = FragmentableArray<Dot>>(args?: {
+    where?: DotWhereInput;
+    orderBy?: DotOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  followedCharities: <T = FragmentableArray<Charity>>(args?: {
+    where?: CharityWhereInput;
+    orderBy?: CharityOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  funds: <T = FragmentableArray<Charge>>(args?: {
+    where?: ChargeWhereInput;
+    orderBy?: ChargeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  halos: <T = FragmentableArray<Halo>>(args?: {
+    where?: HaloWhereInput;
+    orderBy?: HaloOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  identity: <T = IdentityPromise>() => T;
+  loops: <T = FragmentableArray<Loop>>(args?: {
+    where?: LoopWhereInput;
+    orderBy?: LoopOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  preferences: <T = PreferencesPromise>() => T;
+  transactions: <T = FragmentableArray<Transaction>>(args?: {
+    where?: TransactionWhereInput;
+    orderBy?: TransactionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  bio: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  nameFirst: () => Promise<AsyncIterator<String>>;
+  nameLast: () => Promise<AsyncIterator<String>>;
+  picture: () => Promise<AsyncIterator<String>>;
+  securityToken: () => Promise<AsyncIterator<Int>>;
+  username: () => Promise<AsyncIterator<String>>;
+  circleJoinRequests: <
+    T = Promise<AsyncIterator<CircleJoinRequestSubscription>>
+  >(args?: {
+    where?: CircleJoinRequestWhereInput;
+    orderBy?: CircleJoinRequestOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  circleInvites: <T = Promise<AsyncIterator<CircleInviteSubscription>>>(args?: {
+    where?: CircleInviteWhereInput;
+    orderBy?: CircleInviteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  circles: <T = Promise<AsyncIterator<CircleSubscription>>>(args?: {
+    where?: CircleWhereInput;
+    orderBy?: CircleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  circlesOwned: <T = Promise<AsyncIterator<CircleSubscription>>>(args?: {
+    where?: CircleWhereInput;
+    orderBy?: CircleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  dots: <T = Promise<AsyncIterator<DotSubscription>>>(args?: {
+    where?: DotWhereInput;
+    orderBy?: DotOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  followedCharities: <T = Promise<AsyncIterator<CharitySubscription>>>(args?: {
+    where?: CharityWhereInput;
+    orderBy?: CharityOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  funds: <T = Promise<AsyncIterator<ChargeSubscription>>>(args?: {
+    where?: ChargeWhereInput;
+    orderBy?: ChargeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  halos: <T = Promise<AsyncIterator<HaloSubscription>>>(args?: {
+    where?: HaloWhereInput;
+    orderBy?: HaloOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  identity: <T = IdentitySubscription>() => T;
+  loops: <T = Promise<AsyncIterator<LoopSubscription>>>(args?: {
+    where?: LoopWhereInput;
+    orderBy?: LoopOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  preferences: <T = PreferencesSubscription>() => T;
+  transactions: <T = Promise<AsyncIterator<TransactionSubscription>>>(args?: {
+    where?: TransactionWhereInput;
+    orderBy?: TransactionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  bio: () => Promise<String>;
+  email: () => Promise<String>;
+  nameFirst: () => Promise<String>;
+  nameLast: () => Promise<String>;
+  picture: () => Promise<String>;
+  securityToken: () => Promise<Int>;
+  username: () => Promise<String>;
+  circleJoinRequests: <T = FragmentableArray<CircleJoinRequest>>(args?: {
+    where?: CircleJoinRequestWhereInput;
+    orderBy?: CircleJoinRequestOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  circleInvites: <T = FragmentableArray<CircleInvite>>(args?: {
+    where?: CircleInviteWhereInput;
+    orderBy?: CircleInviteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  circles: <T = FragmentableArray<Circle>>(args?: {
+    where?: CircleWhereInput;
+    orderBy?: CircleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  circlesOwned: <T = FragmentableArray<Circle>>(args?: {
+    where?: CircleWhereInput;
+    orderBy?: CircleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  dots: <T = FragmentableArray<Dot>>(args?: {
+    where?: DotWhereInput;
+    orderBy?: DotOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  followedCharities: <T = FragmentableArray<Charity>>(args?: {
+    where?: CharityWhereInput;
+    orderBy?: CharityOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  funds: <T = FragmentableArray<Charge>>(args?: {
+    where?: ChargeWhereInput;
+    orderBy?: ChargeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  halos: <T = FragmentableArray<Halo>>(args?: {
+    where?: HaloWhereInput;
+    orderBy?: HaloOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  identity: <T = IdentityPromise>() => T;
+  loops: <T = FragmentableArray<Loop>>(args?: {
+    where?: LoopWhereInput;
+    orderBy?: LoopOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  preferences: <T = PreferencesPromise>() => T;
+  transactions: <T = FragmentableArray<Transaction>>(args?: {
+    where?: TransactionWhereInput;
+    orderBy?: TransactionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PreferencesPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  allowDonationEmails: Boolean;
+  publicProfile: Boolean;
+}
+
+export interface PreferencesPreviousValuesPromise
+  extends Promise<PreferencesPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  allowDonationEmails: () => Promise<Boolean>;
+  publicProfile: () => Promise<Boolean>;
+}
+
+export interface PreferencesPreviousValuesSubscription
+  extends Promise<AsyncIterator<PreferencesPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  allowDonationEmails: () => Promise<AsyncIterator<Boolean>>;
+  publicProfile: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface PreferencesSubscriptionPayload {
+  mutation: MutationType;
+  node: Preferences;
+  updatedFields: String[];
+  previousValues: PreferencesPreviousValues;
+}
+
+export interface PreferencesSubscriptionPayloadPromise
+  extends Promise<PreferencesSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PreferencesPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PreferencesPreviousValuesPromise>() => T;
+}
+
+export interface PreferencesSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PreferencesSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PreferencesSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PreferencesPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateIdentity {
+  count: Int;
+}
+
+export interface AggregateIdentityPromise
+  extends Promise<AggregateIdentity>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateIdentitySubscription
+  extends Promise<AsyncIterator<AggregateIdentity>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CharityConnection {
+  pageInfo: PageInfo;
+  edges: CharityEdge[];
+}
+
+export interface CharityConnectionPromise
+  extends Promise<CharityConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CharityEdge>>() => T;
+  aggregate: <T = AggregateCharityPromise>() => T;
+}
+
+export interface CharityConnectionSubscription
+  extends Promise<AsyncIterator<CharityConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CharityEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCharitySubscription>() => T;
+}
+
+export interface AggregateCircleInvite {
+  count: Int;
+}
+
+export interface AggregateCircleInvitePromise
+  extends Promise<AggregateCircleInvite>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCircleInviteSubscription
+  extends Promise<AsyncIterator<AggregateCircleInvite>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface EventEdge {
+  node: Event;
   cursor: String;
 }
 
-export interface CircleJoinRequestEdgePromise
-  extends Promise<CircleJoinRequestEdge>,
-    Fragmentable {
-  node: <T = CircleJoinRequestPromise>() => T;
+export interface EventEdgePromise extends Promise<EventEdge>, Fragmentable {
+  node: <T = EventPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface CircleJoinRequestEdgeSubscription
-  extends Promise<AsyncIterator<CircleJoinRequestEdge>>,
+export interface EventEdgeSubscription
+  extends Promise<AsyncIterator<EventEdge>>,
     Fragmentable {
-  node: <T = CircleJoinRequestSubscription>() => T;
+  node: <T = EventSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface EventConnection {
-  pageInfo: PageInfo;
-  edges: EventEdge[];
-}
-
-export interface EventConnectionPromise
-  extends Promise<EventConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<EventEdge>>() => T;
-  aggregate: <T = AggregateEventPromise>() => T;
-}
-
-export interface EventConnectionSubscription
-  extends Promise<AsyncIterator<EventConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<EventEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateEventSubscription>() => T;
-}
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 export type Long = string;
-
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number;
-export type ID_Output = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -8428,19 +8393,20 @@ DateTime scalar output type, which is always a string
 export type DateTimeOutput = string;
 
 /*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
-*/
-export type Float = number;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
-
-/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number;
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
+*/
+export type Float = number;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
@@ -8497,11 +8463,11 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "Donation",
+    name: "Transfer",
     embedded: false
   },
   {
-    name: "Funds",
+    name: "Charge",
     embedded: false
   },
   {

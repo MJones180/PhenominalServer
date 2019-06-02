@@ -1,7 +1,7 @@
 const findIndex = require('lodash/findIndex');
 
 module.exports = (loops) => {
-  // Make sure a valid number of loops is passed
+  // No stage due to 0 loops
   if (!loops) return { min: 0, rank: undefined, boost: 1, goal: 1, count: loops };
 
   // [Min Loops, Rank, Boost]

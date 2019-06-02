@@ -49,11 +49,11 @@ var models = [
     embedded: false
   },
   {
-    name: "Donation",
+    name: "Transfer",
     embedded: false
   },
   {
-    name: "Funds",
+    name: "Charge",
     embedded: false
   },
   {
