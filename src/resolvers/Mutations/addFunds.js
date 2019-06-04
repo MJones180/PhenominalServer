@@ -37,7 +37,7 @@ module.exports = async (parent, { amount, token }, ctx) => (
       stripe.balanceTransactions.retrieve(balance_transaction, async (err, { net }) => {
         // Updated balance after the funds addition
         const newBalance = (await grabBalance()) + net;
-        // Add the funds, grab the transaction's ID
+        // Add the funds, grab the transaction's ID for the confirmation
         const { id: transactionID } = await addFunds(net, chargeID, newBalance);
         // The transactional information for the confirmation
         const transactionData = {

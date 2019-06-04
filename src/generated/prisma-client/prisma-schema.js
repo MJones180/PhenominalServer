@@ -3983,6 +3983,7 @@ type Transfer {
   createdAt: DateTime!
   amount: Int!
   chargeBalance: Int!
+  firstOfBatch: Boolean!
   transferID: String!
   event: Event
   source: Charge
@@ -3999,6 +4000,7 @@ input TransferCreateInput {
   id: ID
   amount: Int!
   chargeBalance: Int!
+  firstOfBatch: Boolean!
   transferID: String!
   event: EventCreateOneWithoutDonationsInput
   source: ChargeCreateOneWithoutDonationsInput
@@ -4024,6 +4026,7 @@ input TransferCreateWithoutEventInput {
   id: ID
   amount: Int!
   chargeBalance: Int!
+  firstOfBatch: Boolean!
   transferID: String!
   source: ChargeCreateOneWithoutDonationsInput
   transaction: TransactionCreateOneWithoutDonationsInput!
@@ -4033,6 +4036,7 @@ input TransferCreateWithoutSourceInput {
   id: ID
   amount: Int!
   chargeBalance: Int!
+  firstOfBatch: Boolean!
   transferID: String!
   event: EventCreateOneWithoutDonationsInput
   transaction: TransactionCreateOneWithoutDonationsInput!
@@ -4042,6 +4046,7 @@ input TransferCreateWithoutTransactionInput {
   id: ID
   amount: Int!
   chargeBalance: Int!
+  firstOfBatch: Boolean!
   transferID: String!
   event: EventCreateOneWithoutDonationsInput
   source: ChargeCreateOneWithoutDonationsInput
@@ -4061,6 +4066,8 @@ enum TransferOrderByInput {
   amount_DESC
   chargeBalance_ASC
   chargeBalance_DESC
+  firstOfBatch_ASC
+  firstOfBatch_DESC
   transferID_ASC
   transferID_DESC
 }
@@ -4070,6 +4077,7 @@ type TransferPreviousValues {
   createdAt: DateTime!
   amount: Int!
   chargeBalance: Int!
+  firstOfBatch: Boolean!
   transferID: String!
 }
 
@@ -4112,6 +4120,8 @@ input TransferScalarWhereInput {
   chargeBalance_lte: Int
   chargeBalance_gt: Int
   chargeBalance_gte: Int
+  firstOfBatch: Boolean
+  firstOfBatch_not: Boolean
   transferID: String
   transferID_not: String
   transferID_in: [String!]
@@ -4152,6 +4162,7 @@ input TransferSubscriptionWhereInput {
 input TransferUpdateInput {
   amount: Int
   chargeBalance: Int
+  firstOfBatch: Boolean
   transferID: String
   event: EventUpdateOneWithoutDonationsInput
   source: ChargeUpdateOneWithoutDonationsInput
@@ -4161,12 +4172,14 @@ input TransferUpdateInput {
 input TransferUpdateManyDataInput {
   amount: Int
   chargeBalance: Int
+  firstOfBatch: Boolean
   transferID: String
 }
 
 input TransferUpdateManyMutationInput {
   amount: Int
   chargeBalance: Int
+  firstOfBatch: Boolean
   transferID: String
 }
 
@@ -4214,6 +4227,7 @@ input TransferUpdateManyWithWhereNestedInput {
 input TransferUpdateWithoutEventDataInput {
   amount: Int
   chargeBalance: Int
+  firstOfBatch: Boolean
   transferID: String
   source: ChargeUpdateOneWithoutDonationsInput
   transaction: TransactionUpdateOneRequiredWithoutDonationsInput
@@ -4222,6 +4236,7 @@ input TransferUpdateWithoutEventDataInput {
 input TransferUpdateWithoutSourceDataInput {
   amount: Int
   chargeBalance: Int
+  firstOfBatch: Boolean
   transferID: String
   event: EventUpdateOneWithoutDonationsInput
   transaction: TransactionUpdateOneRequiredWithoutDonationsInput
@@ -4230,6 +4245,7 @@ input TransferUpdateWithoutSourceDataInput {
 input TransferUpdateWithoutTransactionDataInput {
   amount: Int
   chargeBalance: Int
+  firstOfBatch: Boolean
   transferID: String
   event: EventUpdateOneWithoutDonationsInput
   source: ChargeUpdateOneWithoutDonationsInput
@@ -4307,6 +4323,8 @@ input TransferWhereInput {
   chargeBalance_lte: Int
   chargeBalance_gt: Int
   chargeBalance_gte: Int
+  firstOfBatch: Boolean
+  firstOfBatch_not: Boolean
   transferID: String
   transferID_not: String
   transferID_in: [String!]

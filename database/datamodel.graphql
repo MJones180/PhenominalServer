@@ -160,6 +160,7 @@ type Transfer {
 
   amount: Int!
   chargeBalance: Int!
+  firstOfBatch: Boolean!
   transferID: String!
 
   event: Event

@@ -733,6 +733,8 @@ export type TransferOrderByInput =
   | "amount_DESC"
   | "chargeBalance_ASC"
   | "chargeBalance_DESC"
+  | "firstOfBatch_ASC"
+  | "firstOfBatch_DESC"
   | "transferID_ASC"
   | "transferID_DESC";
 
@@ -1205,108 +1207,25 @@ export interface CircleJoinRequestUpdateWithWhereUniqueWithoutUserInput {
   data: CircleJoinRequestUpdateWithoutUserDataInput;
 }
 
-export interface PreferencesSubscriptionWhereInput {
+export interface TransactionSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<PreferencesWhereInput>;
+  node?: Maybe<TransactionWhereInput>;
   AND?: Maybe<
-    PreferencesSubscriptionWhereInput[] | PreferencesSubscriptionWhereInput
+    TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput
   >;
   OR?: Maybe<
-    PreferencesSubscriptionWhereInput[] | PreferencesSubscriptionWhereInput
+    TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput
   >;
   NOT?: Maybe<
-    PreferencesSubscriptionWhereInput[] | PreferencesSubscriptionWhereInput
+    TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput
   >;
 }
 
 export interface CircleJoinRequestUpdateWithoutUserDataInput {
   circle?: Maybe<CircleUpdateOneRequiredWithoutJoinRequestsInput>;
-}
-
-export interface CircleWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  open?: Maybe<Boolean>;
-  open_not?: Maybe<Boolean>;
-  joinRequests_every?: Maybe<CircleJoinRequestWhereInput>;
-  joinRequests_some?: Maybe<CircleJoinRequestWhereInput>;
-  joinRequests_none?: Maybe<CircleJoinRequestWhereInput>;
-  invites_every?: Maybe<CircleInviteWhereInput>;
-  invites_some?: Maybe<CircleInviteWhereInput>;
-  invites_none?: Maybe<CircleInviteWhereInput>;
-  members_every?: Maybe<UserWhereInput>;
-  members_some?: Maybe<UserWhereInput>;
-  members_none?: Maybe<UserWhereInput>;
-  owner?: Maybe<UserWhereInput>;
-  AND?: Maybe<CircleWhereInput[] | CircleWhereInput>;
-  OR?: Maybe<CircleWhereInput[] | CircleWhereInput>;
-  NOT?: Maybe<CircleWhereInput[] | CircleWhereInput>;
-}
-
-export interface CircleUpdateOneRequiredWithoutJoinRequestsInput {
-  create?: Maybe<CircleCreateWithoutJoinRequestsInput>;
-  update?: Maybe<CircleUpdateWithoutJoinRequestsDataInput>;
-  upsert?: Maybe<CircleUpsertWithoutJoinRequestsInput>;
-  connect?: Maybe<CircleWhereUniqueInput>;
 }
 
 export interface CircleJoinRequestWhereInput {
@@ -1345,6 +1264,173 @@ export interface CircleJoinRequestWhereInput {
   AND?: Maybe<CircleJoinRequestWhereInput[] | CircleJoinRequestWhereInput>;
   OR?: Maybe<CircleJoinRequestWhereInput[] | CircleJoinRequestWhereInput>;
   NOT?: Maybe<CircleJoinRequestWhereInput[] | CircleJoinRequestWhereInput>;
+}
+
+export interface CircleUpdateOneRequiredWithoutJoinRequestsInput {
+  create?: Maybe<CircleCreateWithoutJoinRequestsInput>;
+  update?: Maybe<CircleUpdateWithoutJoinRequestsDataInput>;
+  upsert?: Maybe<CircleUpsertWithoutJoinRequestsInput>;
+  connect?: Maybe<CircleWhereUniqueInput>;
+}
+
+export interface UserWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  bio?: Maybe<String>;
+  bio_not?: Maybe<String>;
+  bio_in?: Maybe<String[] | String>;
+  bio_not_in?: Maybe<String[] | String>;
+  bio_lt?: Maybe<String>;
+  bio_lte?: Maybe<String>;
+  bio_gt?: Maybe<String>;
+  bio_gte?: Maybe<String>;
+  bio_contains?: Maybe<String>;
+  bio_not_contains?: Maybe<String>;
+  bio_starts_with?: Maybe<String>;
+  bio_not_starts_with?: Maybe<String>;
+  bio_ends_with?: Maybe<String>;
+  bio_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  nameFirst?: Maybe<String>;
+  nameFirst_not?: Maybe<String>;
+  nameFirst_in?: Maybe<String[] | String>;
+  nameFirst_not_in?: Maybe<String[] | String>;
+  nameFirst_lt?: Maybe<String>;
+  nameFirst_lte?: Maybe<String>;
+  nameFirst_gt?: Maybe<String>;
+  nameFirst_gte?: Maybe<String>;
+  nameFirst_contains?: Maybe<String>;
+  nameFirst_not_contains?: Maybe<String>;
+  nameFirst_starts_with?: Maybe<String>;
+  nameFirst_not_starts_with?: Maybe<String>;
+  nameFirst_ends_with?: Maybe<String>;
+  nameFirst_not_ends_with?: Maybe<String>;
+  nameLast?: Maybe<String>;
+  nameLast_not?: Maybe<String>;
+  nameLast_in?: Maybe<String[] | String>;
+  nameLast_not_in?: Maybe<String[] | String>;
+  nameLast_lt?: Maybe<String>;
+  nameLast_lte?: Maybe<String>;
+  nameLast_gt?: Maybe<String>;
+  nameLast_gte?: Maybe<String>;
+  nameLast_contains?: Maybe<String>;
+  nameLast_not_contains?: Maybe<String>;
+  nameLast_starts_with?: Maybe<String>;
+  nameLast_not_starts_with?: Maybe<String>;
+  nameLast_ends_with?: Maybe<String>;
+  nameLast_not_ends_with?: Maybe<String>;
+  picture?: Maybe<String>;
+  picture_not?: Maybe<String>;
+  picture_in?: Maybe<String[] | String>;
+  picture_not_in?: Maybe<String[] | String>;
+  picture_lt?: Maybe<String>;
+  picture_lte?: Maybe<String>;
+  picture_gt?: Maybe<String>;
+  picture_gte?: Maybe<String>;
+  picture_contains?: Maybe<String>;
+  picture_not_contains?: Maybe<String>;
+  picture_starts_with?: Maybe<String>;
+  picture_not_starts_with?: Maybe<String>;
+  picture_ends_with?: Maybe<String>;
+  picture_not_ends_with?: Maybe<String>;
+  securityToken?: Maybe<Int>;
+  securityToken_not?: Maybe<Int>;
+  securityToken_in?: Maybe<Int[] | Int>;
+  securityToken_not_in?: Maybe<Int[] | Int>;
+  securityToken_lt?: Maybe<Int>;
+  securityToken_lte?: Maybe<Int>;
+  securityToken_gt?: Maybe<Int>;
+  securityToken_gte?: Maybe<Int>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
+  circleJoinRequests_every?: Maybe<CircleJoinRequestWhereInput>;
+  circleJoinRequests_some?: Maybe<CircleJoinRequestWhereInput>;
+  circleJoinRequests_none?: Maybe<CircleJoinRequestWhereInput>;
+  circleInvites_every?: Maybe<CircleInviteWhereInput>;
+  circleInvites_some?: Maybe<CircleInviteWhereInput>;
+  circleInvites_none?: Maybe<CircleInviteWhereInput>;
+  circles_every?: Maybe<CircleWhereInput>;
+  circles_some?: Maybe<CircleWhereInput>;
+  circles_none?: Maybe<CircleWhereInput>;
+  circlesOwned_every?: Maybe<CircleWhereInput>;
+  circlesOwned_some?: Maybe<CircleWhereInput>;
+  circlesOwned_none?: Maybe<CircleWhereInput>;
+  dots_every?: Maybe<DotWhereInput>;
+  dots_some?: Maybe<DotWhereInput>;
+  dots_none?: Maybe<DotWhereInput>;
+  followedCharities_every?: Maybe<CharityWhereInput>;
+  followedCharities_some?: Maybe<CharityWhereInput>;
+  followedCharities_none?: Maybe<CharityWhereInput>;
+  funds_every?: Maybe<ChargeWhereInput>;
+  funds_some?: Maybe<ChargeWhereInput>;
+  funds_none?: Maybe<ChargeWhereInput>;
+  halos_every?: Maybe<HaloWhereInput>;
+  halos_some?: Maybe<HaloWhereInput>;
+  halos_none?: Maybe<HaloWhereInput>;
+  identity?: Maybe<IdentityWhereInput>;
+  loops_every?: Maybe<LoopWhereInput>;
+  loops_some?: Maybe<LoopWhereInput>;
+  loops_none?: Maybe<LoopWhereInput>;
+  preferences?: Maybe<PreferencesWhereInput>;
+  transactions_every?: Maybe<TransactionWhereInput>;
+  transactions_some?: Maybe<TransactionWhereInput>;
+  transactions_none?: Maybe<TransactionWhereInput>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
+  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
 export interface CircleUpdateWithoutJoinRequestsDataInput {
@@ -1393,7 +1479,7 @@ export interface CircleInviteUpdateManyWithoutCircleInput {
   >;
 }
 
-export interface CharityWhereInput {
+export interface EventWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -1424,187 +1510,115 @@ export interface CharityWhereInput {
   updatedAt_lte?: Maybe<DateTimeInput>;
   updatedAt_gt?: Maybe<DateTimeInput>;
   updatedAt_gte?: Maybe<DateTimeInput>;
-  acronym?: Maybe<String>;
-  acronym_not?: Maybe<String>;
-  acronym_in?: Maybe<String[] | String>;
-  acronym_not_in?: Maybe<String[] | String>;
-  acronym_lt?: Maybe<String>;
-  acronym_lte?: Maybe<String>;
-  acronym_gt?: Maybe<String>;
-  acronym_gte?: Maybe<String>;
-  acronym_contains?: Maybe<String>;
-  acronym_not_contains?: Maybe<String>;
-  acronym_starts_with?: Maybe<String>;
-  acronym_not_starts_with?: Maybe<String>;
-  acronym_ends_with?: Maybe<String>;
-  acronym_not_ends_with?: Maybe<String>;
-  bannerCredit?: Maybe<String>;
-  bannerCredit_not?: Maybe<String>;
-  bannerCredit_in?: Maybe<String[] | String>;
-  bannerCredit_not_in?: Maybe<String[] | String>;
-  bannerCredit_lt?: Maybe<String>;
-  bannerCredit_lte?: Maybe<String>;
-  bannerCredit_gt?: Maybe<String>;
-  bannerCredit_gte?: Maybe<String>;
-  bannerCredit_contains?: Maybe<String>;
-  bannerCredit_not_contains?: Maybe<String>;
-  bannerCredit_starts_with?: Maybe<String>;
-  bannerCredit_not_starts_with?: Maybe<String>;
-  bannerCredit_ends_with?: Maybe<String>;
-  bannerCredit_not_ends_with?: Maybe<String>;
-  connectedAccountID?: Maybe<String>;
-  connectedAccountID_not?: Maybe<String>;
-  connectedAccountID_in?: Maybe<String[] | String>;
-  connectedAccountID_not_in?: Maybe<String[] | String>;
-  connectedAccountID_lt?: Maybe<String>;
-  connectedAccountID_lte?: Maybe<String>;
-  connectedAccountID_gt?: Maybe<String>;
-  connectedAccountID_gte?: Maybe<String>;
-  connectedAccountID_contains?: Maybe<String>;
-  connectedAccountID_not_contains?: Maybe<String>;
-  connectedAccountID_starts_with?: Maybe<String>;
-  connectedAccountID_not_starts_with?: Maybe<String>;
-  connectedAccountID_ends_with?: Maybe<String>;
-  connectedAccountID_not_ends_with?: Maybe<String>;
-  ein?: Maybe<String>;
-  ein_not?: Maybe<String>;
-  ein_in?: Maybe<String[] | String>;
-  ein_not_in?: Maybe<String[] | String>;
-  ein_lt?: Maybe<String>;
-  ein_lte?: Maybe<String>;
-  ein_gt?: Maybe<String>;
-  ein_gte?: Maybe<String>;
-  ein_contains?: Maybe<String>;
-  ein_not_contains?: Maybe<String>;
-  ein_starts_with?: Maybe<String>;
-  ein_not_starts_with?: Maybe<String>;
-  ein_ends_with?: Maybe<String>;
-  ein_not_ends_with?: Maybe<String>;
-  expensesAdministrative?: Maybe<Float>;
-  expensesAdministrative_not?: Maybe<Float>;
-  expensesAdministrative_in?: Maybe<Float[] | Float>;
-  expensesAdministrative_not_in?: Maybe<Float[] | Float>;
-  expensesAdministrative_lt?: Maybe<Float>;
-  expensesAdministrative_lte?: Maybe<Float>;
-  expensesAdministrative_gt?: Maybe<Float>;
-  expensesAdministrative_gte?: Maybe<Float>;
-  expensesFundraising?: Maybe<Float>;
-  expensesFundraising_not?: Maybe<Float>;
-  expensesFundraising_in?: Maybe<Float[] | Float>;
-  expensesFundraising_not_in?: Maybe<Float[] | Float>;
-  expensesFundraising_lt?: Maybe<Float>;
-  expensesFundraising_lte?: Maybe<Float>;
-  expensesFundraising_gt?: Maybe<Float>;
-  expensesFundraising_gte?: Maybe<Float>;
-  expensesOther?: Maybe<Float>;
-  expensesOther_not?: Maybe<Float>;
-  expensesOther_in?: Maybe<Float[] | Float>;
-  expensesOther_not_in?: Maybe<Float[] | Float>;
-  expensesOther_lt?: Maybe<Float>;
-  expensesOther_lte?: Maybe<Float>;
-  expensesOther_gt?: Maybe<Float>;
-  expensesOther_gte?: Maybe<Float>;
-  expensesProgram?: Maybe<Float>;
-  expensesProgram_not?: Maybe<Float>;
-  expensesProgram_in?: Maybe<Float[] | Float>;
-  expensesProgram_not_in?: Maybe<Float[] | Float>;
-  expensesProgram_lt?: Maybe<Float>;
-  expensesProgram_lte?: Maybe<Float>;
-  expensesProgram_gt?: Maybe<Float>;
-  expensesProgram_gte?: Maybe<Float>;
-  expensesUpdated?: Maybe<String>;
-  expensesUpdated_not?: Maybe<String>;
-  expensesUpdated_in?: Maybe<String[] | String>;
-  expensesUpdated_not_in?: Maybe<String[] | String>;
-  expensesUpdated_lt?: Maybe<String>;
-  expensesUpdated_lte?: Maybe<String>;
-  expensesUpdated_gt?: Maybe<String>;
-  expensesUpdated_gte?: Maybe<String>;
-  expensesUpdated_contains?: Maybe<String>;
-  expensesUpdated_not_contains?: Maybe<String>;
-  expensesUpdated_starts_with?: Maybe<String>;
-  expensesUpdated_not_starts_with?: Maybe<String>;
-  expensesUpdated_ends_with?: Maybe<String>;
-  expensesUpdated_not_ends_with?: Maybe<String>;
-  location?: Maybe<String>;
-  location_not?: Maybe<String>;
-  location_in?: Maybe<String[] | String>;
-  location_not_in?: Maybe<String[] | String>;
-  location_lt?: Maybe<String>;
-  location_lte?: Maybe<String>;
-  location_gt?: Maybe<String>;
-  location_gte?: Maybe<String>;
-  location_contains?: Maybe<String>;
-  location_not_contains?: Maybe<String>;
-  location_starts_with?: Maybe<String>;
-  location_not_starts_with?: Maybe<String>;
-  location_ends_with?: Maybe<String>;
-  location_not_ends_with?: Maybe<String>;
-  mission?: Maybe<String>;
-  mission_not?: Maybe<String>;
-  mission_in?: Maybe<String[] | String>;
-  mission_not_in?: Maybe<String[] | String>;
-  mission_lt?: Maybe<String>;
-  mission_lte?: Maybe<String>;
-  mission_gt?: Maybe<String>;
-  mission_gte?: Maybe<String>;
-  mission_contains?: Maybe<String>;
-  mission_not_contains?: Maybe<String>;
-  mission_starts_with?: Maybe<String>;
-  mission_not_starts_with?: Maybe<String>;
-  mission_ends_with?: Maybe<String>;
-  mission_not_ends_with?: Maybe<String>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  phoneNumber_not?: Maybe<String>;
-  phoneNumber_in?: Maybe<String[] | String>;
-  phoneNumber_not_in?: Maybe<String[] | String>;
-  phoneNumber_lt?: Maybe<String>;
-  phoneNumber_lte?: Maybe<String>;
-  phoneNumber_gt?: Maybe<String>;
-  phoneNumber_gte?: Maybe<String>;
-  phoneNumber_contains?: Maybe<String>;
-  phoneNumber_not_contains?: Maybe<String>;
-  phoneNumber_starts_with?: Maybe<String>;
-  phoneNumber_not_starts_with?: Maybe<String>;
-  phoneNumber_ends_with?: Maybe<String>;
-  phoneNumber_not_ends_with?: Maybe<String>;
-  website?: Maybe<String>;
-  website_not?: Maybe<String>;
-  website_in?: Maybe<String[] | String>;
-  website_not_in?: Maybe<String[] | String>;
-  website_lt?: Maybe<String>;
-  website_lte?: Maybe<String>;
-  website_gt?: Maybe<String>;
-  website_gte?: Maybe<String>;
-  website_contains?: Maybe<String>;
-  website_not_contains?: Maybe<String>;
-  website_starts_with?: Maybe<String>;
-  website_not_starts_with?: Maybe<String>;
-  website_ends_with?: Maybe<String>;
-  website_not_ends_with?: Maybe<String>;
-  events_every?: Maybe<EventWhereInput>;
-  events_some?: Maybe<EventWhereInput>;
-  events_none?: Maybe<EventWhereInput>;
-  followers_every?: Maybe<UserWhereInput>;
-  followers_some?: Maybe<UserWhereInput>;
-  followers_none?: Maybe<UserWhereInput>;
-  AND?: Maybe<CharityWhereInput[] | CharityWhereInput>;
-  OR?: Maybe<CharityWhereInput[] | CharityWhereInput>;
-  NOT?: Maybe<CharityWhereInput[] | CharityWhereInput>;
+  endDate?: Maybe<DateTimeInput>;
+  endDate_not?: Maybe<DateTimeInput>;
+  endDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  endDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  endDate_lt?: Maybe<DateTimeInput>;
+  endDate_lte?: Maybe<DateTimeInput>;
+  endDate_gt?: Maybe<DateTimeInput>;
+  endDate_gte?: Maybe<DateTimeInput>;
+  goal?: Maybe<Int>;
+  goal_not?: Maybe<Int>;
+  goal_in?: Maybe<Int[] | Int>;
+  goal_not_in?: Maybe<Int[] | Int>;
+  goal_lt?: Maybe<Int>;
+  goal_lte?: Maybe<Int>;
+  goal_gt?: Maybe<Int>;
+  goal_gte?: Maybe<Int>;
+  multiplier?: Maybe<Int>;
+  multiplier_not?: Maybe<Int>;
+  multiplier_in?: Maybe<Int[] | Int>;
+  multiplier_not_in?: Maybe<Int[] | Int>;
+  multiplier_lt?: Maybe<Int>;
+  multiplier_lte?: Maybe<Int>;
+  multiplier_gt?: Maybe<Int>;
+  multiplier_gte?: Maybe<Int>;
+  specialEvent?: Maybe<String>;
+  specialEvent_not?: Maybe<String>;
+  specialEvent_in?: Maybe<String[] | String>;
+  specialEvent_not_in?: Maybe<String[] | String>;
+  specialEvent_lt?: Maybe<String>;
+  specialEvent_lte?: Maybe<String>;
+  specialEvent_gt?: Maybe<String>;
+  specialEvent_gte?: Maybe<String>;
+  specialEvent_contains?: Maybe<String>;
+  specialEvent_not_contains?: Maybe<String>;
+  specialEvent_starts_with?: Maybe<String>;
+  specialEvent_not_starts_with?: Maybe<String>;
+  specialEvent_ends_with?: Maybe<String>;
+  specialEvent_not_ends_with?: Maybe<String>;
+  specialEventDescription?: Maybe<String>;
+  specialEventDescription_not?: Maybe<String>;
+  specialEventDescription_in?: Maybe<String[] | String>;
+  specialEventDescription_not_in?: Maybe<String[] | String>;
+  specialEventDescription_lt?: Maybe<String>;
+  specialEventDescription_lte?: Maybe<String>;
+  specialEventDescription_gt?: Maybe<String>;
+  specialEventDescription_gte?: Maybe<String>;
+  specialEventDescription_contains?: Maybe<String>;
+  specialEventDescription_not_contains?: Maybe<String>;
+  specialEventDescription_starts_with?: Maybe<String>;
+  specialEventDescription_not_starts_with?: Maybe<String>;
+  specialEventDescription_ends_with?: Maybe<String>;
+  specialEventDescription_not_ends_with?: Maybe<String>;
+  specialEventName?: Maybe<String>;
+  specialEventName_not?: Maybe<String>;
+  specialEventName_in?: Maybe<String[] | String>;
+  specialEventName_not_in?: Maybe<String[] | String>;
+  specialEventName_lt?: Maybe<String>;
+  specialEventName_lte?: Maybe<String>;
+  specialEventName_gt?: Maybe<String>;
+  specialEventName_gte?: Maybe<String>;
+  specialEventName_contains?: Maybe<String>;
+  specialEventName_not_contains?: Maybe<String>;
+  specialEventName_starts_with?: Maybe<String>;
+  specialEventName_not_starts_with?: Maybe<String>;
+  specialEventName_ends_with?: Maybe<String>;
+  specialEventName_not_ends_with?: Maybe<String>;
+  sponsorName?: Maybe<String>;
+  sponsorName_not?: Maybe<String>;
+  sponsorName_in?: Maybe<String[] | String>;
+  sponsorName_not_in?: Maybe<String[] | String>;
+  sponsorName_lt?: Maybe<String>;
+  sponsorName_lte?: Maybe<String>;
+  sponsorName_gt?: Maybe<String>;
+  sponsorName_gte?: Maybe<String>;
+  sponsorName_contains?: Maybe<String>;
+  sponsorName_not_contains?: Maybe<String>;
+  sponsorName_starts_with?: Maybe<String>;
+  sponsorName_not_starts_with?: Maybe<String>;
+  sponsorName_ends_with?: Maybe<String>;
+  sponsorName_not_ends_with?: Maybe<String>;
+  sponsorWebsite?: Maybe<String>;
+  sponsorWebsite_not?: Maybe<String>;
+  sponsorWebsite_in?: Maybe<String[] | String>;
+  sponsorWebsite_not_in?: Maybe<String[] | String>;
+  sponsorWebsite_lt?: Maybe<String>;
+  sponsorWebsite_lte?: Maybe<String>;
+  sponsorWebsite_gt?: Maybe<String>;
+  sponsorWebsite_gte?: Maybe<String>;
+  sponsorWebsite_contains?: Maybe<String>;
+  sponsorWebsite_not_contains?: Maybe<String>;
+  sponsorWebsite_starts_with?: Maybe<String>;
+  sponsorWebsite_not_starts_with?: Maybe<String>;
+  sponsorWebsite_ends_with?: Maybe<String>;
+  sponsorWebsite_not_ends_with?: Maybe<String>;
+  startDate?: Maybe<DateTimeInput>;
+  startDate_not?: Maybe<DateTimeInput>;
+  startDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  startDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  startDate_lt?: Maybe<DateTimeInput>;
+  startDate_lte?: Maybe<DateTimeInput>;
+  startDate_gt?: Maybe<DateTimeInput>;
+  startDate_gte?: Maybe<DateTimeInput>;
+  charity?: Maybe<CharityWhereInput>;
+  donations_every?: Maybe<TransferWhereInput>;
+  donations_some?: Maybe<TransferWhereInput>;
+  donations_none?: Maybe<TransferWhereInput>;
+  AND?: Maybe<EventWhereInput[] | EventWhereInput>;
+  OR?: Maybe<EventWhereInput[] | EventWhereInput>;
+  NOT?: Maybe<EventWhereInput[] | EventWhereInput>;
 }
 
 export interface CircleInviteUpdateWithWhereUniqueWithoutCircleInput {
@@ -1666,6 +1680,8 @@ export interface TransferWhereInput {
   chargeBalance_lte?: Maybe<Int>;
   chargeBalance_gt?: Maybe<Int>;
   chargeBalance_gte?: Maybe<Int>;
+  firstOfBatch?: Maybe<Boolean>;
+  firstOfBatch_not?: Maybe<Boolean>;
   transferID?: Maybe<String>;
   transferID_not?: Maybe<String>;
   transferID_in?: Maybe<String[] | String>;
@@ -1791,6 +1807,7 @@ export interface CircleUpdateWithWhereUniqueWithoutMembersInput {
 export interface TransferUpdateManyMutationInput {
   amount?: Maybe<Int>;
   chargeBalance?: Maybe<Int>;
+  firstOfBatch?: Maybe<Boolean>;
   transferID?: Maybe<String>;
 }
 
@@ -1806,6 +1823,7 @@ export interface CircleUpdateWithoutMembersDataInput {
 export interface TransferUpdateInput {
   amount?: Maybe<Int>;
   chargeBalance?: Maybe<Int>;
+  firstOfBatch?: Maybe<Boolean>;
   transferID?: Maybe<String>;
   event?: Maybe<EventUpdateOneWithoutDonationsInput>;
   source?: Maybe<ChargeUpdateOneWithoutDonationsInput>;
@@ -2542,6 +2560,7 @@ export interface TransferCreateWithoutSourceInput {
   id?: Maybe<ID_Input>;
   amount: Int;
   chargeBalance: Int;
+  firstOfBatch: Boolean;
   transferID: String;
   event?: Maybe<EventCreateOneWithoutDonationsInput>;
   transaction: TransactionCreateOneWithoutDonationsInput;
@@ -2801,6 +2820,7 @@ export interface UserCreateWithoutCircleInvitesInput {
 export interface TransferUpdateWithoutEventDataInput {
   amount?: Maybe<Int>;
   chargeBalance?: Maybe<Int>;
+  firstOfBatch?: Maybe<Boolean>;
   transferID?: Maybe<String>;
   source?: Maybe<ChargeUpdateOneWithoutDonationsInput>;
   transaction?: Maybe<TransactionUpdateOneRequiredWithoutDonationsInput>;
@@ -2952,6 +2972,7 @@ export interface CircleCreateWithoutOwnerInput {
 export interface TransferUpdateWithoutTransactionDataInput {
   amount?: Maybe<Int>;
   chargeBalance?: Maybe<Int>;
+  firstOfBatch?: Maybe<Boolean>;
   transferID?: Maybe<String>;
   event?: Maybe<EventUpdateOneWithoutDonationsInput>;
   source?: Maybe<ChargeUpdateOneWithoutDonationsInput>;
@@ -3028,6 +3049,8 @@ export interface TransferScalarWhereInput {
   chargeBalance_lte?: Maybe<Int>;
   chargeBalance_gt?: Maybe<Int>;
   chargeBalance_gte?: Maybe<Int>;
+  firstOfBatch?: Maybe<Boolean>;
+  firstOfBatch_not?: Maybe<Boolean>;
   transferID?: Maybe<String>;
   transferID_not?: Maybe<String>;
   transferID_in?: Maybe<String[] | String>;
@@ -3070,6 +3093,7 @@ export interface TransferCreateWithoutEventInput {
   id?: Maybe<ID_Input>;
   amount: Int;
   chargeBalance: Int;
+  firstOfBatch: Boolean;
   transferID: String;
   source?: Maybe<ChargeCreateOneWithoutDonationsInput>;
   transaction: TransactionCreateOneWithoutDonationsInput;
@@ -3078,6 +3102,7 @@ export interface TransferCreateWithoutEventInput {
 export interface TransferUpdateManyDataInput {
   amount?: Maybe<Int>;
   chargeBalance?: Maybe<Int>;
+  firstOfBatch?: Maybe<Boolean>;
   transferID?: Maybe<String>;
 }
 
@@ -3129,6 +3154,7 @@ export interface TransferCreateWithoutTransactionInput {
   id?: Maybe<ID_Input>;
   amount: Int;
   chargeBalance: Int;
+  firstOfBatch: Boolean;
   transferID: String;
   event?: Maybe<EventCreateOneWithoutDonationsInput>;
   source?: Maybe<ChargeCreateOneWithoutDonationsInput>;
@@ -3508,6 +3534,7 @@ export interface HaloUpdateManyDataInput {
 export interface TransferUpdateWithoutSourceDataInput {
   amount?: Maybe<Int>;
   chargeBalance?: Maybe<Int>;
+  firstOfBatch?: Maybe<Boolean>;
   transferID?: Maybe<String>;
   event?: Maybe<EventUpdateOneWithoutDonationsInput>;
   transaction?: Maybe<TransactionUpdateOneRequiredWithoutDonationsInput>;
@@ -3619,15 +3646,21 @@ export interface LoopUpdateManyWithoutUserInput {
   >;
 }
 
-export interface LoopSubscriptionWhereInput {
+export interface PreferencesSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<LoopWhereInput>;
-  AND?: Maybe<LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput>;
-  OR?: Maybe<LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput>;
-  NOT?: Maybe<LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput>;
+  node?: Maybe<PreferencesWhereInput>;
+  AND?: Maybe<
+    PreferencesSubscriptionWhereInput[] | PreferencesSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    PreferencesSubscriptionWhereInput[] | PreferencesSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    PreferencesSubscriptionWhereInput[] | PreferencesSubscriptionWhereInput
+  >;
 }
 
 export interface LoopUpdateWithWhereUniqueWithoutUserInput {
@@ -3635,164 +3668,19 @@ export interface LoopUpdateWithWhereUniqueWithoutUserInput {
   data: LoopUpdateWithoutUserDataInput;
 }
 
-export interface UserWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  bio?: Maybe<String>;
-  bio_not?: Maybe<String>;
-  bio_in?: Maybe<String[] | String>;
-  bio_not_in?: Maybe<String[] | String>;
-  bio_lt?: Maybe<String>;
-  bio_lte?: Maybe<String>;
-  bio_gt?: Maybe<String>;
-  bio_gte?: Maybe<String>;
-  bio_contains?: Maybe<String>;
-  bio_not_contains?: Maybe<String>;
-  bio_starts_with?: Maybe<String>;
-  bio_not_starts_with?: Maybe<String>;
-  bio_ends_with?: Maybe<String>;
-  bio_not_ends_with?: Maybe<String>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  nameFirst?: Maybe<String>;
-  nameFirst_not?: Maybe<String>;
-  nameFirst_in?: Maybe<String[] | String>;
-  nameFirst_not_in?: Maybe<String[] | String>;
-  nameFirst_lt?: Maybe<String>;
-  nameFirst_lte?: Maybe<String>;
-  nameFirst_gt?: Maybe<String>;
-  nameFirst_gte?: Maybe<String>;
-  nameFirst_contains?: Maybe<String>;
-  nameFirst_not_contains?: Maybe<String>;
-  nameFirst_starts_with?: Maybe<String>;
-  nameFirst_not_starts_with?: Maybe<String>;
-  nameFirst_ends_with?: Maybe<String>;
-  nameFirst_not_ends_with?: Maybe<String>;
-  nameLast?: Maybe<String>;
-  nameLast_not?: Maybe<String>;
-  nameLast_in?: Maybe<String[] | String>;
-  nameLast_not_in?: Maybe<String[] | String>;
-  nameLast_lt?: Maybe<String>;
-  nameLast_lte?: Maybe<String>;
-  nameLast_gt?: Maybe<String>;
-  nameLast_gte?: Maybe<String>;
-  nameLast_contains?: Maybe<String>;
-  nameLast_not_contains?: Maybe<String>;
-  nameLast_starts_with?: Maybe<String>;
-  nameLast_not_starts_with?: Maybe<String>;
-  nameLast_ends_with?: Maybe<String>;
-  nameLast_not_ends_with?: Maybe<String>;
-  picture?: Maybe<String>;
-  picture_not?: Maybe<String>;
-  picture_in?: Maybe<String[] | String>;
-  picture_not_in?: Maybe<String[] | String>;
-  picture_lt?: Maybe<String>;
-  picture_lte?: Maybe<String>;
-  picture_gt?: Maybe<String>;
-  picture_gte?: Maybe<String>;
-  picture_contains?: Maybe<String>;
-  picture_not_contains?: Maybe<String>;
-  picture_starts_with?: Maybe<String>;
-  picture_not_starts_with?: Maybe<String>;
-  picture_ends_with?: Maybe<String>;
-  picture_not_ends_with?: Maybe<String>;
-  securityToken?: Maybe<Int>;
-  securityToken_not?: Maybe<Int>;
-  securityToken_in?: Maybe<Int[] | Int>;
-  securityToken_not_in?: Maybe<Int[] | Int>;
-  securityToken_lt?: Maybe<Int>;
-  securityToken_lte?: Maybe<Int>;
-  securityToken_gt?: Maybe<Int>;
-  securityToken_gte?: Maybe<Int>;
-  username?: Maybe<String>;
-  username_not?: Maybe<String>;
-  username_in?: Maybe<String[] | String>;
-  username_not_in?: Maybe<String[] | String>;
-  username_lt?: Maybe<String>;
-  username_lte?: Maybe<String>;
-  username_gt?: Maybe<String>;
-  username_gte?: Maybe<String>;
-  username_contains?: Maybe<String>;
-  username_not_contains?: Maybe<String>;
-  username_starts_with?: Maybe<String>;
-  username_not_starts_with?: Maybe<String>;
-  username_ends_with?: Maybe<String>;
-  username_not_ends_with?: Maybe<String>;
-  circleJoinRequests_every?: Maybe<CircleJoinRequestWhereInput>;
-  circleJoinRequests_some?: Maybe<CircleJoinRequestWhereInput>;
-  circleJoinRequests_none?: Maybe<CircleJoinRequestWhereInput>;
-  circleInvites_every?: Maybe<CircleInviteWhereInput>;
-  circleInvites_some?: Maybe<CircleInviteWhereInput>;
-  circleInvites_none?: Maybe<CircleInviteWhereInput>;
-  circles_every?: Maybe<CircleWhereInput>;
-  circles_some?: Maybe<CircleWhereInput>;
-  circles_none?: Maybe<CircleWhereInput>;
-  circlesOwned_every?: Maybe<CircleWhereInput>;
-  circlesOwned_some?: Maybe<CircleWhereInput>;
-  circlesOwned_none?: Maybe<CircleWhereInput>;
-  dots_every?: Maybe<DotWhereInput>;
-  dots_some?: Maybe<DotWhereInput>;
-  dots_none?: Maybe<DotWhereInput>;
-  followedCharities_every?: Maybe<CharityWhereInput>;
-  followedCharities_some?: Maybe<CharityWhereInput>;
-  followedCharities_none?: Maybe<CharityWhereInput>;
-  funds_every?: Maybe<ChargeWhereInput>;
-  funds_some?: Maybe<ChargeWhereInput>;
-  funds_none?: Maybe<ChargeWhereInput>;
-  halos_every?: Maybe<HaloWhereInput>;
-  halos_some?: Maybe<HaloWhereInput>;
-  halos_none?: Maybe<HaloWhereInput>;
-  identity?: Maybe<IdentityWhereInput>;
-  loops_every?: Maybe<LoopWhereInput>;
-  loops_some?: Maybe<LoopWhereInput>;
-  loops_none?: Maybe<LoopWhereInput>;
-  preferences?: Maybe<PreferencesWhereInput>;
-  transactions_every?: Maybe<TransactionWhereInput>;
-  transactions_some?: Maybe<TransactionWhereInput>;
-  transactions_none?: Maybe<TransactionWhereInput>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+export interface IdentitySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<IdentityWhereInput>;
+  AND?: Maybe<
+    IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput
+  >;
+  OR?: Maybe<IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput>;
+  NOT?: Maybe<
+    IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput
+  >;
 }
 
 export interface LoopUpdateWithoutUserDataInput {
@@ -3800,146 +3688,15 @@ export interface LoopUpdateWithoutUserDataInput {
   event?: Maybe<EventUpdateOneRequiredInput>;
 }
 
-export interface EventWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  endDate?: Maybe<DateTimeInput>;
-  endDate_not?: Maybe<DateTimeInput>;
-  endDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  endDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  endDate_lt?: Maybe<DateTimeInput>;
-  endDate_lte?: Maybe<DateTimeInput>;
-  endDate_gt?: Maybe<DateTimeInput>;
-  endDate_gte?: Maybe<DateTimeInput>;
-  goal?: Maybe<Int>;
-  goal_not?: Maybe<Int>;
-  goal_in?: Maybe<Int[] | Int>;
-  goal_not_in?: Maybe<Int[] | Int>;
-  goal_lt?: Maybe<Int>;
-  goal_lte?: Maybe<Int>;
-  goal_gt?: Maybe<Int>;
-  goal_gte?: Maybe<Int>;
-  multiplier?: Maybe<Int>;
-  multiplier_not?: Maybe<Int>;
-  multiplier_in?: Maybe<Int[] | Int>;
-  multiplier_not_in?: Maybe<Int[] | Int>;
-  multiplier_lt?: Maybe<Int>;
-  multiplier_lte?: Maybe<Int>;
-  multiplier_gt?: Maybe<Int>;
-  multiplier_gte?: Maybe<Int>;
-  specialEvent?: Maybe<String>;
-  specialEvent_not?: Maybe<String>;
-  specialEvent_in?: Maybe<String[] | String>;
-  specialEvent_not_in?: Maybe<String[] | String>;
-  specialEvent_lt?: Maybe<String>;
-  specialEvent_lte?: Maybe<String>;
-  specialEvent_gt?: Maybe<String>;
-  specialEvent_gte?: Maybe<String>;
-  specialEvent_contains?: Maybe<String>;
-  specialEvent_not_contains?: Maybe<String>;
-  specialEvent_starts_with?: Maybe<String>;
-  specialEvent_not_starts_with?: Maybe<String>;
-  specialEvent_ends_with?: Maybe<String>;
-  specialEvent_not_ends_with?: Maybe<String>;
-  specialEventDescription?: Maybe<String>;
-  specialEventDescription_not?: Maybe<String>;
-  specialEventDescription_in?: Maybe<String[] | String>;
-  specialEventDescription_not_in?: Maybe<String[] | String>;
-  specialEventDescription_lt?: Maybe<String>;
-  specialEventDescription_lte?: Maybe<String>;
-  specialEventDescription_gt?: Maybe<String>;
-  specialEventDescription_gte?: Maybe<String>;
-  specialEventDescription_contains?: Maybe<String>;
-  specialEventDescription_not_contains?: Maybe<String>;
-  specialEventDescription_starts_with?: Maybe<String>;
-  specialEventDescription_not_starts_with?: Maybe<String>;
-  specialEventDescription_ends_with?: Maybe<String>;
-  specialEventDescription_not_ends_with?: Maybe<String>;
-  specialEventName?: Maybe<String>;
-  specialEventName_not?: Maybe<String>;
-  specialEventName_in?: Maybe<String[] | String>;
-  specialEventName_not_in?: Maybe<String[] | String>;
-  specialEventName_lt?: Maybe<String>;
-  specialEventName_lte?: Maybe<String>;
-  specialEventName_gt?: Maybe<String>;
-  specialEventName_gte?: Maybe<String>;
-  specialEventName_contains?: Maybe<String>;
-  specialEventName_not_contains?: Maybe<String>;
-  specialEventName_starts_with?: Maybe<String>;
-  specialEventName_not_starts_with?: Maybe<String>;
-  specialEventName_ends_with?: Maybe<String>;
-  specialEventName_not_ends_with?: Maybe<String>;
-  sponsorName?: Maybe<String>;
-  sponsorName_not?: Maybe<String>;
-  sponsorName_in?: Maybe<String[] | String>;
-  sponsorName_not_in?: Maybe<String[] | String>;
-  sponsorName_lt?: Maybe<String>;
-  sponsorName_lte?: Maybe<String>;
-  sponsorName_gt?: Maybe<String>;
-  sponsorName_gte?: Maybe<String>;
-  sponsorName_contains?: Maybe<String>;
-  sponsorName_not_contains?: Maybe<String>;
-  sponsorName_starts_with?: Maybe<String>;
-  sponsorName_not_starts_with?: Maybe<String>;
-  sponsorName_ends_with?: Maybe<String>;
-  sponsorName_not_ends_with?: Maybe<String>;
-  sponsorWebsite?: Maybe<String>;
-  sponsorWebsite_not?: Maybe<String>;
-  sponsorWebsite_in?: Maybe<String[] | String>;
-  sponsorWebsite_not_in?: Maybe<String[] | String>;
-  sponsorWebsite_lt?: Maybe<String>;
-  sponsorWebsite_lte?: Maybe<String>;
-  sponsorWebsite_gt?: Maybe<String>;
-  sponsorWebsite_gte?: Maybe<String>;
-  sponsorWebsite_contains?: Maybe<String>;
-  sponsorWebsite_not_contains?: Maybe<String>;
-  sponsorWebsite_starts_with?: Maybe<String>;
-  sponsorWebsite_not_starts_with?: Maybe<String>;
-  sponsorWebsite_ends_with?: Maybe<String>;
-  sponsorWebsite_not_ends_with?: Maybe<String>;
-  startDate?: Maybe<DateTimeInput>;
-  startDate_not?: Maybe<DateTimeInput>;
-  startDate_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  startDate_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  startDate_lt?: Maybe<DateTimeInput>;
-  startDate_lte?: Maybe<DateTimeInput>;
-  startDate_gt?: Maybe<DateTimeInput>;
-  startDate_gte?: Maybe<DateTimeInput>;
-  charity?: Maybe<CharityWhereInput>;
-  donations_every?: Maybe<TransferWhereInput>;
-  donations_some?: Maybe<TransferWhereInput>;
-  donations_none?: Maybe<TransferWhereInput>;
-  AND?: Maybe<EventWhereInput[] | EventWhereInput>;
-  OR?: Maybe<EventWhereInput[] | EventWhereInput>;
-  NOT?: Maybe<EventWhereInput[] | EventWhereInput>;
+export interface EventSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<EventWhereInput>;
+  AND?: Maybe<EventSubscriptionWhereInput[] | EventSubscriptionWhereInput>;
+  OR?: Maybe<EventSubscriptionWhereInput[] | EventSubscriptionWhereInput>;
+  NOT?: Maybe<EventSubscriptionWhereInput[] | EventSubscriptionWhereInput>;
 }
 
 export interface EventUpdateOneRequiredInput {
@@ -4833,19 +4590,15 @@ export interface CharityUpdateManyWithWhereNestedInput {
   data: CharityUpdateManyDataInput;
 }
 
-export interface IdentitySubscriptionWhereInput {
+export interface LoopSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<IdentityWhereInput>;
-  AND?: Maybe<
-    IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput
-  >;
-  OR?: Maybe<IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput>;
-  NOT?: Maybe<
-    IdentitySubscriptionWhereInput[] | IdentitySubscriptionWhereInput
-  >;
+  node?: Maybe<LoopWhereInput>;
+  AND?: Maybe<LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput>;
+  OR?: Maybe<LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput>;
+  NOT?: Maybe<LoopSubscriptionWhereInput[] | LoopSubscriptionWhereInput>;
 }
 
 export interface CharityUpdateManyDataInput {
@@ -5317,21 +5070,80 @@ export interface CircleUpsertWithoutJoinRequestsInput {
   create: CircleCreateWithoutJoinRequestsInput;
 }
 
-export interface TransactionSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<TransactionWhereInput>;
-  AND?: Maybe<
-    TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    TransactionSubscriptionWhereInput[] | TransactionSubscriptionWhereInput
-  >;
+export interface CircleWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  open?: Maybe<Boolean>;
+  open_not?: Maybe<Boolean>;
+  joinRequests_every?: Maybe<CircleJoinRequestWhereInput>;
+  joinRequests_some?: Maybe<CircleJoinRequestWhereInput>;
+  joinRequests_none?: Maybe<CircleJoinRequestWhereInput>;
+  invites_every?: Maybe<CircleInviteWhereInput>;
+  invites_some?: Maybe<CircleInviteWhereInput>;
+  invites_none?: Maybe<CircleInviteWhereInput>;
+  members_every?: Maybe<UserWhereInput>;
+  members_some?: Maybe<UserWhereInput>;
+  members_none?: Maybe<UserWhereInput>;
+  owner?: Maybe<UserWhereInput>;
+  AND?: Maybe<CircleWhereInput[] | CircleWhereInput>;
+  OR?: Maybe<CircleWhereInput[] | CircleWhereInput>;
+  NOT?: Maybe<CircleWhereInput[] | CircleWhereInput>;
 }
 
 export interface CircleJoinRequestUpsertWithWhereUniqueWithoutUserInput {
@@ -5509,15 +5321,218 @@ export interface CharityUpdateInput {
   followers?: Maybe<UserUpdateManyWithoutFollowedCharitiesInput>;
 }
 
-export interface EventSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<EventWhereInput>;
-  AND?: Maybe<EventSubscriptionWhereInput[] | EventSubscriptionWhereInput>;
-  OR?: Maybe<EventSubscriptionWhereInput[] | EventSubscriptionWhereInput>;
-  NOT?: Maybe<EventSubscriptionWhereInput[] | EventSubscriptionWhereInput>;
+export interface CharityWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  acronym?: Maybe<String>;
+  acronym_not?: Maybe<String>;
+  acronym_in?: Maybe<String[] | String>;
+  acronym_not_in?: Maybe<String[] | String>;
+  acronym_lt?: Maybe<String>;
+  acronym_lte?: Maybe<String>;
+  acronym_gt?: Maybe<String>;
+  acronym_gte?: Maybe<String>;
+  acronym_contains?: Maybe<String>;
+  acronym_not_contains?: Maybe<String>;
+  acronym_starts_with?: Maybe<String>;
+  acronym_not_starts_with?: Maybe<String>;
+  acronym_ends_with?: Maybe<String>;
+  acronym_not_ends_with?: Maybe<String>;
+  bannerCredit?: Maybe<String>;
+  bannerCredit_not?: Maybe<String>;
+  bannerCredit_in?: Maybe<String[] | String>;
+  bannerCredit_not_in?: Maybe<String[] | String>;
+  bannerCredit_lt?: Maybe<String>;
+  bannerCredit_lte?: Maybe<String>;
+  bannerCredit_gt?: Maybe<String>;
+  bannerCredit_gte?: Maybe<String>;
+  bannerCredit_contains?: Maybe<String>;
+  bannerCredit_not_contains?: Maybe<String>;
+  bannerCredit_starts_with?: Maybe<String>;
+  bannerCredit_not_starts_with?: Maybe<String>;
+  bannerCredit_ends_with?: Maybe<String>;
+  bannerCredit_not_ends_with?: Maybe<String>;
+  connectedAccountID?: Maybe<String>;
+  connectedAccountID_not?: Maybe<String>;
+  connectedAccountID_in?: Maybe<String[] | String>;
+  connectedAccountID_not_in?: Maybe<String[] | String>;
+  connectedAccountID_lt?: Maybe<String>;
+  connectedAccountID_lte?: Maybe<String>;
+  connectedAccountID_gt?: Maybe<String>;
+  connectedAccountID_gte?: Maybe<String>;
+  connectedAccountID_contains?: Maybe<String>;
+  connectedAccountID_not_contains?: Maybe<String>;
+  connectedAccountID_starts_with?: Maybe<String>;
+  connectedAccountID_not_starts_with?: Maybe<String>;
+  connectedAccountID_ends_with?: Maybe<String>;
+  connectedAccountID_not_ends_with?: Maybe<String>;
+  ein?: Maybe<String>;
+  ein_not?: Maybe<String>;
+  ein_in?: Maybe<String[] | String>;
+  ein_not_in?: Maybe<String[] | String>;
+  ein_lt?: Maybe<String>;
+  ein_lte?: Maybe<String>;
+  ein_gt?: Maybe<String>;
+  ein_gte?: Maybe<String>;
+  ein_contains?: Maybe<String>;
+  ein_not_contains?: Maybe<String>;
+  ein_starts_with?: Maybe<String>;
+  ein_not_starts_with?: Maybe<String>;
+  ein_ends_with?: Maybe<String>;
+  ein_not_ends_with?: Maybe<String>;
+  expensesAdministrative?: Maybe<Float>;
+  expensesAdministrative_not?: Maybe<Float>;
+  expensesAdministrative_in?: Maybe<Float[] | Float>;
+  expensesAdministrative_not_in?: Maybe<Float[] | Float>;
+  expensesAdministrative_lt?: Maybe<Float>;
+  expensesAdministrative_lte?: Maybe<Float>;
+  expensesAdministrative_gt?: Maybe<Float>;
+  expensesAdministrative_gte?: Maybe<Float>;
+  expensesFundraising?: Maybe<Float>;
+  expensesFundraising_not?: Maybe<Float>;
+  expensesFundraising_in?: Maybe<Float[] | Float>;
+  expensesFundraising_not_in?: Maybe<Float[] | Float>;
+  expensesFundraising_lt?: Maybe<Float>;
+  expensesFundraising_lte?: Maybe<Float>;
+  expensesFundraising_gt?: Maybe<Float>;
+  expensesFundraising_gte?: Maybe<Float>;
+  expensesOther?: Maybe<Float>;
+  expensesOther_not?: Maybe<Float>;
+  expensesOther_in?: Maybe<Float[] | Float>;
+  expensesOther_not_in?: Maybe<Float[] | Float>;
+  expensesOther_lt?: Maybe<Float>;
+  expensesOther_lte?: Maybe<Float>;
+  expensesOther_gt?: Maybe<Float>;
+  expensesOther_gte?: Maybe<Float>;
+  expensesProgram?: Maybe<Float>;
+  expensesProgram_not?: Maybe<Float>;
+  expensesProgram_in?: Maybe<Float[] | Float>;
+  expensesProgram_not_in?: Maybe<Float[] | Float>;
+  expensesProgram_lt?: Maybe<Float>;
+  expensesProgram_lte?: Maybe<Float>;
+  expensesProgram_gt?: Maybe<Float>;
+  expensesProgram_gte?: Maybe<Float>;
+  expensesUpdated?: Maybe<String>;
+  expensesUpdated_not?: Maybe<String>;
+  expensesUpdated_in?: Maybe<String[] | String>;
+  expensesUpdated_not_in?: Maybe<String[] | String>;
+  expensesUpdated_lt?: Maybe<String>;
+  expensesUpdated_lte?: Maybe<String>;
+  expensesUpdated_gt?: Maybe<String>;
+  expensesUpdated_gte?: Maybe<String>;
+  expensesUpdated_contains?: Maybe<String>;
+  expensesUpdated_not_contains?: Maybe<String>;
+  expensesUpdated_starts_with?: Maybe<String>;
+  expensesUpdated_not_starts_with?: Maybe<String>;
+  expensesUpdated_ends_with?: Maybe<String>;
+  expensesUpdated_not_ends_with?: Maybe<String>;
+  location?: Maybe<String>;
+  location_not?: Maybe<String>;
+  location_in?: Maybe<String[] | String>;
+  location_not_in?: Maybe<String[] | String>;
+  location_lt?: Maybe<String>;
+  location_lte?: Maybe<String>;
+  location_gt?: Maybe<String>;
+  location_gte?: Maybe<String>;
+  location_contains?: Maybe<String>;
+  location_not_contains?: Maybe<String>;
+  location_starts_with?: Maybe<String>;
+  location_not_starts_with?: Maybe<String>;
+  location_ends_with?: Maybe<String>;
+  location_not_ends_with?: Maybe<String>;
+  mission?: Maybe<String>;
+  mission_not?: Maybe<String>;
+  mission_in?: Maybe<String[] | String>;
+  mission_not_in?: Maybe<String[] | String>;
+  mission_lt?: Maybe<String>;
+  mission_lte?: Maybe<String>;
+  mission_gt?: Maybe<String>;
+  mission_gte?: Maybe<String>;
+  mission_contains?: Maybe<String>;
+  mission_not_contains?: Maybe<String>;
+  mission_starts_with?: Maybe<String>;
+  mission_not_starts_with?: Maybe<String>;
+  mission_ends_with?: Maybe<String>;
+  mission_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  phoneNumber_not?: Maybe<String>;
+  phoneNumber_in?: Maybe<String[] | String>;
+  phoneNumber_not_in?: Maybe<String[] | String>;
+  phoneNumber_lt?: Maybe<String>;
+  phoneNumber_lte?: Maybe<String>;
+  phoneNumber_gt?: Maybe<String>;
+  phoneNumber_gte?: Maybe<String>;
+  phoneNumber_contains?: Maybe<String>;
+  phoneNumber_not_contains?: Maybe<String>;
+  phoneNumber_starts_with?: Maybe<String>;
+  phoneNumber_not_starts_with?: Maybe<String>;
+  phoneNumber_ends_with?: Maybe<String>;
+  phoneNumber_not_ends_with?: Maybe<String>;
+  website?: Maybe<String>;
+  website_not?: Maybe<String>;
+  website_in?: Maybe<String[] | String>;
+  website_not_in?: Maybe<String[] | String>;
+  website_lt?: Maybe<String>;
+  website_lte?: Maybe<String>;
+  website_gt?: Maybe<String>;
+  website_gte?: Maybe<String>;
+  website_contains?: Maybe<String>;
+  website_not_contains?: Maybe<String>;
+  website_starts_with?: Maybe<String>;
+  website_not_starts_with?: Maybe<String>;
+  website_ends_with?: Maybe<String>;
+  website_not_ends_with?: Maybe<String>;
+  events_every?: Maybe<EventWhereInput>;
+  events_some?: Maybe<EventWhereInput>;
+  events_none?: Maybe<EventWhereInput>;
+  followers_every?: Maybe<UserWhereInput>;
+  followers_some?: Maybe<UserWhereInput>;
+  followers_none?: Maybe<UserWhereInput>;
+  AND?: Maybe<CharityWhereInput[] | CharityWhereInput>;
+  OR?: Maybe<CharityWhereInput[] | CharityWhereInput>;
+  NOT?: Maybe<CharityWhereInput[] | CharityWhereInput>;
 }
 
 export interface CharityUpdateManyMutationInput {
@@ -5595,6 +5610,7 @@ export interface TransferCreateInput {
   id?: Maybe<ID_Input>;
   amount: Int;
   chargeBalance: Int;
+  firstOfBatch: Boolean;
   transferID: String;
   event?: Maybe<EventCreateOneWithoutDonationsInput>;
   source?: Maybe<ChargeCreateOneWithoutDonationsInput>;
@@ -5720,6 +5736,7 @@ export interface Transfer {
   createdAt: DateTimeOutput;
   amount: Int;
   chargeBalance: Int;
+  firstOfBatch: Boolean;
   transferID: String;
 }
 
@@ -5728,6 +5745,7 @@ export interface TransferPromise extends Promise<Transfer>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   amount: () => Promise<Int>;
   chargeBalance: () => Promise<Int>;
+  firstOfBatch: () => Promise<Boolean>;
   transferID: () => Promise<String>;
   event: <T = EventPromise>() => T;
   source: <T = ChargePromise>() => T;
@@ -5741,6 +5759,7 @@ export interface TransferSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   amount: () => Promise<AsyncIterator<Int>>;
   chargeBalance: () => Promise<AsyncIterator<Int>>;
+  firstOfBatch: () => Promise<AsyncIterator<Boolean>>;
   transferID: () => Promise<AsyncIterator<String>>;
   event: <T = EventSubscription>() => T;
   source: <T = ChargeSubscription>() => T;
@@ -5754,6 +5773,7 @@ export interface TransferNullablePromise
   createdAt: () => Promise<DateTimeOutput>;
   amount: () => Promise<Int>;
   chargeBalance: () => Promise<Int>;
+  firstOfBatch: () => Promise<Boolean>;
   transferID: () => Promise<String>;
   event: <T = EventPromise>() => T;
   source: <T = ChargePromise>() => T;
@@ -7127,6 +7147,7 @@ export interface TransferPreviousValues {
   createdAt: DateTimeOutput;
   amount: Int;
   chargeBalance: Int;
+  firstOfBatch: Boolean;
   transferID: String;
 }
 
@@ -7137,6 +7158,7 @@ export interface TransferPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   amount: () => Promise<Int>;
   chargeBalance: () => Promise<Int>;
+  firstOfBatch: () => Promise<Boolean>;
   transferID: () => Promise<String>;
 }
 
@@ -7147,6 +7169,7 @@ export interface TransferPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   amount: () => Promise<AsyncIterator<Int>>;
   chargeBalance: () => Promise<AsyncIterator<Int>>;
+  firstOfBatch: () => Promise<AsyncIterator<Boolean>>;
   transferID: () => Promise<AsyncIterator<String>>;
 }
 
@@ -7444,478 +7467,6 @@ export interface CircleJoinRequestEdgeSubscription
     Fragmentable {
   node: <T = CircleJoinRequestSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface CircleInvite {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface CircleInvitePromise
-  extends Promise<CircleInvite>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  circle: <T = CirclePromise>() => T;
-  user: <T = UserPromise>() => T;
-}
-
-export interface CircleInviteSubscription
-  extends Promise<AsyncIterator<CircleInvite>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  circle: <T = CircleSubscription>() => T;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface CircleInviteNullablePromise
-  extends Promise<CircleInvite | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  circle: <T = CirclePromise>() => T;
-  user: <T = UserPromise>() => T;
-}
-
-export interface CircleInviteConnection {
-  pageInfo: PageInfo;
-  edges: CircleInviteEdge[];
-}
-
-export interface CircleInviteConnectionPromise
-  extends Promise<CircleInviteConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CircleInviteEdge>>() => T;
-  aggregate: <T = AggregateCircleInvitePromise>() => T;
-}
-
-export interface CircleInviteConnectionSubscription
-  extends Promise<AsyncIterator<CircleInviteConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CircleInviteEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCircleInviteSubscription>() => T;
-}
-
-export interface IdentitySubscriptionPayload {
-  mutation: MutationType;
-  node: Identity;
-  updatedFields: String[];
-  previousValues: IdentityPreviousValues;
-}
-
-export interface IdentitySubscriptionPayloadPromise
-  extends Promise<IdentitySubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = IdentityPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = IdentityPreviousValuesPromise>() => T;
-}
-
-export interface IdentitySubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<IdentitySubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = IdentitySubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = IdentityPreviousValuesSubscription>() => T;
-}
-
-export interface AggregateCharity {
-  count: Int;
-}
-
-export interface AggregateCharityPromise
-  extends Promise<AggregateCharity>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCharitySubscription
-  extends Promise<AsyncIterator<AggregateCharity>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface IdentityPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  provider: IdentityProvider;
-  providerID: String;
-}
-
-export interface IdentityPreviousValuesPromise
-  extends Promise<IdentityPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  provider: () => Promise<IdentityProvider>;
-  providerID: () => Promise<String>;
-}
-
-export interface IdentityPreviousValuesSubscription
-  extends Promise<AsyncIterator<IdentityPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  provider: () => Promise<AsyncIterator<IdentityProvider>>;
-  providerID: () => Promise<AsyncIterator<String>>;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface Circle {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  description?: String;
-  name: String;
-  open: Boolean;
-}
-
-export interface CirclePromise extends Promise<Circle>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
-  name: () => Promise<String>;
-  open: () => Promise<Boolean>;
-  joinRequests: <T = FragmentableArray<CircleJoinRequest>>(args?: {
-    where?: CircleJoinRequestWhereInput;
-    orderBy?: CircleJoinRequestOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  invites: <T = FragmentableArray<CircleInvite>>(args?: {
-    where?: CircleInviteWhereInput;
-    orderBy?: CircleInviteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  members: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  owner: <T = UserPromise>() => T;
-}
-
-export interface CircleSubscription
-  extends Promise<AsyncIterator<Circle>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  description: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  open: () => Promise<AsyncIterator<Boolean>>;
-  joinRequests: <
-    T = Promise<AsyncIterator<CircleJoinRequestSubscription>>
-  >(args?: {
-    where?: CircleJoinRequestWhereInput;
-    orderBy?: CircleJoinRequestOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  invites: <T = Promise<AsyncIterator<CircleInviteSubscription>>>(args?: {
-    where?: CircleInviteWhereInput;
-    orderBy?: CircleInviteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  members: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  owner: <T = UserSubscription>() => T;
-}
-
-export interface CircleNullablePromise
-  extends Promise<Circle | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
-  name: () => Promise<String>;
-  open: () => Promise<Boolean>;
-  joinRequests: <T = FragmentableArray<CircleJoinRequest>>(args?: {
-    where?: CircleJoinRequestWhereInput;
-    orderBy?: CircleJoinRequestOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  invites: <T = FragmentableArray<CircleInvite>>(args?: {
-    where?: CircleInviteWhereInput;
-    orderBy?: CircleInviteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  members: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  owner: <T = UserPromise>() => T;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface LoopSubscriptionPayload {
-  mutation: MutationType;
-  node: Loop;
-  updatedFields: String[];
-  previousValues: LoopPreviousValues;
-}
-
-export interface LoopSubscriptionPayloadPromise
-  extends Promise<LoopSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = LoopPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = LoopPreviousValuesPromise>() => T;
-}
-
-export interface LoopSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<LoopSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = LoopSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = LoopPreviousValuesSubscription>() => T;
-}
-
-export interface AggregateHalo {
-  count: Int;
-}
-
-export interface AggregateHaloPromise
-  extends Promise<AggregateHalo>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateHaloSubscription
-  extends Promise<AsyncIterator<AggregateHalo>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface LoopPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  count: Int;
-}
-
-export interface LoopPreviousValuesPromise
-  extends Promise<LoopPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  count: () => Promise<Int>;
-}
-
-export interface LoopPreviousValuesSubscription
-  extends Promise<AsyncIterator<LoopPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface DotConnection {
-  pageInfo: PageInfo;
-  edges: DotEdge[];
-}
-
-export interface DotConnectionPromise
-  extends Promise<DotConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<DotEdge>>() => T;
-  aggregate: <T = AggregateDotPromise>() => T;
-}
-
-export interface DotConnectionSubscription
-  extends Promise<AsyncIterator<DotConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<DotEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateDotSubscription>() => T;
-}
-
-export interface CircleJoinRequest {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface CircleJoinRequestPromise
-  extends Promise<CircleJoinRequest>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  circle: <T = CirclePromise>() => T;
-  user: <T = UserPromise>() => T;
-}
-
-export interface CircleJoinRequestSubscription
-  extends Promise<AsyncIterator<CircleJoinRequest>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  circle: <T = CircleSubscription>() => T;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface CircleJoinRequestNullablePromise
-  extends Promise<CircleJoinRequest | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  circle: <T = CirclePromise>() => T;
-  user: <T = UserPromise>() => T;
-}
-
-export interface CircleEdge {
-  node: Circle;
-  cursor: String;
-}
-
-export interface CircleEdgePromise extends Promise<CircleEdge>, Fragmentable {
-  node: <T = CirclePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CircleEdgeSubscription
-  extends Promise<AsyncIterator<CircleEdge>>,
-    Fragmentable {
-  node: <T = CircleSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface TransactionSubscriptionPayload {
-  mutation: MutationType;
-  node: Transaction;
-  updatedFields: String[];
-  previousValues: TransactionPreviousValues;
-}
-
-export interface TransactionSubscriptionPayloadPromise
-  extends Promise<TransactionSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = TransactionPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = TransactionPreviousValuesPromise>() => T;
-}
-
-export interface TransactionSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TransactionSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TransactionSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TransactionPreviousValuesSubscription>() => T;
 }
 
 export interface User {
@@ -8252,6 +7803,478 @@ export interface UserNullablePromise
   }) => T;
 }
 
+export interface CircleInviteConnection {
+  pageInfo: PageInfo;
+  edges: CircleInviteEdge[];
+}
+
+export interface CircleInviteConnectionPromise
+  extends Promise<CircleInviteConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CircleInviteEdge>>() => T;
+  aggregate: <T = AggregateCircleInvitePromise>() => T;
+}
+
+export interface CircleInviteConnectionSubscription
+  extends Promise<AsyncIterator<CircleInviteConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CircleInviteEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCircleInviteSubscription>() => T;
+}
+
+export interface IdentitySubscriptionPayload {
+  mutation: MutationType;
+  node: Identity;
+  updatedFields: String[];
+  previousValues: IdentityPreviousValues;
+}
+
+export interface IdentitySubscriptionPayloadPromise
+  extends Promise<IdentitySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = IdentityPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = IdentityPreviousValuesPromise>() => T;
+}
+
+export interface IdentitySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<IdentitySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = IdentitySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = IdentityPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateCharity {
+  count: Int;
+}
+
+export interface AggregateCharityPromise
+  extends Promise<AggregateCharity>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCharitySubscription
+  extends Promise<AsyncIterator<AggregateCharity>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface IdentityPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  provider: IdentityProvider;
+  providerID: String;
+}
+
+export interface IdentityPreviousValuesPromise
+  extends Promise<IdentityPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  provider: () => Promise<IdentityProvider>;
+  providerID: () => Promise<String>;
+}
+
+export interface IdentityPreviousValuesSubscription
+  extends Promise<AsyncIterator<IdentityPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  provider: () => Promise<AsyncIterator<IdentityProvider>>;
+  providerID: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface CircleInvite {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface CircleInvitePromise
+  extends Promise<CircleInvite>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  circle: <T = CirclePromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface CircleInviteSubscription
+  extends Promise<AsyncIterator<CircleInvite>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  circle: <T = CircleSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface CircleInviteNullablePromise
+  extends Promise<CircleInvite | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  circle: <T = CirclePromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface LoopSubscriptionPayload {
+  mutation: MutationType;
+  node: Loop;
+  updatedFields: String[];
+  previousValues: LoopPreviousValues;
+}
+
+export interface LoopSubscriptionPayloadPromise
+  extends Promise<LoopSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = LoopPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = LoopPreviousValuesPromise>() => T;
+}
+
+export interface LoopSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<LoopSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = LoopSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = LoopPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateHalo {
+  count: Int;
+}
+
+export interface AggregateHaloPromise
+  extends Promise<AggregateHalo>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateHaloSubscription
+  extends Promise<AsyncIterator<AggregateHalo>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface LoopPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  count: Int;
+}
+
+export interface LoopPreviousValuesPromise
+  extends Promise<LoopPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  count: () => Promise<Int>;
+}
+
+export interface LoopPreviousValuesSubscription
+  extends Promise<AsyncIterator<LoopPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface DotConnection {
+  pageInfo: PageInfo;
+  edges: DotEdge[];
+}
+
+export interface DotConnectionPromise
+  extends Promise<DotConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<DotEdge>>() => T;
+  aggregate: <T = AggregateDotPromise>() => T;
+}
+
+export interface DotConnectionSubscription
+  extends Promise<AsyncIterator<DotConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<DotEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateDotSubscription>() => T;
+}
+
+export interface Circle {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  description?: String;
+  name: String;
+  open: Boolean;
+}
+
+export interface CirclePromise extends Promise<Circle>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  name: () => Promise<String>;
+  open: () => Promise<Boolean>;
+  joinRequests: <T = FragmentableArray<CircleJoinRequest>>(args?: {
+    where?: CircleJoinRequestWhereInput;
+    orderBy?: CircleJoinRequestOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  invites: <T = FragmentableArray<CircleInvite>>(args?: {
+    where?: CircleInviteWhereInput;
+    orderBy?: CircleInviteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  members: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  owner: <T = UserPromise>() => T;
+}
+
+export interface CircleSubscription
+  extends Promise<AsyncIterator<Circle>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  description: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  open: () => Promise<AsyncIterator<Boolean>>;
+  joinRequests: <
+    T = Promise<AsyncIterator<CircleJoinRequestSubscription>>
+  >(args?: {
+    where?: CircleJoinRequestWhereInput;
+    orderBy?: CircleJoinRequestOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  invites: <T = Promise<AsyncIterator<CircleInviteSubscription>>>(args?: {
+    where?: CircleInviteWhereInput;
+    orderBy?: CircleInviteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  members: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  owner: <T = UserSubscription>() => T;
+}
+
+export interface CircleNullablePromise
+  extends Promise<Circle | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  name: () => Promise<String>;
+  open: () => Promise<Boolean>;
+  joinRequests: <T = FragmentableArray<CircleJoinRequest>>(args?: {
+    where?: CircleJoinRequestWhereInput;
+    orderBy?: CircleJoinRequestOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  invites: <T = FragmentableArray<CircleInvite>>(args?: {
+    where?: CircleInviteWhereInput;
+    orderBy?: CircleInviteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  members: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  owner: <T = UserPromise>() => T;
+}
+
+export interface CircleEdge {
+  node: Circle;
+  cursor: String;
+}
+
+export interface CircleEdgePromise extends Promise<CircleEdge>, Fragmentable {
+  node: <T = CirclePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CircleEdgeSubscription
+  extends Promise<AsyncIterator<CircleEdge>>,
+    Fragmentable {
+  node: <T = CircleSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TransactionSubscriptionPayload {
+  mutation: MutationType;
+  node: Transaction;
+  updatedFields: String[];
+  previousValues: TransactionPreviousValues;
+}
+
+export interface TransactionSubscriptionPayloadPromise
+  extends Promise<TransactionSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TransactionPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TransactionPreviousValuesPromise>() => T;
+}
+
+export interface TransactionSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TransactionSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TransactionSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TransactionPreviousValuesSubscription>() => T;
+}
+
+export interface CircleJoinRequest {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface CircleJoinRequestPromise
+  extends Promise<CircleJoinRequest>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  circle: <T = CirclePromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface CircleJoinRequestSubscription
+  extends Promise<AsyncIterator<CircleJoinRequest>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  circle: <T = CircleSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface CircleJoinRequestNullablePromise
+  extends Promise<CircleJoinRequest | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  circle: <T = CirclePromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
 export interface PreferencesPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
@@ -8404,14 +8427,14 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
-*/
-export type Float = number;
-
-/*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
+*/
+export type Float = number;
 
 /**
  * Model Metadata

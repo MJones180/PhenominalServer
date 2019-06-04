@@ -3,12 +3,10 @@ const _ = require('lodash');
 
 // All of the fields to forward
 const fields = [
-  'user', 'users', 'usersConnection',
-  'circle', 'circles', 'circlesConnection',
   'charity', 'charities', 'charitiesConnection',
+  'circle', 'circles', 'circlesConnection',
   'event', 'events', 'eventsConnection',
-  'transaction', 'transactions', 'transactionsConnection',
-  'identity', 'identities', 'identitiesConnection',
+  'user', 'users', 'usersConnection',
 ];
 
 // Complete object of all forwarded fields

@@ -39,7 +39,7 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
       })
     );
 
-    // Grab the transaction's ID
+    // Grab the transaction's ID for the confirmation and linking the donations
     const { id: transactionID } = await createTransaction();
 
     // Grab the user's funds that have an active balance
@@ -73,10 +73,11 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
           destination: connectedAccountID,
           source_transaction: chargeID,
         }).then(({ id: transferID }) => (
-          // Add the donation and link it to the transaction
+          // Add the donation to Phenominal and link it to the transaction
           ctx.client.createTransfer({
             amount: partitionedAmount,
             chargeBalance,
+            firstOfBatch: fundsIndex == 0,
             transferID,
             event: { connect: { id: eventID } },
             source: { connect: { id: sourceID } },
@@ -84,13 +85,16 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
           })
         ))
       );
-      // Part of the original donation is still left
+      // The whole donation has not been completed
       if (amountLeft > fundsBalance) {
-        // Process the donation
+        // Process the donation with the rest of the current funds
         process(fundsBalance, 0);
-        // Prepare the next part of the donation
+        // Prepare the next partition of the donation
         donate(fundsIndex + 1, amountLeft - fundsBalance);
-      } else process(amountLeft, fundsBalance - amountLeft); // Donation is complete
+      } else {
+        // Donation is complete, portion of the current funds have been used
+        process(amountLeft, fundsBalance - amountLeft);
+      }
     };
 
     // Start the donation process
@@ -114,6 +118,7 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
       dateToday.setUTCHours(0, 0, 0, 0);
       // Today's date in ISO format
       dateToday.toISOString();
+      // Returns true if a Loop has been gained in the past day
       const loopExists = await ctx.client.$exists.loop({
         createdAt_gte: dateToday,
       }, {
@@ -121,9 +126,11 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
       });
       // Grab the user's current Loop count
       let { count: loopCount } = await ctx.utils.loops.grabLoops({ username });
+      // Bool for if a new Loop has been created
       let loopGained = false;
       // Check if the donation is Loop eligible
       if (!loopExists) {
+        // Add a Loop
         loopCount += 1;
         // Add the Loop
         await ctx.client.createLoop({
@@ -134,6 +141,7 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
         // Loop gained
         loopGained = true;
       }
+      // Necessary info to return to the client
       return { loopCount, loopGained };
     };
 
@@ -150,7 +158,7 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
     // The Dot boost, based on Loop count
     const { boost } = ctx.utils.loopStage(loopCount);
 
-    // The amount of Dots given for donating
+    // The amount of Dots received for donating
     const dotsGained = 50 * boost;
 
     // Add the new Dots

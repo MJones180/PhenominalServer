@@ -24,7 +24,7 @@ type Mutation {
 }
 
 type Query {
-  aggregateDonations(forEvent: String, forUser: Boolean): aggregateDonationsPayload!
+  aggregateDonations(currentUser: Boolean, eventID: ID): aggregateDonationsPayload!
   allHalos: [allHalosPayload!]
   currentUser: User
   currentUserBalance: Int!
@@ -51,7 +51,7 @@ type donationPayload {
   dotTotal: Int!
   dotsGained: Int!
   loopCount: Int!
-  loopGained: Int!
+  loopGained: Boolean!
   transactionID: ID!
 }
 
