@@ -39,8 +39,8 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
       })
     );
 
-    // Grab the transaction's ID for the confirmation and linking the donations
-    const { id: transactionID } = await createTransaction();
+    // Grab the date and transaction's ID for the confirmation and linking the donations
+    const { createdAt: date, id: transactionID } = await createTransaction();
 
     // Grab the user's funds that have an active balance
     const { funds } = await ctx.binding.query.user({ where: { id: userID } },
@@ -118,11 +118,15 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
       dateToday.setUTCHours(0, 0, 0, 0);
       // Today's date in ISO format
       dateToday.toISOString();
-      // Returns true if a Loop has been gained in the past day
-      const loopExists = await ctx.client.$exists.loop({
+      // Checks if a donation has been made to the charity in the past day, meaning a Loop would already exist
+      const loopExists = await ctx.client.$exists.transfer({
         createdAt_gte: dateToday,
       }, {
-        user: { id: userID },
+        event: { id: eventID },
+      }, {
+        transaction: {
+          user: { id: userID },
+        },
       });
       // Grab the user's current Loop count
       let { count: loopCount } = await ctx.utils.loops.grabLoops({ username });
@@ -177,6 +181,7 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
       amount,
       balance: newBalance,
       charityName,
+      date,
       transactionID,
     };
 

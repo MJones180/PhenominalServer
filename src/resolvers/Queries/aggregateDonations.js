@@ -30,7 +30,6 @@ module.exports = async (parent, { currentUser, eventID }, ctx) => {
     // Increment the total amount donated
     results.total += amount;
   });
-  console.log('results: ', results);
   // Return to client
   return results;
 };

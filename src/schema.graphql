@@ -41,6 +41,7 @@ type addFundsPayload {
   amountCharged: Int!
   amountReceived: Int!
   balance: Int!
+  date: DateTime!
   transactionID: ID!
 }
 
@@ -48,6 +49,7 @@ type donationPayload {
   amount: Int!
   balance: Int!
   charityName: String!
+  date: DateTime!
   dotTotal: Int!
   dotsGained: Int!
   loopCount: Int!
