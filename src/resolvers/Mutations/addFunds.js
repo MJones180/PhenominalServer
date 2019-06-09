@@ -1,4 +1,5 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
+const moment = require('moment');
 
 // Set the API version
 stripe.setApiVersion('2019-03-14');
@@ -39,12 +40,15 @@ module.exports = async (parent, { amount, token }, ctx) => (
         const newBalance = (await grabBalance()) + net;
         // Add the funds, grab info for the confirmation
         const { createdAt: date, id: transactionID } = await addFunds(net, chargeID, newBalance);
+        // The deadline for which the funds will automatically be donated
+        const expiration = moment(date).add(80, 'days');
         // The transactional information for the confirmation
         const transactionData = {
           amountCharged: amount,
           amountReceived: net,
           balance: newBalance,
           date,
+          expiration,
           transactionID,
         };
         // Send an email with the confirmation

@@ -1,6 +1,7 @@
+const moment = require('moment');
 const sendEmail = require('../sendEmail');
 
-module.exports = ({ amountCharged, amountReceived, balance, transactionID }, email, nameFirst, nameLast) => (
+module.exports = ({ amountCharged, amountReceived, balance, expiration, transactionID }, email, nameFirst, nameLast) => (
   sendEmail({
     email,
     name: `${nameFirst} ${nameLast}`,
@@ -9,6 +10,7 @@ module.exports = ({ amountCharged, amountReceived, balance, transactionID }, ema
       amountCharged: amountCharged / 100,
       amountReceived: amountReceived / 100,
       balance: balance / 100,
+      expiration: moment(expiration).format('MM/DD/YYYY'),
       firstname: nameFirst,
       transactionID,
     },
