@@ -1,4 +1,6 @@
 const addFunds = require('./Mutations/addFunds');
+const charityAuthLink = require('./Mutations/charityAuthLink');
+const charitySignin = require('./Mutations/charitySignin');
 const charitySuggestion = require('./Mutations/charitySuggestion');
 const contactMessage = require('./Mutations/contactMessage');
 const createCircle = require('./Mutations/createCircle');
@@ -32,6 +34,8 @@ module.exports = {
   Mutation: {
     accountAgeHalo,
     addFunds,
+    charityAuthLink,
+    charitySignin,
     charitySuggestion,
     contactMessage,
     createCircle,

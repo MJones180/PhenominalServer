@@ -11,6 +11,10 @@ type AggregateCharity {
   count: Int!
 }
 
+type AggregateCharityAuth {
+  count: Int!
+}
+
 type AggregateCircle {
   count: Int!
 }
@@ -410,18 +414,211 @@ type Charity {
   bannerCredit: String
   connectedAccountID: String
   ein: String!
+  email: String!
   expensesAdministrative: Float
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
   expensesUpdated: String
-  location: String!
-  mission: String!
+  location: String
+  mission: String
   name: String!
-  phoneNumber: String!
+  phoneNumber: String
+  representative: String!
+  verified: Boolean
   website: String!
+  authHistory(where: CharityAuthWhereInput, orderBy: CharityAuthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CharityAuth!]
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
   followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+type CharityAuth {
+  id: ID!
+  createdAt: DateTime!
+  securityToken: Int!
+  charity: Charity!
+}
+
+type CharityAuthConnection {
+  pageInfo: PageInfo!
+  edges: [CharityAuthEdge]!
+  aggregate: AggregateCharityAuth!
+}
+
+input CharityAuthCreateInput {
+  id: ID
+  securityToken: Int!
+  charity: CharityCreateOneWithoutAuthHistoryInput!
+}
+
+input CharityAuthCreateManyWithoutCharityInput {
+  create: [CharityAuthCreateWithoutCharityInput!]
+  connect: [CharityAuthWhereUniqueInput!]
+}
+
+input CharityAuthCreateWithoutCharityInput {
+  id: ID
+  securityToken: Int!
+}
+
+type CharityAuthEdge {
+  node: CharityAuth!
+  cursor: String!
+}
+
+enum CharityAuthOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  securityToken_ASC
+  securityToken_DESC
+}
+
+type CharityAuthPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  securityToken: Int!
+}
+
+input CharityAuthScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  securityToken: Int
+  securityToken_not: Int
+  securityToken_in: [Int!]
+  securityToken_not_in: [Int!]
+  securityToken_lt: Int
+  securityToken_lte: Int
+  securityToken_gt: Int
+  securityToken_gte: Int
+  AND: [CharityAuthScalarWhereInput!]
+  OR: [CharityAuthScalarWhereInput!]
+  NOT: [CharityAuthScalarWhereInput!]
+}
+
+type CharityAuthSubscriptionPayload {
+  mutation: MutationType!
+  node: CharityAuth
+  updatedFields: [String!]
+  previousValues: CharityAuthPreviousValues
+}
+
+input CharityAuthSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CharityAuthWhereInput
+  AND: [CharityAuthSubscriptionWhereInput!]
+  OR: [CharityAuthSubscriptionWhereInput!]
+  NOT: [CharityAuthSubscriptionWhereInput!]
+}
+
+input CharityAuthUpdateInput {
+  securityToken: Int
+  charity: CharityUpdateOneRequiredWithoutAuthHistoryInput
+}
+
+input CharityAuthUpdateManyDataInput {
+  securityToken: Int
+}
+
+input CharityAuthUpdateManyMutationInput {
+  securityToken: Int
+}
+
+input CharityAuthUpdateManyWithoutCharityInput {
+  create: [CharityAuthCreateWithoutCharityInput!]
+  delete: [CharityAuthWhereUniqueInput!]
+  connect: [CharityAuthWhereUniqueInput!]
+  set: [CharityAuthWhereUniqueInput!]
+  disconnect: [CharityAuthWhereUniqueInput!]
+  update: [CharityAuthUpdateWithWhereUniqueWithoutCharityInput!]
+  upsert: [CharityAuthUpsertWithWhereUniqueWithoutCharityInput!]
+  deleteMany: [CharityAuthScalarWhereInput!]
+  updateMany: [CharityAuthUpdateManyWithWhereNestedInput!]
+}
+
+input CharityAuthUpdateManyWithWhereNestedInput {
+  where: CharityAuthScalarWhereInput!
+  data: CharityAuthUpdateManyDataInput!
+}
+
+input CharityAuthUpdateWithoutCharityDataInput {
+  securityToken: Int
+}
+
+input CharityAuthUpdateWithWhereUniqueWithoutCharityInput {
+  where: CharityAuthWhereUniqueInput!
+  data: CharityAuthUpdateWithoutCharityDataInput!
+}
+
+input CharityAuthUpsertWithWhereUniqueWithoutCharityInput {
+  where: CharityAuthWhereUniqueInput!
+  update: CharityAuthUpdateWithoutCharityDataInput!
+  create: CharityAuthCreateWithoutCharityInput!
+}
+
+input CharityAuthWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  securityToken: Int
+  securityToken_not: Int
+  securityToken_in: [Int!]
+  securityToken_not_in: [Int!]
+  securityToken_lt: Int
+  securityToken_lte: Int
+  securityToken_gt: Int
+  securityToken_gte: Int
+  charity: CharityWhereInput
+  AND: [CharityAuthWhereInput!]
+  OR: [CharityAuthWhereInput!]
+  NOT: [CharityAuthWhereInput!]
+}
+
+input CharityAuthWhereUniqueInput {
+  id: ID
 }
 
 type CharityConnection {
@@ -436,16 +633,20 @@ input CharityCreateInput {
   bannerCredit: String
   connectedAccountID: String
   ein: String!
+  email: String!
   expensesAdministrative: Float
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
   expensesUpdated: String
-  location: String!
-  mission: String!
+  location: String
+  mission: String
   name: String!
-  phoneNumber: String!
+  phoneNumber: String
+  representative: String!
+  verified: Boolean
   website: String!
+  authHistory: CharityAuthCreateManyWithoutCharityInput
   events: EventCreateManyWithoutCharityInput
   followers: UserCreateManyWithoutFollowedCharitiesInput
 }
@@ -455,9 +656,37 @@ input CharityCreateManyWithoutFollowersInput {
   connect: [CharityWhereUniqueInput!]
 }
 
+input CharityCreateOneWithoutAuthHistoryInput {
+  create: CharityCreateWithoutAuthHistoryInput
+  connect: CharityWhereUniqueInput
+}
+
 input CharityCreateOneWithoutEventsInput {
   create: CharityCreateWithoutEventsInput
   connect: CharityWhereUniqueInput
+}
+
+input CharityCreateWithoutAuthHistoryInput {
+  id: ID
+  acronym: String
+  bannerCredit: String
+  connectedAccountID: String
+  ein: String!
+  email: String!
+  expensesAdministrative: Float
+  expensesFundraising: Float
+  expensesOther: Float
+  expensesProgram: Float
+  expensesUpdated: String
+  location: String
+  mission: String
+  name: String!
+  phoneNumber: String
+  representative: String!
+  verified: Boolean
+  website: String!
+  events: EventCreateManyWithoutCharityInput
+  followers: UserCreateManyWithoutFollowedCharitiesInput
 }
 
 input CharityCreateWithoutEventsInput {
@@ -466,16 +695,20 @@ input CharityCreateWithoutEventsInput {
   bannerCredit: String
   connectedAccountID: String
   ein: String!
+  email: String!
   expensesAdministrative: Float
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
   expensesUpdated: String
-  location: String!
-  mission: String!
+  location: String
+  mission: String
   name: String!
-  phoneNumber: String!
+  phoneNumber: String
+  representative: String!
+  verified: Boolean
   website: String!
+  authHistory: CharityAuthCreateManyWithoutCharityInput
   followers: UserCreateManyWithoutFollowedCharitiesInput
 }
 
@@ -485,16 +718,20 @@ input CharityCreateWithoutFollowersInput {
   bannerCredit: String
   connectedAccountID: String
   ein: String!
+  email: String!
   expensesAdministrative: Float
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
   expensesUpdated: String
-  location: String!
-  mission: String!
+  location: String
+  mission: String
   name: String!
-  phoneNumber: String!
+  phoneNumber: String
+  representative: String!
+  verified: Boolean
   website: String!
+  authHistory: CharityAuthCreateManyWithoutCharityInput
   events: EventCreateManyWithoutCharityInput
 }
 
@@ -518,6 +755,8 @@ enum CharityOrderByInput {
   connectedAccountID_DESC
   ein_ASC
   ein_DESC
+  email_ASC
+  email_DESC
   expensesAdministrative_ASC
   expensesAdministrative_DESC
   expensesFundraising_ASC
@@ -536,6 +775,10 @@ enum CharityOrderByInput {
   name_DESC
   phoneNumber_ASC
   phoneNumber_DESC
+  representative_ASC
+  representative_DESC
+  verified_ASC
+  verified_DESC
   website_ASC
   website_DESC
 }
@@ -548,15 +791,18 @@ type CharityPreviousValues {
   bannerCredit: String
   connectedAccountID: String
   ein: String!
+  email: String!
   expensesAdministrative: Float
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
   expensesUpdated: String
-  location: String!
-  mission: String!
+  location: String
+  mission: String
   name: String!
-  phoneNumber: String!
+  phoneNumber: String
+  representative: String!
+  verified: Boolean
   website: String!
 }
 
@@ -647,6 +893,20 @@ input CharityScalarWhereInput {
   ein_not_starts_with: String
   ein_ends_with: String
   ein_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
   expensesAdministrative: Float
   expensesAdministrative_not: Float
   expensesAdministrative_in: [Float!]
@@ -749,6 +1009,22 @@ input CharityScalarWhereInput {
   phoneNumber_not_starts_with: String
   phoneNumber_ends_with: String
   phoneNumber_not_ends_with: String
+  representative: String
+  representative_not: String
+  representative_in: [String!]
+  representative_not_in: [String!]
+  representative_lt: String
+  representative_lte: String
+  representative_gt: String
+  representative_gte: String
+  representative_contains: String
+  representative_not_contains: String
+  representative_starts_with: String
+  representative_not_starts_with: String
+  representative_ends_with: String
+  representative_not_ends_with: String
+  verified: Boolean
+  verified_not: Boolean
   website: String
   website_not: String
   website_in: [String!]
@@ -791,6 +1067,7 @@ input CharityUpdateInput {
   bannerCredit: String
   connectedAccountID: String
   ein: String
+  email: String
   expensesAdministrative: Float
   expensesFundraising: Float
   expensesOther: Float
@@ -800,7 +1077,10 @@ input CharityUpdateInput {
   mission: String
   name: String
   phoneNumber: String
+  representative: String
+  verified: Boolean
   website: String
+  authHistory: CharityAuthUpdateManyWithoutCharityInput
   events: EventUpdateManyWithoutCharityInput
   followers: UserUpdateManyWithoutFollowedCharitiesInput
 }
@@ -810,6 +1090,7 @@ input CharityUpdateManyDataInput {
   bannerCredit: String
   connectedAccountID: String
   ein: String
+  email: String
   expensesAdministrative: Float
   expensesFundraising: Float
   expensesOther: Float
@@ -819,6 +1100,8 @@ input CharityUpdateManyDataInput {
   mission: String
   name: String
   phoneNumber: String
+  representative: String
+  verified: Boolean
   website: String
 }
 
@@ -827,6 +1110,7 @@ input CharityUpdateManyMutationInput {
   bannerCredit: String
   connectedAccountID: String
   ein: String
+  email: String
   expensesAdministrative: Float
   expensesFundraising: Float
   expensesOther: Float
@@ -836,6 +1120,8 @@ input CharityUpdateManyMutationInput {
   mission: String
   name: String
   phoneNumber: String
+  representative: String
+  verified: Boolean
   website: String
 }
 
@@ -856,6 +1142,13 @@ input CharityUpdateManyWithWhereNestedInput {
   data: CharityUpdateManyDataInput!
 }
 
+input CharityUpdateOneRequiredWithoutAuthHistoryInput {
+  create: CharityCreateWithoutAuthHistoryInput
+  update: CharityUpdateWithoutAuthHistoryDataInput
+  upsert: CharityUpsertWithoutAuthHistoryInput
+  connect: CharityWhereUniqueInput
+}
+
 input CharityUpdateOneRequiredWithoutEventsInput {
   create: CharityCreateWithoutEventsInput
   update: CharityUpdateWithoutEventsDataInput
@@ -863,11 +1156,12 @@ input CharityUpdateOneRequiredWithoutEventsInput {
   connect: CharityWhereUniqueInput
 }
 
-input CharityUpdateWithoutEventsDataInput {
+input CharityUpdateWithoutAuthHistoryDataInput {
   acronym: String
   bannerCredit: String
   connectedAccountID: String
   ein: String
+  email: String
   expensesAdministrative: Float
   expensesFundraising: Float
   expensesOther: Float
@@ -877,7 +1171,32 @@ input CharityUpdateWithoutEventsDataInput {
   mission: String
   name: String
   phoneNumber: String
+  representative: String
+  verified: Boolean
   website: String
+  events: EventUpdateManyWithoutCharityInput
+  followers: UserUpdateManyWithoutFollowedCharitiesInput
+}
+
+input CharityUpdateWithoutEventsDataInput {
+  acronym: String
+  bannerCredit: String
+  connectedAccountID: String
+  ein: String
+  email: String
+  expensesAdministrative: Float
+  expensesFundraising: Float
+  expensesOther: Float
+  expensesProgram: Float
+  expensesUpdated: String
+  location: String
+  mission: String
+  name: String
+  phoneNumber: String
+  representative: String
+  verified: Boolean
+  website: String
+  authHistory: CharityAuthUpdateManyWithoutCharityInput
   followers: UserUpdateManyWithoutFollowedCharitiesInput
 }
 
@@ -886,6 +1205,7 @@ input CharityUpdateWithoutFollowersDataInput {
   bannerCredit: String
   connectedAccountID: String
   ein: String
+  email: String
   expensesAdministrative: Float
   expensesFundraising: Float
   expensesOther: Float
@@ -895,13 +1215,21 @@ input CharityUpdateWithoutFollowersDataInput {
   mission: String
   name: String
   phoneNumber: String
+  representative: String
+  verified: Boolean
   website: String
+  authHistory: CharityAuthUpdateManyWithoutCharityInput
   events: EventUpdateManyWithoutCharityInput
 }
 
 input CharityUpdateWithWhereUniqueWithoutFollowersInput {
   where: CharityWhereUniqueInput!
   data: CharityUpdateWithoutFollowersDataInput!
+}
+
+input CharityUpsertWithoutAuthHistoryInput {
+  update: CharityUpdateWithoutAuthHistoryDataInput!
+  create: CharityCreateWithoutAuthHistoryInput!
 }
 
 input CharityUpsertWithoutEventsInput {
@@ -1002,6 +1330,20 @@ input CharityWhereInput {
   ein_not_starts_with: String
   ein_ends_with: String
   ein_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
   expensesAdministrative: Float
   expensesAdministrative_not: Float
   expensesAdministrative_in: [Float!]
@@ -1104,6 +1446,22 @@ input CharityWhereInput {
   phoneNumber_not_starts_with: String
   phoneNumber_ends_with: String
   phoneNumber_not_ends_with: String
+  representative: String
+  representative_not: String
+  representative_in: [String!]
+  representative_not_in: [String!]
+  representative_lt: String
+  representative_lte: String
+  representative_gt: String
+  representative_gte: String
+  representative_contains: String
+  representative_not_contains: String
+  representative_starts_with: String
+  representative_not_starts_with: String
+  representative_ends_with: String
+  representative_not_ends_with: String
+  verified: Boolean
+  verified_not: Boolean
   website: String
   website_not: String
   website_in: [String!]
@@ -1118,6 +1476,9 @@ input CharityWhereInput {
   website_not_starts_with: String
   website_ends_with: String
   website_not_ends_with: String
+  authHistory_every: CharityAuthWhereInput
+  authHistory_some: CharityAuthWhereInput
+  authHistory_none: CharityAuthWhereInput
   events_every: EventWhereInput
   events_some: EventWhereInput
   events_none: EventWhereInput
@@ -1132,6 +1493,7 @@ input CharityWhereInput {
 input CharityWhereUniqueInput {
   id: ID
   ein: String
+  email: String
 }
 
 type Circle {
@@ -3413,6 +3775,12 @@ type Mutation {
   upsertCharity(where: CharityWhereUniqueInput!, create: CharityCreateInput!, update: CharityUpdateInput!): Charity!
   deleteCharity(where: CharityWhereUniqueInput!): Charity
   deleteManyCharities(where: CharityWhereInput): BatchPayload!
+  createCharityAuth(data: CharityAuthCreateInput!): CharityAuth!
+  updateCharityAuth(data: CharityAuthUpdateInput!, where: CharityAuthWhereUniqueInput!): CharityAuth
+  updateManyCharityAuths(data: CharityAuthUpdateManyMutationInput!, where: CharityAuthWhereInput): BatchPayload!
+  upsertCharityAuth(where: CharityAuthWhereUniqueInput!, create: CharityAuthCreateInput!, update: CharityAuthUpdateInput!): CharityAuth!
+  deleteCharityAuth(where: CharityAuthWhereUniqueInput!): CharityAuth
+  deleteManyCharityAuths(where: CharityAuthWhereInput): BatchPayload!
   createCircle(data: CircleCreateInput!): Circle!
   updateCircle(data: CircleUpdateInput!, where: CircleWhereUniqueInput!): Circle
   updateManyCircles(data: CircleUpdateManyMutationInput!, where: CircleWhereInput): BatchPayload!
@@ -3659,6 +4027,9 @@ type Query {
   charity(where: CharityWhereUniqueInput!): Charity
   charities(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charity]!
   charitiesConnection(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CharityConnection!
+  charityAuth(where: CharityAuthWhereUniqueInput!): CharityAuth
+  charityAuths(where: CharityAuthWhereInput, orderBy: CharityAuthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CharityAuth]!
+  charityAuthsConnection(where: CharityAuthWhereInput, orderBy: CharityAuthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CharityAuthConnection!
   circle(where: CircleWhereUniqueInput!): Circle
   circles(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle]!
   circlesConnection(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CircleConnection!
@@ -3701,6 +4072,7 @@ type Query {
 type Subscription {
   charge(where: ChargeSubscriptionWhereInput): ChargeSubscriptionPayload
   charity(where: CharitySubscriptionWhereInput): CharitySubscriptionPayload
+  charityAuth(where: CharityAuthSubscriptionWhereInput): CharityAuthSubscriptionPayload
   circle(where: CircleSubscriptionWhereInput): CircleSubscriptionPayload
   circleInvite(where: CircleInviteSubscriptionWhereInput): CircleInviteSubscriptionPayload
   circleJoinRequest(where: CircleJoinRequestSubscriptionWhereInput): CircleJoinRequestSubscriptionPayload

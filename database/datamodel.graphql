@@ -120,19 +120,32 @@ type Charity {
   bannerCredit: String
   connectedAccountID: String
   ein: String! @unique
+  email: String! @unique
   expensesAdministrative: Float
   expensesFundraising: Float
   expensesOther: Float
   expensesProgram: Float
   expensesUpdated: String
-  location: String!
-  mission: String!
+  location: String
+  mission: String
   name: String!
-  phoneNumber: String!
+  phoneNumber: String
+  representative: String!
+  verified: Boolean
   website: String!
 
+  authHistory: [CharityAuth!]!
   events: [Event!]!
   followers: [User!]!
+}
+
+type CharityAuth {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+
+  securityToken: Int!
+
+  charity: Charity!
 }
 
 type Event {

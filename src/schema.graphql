@@ -5,6 +5,8 @@ scalar Upload
 type Mutation {
   accountAgeHalo: Boolean
   addFunds(amount: Int!, token: String!): addFundsPayload
+  charityAuthLink(email: String!): Boolean
+  charitySignin(token: String!): String!
   charitySuggestion(ein: String, email: String!, name: String!, representative: Boolean, url: String): Boolean
   contactMessage(email: String!, message: String!, name: String!): Boolean
   createCircle(description: String, name: String!, open: Boolean): ID

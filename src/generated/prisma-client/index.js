@@ -45,6 +45,10 @@ var models = [
     embedded: false
   },
   {
+    name: "CharityAuth",
+    embedded: false
+  },
+  {
     name: "Event",
     embedded: false
   },

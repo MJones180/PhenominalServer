@@ -25,4 +25,32 @@ module.exports = {
       return false;
     }
   },
+
+  charityAuthLinkDecode: token => jwt.decode(token),
+  generateCharityAuthLink: (data, date) => (
+    jwt.sign(data, `${secret}${date}`, {
+      expiresIn: '20 minutes',
+      issuer: 'Phenominal',
+      subject: 'CharityAuthentication',
+    })
+  ),
+  generateCharityAuth: (data, date) => (
+    jwt.sign(data, `${secret}${date}`, {
+      expiresIn: '120 days',
+      issuer: 'Phenominal',
+      subject: 'CharityAuthentication',
+    })
+  ),
+  validateCharityAuthLink: (token, date) => {
+    try {
+      const { exp, iat, iss, sub, ...data } = jwt.verify(token, `${secret}${date}`, {
+        expiresIn: '20 minutes',
+        issuer: 'Phenominal',
+        subject: 'CharityAuthentication',
+      });
+      return data;
+    } catch (e) {
+      return false;
+    }
+  },
 };
