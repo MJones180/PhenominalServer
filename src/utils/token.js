@@ -1,56 +1,57 @@
-const jwt = require('jsonwebtoken');
+const { decode, sign, verify } = require('jsonwebtoken');
 const rand = require('./rand');
 
 const secret = process.env.APP_SECRET;
 
-const authTokenOptions = {
-  expiresIn: '120 days',
-  issuer: 'Phenominal',
-  subject: 'Authentication',
+const EXPIRES_DEFAULT = '120 days';
+const EXPIRES_SHORT = '20 minutes';
+
+const ISSUER = 'Phenominal';
+
+const SUBJECT_DEFAULT = 'Authentication';
+const SUBJECT_CHARITY = 'CharityAuthentication';
+
+// Creates dynamic secrets when a date is passed in
+const grabSecret = date => `${secret}${date}`;
+
+// Generate a new JWT
+const generateToken = (token, date, subject = SUBJECT_DEFAULT, expiresIn = EXPIRES_DEFAULT) => (
+  sign(token, grabSecret(date), {
+    expiresIn,
+    issuer: ISSUER,
+    subject,
+  })
+);
+
+// Check if the JWT has been tampered with and is still valid
+const validateToken = (token, date, subject = SUBJECT_DEFAULT, expiresIn = EXPIRES_DEFAULT) => {
+  try {
+    return verify(token, grabSecret(date), {
+      expiresIn,
+      issuer: ISSUER,
+      subject,
+    });
+  } catch (e) {
+    return false;
+  }
 };
 
 module.exports = {
-  // Generate an auth token, sign the JWT
-  generateAuth: data => jwt.sign(data, secret, authTokenOptions),
+  // Random 8 digit securityToken
+  createSecurity: () => rand(10000000, 99999999),
 
-  // Generate a random 8 digit security token
-  generateSecurity: () => rand(10000000, 99999999),
+  // Decode the JWT without verifying
+  decode: token => decode(token),
 
-  // Verify the JWT
-  validateAuth: (token) => {
-    try {
-      const { exp, iat, iss, sub, ...data } = jwt.verify(token, secret, authTokenOptions);
-      return data;
-    } catch (e) {
-      return false;
-    }
-  },
+  // Default user tokens
+  generate: data => generateToken(data),
+  validate: data => validateToken(data),
 
-  charityAuthLinkDecode: token => jwt.decode(token),
-  generateCharityAuthLink: (data, date) => (
-    jwt.sign(data, `${secret}${date}`, {
-      expiresIn: '20 minutes',
-      issuer: 'Phenominal',
-      subject: 'CharityAuthentication',
-    })
-  ),
-  generateCharityAuth: (data, date) => (
-    jwt.sign(data, `${secret}${date}`, {
-      expiresIn: '120 days',
-      issuer: 'Phenominal',
-      subject: 'CharityAuthentication',
-    })
-  ),
-  validateCharityAuthLink: (token, date) => {
-    try {
-      const { exp, iat, iss, sub, ...data } = jwt.verify(token, `${secret}${date}`, {
-        expiresIn: '20 minutes',
-        issuer: 'Phenominal',
-        subject: 'CharityAuthentication',
-      });
-      return data;
-    } catch (e) {
-      return false;
-    }
-  },
+  // Charity authLinks tokens
+  generateCharityAuth: (data, date) => generateToken(data, date, SUBJECT_CHARITY, EXPIRES_SHORT),
+  validateCharityAuth: (data, date) => validateToken(data, date, SUBJECT_CHARITY, EXPIRES_SHORT),
+
+  // Charity client auth tokens
+  generateCharityClient: (data, date) => generateToken(data, date, SUBJECT_CHARITY),
+  validateCharityClient: (data, date) => validateToken(data, date, SUBJECT_CHARITY),
 };

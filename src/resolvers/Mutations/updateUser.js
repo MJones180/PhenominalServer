@@ -70,7 +70,7 @@ module.exports = async (parent, params, ctx) => {
   if (publicProfile != undefined) set(data, 'preferences.update.publicProfile', publicProfile);
 
   // Generate a new securityToken if bool is set
-  if (securityToken) data.securityToken = ctx.utils.token.generateSecurity();
+  if (securityToken) data.securityToken = ctx.utils.token.createSecurity();
 
   // Update the user's info
   await ctx.client.updateUser({

@@ -38,7 +38,7 @@ module.exports = async (parent, { provider, token }, ctx) => {
       email,
       nameFirst: upperFirst,
       nameLast: upperLast,
-      securityToken: ctx.utils.token.generateSecurity(),
+      securityToken: ctx.utils.token.createSecurity(),
       username: await generateUsername(),
       identity: {
         create: {
@@ -61,7 +61,7 @@ module.exports = async (parent, { provider, token }, ctx) => {
 
   return {
     // Generate an authToken
-    authToken: ctx.utils.token.generateAuth({ userID: id, securityToken }),
+    authToken: ctx.utils.token.generate({ userID: id, securityToken }),
     email,
     id,
     isNewUser,

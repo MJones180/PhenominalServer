@@ -6,7 +6,7 @@ type AggregateCharity {
   count: Int!
 }
 
-type AggregateCharityAuth {
+type AggregateCharityAuthHistory {
   count: Int!
 }
 
@@ -422,61 +422,55 @@ type Charity {
   representative: String!
   verified: Boolean
   website: String!
-  authHistory(where: CharityAuthWhereInput, orderBy: CharityAuthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CharityAuth!]
+  authHistory(where: CharityAuthHistoryWhereInput, orderBy: CharityAuthHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CharityAuthHistory!]
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
   followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
-type CharityAuth {
+type CharityAuthHistory {
   id: ID!
   createdAt: DateTime!
-  securityToken: Int!
   charity: Charity!
 }
 
-type CharityAuthConnection {
+type CharityAuthHistoryConnection {
   pageInfo: PageInfo!
-  edges: [CharityAuthEdge]!
-  aggregate: AggregateCharityAuth!
+  edges: [CharityAuthHistoryEdge]!
+  aggregate: AggregateCharityAuthHistory!
 }
 
-input CharityAuthCreateInput {
+input CharityAuthHistoryCreateInput {
   id: ID
-  securityToken: Int!
   charity: CharityCreateOneWithoutAuthHistoryInput!
 }
 
-input CharityAuthCreateManyWithoutCharityInput {
-  create: [CharityAuthCreateWithoutCharityInput!]
-  connect: [CharityAuthWhereUniqueInput!]
+input CharityAuthHistoryCreateManyWithoutCharityInput {
+  create: [CharityAuthHistoryCreateWithoutCharityInput!]
+  connect: [CharityAuthHistoryWhereUniqueInput!]
 }
 
-input CharityAuthCreateWithoutCharityInput {
+input CharityAuthHistoryCreateWithoutCharityInput {
   id: ID
-  securityToken: Int!
 }
 
-type CharityAuthEdge {
-  node: CharityAuth!
+type CharityAuthHistoryEdge {
+  node: CharityAuthHistory!
   cursor: String!
 }
 
-enum CharityAuthOrderByInput {
+enum CharityAuthHistoryOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  securityToken_ASC
-  securityToken_DESC
 }
 
-type CharityAuthPreviousValues {
+type CharityAuthHistoryPreviousValues {
   id: ID!
   createdAt: DateTime!
-  securityToken: Int!
 }
 
-input CharityAuthScalarWhereInput {
+input CharityAuthHistoryScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -499,83 +493,43 @@ input CharityAuthScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  securityToken: Int
-  securityToken_not: Int
-  securityToken_in: [Int!]
-  securityToken_not_in: [Int!]
-  securityToken_lt: Int
-  securityToken_lte: Int
-  securityToken_gt: Int
-  securityToken_gte: Int
-  AND: [CharityAuthScalarWhereInput!]
-  OR: [CharityAuthScalarWhereInput!]
-  NOT: [CharityAuthScalarWhereInput!]
+  AND: [CharityAuthHistoryScalarWhereInput!]
+  OR: [CharityAuthHistoryScalarWhereInput!]
+  NOT: [CharityAuthHistoryScalarWhereInput!]
 }
 
-type CharityAuthSubscriptionPayload {
+type CharityAuthHistorySubscriptionPayload {
   mutation: MutationType!
-  node: CharityAuth
+  node: CharityAuthHistory
   updatedFields: [String!]
-  previousValues: CharityAuthPreviousValues
+  previousValues: CharityAuthHistoryPreviousValues
 }
 
-input CharityAuthSubscriptionWhereInput {
+input CharityAuthHistorySubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: CharityAuthWhereInput
-  AND: [CharityAuthSubscriptionWhereInput!]
-  OR: [CharityAuthSubscriptionWhereInput!]
-  NOT: [CharityAuthSubscriptionWhereInput!]
+  node: CharityAuthHistoryWhereInput
+  AND: [CharityAuthHistorySubscriptionWhereInput!]
+  OR: [CharityAuthHistorySubscriptionWhereInput!]
+  NOT: [CharityAuthHistorySubscriptionWhereInput!]
 }
 
-input CharityAuthUpdateInput {
-  securityToken: Int
+input CharityAuthHistoryUpdateInput {
   charity: CharityUpdateOneRequiredWithoutAuthHistoryInput
 }
 
-input CharityAuthUpdateManyDataInput {
-  securityToken: Int
+input CharityAuthHistoryUpdateManyWithoutCharityInput {
+  create: [CharityAuthHistoryCreateWithoutCharityInput!]
+  delete: [CharityAuthHistoryWhereUniqueInput!]
+  connect: [CharityAuthHistoryWhereUniqueInput!]
+  set: [CharityAuthHistoryWhereUniqueInput!]
+  disconnect: [CharityAuthHistoryWhereUniqueInput!]
+  deleteMany: [CharityAuthHistoryScalarWhereInput!]
 }
 
-input CharityAuthUpdateManyMutationInput {
-  securityToken: Int
-}
-
-input CharityAuthUpdateManyWithoutCharityInput {
-  create: [CharityAuthCreateWithoutCharityInput!]
-  delete: [CharityAuthWhereUniqueInput!]
-  connect: [CharityAuthWhereUniqueInput!]
-  set: [CharityAuthWhereUniqueInput!]
-  disconnect: [CharityAuthWhereUniqueInput!]
-  update: [CharityAuthUpdateWithWhereUniqueWithoutCharityInput!]
-  upsert: [CharityAuthUpsertWithWhereUniqueWithoutCharityInput!]
-  deleteMany: [CharityAuthScalarWhereInput!]
-  updateMany: [CharityAuthUpdateManyWithWhereNestedInput!]
-}
-
-input CharityAuthUpdateManyWithWhereNestedInput {
-  where: CharityAuthScalarWhereInput!
-  data: CharityAuthUpdateManyDataInput!
-}
-
-input CharityAuthUpdateWithoutCharityDataInput {
-  securityToken: Int
-}
-
-input CharityAuthUpdateWithWhereUniqueWithoutCharityInput {
-  where: CharityAuthWhereUniqueInput!
-  data: CharityAuthUpdateWithoutCharityDataInput!
-}
-
-input CharityAuthUpsertWithWhereUniqueWithoutCharityInput {
-  where: CharityAuthWhereUniqueInput!
-  update: CharityAuthUpdateWithoutCharityDataInput!
-  create: CharityAuthCreateWithoutCharityInput!
-}
-
-input CharityAuthWhereInput {
+input CharityAuthHistoryWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -598,21 +552,13 @@ input CharityAuthWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  securityToken: Int
-  securityToken_not: Int
-  securityToken_in: [Int!]
-  securityToken_not_in: [Int!]
-  securityToken_lt: Int
-  securityToken_lte: Int
-  securityToken_gt: Int
-  securityToken_gte: Int
   charity: CharityWhereInput
-  AND: [CharityAuthWhereInput!]
-  OR: [CharityAuthWhereInput!]
-  NOT: [CharityAuthWhereInput!]
+  AND: [CharityAuthHistoryWhereInput!]
+  OR: [CharityAuthHistoryWhereInput!]
+  NOT: [CharityAuthHistoryWhereInput!]
 }
 
-input CharityAuthWhereUniqueInput {
+input CharityAuthHistoryWhereUniqueInput {
   id: ID
 }
 
@@ -641,7 +587,7 @@ input CharityCreateInput {
   representative: String!
   verified: Boolean
   website: String!
-  authHistory: CharityAuthCreateManyWithoutCharityInput
+  authHistory: CharityAuthHistoryCreateManyWithoutCharityInput
   events: EventCreateManyWithoutCharityInput
   followers: UserCreateManyWithoutFollowedCharitiesInput
 }
@@ -703,7 +649,7 @@ input CharityCreateWithoutEventsInput {
   representative: String!
   verified: Boolean
   website: String!
-  authHistory: CharityAuthCreateManyWithoutCharityInput
+  authHistory: CharityAuthHistoryCreateManyWithoutCharityInput
   followers: UserCreateManyWithoutFollowedCharitiesInput
 }
 
@@ -726,7 +672,7 @@ input CharityCreateWithoutFollowersInput {
   representative: String!
   verified: Boolean
   website: String!
-  authHistory: CharityAuthCreateManyWithoutCharityInput
+  authHistory: CharityAuthHistoryCreateManyWithoutCharityInput
   events: EventCreateManyWithoutCharityInput
 }
 
@@ -1075,7 +1021,7 @@ input CharityUpdateInput {
   representative: String
   verified: Boolean
   website: String
-  authHistory: CharityAuthUpdateManyWithoutCharityInput
+  authHistory: CharityAuthHistoryUpdateManyWithoutCharityInput
   events: EventUpdateManyWithoutCharityInput
   followers: UserUpdateManyWithoutFollowedCharitiesInput
 }
@@ -1191,7 +1137,7 @@ input CharityUpdateWithoutEventsDataInput {
   representative: String
   verified: Boolean
   website: String
-  authHistory: CharityAuthUpdateManyWithoutCharityInput
+  authHistory: CharityAuthHistoryUpdateManyWithoutCharityInput
   followers: UserUpdateManyWithoutFollowedCharitiesInput
 }
 
@@ -1213,7 +1159,7 @@ input CharityUpdateWithoutFollowersDataInput {
   representative: String
   verified: Boolean
   website: String
-  authHistory: CharityAuthUpdateManyWithoutCharityInput
+  authHistory: CharityAuthHistoryUpdateManyWithoutCharityInput
   events: EventUpdateManyWithoutCharityInput
 }
 
@@ -1471,9 +1417,9 @@ input CharityWhereInput {
   website_not_starts_with: String
   website_ends_with: String
   website_not_ends_with: String
-  authHistory_every: CharityAuthWhereInput
-  authHistory_some: CharityAuthWhereInput
-  authHistory_none: CharityAuthWhereInput
+  authHistory_every: CharityAuthHistoryWhereInput
+  authHistory_some: CharityAuthHistoryWhereInput
+  authHistory_none: CharityAuthHistoryWhereInput
   events_every: EventWhereInput
   events_some: EventWhereInput
   events_none: EventWhereInput
@@ -3770,12 +3716,11 @@ type Mutation {
   upsertCharity(where: CharityWhereUniqueInput!, create: CharityCreateInput!, update: CharityUpdateInput!): Charity!
   deleteCharity(where: CharityWhereUniqueInput!): Charity
   deleteManyCharities(where: CharityWhereInput): BatchPayload!
-  createCharityAuth(data: CharityAuthCreateInput!): CharityAuth!
-  updateCharityAuth(data: CharityAuthUpdateInput!, where: CharityAuthWhereUniqueInput!): CharityAuth
-  updateManyCharityAuths(data: CharityAuthUpdateManyMutationInput!, where: CharityAuthWhereInput): BatchPayload!
-  upsertCharityAuth(where: CharityAuthWhereUniqueInput!, create: CharityAuthCreateInput!, update: CharityAuthUpdateInput!): CharityAuth!
-  deleteCharityAuth(where: CharityAuthWhereUniqueInput!): CharityAuth
-  deleteManyCharityAuths(where: CharityAuthWhereInput): BatchPayload!
+  createCharityAuthHistory(data: CharityAuthHistoryCreateInput!): CharityAuthHistory!
+  updateCharityAuthHistory(data: CharityAuthHistoryUpdateInput!, where: CharityAuthHistoryWhereUniqueInput!): CharityAuthHistory
+  upsertCharityAuthHistory(where: CharityAuthHistoryWhereUniqueInput!, create: CharityAuthHistoryCreateInput!, update: CharityAuthHistoryUpdateInput!): CharityAuthHistory!
+  deleteCharityAuthHistory(where: CharityAuthHistoryWhereUniqueInput!): CharityAuthHistory
+  deleteManyCharityAuthHistories(where: CharityAuthHistoryWhereInput): BatchPayload!
   createCircle(data: CircleCreateInput!): Circle!
   updateCircle(data: CircleUpdateInput!, where: CircleWhereUniqueInput!): Circle
   updateManyCircles(data: CircleUpdateManyMutationInput!, where: CircleWhereInput): BatchPayload!
@@ -4022,9 +3967,9 @@ type Query {
   charity(where: CharityWhereUniqueInput!): Charity
   charities(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Charity]!
   charitiesConnection(where: CharityWhereInput, orderBy: CharityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CharityConnection!
-  charityAuth(where: CharityAuthWhereUniqueInput!): CharityAuth
-  charityAuths(where: CharityAuthWhereInput, orderBy: CharityAuthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CharityAuth]!
-  charityAuthsConnection(where: CharityAuthWhereInput, orderBy: CharityAuthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CharityAuthConnection!
+  charityAuthHistory(where: CharityAuthHistoryWhereUniqueInput!): CharityAuthHistory
+  charityAuthHistories(where: CharityAuthHistoryWhereInput, orderBy: CharityAuthHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CharityAuthHistory]!
+  charityAuthHistoriesConnection(where: CharityAuthHistoryWhereInput, orderBy: CharityAuthHistoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CharityAuthHistoryConnection!
   circle(where: CircleWhereUniqueInput!): Circle
   circles(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Circle]!
   circlesConnection(where: CircleWhereInput, orderBy: CircleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CircleConnection!
@@ -4067,7 +4012,7 @@ type Query {
 type Subscription {
   charge(where: ChargeSubscriptionWhereInput): ChargeSubscriptionPayload
   charity(where: CharitySubscriptionWhereInput): CharitySubscriptionPayload
-  charityAuth(where: CharityAuthSubscriptionWhereInput): CharityAuthSubscriptionPayload
+  charityAuthHistory(where: CharityAuthHistorySubscriptionWhereInput): CharityAuthHistorySubscriptionPayload
   circle(where: CircleSubscriptionWhereInput): CircleSubscriptionPayload
   circleInvite(where: CircleInviteSubscriptionWhereInput): CircleInviteSubscriptionPayload
   circleJoinRequest(where: CircleJoinRequestSubscriptionWhereInput): CircleJoinRequestSubscriptionPayload

@@ -1,4 +1,4 @@
-const { validateAuth } = require('../utils/token');
+const { validate } = require('../utils/token');
 const errors = require('../utils/errors');
 
 module.exports = async (resolve, root, args, ctx, info) => {
@@ -10,7 +10,7 @@ module.exports = async (resolve, root, args, ctx, info) => {
   if (!authorization) setCurrentUser(() => { throw new errors.NotAuthenticated(); });
   else {
     // Grab the token contents
-    const token = validateAuth(authorization.replace('Bearer ', ''));
+    const token = validate(authorization.replace('Bearer ', ''));
     // Easy access to userID
     const { userID } = token;
     // Grab the user's balance

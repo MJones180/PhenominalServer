@@ -10,6 +10,9 @@ module.exports = {
   InsufficientFunds: createError('InsufficientFunds', {
     message: 'Insufficient funds to process the requested donations.',
   }),
+  InvalidCharityAuthLinkToken: createError('InvalidCharityAuthLinkToken', {
+    message: 'The charity authentication token is invalid.',
+  }),
   InvalidCircleData: createError('InvalidCircleData', {
     message: 'Data passed to create/update the Circle is invalid.',
   }),

@@ -45,7 +45,7 @@ var models = [
     embedded: false
   },
   {
-    name: "CharityAuth",
+    name: "CharityAuthHistory",
     embedded: false
   },
   {

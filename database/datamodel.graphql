@@ -134,16 +134,14 @@ type Charity {
   verified: Boolean
   website: String!
 
-  authHistory: [CharityAuth!]!
+  authHistory: [CharityAuthHistory!]!
   events: [Event!]!
   followers: [User!]!
 }
 
-type CharityAuth {
+type CharityAuthHistory {
   id: ID! @id
   createdAt: DateTime! @createdAt
-
-  securityToken: Int!
 
   charity: Charity!
 }
