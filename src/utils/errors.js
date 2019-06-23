@@ -1,6 +1,9 @@
 const { createError } = require('apollo-errors');
 
 module.exports = {
+  CharityAlreadyExists: createError('CharityAlreadyExists', {
+    message: 'The information provided for the charity already exists.',
+  }),
   CircleNameExists: createError('CircleNameExists', {
     message: 'The requested Circle name already exists.',
   }),
