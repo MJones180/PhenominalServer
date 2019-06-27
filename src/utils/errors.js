@@ -8,13 +8,13 @@ module.exports = {
     message: 'The requested Circle name already exists.',
   }),
   CorruptAuthToken: createError('CorruptAuthToken', {
-    message: 'The sent authToken has been corrupted.',
+    message: 'The sent user authToken has been corrupted.',
+  }),
+  CorruptCharityAuthToken: createError('CorruptCharityAuthToken', {
+    message: 'The sent charity authToken has been corrupted.',
   }),
   InsufficientFunds: createError('InsufficientFunds', {
     message: 'Insufficient funds to process the requested donations.',
-  }),
-  InvalidCharityAuthLinkToken: createError('InvalidCharityAuthLinkToken', {
-    message: 'The charity authentication token is invalid.',
   }),
   InvalidCircleData: createError('InvalidCircleData', {
     message: 'Data passed to create/update the Circle is invalid.',

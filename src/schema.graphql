@@ -8,7 +8,7 @@ type Mutation {
   charityAuthLink(email: String!): Boolean
   charityCreate(ein: String!, email: String!, name: String!, representative: String!, url: String!): Boolean
   charitySignin(token: String!): String!
-  charitySuggestion(ein: String, email: String!, name: String!, representative: Boolean, url: String): Boolean
+  charitySuggestion(ein: String, email: String!, name: String!, url: String): Boolean
   contactMessage(email: String!, message: String!, name: String!): Boolean
   createCircle(description: String, name: String!, open: Boolean): ID
   disbandCircle(id: ID!): Boolean
@@ -29,6 +29,7 @@ type Mutation {
 type Query {
   aggregateDonations(currentUser: Boolean, eventID: ID): aggregateDonationsPayload!
   allHalos: [allHalosPayload!]
+  currentAuthCharity(token: String!): String!
   currentUser: User
   currentUserBalance: Int!
   eventsCurrent(charityEIN: String, orderBy: EventOrderByInput, first: Int, last: Int): [Event!]

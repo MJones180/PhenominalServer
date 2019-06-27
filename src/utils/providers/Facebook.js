@@ -5,7 +5,7 @@ module.exports = (token, cb) => {
   graph.setAccessToken(token);
   graph.setAppSecret(process.env.FACEBOOK_SECRET);
   // Graph version to use
-  graph.setVersion('2.9');
+  graph.setVersion('3.3');
   // Fields that need to be returned
   const fields = [
     'email',
