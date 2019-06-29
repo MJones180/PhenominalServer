@@ -5,15 +5,17 @@ module.exports = binding => async (token) => {
   // Grab the token's contents without verifying it
   const decodedToken = decode(token);
 
+  // Ensure the token is actually a JWT
   if (decodedToken) {
-    // Decoded EIN
-    const { ein } = decodedToken;
+    // History to use
+    const { authHistory: [history] } = await binding.query.charity(
+      // EIN from the token's payload
+      { where: { ein: decodedToken.ein } },
+      // Charity's last authHistory
+      '{ authHistory(orderBy: createdAt_DESC) { createdAt } }'
+    );
 
-    // Grab the charity's info
-    const charityInfo = '{ authHistory(orderBy: createdAt_DESC) { createdAt } }';
-    const { authHistory: [history] } = await binding.query.charity({ where: { ein } }, charityInfo);
-
-    // Ensure the history actually exists
+    // Ensure the charity actually has an authHistory
     if (history) {
       // Validate the token
       const { ein } = validateCharityClient(token, history.createdAt);
@@ -23,5 +25,5 @@ module.exports = binding => async (token) => {
   }
 
   // Invalid token
-  throw new errors.CorruptCharityAuthClientToken();
+  throw new errors.CorruptCharityAuthToken();
 };
