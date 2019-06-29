@@ -17,5 +17,5 @@ module.exports = async (parent, { token }, ctx) => {
     return ctx.utils.token.generateCharityClient({ ein }, newSecret);
   }
   // Invalid token
-  throw new ctx.utils.errors.CorruptCharityAuthToken();
+  throw new ctx.utils.errors.CorruptCharityAuthLinkToken();
 };

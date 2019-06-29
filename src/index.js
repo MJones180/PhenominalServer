@@ -4,6 +4,7 @@ const { Prisma: PrismaBinding } = require('prisma-binding');
 const { prisma: client } = require('./generated/prisma-client');
 const user = require('./middleware/user');
 const aws = require('./utils/aws');
+const currentAuthCharity = require('./utils/currentAuthCharity');
 const dots = require('./utils/dots');
 const email = require('./utils/email');
 const loops = require('./utils/loops');
@@ -35,6 +36,7 @@ const server = new GraphQLServer({
     client,
     utils: {
       aws,
+      currentAuthCharity: currentAuthCharity(binding),
       dots: dots(client),
       email,
       loops: loops(client),
