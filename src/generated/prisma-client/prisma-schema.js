@@ -411,6 +411,7 @@ type Charity {
   createdAt: DateTime!
   updatedAt: DateTime!
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String!
@@ -421,6 +422,7 @@ type Charity {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String!
   phoneNumber: String
@@ -576,6 +578,7 @@ type CharityConnection {
 input CharityCreateInput {
   id: ID
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String!
@@ -586,6 +589,7 @@ input CharityCreateInput {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String!
   phoneNumber: String
@@ -615,6 +619,7 @@ input CharityCreateOneWithoutEventsInput {
 input CharityCreateWithoutAuthHistoryInput {
   id: ID
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String!
@@ -625,6 +630,7 @@ input CharityCreateWithoutAuthHistoryInput {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String!
   phoneNumber: String
@@ -638,6 +644,7 @@ input CharityCreateWithoutAuthHistoryInput {
 input CharityCreateWithoutEventsInput {
   id: ID
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String!
@@ -648,6 +655,7 @@ input CharityCreateWithoutEventsInput {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String!
   phoneNumber: String
@@ -661,6 +669,7 @@ input CharityCreateWithoutEventsInput {
 input CharityCreateWithoutFollowersInput {
   id: ID
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String!
@@ -671,6 +680,7 @@ input CharityCreateWithoutFollowersInput {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String!
   phoneNumber: String
@@ -695,6 +705,8 @@ enum CharityOrderByInput {
   updatedAt_DESC
   acronym_ASC
   acronym_DESC
+  banner_ASC
+  banner_DESC
   bannerCredit_ASC
   bannerCredit_DESC
   connectedAccountID_ASC
@@ -715,6 +727,8 @@ enum CharityOrderByInput {
   expensesUpdated_DESC
   location_ASC
   location_DESC
+  logo_ASC
+  logo_DESC
   mission_ASC
   mission_DESC
   name_ASC
@@ -734,6 +748,7 @@ type CharityPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String!
@@ -744,6 +759,7 @@ type CharityPreviousValues {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String!
   phoneNumber: String
@@ -797,6 +813,20 @@ input CharityScalarWhereInput {
   acronym_not_starts_with: String
   acronym_ends_with: String
   acronym_not_ends_with: String
+  banner: String
+  banner_not: String
+  banner_in: [String!]
+  banner_not_in: [String!]
+  banner_lt: String
+  banner_lte: String
+  banner_gt: String
+  banner_gte: String
+  banner_contains: String
+  banner_not_contains: String
+  banner_starts_with: String
+  banner_not_starts_with: String
+  banner_ends_with: String
+  banner_not_ends_with: String
   bannerCredit: String
   bannerCredit_not: String
   bannerCredit_in: [String!]
@@ -913,6 +943,20 @@ input CharityScalarWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  logo: String
+  logo_not: String
+  logo_in: [String!]
+  logo_not_in: [String!]
+  logo_lt: String
+  logo_lte: String
+  logo_gt: String
+  logo_gte: String
+  logo_contains: String
+  logo_not_contains: String
+  logo_starts_with: String
+  logo_not_starts_with: String
+  logo_ends_with: String
+  logo_not_ends_with: String
   mission: String
   mission_not: String
   mission_in: [String!]
@@ -1010,6 +1054,7 @@ input CharitySubscriptionWhereInput {
 
 input CharityUpdateInput {
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String
@@ -1020,6 +1065,7 @@ input CharityUpdateInput {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String
   phoneNumber: String
@@ -1033,6 +1079,7 @@ input CharityUpdateInput {
 
 input CharityUpdateManyDataInput {
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String
@@ -1043,6 +1090,7 @@ input CharityUpdateManyDataInput {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String
   phoneNumber: String
@@ -1053,6 +1101,7 @@ input CharityUpdateManyDataInput {
 
 input CharityUpdateManyMutationInput {
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String
@@ -1063,6 +1112,7 @@ input CharityUpdateManyMutationInput {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String
   phoneNumber: String
@@ -1104,6 +1154,7 @@ input CharityUpdateOneRequiredWithoutEventsInput {
 
 input CharityUpdateWithoutAuthHistoryDataInput {
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String
@@ -1114,6 +1165,7 @@ input CharityUpdateWithoutAuthHistoryDataInput {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String
   phoneNumber: String
@@ -1126,6 +1178,7 @@ input CharityUpdateWithoutAuthHistoryDataInput {
 
 input CharityUpdateWithoutEventsDataInput {
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String
@@ -1136,6 +1189,7 @@ input CharityUpdateWithoutEventsDataInput {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String
   phoneNumber: String
@@ -1148,6 +1202,7 @@ input CharityUpdateWithoutEventsDataInput {
 
 input CharityUpdateWithoutFollowersDataInput {
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String
@@ -1158,6 +1213,7 @@ input CharityUpdateWithoutFollowersDataInput {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String
   phoneNumber: String
@@ -1234,6 +1290,20 @@ input CharityWhereInput {
   acronym_not_starts_with: String
   acronym_ends_with: String
   acronym_not_ends_with: String
+  banner: String
+  banner_not: String
+  banner_in: [String!]
+  banner_not_in: [String!]
+  banner_lt: String
+  banner_lte: String
+  banner_gt: String
+  banner_gte: String
+  banner_contains: String
+  banner_not_contains: String
+  banner_starts_with: String
+  banner_not_starts_with: String
+  banner_ends_with: String
+  banner_not_ends_with: String
   bannerCredit: String
   bannerCredit_not: String
   bannerCredit_in: [String!]
@@ -1350,6 +1420,20 @@ input CharityWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  logo: String
+  logo_not: String
+  logo_in: [String!]
+  logo_not_in: [String!]
+  logo_lt: String
+  logo_lte: String
+  logo_gt: String
+  logo_gte: String
+  logo_contains: String
+  logo_not_contains: String
+  logo_starts_with: String
+  logo_not_starts_with: String
+  logo_ends_with: String
+  logo_not_ends_with: String
   mission: String
   mission_not: String
   mission_in: [String!]

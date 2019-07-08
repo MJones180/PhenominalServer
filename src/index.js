@@ -14,6 +14,7 @@ const errors = require('./utils/errors');
 const loopStage = require('./utils/loopStage');
 const rand = require('./utils/rand');
 const token = require('./utils/token');
+const uploadPicture = require('./utils/uploadPicture');
 const wait = require('./utils/wait');
 const resolvers = require('./resolvers');
 
@@ -46,6 +47,7 @@ const server = new GraphQLServer({
       loopStage,
       rand,
       token,
+      uploadPicture,
       wait,
     },
   }),

@@ -852,6 +852,8 @@ export type CharityOrderByInput =
   | "updatedAt_DESC"
   | "acronym_ASC"
   | "acronym_DESC"
+  | "banner_ASC"
+  | "banner_DESC"
   | "bannerCredit_ASC"
   | "bannerCredit_DESC"
   | "connectedAccountID_ASC"
@@ -872,6 +874,8 @@ export type CharityOrderByInput =
   | "expensesUpdated_DESC"
   | "location_ASC"
   | "location_DESC"
+  | "logo_ASC"
+  | "logo_DESC"
   | "mission_ASC"
   | "mission_DESC"
   | "name_ASC"
@@ -1083,6 +1087,7 @@ export interface TransactionWhereInput {
 
 export interface CharityUpdateWithoutFollowersDataInput {
   acronym?: Maybe<String>;
+  banner?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   connectedAccountID?: Maybe<String>;
   ein?: Maybe<String>;
@@ -1093,6 +1098,7 @@ export interface CharityUpdateWithoutFollowersDataInput {
   expensesProgram?: Maybe<Float>;
   expensesUpdated?: Maybe<String>;
   location?: Maybe<String>;
+  logo?: Maybe<String>;
   mission?: Maybe<String>;
   name?: Maybe<String>;
   phoneNumber?: Maybe<String>;
@@ -1146,6 +1152,7 @@ export interface PreferencesWhereInput {
 
 export interface CharityUpdateWithoutEventsDataInput {
   acronym?: Maybe<String>;
+  banner?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   connectedAccountID?: Maybe<String>;
   ein?: Maybe<String>;
@@ -1156,6 +1163,7 @@ export interface CharityUpdateWithoutEventsDataInput {
   expensesProgram?: Maybe<Float>;
   expensesUpdated?: Maybe<String>;
   location?: Maybe<String>;
+  logo?: Maybe<String>;
   mission?: Maybe<String>;
   name?: Maybe<String>;
   phoneNumber?: Maybe<String>;
@@ -2888,6 +2896,7 @@ export interface ChargeWhereInput {
 export interface CharityCreateWithoutEventsInput {
   id?: Maybe<ID_Input>;
   acronym?: Maybe<String>;
+  banner?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   connectedAccountID?: Maybe<String>;
   ein: String;
@@ -2898,6 +2907,7 @@ export interface CharityCreateWithoutEventsInput {
   expensesProgram?: Maybe<Float>;
   expensesUpdated?: Maybe<String>;
   location?: Maybe<String>;
+  logo?: Maybe<String>;
   mission?: Maybe<String>;
   name: String;
   phoneNumber?: Maybe<String>;
@@ -3264,6 +3274,7 @@ export interface TransferScalarWhereInput {
 export interface CharityCreateWithoutFollowersInput {
   id?: Maybe<ID_Input>;
   acronym?: Maybe<String>;
+  banner?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   connectedAccountID?: Maybe<String>;
   ein: String;
@@ -3274,6 +3285,7 @@ export interface CharityCreateWithoutFollowersInput {
   expensesProgram?: Maybe<Float>;
   expensesUpdated?: Maybe<String>;
   location?: Maybe<String>;
+  logo?: Maybe<String>;
   mission?: Maybe<String>;
   name: String;
   phoneNumber?: Maybe<String>;
@@ -4626,6 +4638,20 @@ export interface CharityScalarWhereInput {
   acronym_not_starts_with?: Maybe<String>;
   acronym_ends_with?: Maybe<String>;
   acronym_not_ends_with?: Maybe<String>;
+  banner?: Maybe<String>;
+  banner_not?: Maybe<String>;
+  banner_in?: Maybe<String[] | String>;
+  banner_not_in?: Maybe<String[] | String>;
+  banner_lt?: Maybe<String>;
+  banner_lte?: Maybe<String>;
+  banner_gt?: Maybe<String>;
+  banner_gte?: Maybe<String>;
+  banner_contains?: Maybe<String>;
+  banner_not_contains?: Maybe<String>;
+  banner_starts_with?: Maybe<String>;
+  banner_not_starts_with?: Maybe<String>;
+  banner_ends_with?: Maybe<String>;
+  banner_not_ends_with?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   bannerCredit_not?: Maybe<String>;
   bannerCredit_in?: Maybe<String[] | String>;
@@ -4742,6 +4768,20 @@ export interface CharityScalarWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
+  logo?: Maybe<String>;
+  logo_not?: Maybe<String>;
+  logo_in?: Maybe<String[] | String>;
+  logo_not_in?: Maybe<String[] | String>;
+  logo_lt?: Maybe<String>;
+  logo_lte?: Maybe<String>;
+  logo_gt?: Maybe<String>;
+  logo_gte?: Maybe<String>;
+  logo_contains?: Maybe<String>;
+  logo_not_contains?: Maybe<String>;
+  logo_starts_with?: Maybe<String>;
+  logo_not_starts_with?: Maybe<String>;
+  logo_ends_with?: Maybe<String>;
+  logo_not_ends_with?: Maybe<String>;
   mission?: Maybe<String>;
   mission_not?: Maybe<String>;
   mission_in?: Maybe<String[] | String>;
@@ -4836,6 +4876,7 @@ export interface TransferUpdateWithWhereUniqueWithoutSourceInput {
 
 export interface CharityUpdateManyDataInput {
   acronym?: Maybe<String>;
+  banner?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   connectedAccountID?: Maybe<String>;
   ein?: Maybe<String>;
@@ -4846,6 +4887,7 @@ export interface CharityUpdateManyDataInput {
   expensesProgram?: Maybe<Float>;
   expensesUpdated?: Maybe<String>;
   location?: Maybe<String>;
+  logo?: Maybe<String>;
   mission?: Maybe<String>;
   name?: Maybe<String>;
   phoneNumber?: Maybe<String>;
@@ -5078,6 +5120,20 @@ export interface CharityWhereInput {
   acronym_not_starts_with?: Maybe<String>;
   acronym_ends_with?: Maybe<String>;
   acronym_not_ends_with?: Maybe<String>;
+  banner?: Maybe<String>;
+  banner_not?: Maybe<String>;
+  banner_in?: Maybe<String[] | String>;
+  banner_not_in?: Maybe<String[] | String>;
+  banner_lt?: Maybe<String>;
+  banner_lte?: Maybe<String>;
+  banner_gt?: Maybe<String>;
+  banner_gte?: Maybe<String>;
+  banner_contains?: Maybe<String>;
+  banner_not_contains?: Maybe<String>;
+  banner_starts_with?: Maybe<String>;
+  banner_not_starts_with?: Maybe<String>;
+  banner_ends_with?: Maybe<String>;
+  banner_not_ends_with?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   bannerCredit_not?: Maybe<String>;
   bannerCredit_in?: Maybe<String[] | String>;
@@ -5194,6 +5250,20 @@ export interface CharityWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
+  logo?: Maybe<String>;
+  logo_not?: Maybe<String>;
+  logo_in?: Maybe<String[] | String>;
+  logo_not_in?: Maybe<String[] | String>;
+  logo_lt?: Maybe<String>;
+  logo_lte?: Maybe<String>;
+  logo_gt?: Maybe<String>;
+  logo_gte?: Maybe<String>;
+  logo_contains?: Maybe<String>;
+  logo_not_contains?: Maybe<String>;
+  logo_starts_with?: Maybe<String>;
+  logo_not_starts_with?: Maybe<String>;
+  logo_ends_with?: Maybe<String>;
+  logo_not_ends_with?: Maybe<String>;
   mission?: Maybe<String>;
   mission_not?: Maybe<String>;
   mission_in?: Maybe<String[] | String>;
@@ -5707,6 +5777,7 @@ export type UserWhereUniqueInput = AtLeastOne<{
 export interface CharityCreateInput {
   id?: Maybe<ID_Input>;
   acronym?: Maybe<String>;
+  banner?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   connectedAccountID?: Maybe<String>;
   ein: String;
@@ -5717,6 +5788,7 @@ export interface CharityCreateInput {
   expensesProgram?: Maybe<Float>;
   expensesUpdated?: Maybe<String>;
   location?: Maybe<String>;
+  logo?: Maybe<String>;
   mission?: Maybe<String>;
   name: String;
   phoneNumber?: Maybe<String>;
@@ -5740,6 +5812,7 @@ export interface CircleJoinRequestCreateManyWithoutUserInput {
 
 export interface CharityUpdateInput {
   acronym?: Maybe<String>;
+  banner?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   connectedAccountID?: Maybe<String>;
   ein?: Maybe<String>;
@@ -5750,6 +5823,7 @@ export interface CharityUpdateInput {
   expensesProgram?: Maybe<Float>;
   expensesUpdated?: Maybe<String>;
   location?: Maybe<String>;
+  logo?: Maybe<String>;
   mission?: Maybe<String>;
   name?: Maybe<String>;
   phoneNumber?: Maybe<String>;
@@ -5768,6 +5842,7 @@ export interface CircleCreateOneWithoutInvitesInput {
 
 export interface CharityUpdateManyMutationInput {
   acronym?: Maybe<String>;
+  banner?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   connectedAccountID?: Maybe<String>;
   ein?: Maybe<String>;
@@ -5778,6 +5853,7 @@ export interface CharityUpdateManyMutationInput {
   expensesProgram?: Maybe<Float>;
   expensesUpdated?: Maybe<String>;
   location?: Maybe<String>;
+  logo?: Maybe<String>;
   mission?: Maybe<String>;
   name?: Maybe<String>;
   phoneNumber?: Maybe<String>;
@@ -5818,6 +5894,7 @@ export interface EventUpdateOneWithoutDonationsInput {
 export interface CharityCreateWithoutAuthHistoryInput {
   id?: Maybe<ID_Input>;
   acronym?: Maybe<String>;
+  banner?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   connectedAccountID?: Maybe<String>;
   ein: String;
@@ -5828,6 +5905,7 @@ export interface CharityCreateWithoutAuthHistoryInput {
   expensesProgram?: Maybe<Float>;
   expensesUpdated?: Maybe<String>;
   location?: Maybe<String>;
+  logo?: Maybe<String>;
   mission?: Maybe<String>;
   name: String;
   phoneNumber?: Maybe<String>;
@@ -5884,6 +5962,7 @@ export interface EventCreateOneWithoutDonationsInput {
 
 export interface CharityUpdateWithoutAuthHistoryDataInput {
   acronym?: Maybe<String>;
+  banner?: Maybe<String>;
   bannerCredit?: Maybe<String>;
   connectedAccountID?: Maybe<String>;
   ein?: Maybe<String>;
@@ -5894,6 +5973,7 @@ export interface CharityUpdateWithoutAuthHistoryDataInput {
   expensesProgram?: Maybe<Float>;
   expensesUpdated?: Maybe<String>;
   location?: Maybe<String>;
+  logo?: Maybe<String>;
   mission?: Maybe<String>;
   name?: Maybe<String>;
   phoneNumber?: Maybe<String>;
@@ -6743,6 +6823,7 @@ export interface CharityPreviousValues {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   acronym?: String;
+  banner?: String;
   bannerCredit?: String;
   connectedAccountID?: String;
   ein: String;
@@ -6753,6 +6834,7 @@ export interface CharityPreviousValues {
   expensesProgram?: Float;
   expensesUpdated?: String;
   location?: String;
+  logo?: String;
   mission?: String;
   name: String;
   phoneNumber?: String;
@@ -6768,6 +6850,7 @@ export interface CharityPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   acronym: () => Promise<String>;
+  banner: () => Promise<String>;
   bannerCredit: () => Promise<String>;
   connectedAccountID: () => Promise<String>;
   ein: () => Promise<String>;
@@ -6778,6 +6861,7 @@ export interface CharityPreviousValuesPromise
   expensesProgram: () => Promise<Float>;
   expensesUpdated: () => Promise<String>;
   location: () => Promise<String>;
+  logo: () => Promise<String>;
   mission: () => Promise<String>;
   name: () => Promise<String>;
   phoneNumber: () => Promise<String>;
@@ -6793,6 +6877,7 @@ export interface CharityPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   acronym: () => Promise<AsyncIterator<String>>;
+  banner: () => Promise<AsyncIterator<String>>;
   bannerCredit: () => Promise<AsyncIterator<String>>;
   connectedAccountID: () => Promise<AsyncIterator<String>>;
   ein: () => Promise<AsyncIterator<String>>;
@@ -6803,6 +6888,7 @@ export interface CharityPreviousValuesSubscription
   expensesProgram: () => Promise<AsyncIterator<Float>>;
   expensesUpdated: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
+  logo: () => Promise<AsyncIterator<String>>;
   mission: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   phoneNumber: () => Promise<AsyncIterator<String>>;
@@ -6816,6 +6902,7 @@ export interface Charity {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   acronym?: String;
+  banner?: String;
   bannerCredit?: String;
   connectedAccountID?: String;
   ein: String;
@@ -6826,6 +6913,7 @@ export interface Charity {
   expensesProgram?: Float;
   expensesUpdated?: String;
   location?: String;
+  logo?: String;
   mission?: String;
   name: String;
   phoneNumber?: String;
@@ -6839,6 +6927,7 @@ export interface CharityPromise extends Promise<Charity>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   acronym: () => Promise<String>;
+  banner: () => Promise<String>;
   bannerCredit: () => Promise<String>;
   connectedAccountID: () => Promise<String>;
   ein: () => Promise<String>;
@@ -6849,6 +6938,7 @@ export interface CharityPromise extends Promise<Charity>, Fragmentable {
   expensesProgram: () => Promise<Float>;
   expensesUpdated: () => Promise<String>;
   location: () => Promise<String>;
+  logo: () => Promise<String>;
   mission: () => Promise<String>;
   name: () => Promise<String>;
   phoneNumber: () => Promise<String>;
@@ -6891,6 +6981,7 @@ export interface CharitySubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   acronym: () => Promise<AsyncIterator<String>>;
+  banner: () => Promise<AsyncIterator<String>>;
   bannerCredit: () => Promise<AsyncIterator<String>>;
   connectedAccountID: () => Promise<AsyncIterator<String>>;
   ein: () => Promise<AsyncIterator<String>>;
@@ -6901,6 +6992,7 @@ export interface CharitySubscription
   expensesProgram: () => Promise<AsyncIterator<Float>>;
   expensesUpdated: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
+  logo: () => Promise<AsyncIterator<String>>;
   mission: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   phoneNumber: () => Promise<AsyncIterator<String>>;
@@ -6945,6 +7037,7 @@ export interface CharityNullablePromise
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   acronym: () => Promise<String>;
+  banner: () => Promise<String>;
   bannerCredit: () => Promise<String>;
   connectedAccountID: () => Promise<String>;
   ein: () => Promise<String>;
@@ -6955,6 +7048,7 @@ export interface CharityNullablePromise
   expensesProgram: () => Promise<Float>;
   expensesUpdated: () => Promise<String>;
   location: () => Promise<String>;
+  logo: () => Promise<String>;
   mission: () => Promise<String>;
   name: () => Promise<String>;
   phoneNumber: () => Promise<String>;

@@ -3,6 +3,7 @@ const charityAuthLink = require('./Mutations/charityAuthLink');
 const charityCreate = require('./Mutations/charityCreate');
 const charitySignin = require('./Mutations/charitySignin');
 const charitySuggestion = require('./Mutations/charitySuggestion');
+const charityUpdate = require('./Mutations/charityUpdate');
 const contactMessage = require('./Mutations/contactMessage');
 const createCircle = require('./Mutations/createCircle');
 const disbandCircle = require('./Mutations/disbandCircle');
@@ -40,6 +41,7 @@ module.exports = {
     charityCreate,
     charitySignin,
     charitySuggestion,
+    charityUpdate,
     contactMessage,
     createCircle,
     disbandCircle,

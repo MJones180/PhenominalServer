@@ -117,6 +117,7 @@ type Charity {
   updatedAt: DateTime! @updatedAt
 
   acronym: String
+  banner: String
   bannerCredit: String
   connectedAccountID: String
   ein: String! @unique
@@ -127,6 +128,7 @@ type Charity {
   expensesProgram: Float
   expensesUpdated: String
   location: String
+  logo: String
   mission: String
   name: String!
   phoneNumber: String

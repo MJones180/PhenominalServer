@@ -9,6 +9,7 @@ type Mutation {
   charityCreate(ein: String!, email: String!, name: String!, representative: String!, url: String!): Boolean
   charitySignin(token: String!): String!
   charitySuggestion(ein: String, email: String!, name: String!, url: String): Boolean
+  charityUpdate(token: String!, acronym: String, banner: Upload, bannerCredit: String, email: String, expensesAdministrative: Float, expensesFundraising: Float, expensesOther: Float, expensesProgram: Float, expensesUpdated: String, location: String, logo: Upload, mission: String, name: String, phoneNumber: String, representative: String, website: String): Boolean
   contactMessage(email: String!, message: String!, name: String!): Boolean
   createCircle(description: String, name: String!, open: Boolean): ID
   disbandCircle(id: ID!): Boolean

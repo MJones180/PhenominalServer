@@ -8,6 +8,7 @@ const errors = {
   CorruptCharityAuthToken: 'The sent charity authToken has been corrupted.',
   CorruptCharityAuthLink: 'The sent charity authLink has been corrupted.',
   InsufficientFunds: 'Insufficient funds to process the requested donations.',
+  InvalidCharityData: 'Data passed to update the charity information is invalid.',
   InvalidCircleData: 'Data passed to create/update the Circle is invalid.',
   InvalidUser: 'The authToken contains either a non-existant user or an invalid securityToken.',
   InvalidUserData: 'Data passed to update the user information is invalid.',
