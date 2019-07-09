@@ -11,6 +11,7 @@ module.exports = async (parent, params, ctx) => {
     })
   );
 
+  // Upload the picture
   await ctx.utils.uploadPicture(params.picture, id, 'pictures', updatePictureKey, oldPictureKey);
 
   // Add the setProfilePic Halo if needed
