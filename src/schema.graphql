@@ -8,6 +8,7 @@ type Mutation {
   charityAuthLink(email: String!): Boolean
   charityCreate(ein: String!, email: String!, name: String!, representative: String!, url: String!): Boolean
   charitySignin(token: String!): String!
+  charityStripeConnect(code: String!, state: String!, token: String!): Boolean
   charitySuggestion(ein: String, email: String!, name: String!, url: String): Boolean
   charityUpdate(token: String!, acronym: String, banner: Upload, bannerCredit: String, email: String, expensesAdministrative: Float, expensesFundraising: Float, expensesOther: Float, expensesProgram: Float, expensesUpdated: String, location: String, logo: Upload, mission: String, name: String, phoneNumber: String, representative: String, website: String): Boolean
   contactMessage(email: String!, message: String!, name: String!): Boolean
@@ -22,6 +23,7 @@ type Mutation {
   setFollowCharityRelation(ein: String!, unfollow: Boolean): Boolean
   setCircleRelation(id: ID!, leave: Boolean): String
   signin(provider: String!, token: String!): signinPayload!
+  stripeAccountView(token: String!): String!
   updateCircle(id: ID!, description: String, open: Boolean): Boolean
   updateUser(bio: String, email: String, nameFirst: String, nameLast: String, username: String, allowDonationEmails: Boolean, publicProfile: Boolean, securityToken: Boolean): Boolean
   updateUserPicture(picture: Upload!): Boolean

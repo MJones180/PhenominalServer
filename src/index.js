@@ -60,7 +60,6 @@ const options = {
     origin: [
       'https://localhost:3000',
       'https://phenominal.fund',
-      'https://phenominal.netlify.com',
     ],
   },
   formatError,

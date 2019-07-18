@@ -7,6 +7,7 @@ const errors = {
   CorruptAuthToken: 'The sent user authToken has been corrupted.',
   CorruptCharityAuthToken: 'The sent charity authToken has been corrupted.',
   CorruptCharityAuthLink: 'The sent charity authLink has been corrupted.',
+  FailedAccountConnection: 'The Stripe account connection has failed.',
   InsufficientFunds: 'Insufficient funds to process the requested donations.',
   InvalidCharityData: 'Data passed to update the charity information is invalid.',
   InvalidCircleData: 'Data passed to create/update the Circle is invalid.',

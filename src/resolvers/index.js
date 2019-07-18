@@ -2,6 +2,7 @@ const addFunds = require('./Mutations/addFunds');
 const charityAuthLink = require('./Mutations/charityAuthLink');
 const charityCreate = require('./Mutations/charityCreate');
 const charitySignin = require('./Mutations/charitySignin');
+const charityStripeConnect = require('./Mutations/charityStripeConnect');
 const charitySuggestion = require('./Mutations/charitySuggestion');
 const charityUpdate = require('./Mutations/charityUpdate');
 const contactMessage = require('./Mutations/contactMessage');
@@ -17,6 +18,7 @@ const sendFriendInvite = require('./Mutations/sendFriendInvite');
 const setFollowCharityRelation = require('./Mutations/setFollowCharityRelation');
 const setCircleRelation = require('./Mutations/setCircleRelation');
 const signin = require('./Mutations/signin');
+const stripeAccountView = require('./Mutations/stripeAccountView');
 const updateCircle = require('./Mutations/updateCircle');
 const updateUser = require('./Mutations/updateUser');
 const updateUserPicture = require('./Mutations/updateUserPicture');
@@ -40,6 +42,7 @@ module.exports = {
     charityAuthLink,
     charityCreate,
     charitySignin,
+    charityStripeConnect,
     charitySuggestion,
     charityUpdate,
     contactMessage,
@@ -54,6 +57,7 @@ module.exports = {
     setFollowCharityRelation,
     setCircleRelation,
     signin,
+    stripeAccountView,
     updateCircle,
     updateUser,
     updateUserPicture,

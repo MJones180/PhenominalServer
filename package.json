@@ -28,6 +28,7 @@
     "node-mailjet": "^3.2.1",
     "prisma-binding": "2.3.11",
     "prisma-client-lib": "^1.33.0",
+    "request": "^2.88.0",
     "stripe": "^6.34.0"
   },
   "devDependencies": {
