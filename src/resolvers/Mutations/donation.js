@@ -1,8 +1,3 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET);
-
-// Set the API version
-stripe.setApiVersion('2019-03-14');
-
 module.exports = async (parent, { amount, eventID }, ctx) => (
   ctx.utils.wait(async (done, reject) => {
     // Grab the user's information
@@ -67,7 +62,7 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
       // Make the transfer
       const process = (partitionedAmount, chargeBalance) => (
         // Process the transfer in Stripe
-        stripe.transfers.create({
+        ctx.utils.stripe.transfers.create({
           amount: partitionedAmount,
           currency: 'usd',
           destination: connectedAccountID,

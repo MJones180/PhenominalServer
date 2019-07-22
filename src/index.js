@@ -1,8 +1,14 @@
-const { GraphQLServer } = require('graphql-yoga');
 const { formatError } = require('apollo-errors');
+const { ApolloServer } = require('apollo-server-express');
+const express = require('express');
+const { importSchema } = require('graphql-import');
+const { applyMiddleware } = require('graphql-middleware');
+const { makeExecutableSchema } = require('graphql-tools');
+const { GraphQLUpload } = require('graphql-upload');
 const { Prisma: PrismaBinding } = require('prisma-binding');
 const { prisma: client } = require('./generated/prisma-client');
 const user = require('./middleware/user');
+const resolvers = require('./resolvers');
 const aws = require('./utils/aws');
 const currentAuthCharity = require('./utils/currentAuthCharity');
 const dots = require('./utils/dots');
@@ -13,24 +19,43 @@ const providers = require('./utils/providers');
 const errors = require('./utils/errors');
 const loopStage = require('./utils/loopStage');
 const rand = require('./utils/rand');
+const stripe = require('./utils/stripe');
 const token = require('./utils/token');
 const uploadPicture = require('./utils/uploadPicture');
 const wait = require('./utils/wait');
-const resolvers = require('./resolvers');
+const disputes = require('./webhooks/disputes');
 
+// List of middlewards, applied in order given
+const middlewares = [user];
+
+// The final schema with the middlewares attached
+const schema = applyMiddleware(
+  // Generate the schema, used for all queries and mutation
+  makeExecutableSchema({
+    // Import the definitions
+    typeDefs: importSchema('src/schema.graphql'),
+    // Include the Upload type for file uploads along with the normal resolvers
+    resolvers: [{ Upload: GraphQLUpload }, resolvers],
+    // Disable node error generated on each start
+    resolverValidationOptions: {
+      requireResolversForResolveType: false,
+    },
+  }),
+  ...middlewares
+);
+
+// Check if in dev env
+const __DEV__ = (process.env.STAGE) == 'dev';
+
+// The Prisma binding config
 const binding = new PrismaBinding({
   typeDefs: 'src/generated/prisma.graphql',
   endpoint: process.env.PRISMA_ENDPOINT,
   secret: process.env.PRISMA_SECRET,
 });
 
-// Server config
-const server = new GraphQLServer({
-  typeDefs: 'src/schema.graphql',
-  resolvers,
-  resolverValidationOptions: {
-    requireResolversForResolveType: false,
-  },
+// The GraphQL server
+const server = new ApolloServer({
   context: req => ({
     ...req,
     binding,
@@ -46,33 +71,37 @@ const server = new GraphQLServer({
       errors,
       loopStage,
       rand,
+      stripe,
       token,
       uploadPicture,
       wait,
     },
   }),
-  middlewares: [user],
+  // Only enable debug in dev
+  debug: __DEV__,
+  formatError,
+  schema,
 });
 
-// Server options
-const options = {
-  cors: {
-    origin: [
-      'https://localhost:3000',
-      'https://phenominal.fund',
-    ],
-  },
-  formatError,
-};
+// The Express app
+const app = express();
 
-// Check if in prod env
-const __PROD__ = (process.env.STAGE) == 'prod';
+// Whitelisted URLs
+const origin = ['https://phenominal.fund'];
+// Allow `localhost` in dev
+if (__DEV__) origin.push('https://localhost:3000');
 
-// Hide the playground in production
-if (__PROD__) options.playground = false;
+// Attach Express to the Apollo GraphQL server
+server.applyMiddleware({
+  app,
+  // Only allow requests from Phenominal
+  cors: { origin },
+});
+
+// Disputes webhook endpoint
+app.post('/webhook/disputes', disputes(stripe));
 
 // Server's URL
-const serverURL = __PROD__ ? 'https://server.phenominal.fund' : 'http://localhost:4000';
+const serverURL = __DEV__ ? 'http://localhost:4000' : 'https://server.phenominal.fund';
 
-// Start the server
-server.start(options, () => console.log(`Server is running on ${serverURL}`));
+app.listen({ port: 4000 }, () => console.log(`Server is running on ${serverURL}`));

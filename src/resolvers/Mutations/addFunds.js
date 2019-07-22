@@ -1,8 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const moment = require('moment');
-
-// Set the API version
-stripe.setApiVersion('2019-03-14');
 
 module.exports = async (parent, { amount, token }, ctx) => (
   new Promise(async (done) => {
@@ -28,14 +24,14 @@ module.exports = async (parent, { amount, token }, ctx) => (
     );
 
     // Process the payment in Stripe as a Charge
-    stripe.charges.create({
+    ctx.utils.stripe.charges.create({
       amount, // In cents
       currency: 'usd',
       description: 'Funds Addition',
       source: token, // Payment method
     }, async (err, { id: chargeID, balance_transaction }) => (
       // Grab the charge's net payout after fees
-      stripe.balanceTransactions.retrieve(balance_transaction, async (err, { net }) => {
+      ctx.utils.stripe.balanceTransactions.retrieve(balance_transaction, async (err, { net }) => {
         // Updated balance after the funds addition
         const newBalance = (await grabBalance()) + net;
         // Add the funds, grab info for the confirmation

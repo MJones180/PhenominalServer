@@ -3,7 +3,7 @@ const errors = require('../utils/errors');
 
 module.exports = async (resolve, root, args, ctx, info) => {
   // Check if the request contains an Authorization token
-  const authorization = ctx.request.get('Authorization');
+  const authorization = ctx.req.get('Authorization');
   // Append function to the context chain for resolving user information
   const setCurrentUser = (func) => { ctx.currentUser = func; };
   // Throw error if the user is not authenticated
