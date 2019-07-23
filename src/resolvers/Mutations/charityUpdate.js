@@ -1,4 +1,5 @@
 const validator = require('email-validator');
+const isUndefined = require('lodash/isUndefined');
 const mapValues = require('lodash/mapValues');
 const startCase = require('lodash/startCase');
 const toLower = require('lodash/toLower');
@@ -29,20 +30,20 @@ module.exports = async (parent, { token, ...params }, ctx) => {
   // ==================================
   // Update each field if it was passed
   // ==================================
-  if (acronym) data.acronym = toUpper(acronym);
-  if (bannerCredit) data.bannerCredit = startCase(toLower(bannerCredit));
-  if (expensesAdministrative) data.expensesAdministrative = expensesAdministrative;
-  if (expensesFundraising) data.expensesFundraising = expensesFundraising;
-  if (expensesOther) data.expensesOther = expensesOther;
-  if (expensesProgram) data.expensesProgram = expensesProgram;
-  if (expensesUpdated) data.expensesUpdated = expensesUpdated;
-  if (location) data.location = location;
-  if (mission) data.mission = mission;
-  if (name) data.name = startCase(toLower(name));
-  if (phoneNumber) data.phoneNumber = phoneNumber;
-  if (representative) data.representative = startCase(toLower(representative));
-  if (website) data.website = toLower(website);
-  if (email) {
+  if (!isUndefined(acronym)) data.acronym = toUpper(acronym);
+  if (!isUndefined(bannerCredit)) data.bannerCredit = startCase(toLower(bannerCredit));
+  if (!isUndefined(expensesAdministrative)) data.expensesAdministrative = expensesAdministrative;
+  if (!isUndefined(expensesFundraising)) data.expensesFundraising = expensesFundraising;
+  if (!isUndefined(expensesOther)) data.expensesOther = expensesOther;
+  if (!isUndefined(expensesProgram)) data.expensesProgram = expensesProgram;
+  if (!isUndefined(expensesUpdated)) data.expensesUpdated = expensesUpdated;
+  if (!isUndefined(location)) data.location = location;
+  if (!isUndefined(mission)) data.mission = mission;
+  if (!isUndefined(name)) data.name = startCase(toLower(name));
+  if (!isUndefined(phoneNumber)) data.phoneNumber = phoneNumber;
+  if (!isUndefined(representative)) data.representative = startCase(toLower(representative));
+  if (!isUndefined(website)) data.website = toLower(website);
+  if (!isUndefined(email)) {
     // Ensure the email is valid
     if (validator.validate(email)) data.email = email;
     else invalidData();
