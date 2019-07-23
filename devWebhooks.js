@@ -11,6 +11,7 @@ localtunnel(4000, (err, { url }) => {
   // All dev webhooks
   const webhooks = {
     'webhook/disputes': 'we_1Exlx1F0S6xPuZyAcXMWTPkm',
+    'webhook/connect': 'we_1EzCjhF0S6xPuZyAmYVsQ7j1',
   };
 
   // Update the webhook's endpoint

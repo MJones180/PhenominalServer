@@ -23,7 +23,8 @@ const stripe = require('./utils/stripe');
 const token = require('./utils/token');
 const uploadPicture = require('./utils/uploadPicture');
 const wait = require('./utils/wait');
-const disputes = require('./webhooks/disputes');
+const disputesWebhook = require('./webhooks/disputes');
+const connectWebhook = require('./webhooks/connect');
 
 // List of middlewards, applied in order given
 const middlewares = [user];
@@ -98,8 +99,9 @@ server.applyMiddleware({
   cors: { origin },
 });
 
-// Disputes webhook endpoint
-app.post('/webhook/disputes', disputes(stripe));
+// Webhook endpoints
+app.post('/webhook/disputes', disputesWebhook(email, stripe));
+app.post('/webhook/connect', connectWebhook(email, stripe));
 
 // Server's URL
 const serverURL = __DEV__ ? 'http://localhost:4000' : 'https://server.phenominal.fund';
