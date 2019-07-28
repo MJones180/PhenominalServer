@@ -4,6 +4,7 @@ const charityCreated = require('./templates/charityCreated');
 const charitySuggestion = require('./templates/charitySuggestion');
 const contactMessage = require('./templates/contactMessage');
 const donationConfirmation = require('./templates/donationConfirmation');
+const expiredFundsDonated = require('./templates/expiredFundsDonated');
 const friendInvite = require('./templates/friendInvite');
 const webhookAlert = require('./templates/webhookAlert');
 
@@ -14,6 +15,7 @@ module.exports = {
   charitySuggestion,
   contactMessage,
   donationConfirmation,
+  expiredFundsDonated,
   friendInvite,
   webhookAlert,
 };

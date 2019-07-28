@@ -10,7 +10,7 @@ module.exports = (client) => {
     // Yesterday's date in ISO format
     const dateYesterday = () => {
       const date = new Date();
-      // Set the current date back by one date
+      // Set the current date back by one day
       date.setDate(date.getDate() - 1);
       // Remove hours, minutes, seconds, and ms from date
       date.setUTCHours(0, 0, 0, 0);

@@ -1,6 +1,7 @@
 const validator = require('email-validator');
+const each = require('lodash/each');
+const isString = require('lodash/isString');
 const isUndefined = require('lodash/isUndefined');
-const mapValues = require('lodash/mapValues');
 const startCase = require('lodash/startCase');
 const toLower = require('lodash/toLower');
 const toUpper = require('lodash/toUpper');
@@ -10,12 +11,6 @@ module.exports = async (parent, { token, ...params }, ctx) => {
   // Grab the EIN from the auth token
   const ein = await ctx.utils.currentAuthCharity(token);
 
-  // Trimmed params
-  const { acronym, bannerCredit, email, location, mission, name, representative, website } = mapValues(params, param => (param ? trim(param) : param));
-
-  // Regular params
-  const { banner, expensesAdministrative, expensesFundraising, expensesOther, expensesProgram, expensesUpdated, logo, phoneNumber } = params;
-
   // Properties to update
   const data = {};
 
@@ -24,44 +19,56 @@ module.exports = async (parent, { token, ...params }, ctx) => {
     throw new ctx.utils.errors.InvalidCharityData();
   };
 
-  // Ensure none of the required fields are being reset
-  if (email == '' || name == '' || representative == '' || website == '') invalidData();
+  // Fields that can be updated
+  const fields = [
+    ['acronym', val => toUpper(val)],
+    ['bannerCredit', val => startCase(toLower(val))],
+    ['email'],
+    ['expensesAdministrative'],
+    ['expensesFundraising'],
+    ['expensesOther'],
+    ['expensesProgram'],
+    ['expensesUpdated'],
+    ['location'],
+    ['mission'],
+    ['name', val => startCase(toLower(val))],
+    ['phoneNumber'],
+    ['representative', val => startCase(toLower(val))],
+    ['website', val => toLower(val)],
+  ];
 
-  // ==================================
-  // Update each field if it was passed
-  // ==================================
-  if (!isUndefined(acronym)) data.acronym = toUpper(acronym);
-  if (!isUndefined(bannerCredit)) data.bannerCredit = startCase(toLower(bannerCredit));
-  if (!isUndefined(expensesAdministrative)) data.expensesAdministrative = expensesAdministrative;
-  if (!isUndefined(expensesFundraising)) data.expensesFundraising = expensesFundraising;
-  if (!isUndefined(expensesOther)) data.expensesOther = expensesOther;
-  if (!isUndefined(expensesProgram)) data.expensesProgram = expensesProgram;
-  if (!isUndefined(expensesUpdated)) data.expensesUpdated = expensesUpdated;
-  if (!isUndefined(location)) data.location = location;
-  if (!isUndefined(mission)) data.mission = mission;
-  if (!isUndefined(name)) data.name = startCase(toLower(name));
-  if (!isUndefined(phoneNumber)) data.phoneNumber = phoneNumber;
-  if (!isUndefined(representative)) data.representative = startCase(toLower(representative));
-  if (!isUndefined(website)) data.website = toLower(website);
-  if (!isUndefined(email)) {
-    // Ensure the email is valid
-    if (validator.validate(email)) data.email = email;
-    else invalidData();
-  }
-  if (banner || logo) {
+  // Update the fields
+  each(fields, ([field, format]) => {
+    // Field's value
+    let fieldValue = params[field];
+    // Field was passed for update
+    if (!isUndefined(fieldValue)) {
+      // Trim all strings
+      if (isString(fieldValue)) fieldValue = trim(fieldValue);
+      // Format the field and update it
+      data[field] = format ? format(fieldValue) : fieldValue;
+    }
+  });
+
+  // Ensure the email is valid and none of the required fields are being reset
+  if ((data.email && !validator.validate(data.email)) || data.name == '' || data.representative == '' || data.website == '') invalidData();
+
+  // Grab the pictures and check if they are being updated
+  const { banner, logo } = params;
+  const bannerUpdated = banner && !isString(banner);
+  const logoUpdated = logo && !isString(logo);
+
+  if (bannerUpdated || logoUpdated) {
     // Grab the old banner/logo path
     const { id, banner: oldBanner, logo: oldLogo } = await ctx.client.charity({ ein });
-    if (banner) {
-      const updatePictureKey = (newPictureKey) => { data.banner = newPictureKey; };
-      // Upload the new banner
-      await ctx.utils.uploadPicture(params.banner, id, 'charities/banners', updatePictureKey, oldBanner);
-    }
-    if (logo) {
-      const updatePictureKey = (newPictureKey) => { data.logo = newPictureKey; };
-      // Upload the new logo
-      await ctx.utils.uploadPicture(params.logo, id, 'charities/logos', updatePictureKey, oldLogo);
-    }
+    // Update the picture's key in the db
+    const updateKey = picture => (newKey) => { data[picture] = newKey; };
+    // Upload the new banner
+    if (bannerUpdated) await ctx.utils.uploadPicture(banner, id, 'charities/banners', updateKey('banner'), oldBanner);
+    // Upload the new logo
+    if (logoUpdated) await ctx.utils.uploadPicture(logo, id, 'charities/logos', updateKey('logo'), oldLogo);
   }
+
   // Update the charity information
   await ctx.client.updateCharity({
     data,

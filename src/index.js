@@ -7,24 +7,27 @@ const { makeExecutableSchema } = require('graphql-tools');
 const { GraphQLUpload } = require('graphql-upload');
 const { Prisma: PrismaBinding } = require('prisma-binding');
 const { prisma: client } = require('./generated/prisma-client');
+const handleExpiredFunds = require('./cron/handleExpiredFunds');
+// const upcomingExpiredFunds = require('./cron/upcomingExpiredFunds');
 const user = require('./middleware/user');
 const resolvers = require('./resolvers');
 const aws = require('./utils/aws');
 const currentAuthCharity = require('./utils/currentAuthCharity');
 const dots = require('./utils/dots');
 const email = require('./utils/email');
-const loops = require('./utils/loops');
-const halos = require('./utils/halos');
-const providers = require('./utils/providers');
 const errors = require('./utils/errors');
+const grabEvents = require('./utils/grabEvents');
+const halos = require('./utils/halos');
+const loops = require('./utils/loops');
 const loopStage = require('./utils/loopStage');
+const providers = require('./utils/providers');
 const rand = require('./utils/rand');
 const stripe = require('./utils/stripe');
 const token = require('./utils/token');
 const uploadPicture = require('./utils/uploadPicture');
 const wait = require('./utils/wait');
-const disputesWebhook = require('./webhooks/disputes');
 const connectWebhook = require('./webhooks/connect');
+const disputesWebhook = require('./webhooks/disputes');
 
 // List of middlewards, applied in order given
 const middlewares = [user];
@@ -66,11 +69,12 @@ const server = new ApolloServer({
       currentAuthCharity: currentAuthCharity(binding),
       dots: dots(client),
       email,
-      loops: loops(client),
-      halos: halos(binding, client),
-      providers,
       errors,
+      grabEvents: grabEvents(binding),
+      halos: halos(binding, client),
+      loops: loops(client),
       loopStage,
+      providers,
       rand,
       stripe,
       token,
@@ -100,8 +104,10 @@ server.applyMiddleware({
 });
 
 // Webhook endpoints
-app.post('/webhook/disputes', disputesWebhook(email, stripe));
 app.post('/webhook/connect', connectWebhook(email, stripe));
+app.post('/webhook/disputes', disputesWebhook(email, stripe));
+
+handleExpiredFunds(binding, client, email, grabEvents(binding), stripe);
 
 // Server's URL
 const serverURL = __DEV__ ? 'http://localhost:4000' : 'https://server.phenominal.fund';

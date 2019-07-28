@@ -21,7 +21,7 @@ module.exports = async (parent, { amount, eventID }, ctx) => (
     // ====================
 
     // Charity info
-    const { connectedAccountID, name: charityName } = await ctx.client.event({ id: eventID }).charity();
+    const [{ charity: { connectedAccountID, name: charityName } }] = await ctx.utils.grabEvents.current({ where: { id: eventID } }, '{ charity { connectedAccountID name} }');
 
     // Balance after donating
     const newBalance = balance - amount;
