@@ -1,89 +1,67 @@
+// =============================
+// Cron to email that funds will
+// be auto donated in 1 week
+// =============================
+
 const { CronJob } = require('cron');
 const each = require('lodash/each');
 
-module.exports = (binding, client, sendEmail, grabEvents, stripe) => {
-  const handleExpiredFunds = async () => {
-    const [{ id: eventID, charity: { connectedAccountID, name: charityName } }] = await grabEvents.current({ first: 1 }, '{ id charity { connectedAccountID name} }');
-
-    const date80DaysAgo = () => {
+module.exports = (binding, sendEmail) => {
+  const upcomingExpiredFunds = async () => {
+    // Format console logs
+    const log = text => console.log(`[Cron] ${text}`);
+    // Alert that the process has started
+    log(new Date().toISOString());
+    log('Executing upcomingExpiredFunds');
+    // The date constraint for the charges
+    const dateDaysAgo = (x) => {
       const date = new Date();
-      // Set the current date back by 80 days
-      date.setDate(date.getDate() - 80);
+      // Set the current date back by x days
+      date.setDate(date.getDate() - x);
       // Convert to ISO string
       return date.toISOString();
     };
-
+    // The date for when the funds will expire
+    const date1WeekAhead = () => {
+      const date = new Date();
+      // Set the current date ahead 7 days
+      date.setDate(date.getDate() + 7);
+      // Convert to ISO string
+      return date.toISOString();
+    };
+    // Grab all of the charges that are going to expire in 1 week
     const charges = await binding.query.charges({
       where: {
-        createdAt_lte: date80DaysAgo(),
+        createdAt_lte: dateDaysAgo(73),
+        createdAt_gt: dateDaysAgo(74),
         donations_every: { chargeBalance_gt: 0 },
       },
     }, `{
       id
       amountNet
-      chargeID
-      donations(first: 1) {
+      donations(first: 1, orderBy: createdAt_DESC) {
         chargeBalance
       }
       user {
-        id
         email
         nameFirst
         nameLast
-        transactions(first: 1, orderBy: createdAt_DESC) {
-          balance
-        }
       }
     }`);
-
-    each(charges, async ({ amountNet, chargeID, donations, id: sourceID, user: { id: userID, email, nameFirst, nameLast, tranasctions } }) => {
-      const chargeBalance = donations.length ? donations[0].chargeBalance : amountNet;
-      const [{ balance }] = tranasctions;
-
-      const newBalance = balance - chargeBalance;
-
-      // Create the transaction that links to the donations
-      const createTransaction = async () => (
-        client.createTransaction({
-          balance: newBalance,
-          user: { connect: { id: userID } },
-        })
-      );
-
-      // Grab the date and transaction's ID for the confirmation and linking the donations
-      const { createdAt: date, id: transactionID } = await createTransaction();
-
-      const amount = donations.length ? donations[0].chargeBalance : amountNet;
-      stripe.transfers.create({
-        amount,
-        currency: 'usd',
-        destination: connectedAccountID,
-        source_transaction: chargeID,
-      }).then(({ id: transferID }) => (
-      // Add the donation to Phenominal and link it to the transaction
-        client.createTransfer({
-          amount,
-          chargeBalance,
-          firstOfBatch: true,
-          transferID,
-          event: { connect: { id: eventID } },
-          source: { connect: { id: sourceID } },
-          transaction: { connect: { id: transactionID } },
-        })
-      ));
-
-      // Information that is used in the confirmation and response
-      const transactionData = {
-        amount,
-        balance: newBalance,
-        charityName,
-        date,
-        transactionID,
-      };
-
-      sendEmail.donationConfirmation(transactionData, email, nameFirst, nameLast);
-    });
+    // There is at least one charge that is about to expire
+    if (charges.length) {
+      log('Charges:');
+      // Have an email alert sent for each of the charges
+      each(charges, async ({ amountNet, donations, id: sourceID, user: { email, nameFirst, nameLast } }) => {
+        // Log the charge's ID
+        log(`- ${sourceID}`);
+        // Amount of the source funds left
+        const amount = donations.length ? donations[0].chargeBalance : amountNet;
+        // Send an email that the funds will be automatically donated
+        sendEmail.upcomingExpiredFunds({ amount, expirationDate: date1WeekAhead() }, email, nameFirst, nameLast);
+      });
+    } else log('No Charges');
   };
-
-  new CronJob('00 00 00 * * *', handleExpiredFunds()).start();
+  // Run script at 12:30AM everyday
+  new CronJob('00 30 00 * * *', upcomingExpiredFunds).start();
 };

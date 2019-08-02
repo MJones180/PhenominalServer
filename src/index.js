@@ -8,7 +8,7 @@ const { GraphQLUpload } = require('graphql-upload');
 const { Prisma: PrismaBinding } = require('prisma-binding');
 const { prisma: client } = require('./generated/prisma-client');
 const handleExpiredFunds = require('./cron/handleExpiredFunds');
-// const upcomingExpiredFunds = require('./cron/upcomingExpiredFunds');
+const upcomingExpiredFunds = require('./cron/upcomingExpiredFunds');
 const user = require('./middleware/user');
 const resolvers = require('./resolvers');
 const aws = require('./utils/aws');
@@ -107,7 +107,9 @@ server.applyMiddleware({
 app.post('/webhook/connect', connectWebhook(email, stripe));
 app.post('/webhook/disputes', disputesWebhook(email, stripe));
 
+// Cron jobs
 handleExpiredFunds(binding, client, email, grabEvents(binding), stripe);
+upcomingExpiredFunds(binding, email);
 
 // Server's URL
 const serverURL = __DEV__ ? 'http://localhost:4000' : 'https://server.phenominal.fund';
