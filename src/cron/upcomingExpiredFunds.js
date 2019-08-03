@@ -4,6 +4,7 @@
 // =============================
 
 const { CronJob } = require('cron');
+const moment = require('moment');
 const each = require('lodash/each');
 
 module.exports = (binding, sendEmail) => {
@@ -14,21 +15,9 @@ module.exports = (binding, sendEmail) => {
     log(new Date().toISOString());
     log('Executing upcomingExpiredFunds');
     // The date constraint for the charges
-    const dateDaysAgo = (x) => {
-      const date = new Date();
-      // Set the current date back by x days
-      date.setDate(date.getDate() - x);
-      // Convert to ISO string
-      return date.toISOString();
-    };
+    const dateDaysAgo = x => moment().subtract(x, 'days').toISOString();
     // The date for when the funds will expire
-    const date1WeekAhead = () => {
-      const date = new Date();
-      // Set the current date ahead 7 days
-      date.setDate(date.getDate() + 7);
-      // Convert to ISO string
-      return date.toISOString();
-    };
+    const date1WeekAhead = () => moment().add(7, 'days').toISOString();
     // Grab all of the charges that are going to expire in 1 week
     const charges = await binding.query.charges({
       where: {

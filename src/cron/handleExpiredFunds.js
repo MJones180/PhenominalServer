@@ -4,6 +4,7 @@
 // =============================
 
 const { CronJob } = require('cron');
+const moment = require('moment');
 const each = require('lodash/each');
 
 module.exports = (binding, client, sendEmail, grabEvents, stripe) => {
@@ -14,13 +15,7 @@ module.exports = (binding, client, sendEmail, grabEvents, stripe) => {
     log(new Date().toISOString());
     log('Executing handleExpiredFunds');
     // The date constraint for the charges
-    const date80DaysAgo = () => {
-      const date = new Date();
-      // Set the current date back by 80 days
-      date.setDate(date.getDate() - 80);
-      // Convert to ISO string
-      return date.toISOString();
-    };
+    const date80DaysAgo = () => moment().subtract(80, 'days').toISOString();
     // Grab all of the charges that need to be donated
     const charges = await binding.query.charges({
       where: {
