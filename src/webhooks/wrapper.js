@@ -1,15 +1,7 @@
 const bodyParser = require('body-parser');
 
 module.exports = (email, stripe, secret, events) => ([
-  bodyParser.raw({
-    type: 'application/json',
-    verify: (req, res, buf) => {
-      const url = req.originalUrl;
-      if (url.startsWith('/webhook')) {
-        req.rawBody = buf.toString();
-      }
-    },
-  }),
+  bodyParser.raw({ type: 'application/json' }),
   (req, resp) => {
     const sig = req.headers['stripe-signature'];
 
