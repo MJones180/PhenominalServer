@@ -5,7 +5,7 @@ module.exports = (email, stripe, secret, events) => ([
     type: 'application/json',
     verify: (req, res, buf) => {
       const url = req.originalUrl;
-      if (url.startsWith('/stripe-webhooks')) {
+      if (url.startsWith('/webhook')) {
         req.rawBody = buf.toString();
       }
     },
