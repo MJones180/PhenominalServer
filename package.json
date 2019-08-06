@@ -45,7 +45,7 @@
     "nodemon": "1.17.2"
   },
   "scripts": {
-    "deployGraphql": "heroku config:push -o -f ./env/.root && heroku config:push -o -f ./env/.prod && git push heroku master",
+    "deployGraphql": "heroku config:push -a phenominal-production-server -o -f ./env/.root && heroku config:push -o -f ./env/.prod && git push heroku master",
     "deployPrisma": "prisma deploy -e ./env/.dev",
     "deployPrismaProd": "prisma deploy -e ./env/.prod",
     "devWebhooks": "node run --path=./devWebhooks.js",

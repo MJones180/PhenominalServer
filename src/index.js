@@ -114,4 +114,8 @@ upcomingExpiredFunds(binding, email);
 // Server's URL
 const serverURL = __DEV__ ? 'http://localhost:4000' : 'https://server.phenominal.fund';
 
-app.listen({ port: 4000 }, () => console.log(`Server is running on ${serverURL}`));
+// Use Heroku port or 4000 in dev
+const port = process.env.PORT || 4000;
+
+// Listen for requests
+app.listen({ port }, () => console.log(`Server is running on ${serverURL}`));

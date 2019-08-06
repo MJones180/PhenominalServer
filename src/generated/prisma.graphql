@@ -2626,9 +2626,6 @@ type Event {
   endDate: DateTime!
   goal: Int!
   multiplier: Int
-  specialEvent: String
-  specialEventDescription: String
-  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime!
@@ -2647,9 +2644,6 @@ input EventCreateInput {
   endDate: DateTime!
   goal: Int!
   multiplier: Int
-  specialEvent: String
-  specialEventDescription: String
-  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime!
@@ -2677,9 +2671,6 @@ input EventCreateWithoutCharityInput {
   endDate: DateTime!
   goal: Int!
   multiplier: Int
-  specialEvent: String
-  specialEventDescription: String
-  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime!
@@ -2691,9 +2682,6 @@ input EventCreateWithoutDonationsInput {
   endDate: DateTime!
   goal: Int!
   multiplier: Int
-  specialEvent: String
-  specialEventDescription: String
-  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime!
@@ -2718,12 +2706,6 @@ enum EventOrderByInput {
   goal_DESC
   multiplier_ASC
   multiplier_DESC
-  specialEvent_ASC
-  specialEvent_DESC
-  specialEventDescription_ASC
-  specialEventDescription_DESC
-  specialEventName_ASC
-  specialEventName_DESC
   sponsorName_ASC
   sponsorName_DESC
   sponsorWebsite_ASC
@@ -2739,9 +2721,6 @@ type EventPreviousValues {
   endDate: DateTime!
   goal: Int!
   multiplier: Int
-  specialEvent: String
-  specialEventDescription: String
-  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime!
@@ -2802,48 +2781,6 @@ input EventScalarWhereInput {
   multiplier_lte: Int
   multiplier_gt: Int
   multiplier_gte: Int
-  specialEvent: String
-  specialEvent_not: String
-  specialEvent_in: [String!]
-  specialEvent_not_in: [String!]
-  specialEvent_lt: String
-  specialEvent_lte: String
-  specialEvent_gt: String
-  specialEvent_gte: String
-  specialEvent_contains: String
-  specialEvent_not_contains: String
-  specialEvent_starts_with: String
-  specialEvent_not_starts_with: String
-  specialEvent_ends_with: String
-  specialEvent_not_ends_with: String
-  specialEventDescription: String
-  specialEventDescription_not: String
-  specialEventDescription_in: [String!]
-  specialEventDescription_not_in: [String!]
-  specialEventDescription_lt: String
-  specialEventDescription_lte: String
-  specialEventDescription_gt: String
-  specialEventDescription_gte: String
-  specialEventDescription_contains: String
-  specialEventDescription_not_contains: String
-  specialEventDescription_starts_with: String
-  specialEventDescription_not_starts_with: String
-  specialEventDescription_ends_with: String
-  specialEventDescription_not_ends_with: String
-  specialEventName: String
-  specialEventName_not: String
-  specialEventName_in: [String!]
-  specialEventName_not_in: [String!]
-  specialEventName_lt: String
-  specialEventName_lte: String
-  specialEventName_gt: String
-  specialEventName_gte: String
-  specialEventName_contains: String
-  specialEventName_not_contains: String
-  specialEventName_starts_with: String
-  specialEventName_not_starts_with: String
-  specialEventName_ends_with: String
-  specialEventName_not_ends_with: String
   sponsorName: String
   sponsorName_not: String
   sponsorName_in: [String!]
@@ -2907,9 +2844,6 @@ input EventUpdateDataInput {
   endDate: DateTime
   goal: Int
   multiplier: Int
-  specialEvent: String
-  specialEventDescription: String
-  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime
@@ -2921,9 +2855,6 @@ input EventUpdateInput {
   endDate: DateTime
   goal: Int
   multiplier: Int
-  specialEvent: String
-  specialEventDescription: String
-  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime
@@ -2935,9 +2866,6 @@ input EventUpdateManyDataInput {
   endDate: DateTime
   goal: Int
   multiplier: Int
-  specialEvent: String
-  specialEventDescription: String
-  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime
@@ -2947,9 +2875,6 @@ input EventUpdateManyMutationInput {
   endDate: DateTime
   goal: Int
   multiplier: Int
-  specialEvent: String
-  specialEventDescription: String
-  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime
@@ -2992,9 +2917,6 @@ input EventUpdateWithoutCharityDataInput {
   endDate: DateTime
   goal: Int
   multiplier: Int
-  specialEvent: String
-  specialEventDescription: String
-  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime
@@ -3005,9 +2927,6 @@ input EventUpdateWithoutDonationsDataInput {
   endDate: DateTime
   goal: Int
   multiplier: Int
-  specialEvent: String
-  specialEventDescription: String
-  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime
@@ -3090,48 +3009,6 @@ input EventWhereInput {
   multiplier_lte: Int
   multiplier_gt: Int
   multiplier_gte: Int
-  specialEvent: String
-  specialEvent_not: String
-  specialEvent_in: [String!]
-  specialEvent_not_in: [String!]
-  specialEvent_lt: String
-  specialEvent_lte: String
-  specialEvent_gt: String
-  specialEvent_gte: String
-  specialEvent_contains: String
-  specialEvent_not_contains: String
-  specialEvent_starts_with: String
-  specialEvent_not_starts_with: String
-  specialEvent_ends_with: String
-  specialEvent_not_ends_with: String
-  specialEventDescription: String
-  specialEventDescription_not: String
-  specialEventDescription_in: [String!]
-  specialEventDescription_not_in: [String!]
-  specialEventDescription_lt: String
-  specialEventDescription_lte: String
-  specialEventDescription_gt: String
-  specialEventDescription_gte: String
-  specialEventDescription_contains: String
-  specialEventDescription_not_contains: String
-  specialEventDescription_starts_with: String
-  specialEventDescription_not_starts_with: String
-  specialEventDescription_ends_with: String
-  specialEventDescription_not_ends_with: String
-  specialEventName: String
-  specialEventName_not: String
-  specialEventName_in: [String!]
-  specialEventName_not_in: [String!]
-  specialEventName_lt: String
-  specialEventName_lte: String
-  specialEventName_gt: String
-  specialEventName_gte: String
-  specialEventName_contains: String
-  specialEventName_not_contains: String
-  specialEventName_starts_with: String
-  specialEventName_not_starts_with: String
-  specialEventName_ends_with: String
-  specialEventName_not_ends_with: String
   sponsorName: String
   sponsorName_not: String
   sponsorName_in: [String!]

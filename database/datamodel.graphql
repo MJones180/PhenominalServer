@@ -156,9 +156,6 @@ type Event {
   endDate: DateTime!
   goal: Int!
   multiplier: Int
-  specialEvent: String
-  specialEventDescription: String
-  specialEventName: String
   sponsorName: String
   sponsorWebsite: String
   startDate: DateTime!
