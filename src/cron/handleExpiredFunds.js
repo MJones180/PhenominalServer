@@ -43,7 +43,7 @@ module.exports = (binding, client, sendEmail, grabEvents, stripe) => {
     if (charges.length) {
       // Grab the current event info
       const activeEvent = await grabEvents.current({ first: 1 }, '{ id charity { connectedAccountID name} }');
-      if (activeEvent) {
+      if (activeEvent[0]) {
         const [{ id: eventID, charity: { connectedAccountID, name: charityName } }] = activeEvent;
         log('Charges:');
         // Donate each of the charges
