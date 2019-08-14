@@ -93,6 +93,6 @@ module.exports = (binding, client, sendEmail, grabEvents, stripe) => {
       } else log('No Active Event');
     } else log('No Charges');
   };
-  // Run script at 12:05AM everyday
-  new CronJob('00 05 00 * * *', handleExpiredFunds).start();
+  // TEST FOR 5:30PM
+  new CronJob('00 30 16 * * *', handleExpiredFunds).start();
 };
